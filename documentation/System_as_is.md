@@ -20,3 +20,7 @@
 ## Alerts
 
 ![Alerts](images/Alerts.png)
+
+## Schedule
+
+![Schedule](images/Schedule.png)
