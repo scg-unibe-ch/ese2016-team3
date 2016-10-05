@@ -12,6 +12,14 @@
 
 > A user can create search alerts which notify him about new ads corresponding the search criteria.
 
+ - Müssen alle Kritieren zurteffen damit der User von neuen Anzeigen benachrichtigt wird? Oder reicht es auch aus, wenn einige Kritieren zutreffen andere aber nicht.( Bsp: 5 Kritieren treffen zu aber eine nicht)
+ - Wie wird der User von den neuen entsprechenden Anzeigen benachrichtig? 
+Von wem wird er benachrichtig? 
+Bekommt der User eine Email vom System?
+- Welches sind diese "search criterias"? Bsp: Ort, Mietpreis, Tierfreundlich, Balkon, Lift, etc...
+
+- 
+
 ## Requirement 4
 
 > Extend the search capabilities to cover more filter criteria
