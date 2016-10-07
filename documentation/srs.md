@@ -4,7 +4,7 @@
 
 ### Purpose
 
-This document gives a detailed description of the requirements for the application "FlatFinder". "FlatFinder" is a web portal for real estate.
+This document gives a detailed description of the requirements for the web application project **FlatFinder**.
 
 All functional and non-functional requirements are listed and documented in this document. The document also gives a brief overview of the overall application and collaborating external systems.
 
@@ -30,10 +30,12 @@ The following sections describe abbreviations and special terms used in this doc
 
 |Term|Description|
 |---|---|
-|FlatFinder|The web-application for real estate being built|
-|Ad|An advertisement for a flat for rent or for sale|
-|Enquiry|A request of a person to visit a flat for rent or for sale|
-|Flat manager|The person which manages a flat for rent or for sale|
+|FlatFinder|The web-application for managing ads for real estate|
+|Ad|An advertisement for real estate|
+|Enquiry|A request of a person to visit real state|
+|Real estate manager|The person which manages real estate (places ads, organizes visits)|
+|Studio|A small flat with several rooms for rent|
+|Room|A single room for rent|
 
 #### Technical terms
 
@@ -51,6 +53,12 @@ The following sections describe abbreviations and special terms used in this doc
 ### System overview
 
 ### References
+
+- Spring Framework: [https://spring.io](https://spring.io)
+- Spring Data: [http://projects.spring.io/spring-data/](http://projects.spring.io/spring-data/)
+- Spring MVC: [http://projects.spring.io/spring-framework/](http://projects.spring.io/spring-framework/)
+- Spring Security: [http://projects.spring.io/spring-security/](http://projects.spring.io/spring-security/)
+- MySQL: [http://www.mysql.com](http://www.mysql.com)
 
 ## Overall description
 
@@ -88,7 +96,7 @@ If he has no account yet, he can sign up as a new user.
 
 #### Placement of advertisements
 
-A user can create a new advertisement for real estate. An advertisement consists of required general information and additonal optional information about the real estate it concerns.
+A real estate manager can create a new advertisement for real estate. An advertisement consists of required general information and additonal optional information about the real estate it concerns.
 
 The following general information can be declared:
 
@@ -114,7 +122,7 @@ The following *additional attributes* of the real estate can be specified in a y
 
 Additionally a *textual description* of the real estate can be added to the ad.
 
-To give users a better impression of the real estate, *images* of the real estate can be uploaded and will be displayed on the advertisement. This is not mandatory.
+*Images* of the real estate can be added to the advertisement to give users a better impression of the real estate. This is not mandatory.
 
 The advertiser can state his *preferences* in questions of tenants with a textual description. This is not mandatory.
 
