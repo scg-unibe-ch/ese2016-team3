@@ -74,6 +74,19 @@ The following sections describe abbreviations and special terms used in this doc
 
 ### Use cases
 
+|Use case element|Description|
+|---|---|
+|ID||
+|Name||
+|Description||
+|Primary actor||
+|Precondition||
+|Trigger||
+|Normal flow||
+|Alternate flow||
+
+see [http://www.gatherspace.com/static/use_case_example.html](http://www.gatherspace.com/static/use_case_example.html)
+
 ### Actor characteristics
 
 ## Requirements
