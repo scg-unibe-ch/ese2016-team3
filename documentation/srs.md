@@ -77,6 +77,70 @@ The following sections describe abbreviations and special terms used in this doc
 #### User management
 ![User management](images/User_Management.png)
 
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|uc01|
+|**Name**|Sign up|
+|**Description**|The user creates a flatfinder account.|
+|**Primary actor**|User visiting the web portal|
+|**Precondition**|The user visits the start page of the web portal. The user has no flatfinder account yet.|
+|**Trigger**|A visitor wants to use the application|
+|**Normal flow**|1. The user clicks on the button "login"|
+||2. The login form and a link "sign up" is shown|
+||3. The user clicks on the link "sign up"|
+||4. The sign up form is shown|
+||5. The user enter his name, his email address, a password and selects his gender|
+||6. The user clicks on the button "Sign up"|
+||7. The login page and a success message are shown|
+|**Alternate flow**|If the user doesn't fill up the entire sign up form in step 5, validation error messages are shown.|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|uc02|
+|**Name**|Login|
+|**Description**|The user logs into the application|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user has signed up for an account and visits the start page of the web portal.|
+|**Trigger**|The user wants to use the application|
+|**Normal flow**|1. The user clicks on the button "login"|
+||2. The login form is shown|
+||3. The user enters his email address and his password|
+||4. The user clicks on the button "Login"|
+||5. The user is logged in and the start page is shown|
+|**Alternate flow**|If the user enters wrong credentials in step 3, an error message and the login form are shown.|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|uc03|
+|**Name**|Edit public profile|
+|**Description**|The user edits his public profile, which is shown to other users.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application.|
+|**Trigger**|The user wants to edit his public profile.|
+|**Normal flow**|1. The user hovers over his user image in the header line of the web portal|
+||2. The user clicks on the appearing button "Public profile"|
+||3. His public profile information is shown|
+||4. The user clicks on the button "Edit"|
+||5. The form to edit his personal information like name, password and email is shown|
+||6. The user changes some values|
+||7. The user clicks on the button "Update"|
+||8. The system shows a success message|
+|**Alternate flow**|If the user enters invalid input, an error message is shown.|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|uc04|
+|**Name**|Logout|
+|**Description**|The user logs out of the application|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the the application.|
+|**Trigger**|The user wants to leave the application|
+|**Normal flow**|1. The user hovers over his user image in the header line of the web portal|
+||2. The user clicks on the appearing button "Logout"|
+||3. The user is logged out and the start page of the web portal is shown|
+|**Alternate flow**||
+
 #### Searching and viewing ads
 ![Searching and viewing ads](images/Ad.png)
 
@@ -100,15 +164,15 @@ The following sections describe abbreviations and special terms used in this doc
 ![Schedule](images/Schedule.png)
 
 |Use case element|Description|
-|---|---|
-|ID||
-|Name||
-|Description||
-|Primary actor||
-|Precondition||
-|Trigger||
-|Normal flow||
-|Alternate flow||
+|:---|:---|
+|**ID**||
+|**Name**||
+|**Description**||
+|**Primary actor**||
+|**Precondition**||
+|**Trigger**||
+|**Normal flow**||
+|**Alternate flow**||
 
 see [http://www.gatherspace.com/static/use_case_example.html](http://www.gatherspace.com/static/use_case_example.html)
 
