@@ -4,7 +4,7 @@
 
 ### Purpose
 
-This document gives a detailed description of the requirements for the application "FlatFinder". "FlatFinder" is a web portal for real estate.
+This document gives a detailed description of the requirements for the web application project **FlatFinder**.
 
 All functional and non-functional requirements are listed and documented in this document. The document also gives a brief overview of the overall application and collaborating external systems.
 
@@ -13,6 +13,12 @@ This document serves as basis for discussions with the customer during the initi
 Furthermore the document serves as contract between the customer and the developer team, on which both can depend during the whole project.
 
 The document is continuously updated during the whole project. Old versions of the document can be retrieved anytime from the version control system.
+
+### System overview
+
+The web application **FlatFinder** is a web portal for real estate, where users can place ads for real estate. The goal of the customer is to build a web portal which provides the users effective support with doing real estate related tasks like managing enquiries, organizing on site visits and so on.
+
+The system being built bases on a already existing application which should be generally revised and extended with additional functionality.
 
 ### Stakeholders
 
@@ -30,10 +36,12 @@ The following sections describe abbreviations and special terms used in this doc
 
 |Term|Description|
 |---|---|
-|FlatFinder|The web-application for real estate being built|
-|Ad|An advertisement for a flat for rent or for sale|
-|Enquiry|A request of a person to visit a flat for rent or for sale|
-|Flat manager|The person which manages a flat for rent or for sale|
+|FlatFinder|The web-application for managing ads for real estate|
+|Ad|An advertisement for real estate|
+|Enquiry|A request of a person to visit real state|
+|Real estate manager|The person which manages real estate (places ads, organizes visits)|
+|Studio|A small flat with several rooms for rent|
+|Room|A single room for rent|
 
 #### Technical terms
 
@@ -48,13 +56,36 @@ The following sections describe abbreviations and special terms used in this doc
 |MVC|Model View Controller, a software architecture used in the system|
 |Git|A software version control system|
 
-### System overview
-
 ### References
+
+#### Domain specific
+
+- Customer requirements document [https://github.com/scg-unibe-ch/ese2016/wiki/Project-Description](https://github.com/scg-unibe-ch/ese2016/wiki/Project-Description)
+
+#### Technical
+
+- Spring Framework: [https://spring.io](https://spring.io)
+- Spring Data: [http://projects.spring.io/spring-data/](http://projects.spring.io/spring-data/)
+- Spring MVC: [http://projects.spring.io/spring-framework/](http://projects.spring.io/spring-framework/)
+- Spring Security: [http://projects.spring.io/spring-security/](http://projects.spring.io/spring-security/)
+- MySQL: [http://www.mysql.com](http://www.mysql.com)
 
 ## Overall description
 
 ### Use cases
+
+|Use case element|Description|
+|---|---|
+|ID||
+|Name||
+|Description||
+|Primary actor||
+|Precondition||
+|Trigger||
+|Normal flow||
+|Alternate flow||
+
+see [http://www.gatherspace.com/static/use_case_example.html](http://www.gatherspace.com/static/use_case_example.html)
 
 ### Actor characteristics
 
@@ -65,7 +96,7 @@ The following sections describe abbreviations and special terms used in this doc
 #### User management
 
 - The user can login to the application.
-Therefor he has to enters his email-address and his password into the login-form. 
+Therefore he has to enters his email-address and his password into the login-form. 
 If he has no account yet, he can sign up as a new user.
 
 - For signing up as a new user he has to enter his first and last name, select his gender and give his email-address and a passwort, which has to be at least 6 characters long. If any of these informations aren't fill in, an error occurs, which tells the user that he must fill in a valid information.
@@ -88,7 +119,7 @@ If he has no account yet, he can sign up as a new user.
 
 #### Placement of advertisements
 
-A user can create a new advertisement for real estate. An advertisement consists of required general information and additonal optional information about the real estate it concerns.
+A real estate manager can create a new advertisement for real estate. An advertisement consists of required general information and additonal optional information about the real estate it concerns.
 
 The following general information can be declared:
 
@@ -114,7 +145,7 @@ The following *additional attributes* of the real estate can be specified in a y
 
 Additionally a *textual description* of the real estate can be added to the ad.
 
-To give users a better impression of the real estate, *images* of the real estate can be uploaded and will be displayed on the advertisement. This is not mandatory.
+*Images* of the real estate can be added to the advertisement to give users a better impression of the real estate. This is not mandatory.
 
 The advertiser can state his *preferences* in questions of tenants with a textual description. This is not mandatory.
 
@@ -122,4 +153,18 @@ The *roommates* living in the real estate can be mentioned in the advertisement.
 
 The advertiser can specify multiple possible *visiting times* for enquiries. A visiting time is specified by a date, a start time and an end time. This is not mandatory.
 
+#### User roles
+
+**NEW** The application distinguishes two different user types: *premium* and *normal*.
+
+The application behaves different for the different user roles as follows:
+
+- If a new advertisement meets the filter criteria of an alert of a premium user, he immediately gets a message.
+- In the same situation, a normal user gets the information with a specific delay.
+- The advertisement of premium users are shown at the top of the search result list.
+
 ### Non-functional requirements
+
+#### Design of the application
+
+The application should have a modern look and feel.

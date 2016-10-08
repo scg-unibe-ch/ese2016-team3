@@ -1,14 +1,16 @@
 # Question list
 
-## Requirement 1
+## Functional requirements
+
+### Requirement 1
 
 > A user can put an ad to sell properties directly or through an auction.
 
-## Requirement 2
+### Requirement 2
 
 > A user can search for properties for sale similarly to the search form for properties for rent
 
-## Requirement 3
+### Requirement 3
 
 > A user can create search alerts which notify him about new ads corresponding the search criteria.
 
@@ -18,16 +20,25 @@ Von wem wird er benachrichtig?
 Bekommt der User eine Email vom System?
 - Welches sind diese "search criterias"? Bsp: Ort, Mietpreis, Tierfreundlich, Balkon, Lift, etc...
 
-- 
-
-## Requirement 4
+### Requirement 4
 
 > Extend the search capabilities to cover more filter criteria
 
-## Requirement 5
+### Requirement 5
 
 > Different user roles: Premium and Normal
 > 
 > - Premium users: get alerts and results early
 > - Normal users get the results a bit late
 > - The adds of premium user are a bit higher in the result list
+
+- What is meant by early? Immediately?
+- What is meant by results?
+- What is meant by late? A few hours, a few days?
+- How should the ads of premium users be displayed in the list? Simply at the top of the list or should they be highlighted?
+
+## Non-functional requirements
+
+### Design
+
+- Should the design be responsive? (e.g. using bootstrap or something similar)
