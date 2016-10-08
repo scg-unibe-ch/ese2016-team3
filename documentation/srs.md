@@ -14,6 +14,12 @@ Furthermore the document serves as contract between the customer and the develop
 
 The document is continuously updated during the whole project. Old versions of the document can be retrieved anytime from the version control system.
 
+### System overview
+
+The web application **FlatFinder** is a web portal for real estate, where users can place ads for real estate. The goal of the customer is to build a web portal which provides the users effective support with doing real estate related tasks like managing enquiries, organizing on site visits and so on.
+
+The system being built bases on a already existing application which should be generally revised and extended with additional functionality.
+
 ### Stakeholders
 
 Multiple stakeholders play various roles in the project:
@@ -50,9 +56,13 @@ The following sections describe abbreviations and special terms used in this doc
 |MVC|Model View Controller, a software architecture used in the system|
 |Git|A software version control system|
 
-### System overview
-
 ### References
+
+#### Domain specific
+
+- Customer requirements document [https://github.com/scg-unibe-ch/ese2016/wiki/Project-Description](https://github.com/scg-unibe-ch/ese2016/wiki/Project-Description)
+
+#### Technical
 
 - Spring Framework: [https://spring.io](https://spring.io)
 - Spring Data: [http://projects.spring.io/spring-data/](http://projects.spring.io/spring-data/)
@@ -73,7 +83,7 @@ The following sections describe abbreviations and special terms used in this doc
 #### User management
 
 - The user can login to the application.
-Therefor he has to enters his email-address and his password into the login-form. 
+Therefore he has to enters his email-address and his password into the login-form. 
 If he has no account yet, he can sign up as a new user.
 
 - For signing up as a new user he has to enter his first and last name, select his gender and give his email-address and a passwort, which has to be at least 6 characters long. If any of these informations aren't fill in, an error occurs, which tells the user that he must fill in a valid information.
@@ -130,4 +140,18 @@ The *roommates* living in the real estate can be mentioned in the advertisement.
 
 The advertiser can specify multiple possible *visiting times* for enquiries. A visiting time is specified by a date, a start time and an end time. This is not mandatory.
 
+#### User roles
+
+**NEW** The application distinguishes two different user types: *premium* and *normal*.
+
+The application behaves different for the different user roles as follows:
+
+- If a new advertisement meets the filter criteria of an alert of a premium user, he immediately gets a message.
+- In the same situation, a normal user gets the information with a specific delay.
+- The advertisement of premium users are shown at the top of the search result list.
+
 ### Non-functional requirements
+
+#### Design of the application
+
+The application should have a modern look and feel.
