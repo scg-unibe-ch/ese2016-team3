@@ -488,14 +488,54 @@ The following sections describe abbreviations and special terms used in this doc
 |**Alternate flow**|None|
 
 
-
-
 see [http://www.gatherspace.com/static/use_case_example.html](http://www.gatherspace.com/static/use_case_example.html)
 
 ### Actor characteristics
-There are a couple of users, which are 
+In general, the users of the FlatFindr are expected to have little or no technical experience. However, they are expected to have some base knowledge of the general use of message services and internet applications.
 
-#### 
+The users of the FlatFindr can be divided in two main categories: 
+1. The users, which search a real estate (=suitors).
+2. The users, which have a real estate to rent (real estate managers).
+
+#### Suitors
+Suitors are people who want to rent a real estate. As FlatFindr is a platform which promotes Ads for single rooms or studios. Thus, it is expected that the suitors are mainly students or young people in general.
+
+**Expectations of at the application**
+Suitors expect, that the application
+1. offers a good and easy search service 
+2. has a message service
+3. can contact them, when an Ad of interest is created
+4. allows an easy way to schedule visit times with the real estate managers
+5. has a schedule function, which gives the suitors an overview over his planed visits
+
+**User interactions**
+The suitors 
+1. searches Ads 
+2. creates alerts
+3. writes and receives messages 
+4. sends enquiries to real estate managers
+5. edits his public profile
+6. checks his schedule to get an overview over his enquiries
+
+#### Real estate manager
+Real estate managers have a real estate to rent. They are expected to be a more diverse group than the suitors: Presumably, they reach from students searching a roommate to landholders.
+
+**Expectations of at the application**
+Real estate managers expect, that the application
+1. offers an easy way to create Ads
+2. has a message service
+3. allows management of multiple Ads 
+4. offers an easy way to schedule visit times with suitors.
+5. has a schedule function, which gives the real estate managers an overview over the visit times of suitors.
+
+**User interactions**
+The real estate manager
+1. creates Ads
+2. writes and receives messages 
+3. Accepts or declines enquiries from suitors
+4. edits his public profile
+5. checks his schedule to get an overview over his enquiries and the visiting suitors
+6. edits his public profile
 
 ## Requirements
 
