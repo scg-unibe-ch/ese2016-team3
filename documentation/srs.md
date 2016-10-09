@@ -278,17 +278,132 @@ The following sections describe abbreviations and special terms used in this doc
 #### Creating an ad
 ![Creating an ad](images/CreateAd.png)
 
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc15`|
+|**Name**|Create Ad|
+|**Description**|The user creates an Ad|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the the application.|
+|**Trigger**|The user wants to create an Ad|
+|**Normal flow**|1. The user hovers over his user image in the header line of the web portal|
+||2. The user clicks on the appearing button "Place an ad"|
+||3. The form “Place an ad” is shown. Optional Fields are labelled with (optional)|
+||4. The user specifies a) the Ad Title, b) Street, c) Move-in date, d) Price per month, e) Type (Studio or Room), f) City / Zip code, g) Move-out date (optional), h) Square Meters|
+||5. The user adds room descriptions to the Ad. Descriptions are added when the user clicks on checkboxes. In addition, the user adds a description as free text.|
+||6. The user adds Roommates which live in the room|
+||7. The user describes his preferences in a textfield|
+||8. The user uploads pictures|
+||9. The user specifies preferred Visiting times|
+||10. The user clicks on “Submit” in order to create the Ad|
+|**Alternate flow**|If a mandatory field is not filled out, an error message pops up which advises the user to add the missing field.|
+
 #### Messaging
 
 ![Messaging](images/Messages.png)
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc16`|
+|**Name**|Create and send Message |
+|**Description**|The user sends a message to another user.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application.|
+|**Trigger**|The user wants to send a message to another user.|
+|**Normal flow**|1. The user hovers over his user image in the header line of the web portal|
+||2. The user clicks on the appearing button "Messages"|
+||3. The user's inbox is shown|
+||4. The user clicks on the button "New"|
+||5. The user enters the address of the receiver, the message's subject and the message text|
+||6. The user clicks the button "send"|
+|**Alternate flow**| If the receiver is not valid, a dialog with the message "User does not exist." appears|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc17`|
+|**Name**|View sent messages |
+|**Description**|The user views the messages he sent previously.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application. The user has sent a message before.|
+|**Trigger**|The user wants to check his sent messages.|
+|**Normal flow**|1. The user hovers over his user image in the header line of the web portal|
+||2. The user clicks on the appearing button "Messages"|
+||3. The user's inbox is shown|
+||4. The user clicks on "Sent" in the box on the left.|
+||5. The sent messages are displayed. The user clicks on a sent message to view its text.|
+|**Alternate flow**|None| 
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc18`|
+|**Name**|View incoming messages |
+|**Description**|The user views the messages he received previously.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application. The user has received a message|
+|**Trigger**|The user wants to check the messages he received.|
+|**Normal flow**|1. The user hovers over his user image in the header line of the web portal|
+||2. The user clicks on the appearing button "Messages"|
+||3. The user's inbox is shown with all the received messages.|
+||4. The user clicks on a message to view its text.
+|**Alternate flow**|None|
 
 #### Enquiries
 
 ![Enquiries](images/Enquiries.png)
 
-#### Alerts
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc19`|
+|**Name**|Send enquiry|
+|**Description**|A user, which wants to visit a flat sends an enquiry to the Real estate manager.
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application.|
+|**Trigger**|The user wants visit a flat he is interested in.|
+|**Normal flow**|1. The user clicks on an Ad he is interested in.|
+||2. Under "Visiting times", the possible times of a visit are listed.|
+||3. The user can click on the button "Send enquiry to advertiser" to send an enquiry.|
+|**Alternate flow**|None|
 
-![Alerts](images/Alerts.png)
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc20`|
+|**Name**|View enquiries|
+|**Description**|The Real estate manager views his enquiries.|
+|**Primary actor**|The Real estate manager|
+|**Precondition**|The Real estate manager is logged into the application.|
+|**Trigger**|The Real estate manager wants to view the enquiries he received.|
+|**Normal flow**|1. The Real estate manager hovers over his user image in the header line of the web portal.|
+||2. He clicks on the appearing button "Enquiries"|
+||3. A list with all enquiries appears, which were sent by other users. Accepted and declined enquiries are listed, as well as enquiries for which a decision has to be made|
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc21`|
+|**Name**|Accept enquiry|
+|**Description**|The Real estate manager accepts an enquiry, which he received from another user which is interested in the manager's flat.|
+|**Primary actor**|The Real estate manager|
+|**Precondition**|The Real estate manager is logged into the application.|
+|**Trigger**|The Real estate manager wants to accept an enquiry.|
+|**Normal flow**|1. The Real estate manager hovers over his user image in the header line of the web portal.|
+||2. He clicks on the appearing button "Enquiries"|
+||3. A list with all enquiries appears.|
+||4. The manager accepts an enquiry by clicking the button "Accept".|
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc22`|
+|**Name**|Decline enquiry|
+|**Description**|The Real estate manager declines an enquiry, which he received from another user which is interested in the managers flat.|
+|**Primary actor**|The Real estate manager|
+|**Precondition**|The Real estate manager is logged into the application.|
+|**Trigger**|The Real estate manager wants to decline an enquiry.|
+|**Normal flow**|1. The Real estate manager hovers over his user image in the header line of the web portal.|
+||2. He clicks on the appearing button "Enquiries"|
+||3. A list with all enquiries appears.|
+||4. The manager declines an enquiry by clicking the button "Decline".|
+|**Alternate flow**|None|
 
 #### Schedule
 
@@ -296,18 +411,91 @@ The following sections describe abbreviations and special terms used in this doc
 
 |Use case element|Description|
 |:---|:---|
-|**ID**||
-|**Name**||
-|**Description**||
-|**Primary actor**||
-|**Precondition**||
-|**Trigger**||
-|**Normal flow**||
-|**Alternate flow**||
+|**ID**|`uc23`|
+|**Name**|View Schedule|
+|**Description**|The user watches his schedule.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application.|
+|**Trigger**|The wants to view the Schedule of his enquirys.|
+|**Normal flow**|1. The user estate manager hovers over his user image in the header line of the web portal.|
+||2. He clicks on the appearing button "Schedule"|
+||3. A list with all the visits the user has planed appears. The location to visit as well as time and date is displayed. In addition, if the user accepted enquiries for his own Ad, it is displayed when other users visit his estate.|
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc24`|
+|**Name**|See list of visitors|
+|**Description**|The Real estate manager checks when visitors visits his flat.|
+|**Primary actor**|The Real estate manager.|
+|**Precondition**|The Real estate manager is logged into the application and created an Ad. He is in the Schedule view (`uc23`).|
+|**Trigger**|The Real estate manager wants to see which users are going to visit his real estate at a specific enquiry.
+|**Normal flow**|1. The Real estate manager clicks on the button "See visitors" next to a enquiry.|
+||2. A list with all visitors which are visiting at a given time is shown. For each visitor, a rating is displayed.
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc25`|
+|**Name**|Visit Ad belonging to an enquiry|
+|**Description**|The user visits an Ad which belongs to an equiry which is listed in his schedule.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application. He is in the Schedule view (`uc23`). He has at least on enquiry in his schedule.|
+|**Trigger**|The user wants to see which Ad is connected with his enquiry.
+|**Normal flow**|1. The Real estate manager clicks on the button "Visit" next to a enquiry.|
+||2. The user is redirected to the Ad.
+|**Alternate flow**|None|
+
+#### Alerts
+
+![Alerts](images/Alerts.png)
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc26`|
+|**Name**|View alerts|
+|**Description**|The user views his alerts.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application.|
+|**Trigger**|The user wants to check his alerts.|
+|**Normal flow**|1. The user hovers over his user image in the header line of the web portal.|
+||2. He clicks on the appearing button "Alerts"|
+||3. A list with all alerts is displayed.|
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc27`|
+|**Name**|Subscribe to alert|
+|**Description**|The user subscribes to an alert.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application. The user is in the Alerts view (`uc25`).|
+|**Trigger**|The user want to subscribe to an alert.|
+|**Normal flow**||1. The user fills out a form, in which he specifies under which conditions a newly created Ad creates an alert. Roomtype, Location and maximal price are specified.
+||2. The user subscribes to the alert by clicking the "Subscribe" button.| 
+|**Alternate flow**|If the criteria specified under point 1. are not entered correctly, an error message is displayed.|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc28`|
+|**Name**|Delete alert|
+|**Description**|The user deletes an existing alert.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application. The user is in the Alerts view (`uc25`). The user has created an alert.|
+|**Trigger**|The user wants to delete an alert.|
+|**Normal flow**||1. The user views the active alerts in the Alerts view.
+||2. The user deletes the alert by clicking the "Delete" button.| 
+|**Alternate flow**|None|
+
+
+
 
 see [http://www.gatherspace.com/static/use_case_example.html](http://www.gatherspace.com/static/use_case_example.html)
 
 ### Actor characteristics
+There are a couple of users, which are 
+
+#### 
 
 ## Requirements
 
