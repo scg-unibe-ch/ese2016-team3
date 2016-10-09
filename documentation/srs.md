@@ -611,6 +611,35 @@ The application behaves different for the different user roles as follows:
 - In the same situation, a normal user gets the information with a specific delay.
 - The advertisement of premium users are shown at the top of the search result list.
 
+#### Enquiries
+
+A logged in user can see his enquiries by choosing "Enquiries" from the Profile drop-down menu. There he sees a table of enquiries sent to him entailing the following: 
+- *Sender*: The user name of the person who sent the enquiry,
+- *Ad*: The address of the flat the enquiry has been sent for,
+- *Date of the visit*: The date the sender has chosen to visit,
+- *Date sent*: The date the enquiry has been sent to the user,
+- *Actions*: Two buttons _decline_ and _accept_ where the user gives feedback to the sender on whether he accepts or declines the enquiry. After accepting or declining, the user can undo his choice by clicking the _undo_ button.
+	
+#### Schedule 
+
+A logged in user can see his personal schedule by choosing "Schedule" from the Profile drop-down menu. The schedule shows two tables, one named *Your presentations*, the other *Your visits*
+
+_Your presentations_-table:
+A table of the users owned flats, which he wants to rent to other people, containing the following:
+- *Address*: The address of the flat to be presented to interested people,
+- *Date*: The date of the flat presentation,
+- *Time*: The time of the flat presentation,
+- *Visit Ad*: A button that if clicked will lead the user to the ad he posted about the flat in question
+- *Visitors*: A button which will open a new site with some information about the property in question and a table of all people that will attend its presentation. The table contains the following: *Name* (full name of the user), *Username* (the flatfindr username of the user), *Profile* (a button that leads to the user's personal profile), *Rating* (the rating of one to 5 stars that this user has on the website)
+
+_Your visits_-table:
+A table of the flats a user is interested in and will or has already visited, containing the following:
+- *Address*: The address of the flat, the user has visited,
+- *Date*: The date of the presentation the user has attended,
+- *Time*: The time of the presentation the user has attended,
+- *Visit Ad*: A button that if clicked will guide the user to the advertisement of the flat in question.
+
+
 ### Non-functional requirements
 
 #### Design of the application
