@@ -288,14 +288,14 @@ The following sections describe abbreviations and special terms used in this doc
 |**Trigger**|The user wants to create an Ad|
 |**Normal flow**|1. The user hovers over his user image in the header line of the web portal|
 ||2. The user clicks on the appearing button "Place an ad"|
-||3. The form “Place an ad” is shown. Optional Fields are labelled with (optional)|
+||3. The form "Place an ad" is shown. Optional Fields are labelled with (optional)|
 ||4. The user specifies a) the Ad Title, b) Street, c) Move-in date, d) Price per month, e) Type (Studio or Room), f) City / Zip code, g) Move-out date (optional), h) Square Meters|
 ||5. The user adds room descriptions to the Ad. Descriptions are added when the user clicks on checkboxes. In addition, the user adds a description as free text.|
 ||6. The user adds Roommates which live in the room|
 ||7. The user describes his preferences in a textfield|
 ||8. The user uploads pictures|
 ||9. The user specifies preferred Visiting times|
-||10. The user clicks on “Submit” in order to create the Ad|
+||10. The user clicks on "Submit" in order to create the Ad|
 |**Alternate flow**|If a mandatory field is not filled out, an error message pops up which advises the user to add the missing field.|
 
 #### Messaging
@@ -494,6 +494,7 @@ see [http://www.gatherspace.com/static/use_case_example.html](http://www.gathers
 In general, the users of the FlatFindr are expected to have little or no technical experience. However, they are expected to have some base knowledge of the general use of message services and internet applications.
 
 The users of the FlatFindr can be divided in two main categories: 
+
 1. The users, which search a real estate (=suitors).
 2. The users, which have a real estate to rent (real estate managers).
 
@@ -502,6 +503,7 @@ Suitors are people who want to rent a real estate. As FlatFindr is a platform wh
 
 **Expectations of at the application**
 Suitors expect, that the application
+
 1. offers a good and easy search service 
 2. has a message service
 3. can contact them, when an Ad of interest is created
@@ -510,6 +512,7 @@ Suitors expect, that the application
 
 **User interactions**
 The suitors 
+
 1. searches Ads 
 2. creates alerts
 3. writes and receives messages 
@@ -522,6 +525,7 @@ Real estate managers have a real estate to rent. They are expected to be a more 
 
 **Expectations of at the application**
 Real estate managers expect, that the application
+
 1. offers an easy way to create Ads
 2. has a message service
 3. allows management of multiple Ads 
@@ -530,6 +534,7 @@ Real estate managers expect, that the application
 
 **User interactions**
 The real estate manager
+
 1. creates Ads
 2. writes and receives messages 
 3. Accepts or declines enquiries from suitors
@@ -551,7 +556,7 @@ If he has no account yet, he can sign up as a new user.
 
 - When the user is logged in, he can logout by clicking on his name on the top right and then selecting "logout".
 
-- When the user is logged in, he can edit his public profile by clicking on his name on the top right  and selecting "Public Profile". Then he has to click on the Button " Edit Profile". There he can change his passwort, first name, last name, username and write something about himself. By clicking " update " his changes will be saved.
+- When the user is logged in, he can edit his public profile by clicking on his name on the top right  and selecting "Public Profile". Then he has to click on the Button "Edit Profile". There he can change his passwort, first name, last name, username and write something about himself. By clicking "update" his changes will be saved.
 
 #### Messaging system
 
