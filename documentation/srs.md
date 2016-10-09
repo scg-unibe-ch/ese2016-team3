@@ -80,7 +80,7 @@ The following sections describe abbreviations and special terms used in this doc
 
 |Use case element|Description|
 |:---|:---|
-|**ID**|uc01|
+|**ID**|`uc01`|
 |**Name**|Sign up|
 |**Description**|The user creates a flatfinder account.|
 |**Primary actor**|User visiting the web portal|
@@ -97,11 +97,11 @@ The following sections describe abbreviations and special terms used in this doc
 
 |Use case element|Description|
 |:---|:---|
-|**ID**|uc02|
+|**ID**|`uc02`|
 |**Name**|Login|
 |**Description**|The user logs into the application|
 |**Primary actor**|The user of the web application|
-|**Precondition**|The user has signed up for an account and visits the start page of the web portal.|
+|**Precondition**|The user has signed up for an account (`uc01`) and visits the start page of the web portal.|
 |**Trigger**|The user wants to use the application|
 |**Normal flow**|1. The user clicks on the button "login"|
 ||2. The login form is shown|
@@ -112,11 +112,11 @@ The following sections describe abbreviations and special terms used in this doc
 
 |Use case element|Description|
 |:---|:---|
-|**ID**|uc03|
+|**ID**|`uc03`|
 |**Name**|Edit public profile|
 |**Description**|The user edits his public profile, which is shown to other users.|
 |**Primary actor**|The user of the web application|
-|**Precondition**|The user is logged into the application.|
+|**Precondition**|The user is logged into the application. (`uc02`)|
 |**Trigger**|The user wants to edit his public profile.|
 |**Normal flow**|1. The user hovers over his user image in the header line of the web portal|
 ||2. The user clicks on the appearing button "Public profile"|
@@ -130,19 +130,150 @@ The following sections describe abbreviations and special terms used in this doc
 
 |Use case element|Description|
 |:---|:---|
-|**ID**|uc04|
+|**ID**|`uc04`|
 |**Name**|Logout|
 |**Description**|The user logs out of the application|
 |**Primary actor**|The user of the web application|
-|**Precondition**|The user is logged into the the application.|
+|**Precondition**|The user is logged into the the application. (`uc02`)|
 |**Trigger**|The user wants to leave the application|
 |**Normal flow**|1. The user hovers over his user image in the header line of the web portal|
 ||2. The user clicks on the appearing button "Logout"|
 ||3. The user is logged out and the start page of the web portal is shown|
-|**Alternate flow**||
+|**Alternate flow**|None|
 
 #### Searching and viewing ads
 ![Searching and viewing ads](images/Ad.png)
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc05`|
+|**Name**|Search ad|
+|**Description**|The user searches some ads which meet search criterias defined by the user.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user visits the web portal.|
+|**Trigger**|The user wants to find specfific ads|
+|**Normal flow**|1. The user clicks on the button "Search" in the menu bar|
+||2. The search form is shown|
+||3. The user enters his search criteria|
+||4. The user clicks on the button "Search"|
+||5. The system shows a list with all ads which meet the search criteria and a form with the entered search criteria|
+|**Alternate flow**|If the user doesn't enter some required search criteria, validation error messages are shown.|
+||If no results are found, an appropriate message is shown.|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc06`|
+|**Name**|Sort search result|
+|**Description**|The user sorts the displayed search results|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user performed a search and got some results (`uc05`)|
+|**Trigger**|The user wants to sort the search result according to some criteria|
+|**Normal flow**|1. The user selects the sort criteria|
+||2. The user clicks on the button "Sort"|
+||3. The results are shown in order according to the selected criteria|
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc07`|
+|**Name**|Filter search results|
+|**Description**|The user filters the displayed search results according to some extended criteria.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user performed a search and got some results (`uc05`)|
+|**Trigger**|The user wants to filter the search results|
+|**Normal flow**|1. The user enters his search/filter criteria into the search/filter form|
+||2. The user clicks on the button "Filter"|
+||3. The system shows the filtered result and the selected filter criteria|
+|**Alternate flow**|If the user cancels the filtering in step 2, the filter form is reset to the original values before the user changed anything.|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc08`|
+|**Name**|View ad|
+|**Description**|The user reads the detailed information (attributes, images, roommates, description and others) of an advertisement.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user visits either the start page of the web portal or performed a successful search (`uc05`).|
+|**Trigger**|The user wants to see the details of an ad|
+|**Normal flow**|1. The user clicks on the ad|
+||2. The system shows detailed information about the ad|
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc09`|
+|**Name**|Bookmark ad|
+|**Description**|The user can bookmark an ad so that can easily find it again.|
+|**Primary actor**|The user of the application|
+|**Precondition**|The user is logged in `uc02` and views a specific ad `uc08` of which he's not the creator|
+|**Trigger**|The user likes some ad and wants to easily find it again later|
+|**Normal flow**|1. The user clicks on the button "Bookmark"|
+||2. The systems saves the bookmark and marks the ad as bookmarked|
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc10`|
+|**Name**|Delete bookmark|
+|**Description**|The user removes the bookmark from a previously bookmarked room.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged in `uc02` and views an add which he has previously bookmarked `uc09`.|
+|**Trigger**|The user doesn't need a specific bookmark anymore|
+|**Normal flow**|1. The user clicks on the button "Bookmarked"|
+||2. The system deletes the bookmark and removes the bookmark from the ad|
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc11`|
+|**Name**|View advertiser profile|
+|**Description**|The user views information about the advertiser of a specific ad|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user views a specific ad `uc08`|
+|**Trigger**|The user wants to see information about the advertiser|
+|**Normal flow**|1. In the information panel about the advertiser, the user clicks on the button "Visit profile"|
+||2. The system shows all information about the advertiser|
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc12`|
+|**Name**|Send message to advertiser|
+|**Description**|The user contacts the advertiser by sending him a message|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged in `uc02` and views a specific ad `uc08` or visits the advertiser profile `uc11`|
+|**Trigger**|The user wants to contact the advertiser of a specific ad|
+|**Normal flow**|1. The user clicks on the button "Contact advertiser" (on ad details page) or "Message" (on advertiser profile page)|
+||2. The system shows a popup with a form for sending a message|
+||3. The user enters a subject and the message|
+||4. The user clicks on the button "Send"|
+||5. The message is sent to the advertiser|
+|**Alternate flow**|If the user doesn't fill up the form correctly in step 3, the message is not sent.|
+||If the user cancels the process, the popup is hidden and no message is sent.|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc13`|
+|**Name**|Send enquiry to advertiser|
+|**Description**|The user send a visiting request to the advertiser|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged in `uc02` and views a specific ad `uc08`|
+|**Trigger**|The user wants to visit a specific room/studio|
+|**Normal flow**|1. The user chooses the visiting time from the list of the available visiting times|
+||2. The user clicks on the button "Send enquiry to advertiser" next to the desired visiting time|
+||3. The system saves the enquiry and sends it to the advertiser|
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc14`|
+|**Name**|View ad location|
+|**Description**|The user can see the location of the room/studio on a map|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user views a specific ad `uc08`|
+|**Trigger**|The user wants to see the location of a specific room/studio|
+|**Normal flow**|1. The user clicks on the address of the room/studio|
+||2. The browser opens the GoogleMaps web page and displays the location of the room/studio on the map|
+|**Alternate flow**|None|
 
 #### Creating an ad
 ![Creating an ad](images/CreateAd.png)
