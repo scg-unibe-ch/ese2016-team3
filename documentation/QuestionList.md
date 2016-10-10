@@ -10,8 +10,8 @@
 - What information about the property needs to be shared, is it the same as for a property that is up for rent?
 - How do we make CLEAR (graphically) which properties are for rent and which for sale?
 - Should a user be able to put up a property for sale AND rent?
-- Should interested users for an auction be able to bet whatever they like or do they have to choose from existing proposals?
-- Does the owner of the property need more information about the betters than just the amount they're betting? (Should they fill out a form with contact information)
+- Should interested users for an auction be able to bid whatever they like or do they have to choose from existing proposals?
+- Does the owner of the property need more information about the bidders than just the amount they're bidding? (Should they fill out a form with contact information)
 
 ### Requirement 2
 

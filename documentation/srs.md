@@ -673,6 +673,8 @@ The *roommates* living in the real estate can be mentioned in the advertisement.
 
 The advertiser can specify multiple possible *visiting times* for enquiries. A visiting time is specified by a date, a start time and an end time. This is not mandatory.
 
+**NEW** User can choose between whether he wants to rent or sell his property and open an auction or decide on a fix price in the case of selling
+
 #### User roles
 
 **NEW** The application distinguishes two different user types: *premium* and *normal*.
@@ -694,6 +696,7 @@ A logged in user can see his enquiries by choosing "Enquiries" from the Profile 
 - *Date sent*: The date the enquiry has been sent to the user,
 - *Actions*: Two buttons _decline_ and _accept_ where the user gives feedback to the sender on whether he accepts or declines the enquiry. After accepting or declining, the user can undo his choice by clicking the _undo_ button.
 
+**NEW** A user can see the auction for a property he wants to sell with information about who bid and how much
 	
 #### Schedule 
 
