@@ -116,9 +116,9 @@ The following sections describe abbreviations and special terms used in this doc
 |:---|:---|
 |**ID**|`uc01`|
 |**Name**|Sign up|
-|**Description**|The user creates a flatfinder account.|
+|**Description**|The user creates a flatfindr account.|
 |**Primary actor**|User visiting the web portal|
-|**Precondition**|The user visits the start page of the web portal. The user has no flatfinder account yet.|
+|**Precondition**|The user visits the start page of the web portal. The user has no flatfindr account yet.|
 |**Trigger**|A visitor wants to use the application|
 |**Normal flow**|1. The user clicks on the button "login"|
 ||2. The login form and a link "sign up" is shown|
@@ -182,10 +182,10 @@ The following sections describe abbreviations and special terms used in this doc
 |:---|:---|
 |**ID**|`uc05`|
 |**Name**|Search ad|
-|**Description**|The user searches some ads which meet search criterias defined by the user.|
+|**Description**|The user searches some ads which meet search criteria defined by the user.|
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user visits the web portal.|
-|**Trigger**|The user wants to find specfific ads|
+|**Trigger**|The user wants to find specific ads|
 |**Normal flow**|1. The user clicks on the button "Search" in the menu bar|
 ||2. The search form is shown|
 ||3. The user enters his search criteria|
@@ -450,7 +450,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Description**|The user watches his schedule.|
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user is logged into the application.|
-|**Trigger**|The wants to view the Schedule of his enquirys.|
+|**Trigger**|The wants to view the Schedule of his enquiries.|
 |**Normal flow**|1. The user estate manager hovers over his user image in the header line of the web portal.|
 ||2. He clicks on the appearing button "Schedule"|
 ||3. A list with all the visits the user has planed appears. The location to visit as well as time and date is displayed. In addition, if the user accepted enquiries for his own Ad, it is displayed when other users visit his estate.|
@@ -505,7 +505,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user is logged into the application. The user is in the Alerts view (`uc25`).|
 |**Trigger**|The user want to subscribe to an alert.|
-|**Normal flow**||1. The user fills out a form, in which he specifies under which conditions a newly created Ad creates an alert. Roomtype, Location and maximal price are specified.
+|**Normal flow**||1. The user fills out a form, in which he specifies under which conditions a newly created Ad creates an alert. Type of room, Location and maximal price are specified.
 ||2. The user subscribes to the alert by clicking the "Subscribe" button.| 
 |**Alternate flow**|If the criteria specified under point 1. are not entered correctly, an error message is displayed.|
 
@@ -620,7 +620,7 @@ From the view of the ad, the user can:
 
 - View the ad information. On the left is listed: Type of room, address, date the flat is available from, move-out date, monthly rent, size of flat in square meters and the date the ad was created. The room description is displayed under this information box, with personal information on roommates underneath. Then comes their preferences, the visiting times and at the bottom the information of the advertiser.
 
-- View the pictures of the room on the right of the information box. They can be viewed one after the other by clicking a button to the right or to the left of the picture. Under the pictures there is a list of the requirements that the user could check the boxes for, where it shows with gren if the requirement is met and red if it isn't.
+- View the pictures of the room on the right of the information box. They can be viewed one after the other by clicking a button to the right or to the left of the picture. Under the pictures there is a list of the requirements that the user could check the boxes for, where it shows with green if the requirement is met and red if it isn't.
 
 - View advertiser profile, contact or send enquiry to advertiser if the user is logged in. If the user is not logged in, the boxes you can click to do these actions show "Login to send enquiries", "Login to visit profile" and "Login to contact advertiser" and will send you to the login screen.
 
