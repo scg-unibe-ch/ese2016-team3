@@ -10,6 +10,12 @@
 
 > A user can search for properties for sale similarly to the search form for properties for rent
 
+- Is this a seperate function or is it a choice in the existing search? 
+- If in existing search, do you just check a new box saying "for sale" or "for rent"? Should you be able to look for both at once?
+- Or should there be two search buttons, one for sale and one for rent? Dropdown menu from search button?
+- How similar is similar? Are all the other criterias the same, just with total price instead of monthly rent?
+- If there are other criterias, what are they?
+
 ### Requirement 3
 
 > A user can create search alerts which notify him about new ads corresponding the search criteria.
