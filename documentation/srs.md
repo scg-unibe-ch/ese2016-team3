@@ -570,7 +570,7 @@ If he has no account yet, he can sign up as a new user.
 
 - **NEW** A user can create search alerts which notify him about new ads corresponding the search criteria.
 
-### Searching and viewing ads
+#### Searching and viewing ads
 
 A user can search for ads by clicking the search button whether or not he's logged in. The initial search is filtered by room and/or studio, zip code with max radius and max price. After the result is displayed, the user can choose to:
 
@@ -596,7 +596,7 @@ From the view of the ad, the user can:
 
 - **NEW** User can search for properties for sale as well as for rent. 
 
-### Alerts 
+#### Alerts 
 
 A logged in user can view and modify his alerts by choosing "Alerts" from the Profile drop-down menu. He can create a new alert by filling in the initial search criteria and clicking "Subscribe". Below where the user can create new alerts is "Your active alerts", where he can vew a list of alerts in a table with type, city, radius, max price and a column "Action" with a button to delete the alert.
 
