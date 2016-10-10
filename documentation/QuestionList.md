@@ -6,6 +6,13 @@
 
 > A user can put an ad to sell properties directly or through an auction.
 
+- Should properties for sale be listed on a separate page or should there just be a sign for each property about whether it is for rent or for sale?
+- What information about the property needs to be shared, is it the same as for a property that is up for rent?
+- How do we make CLEAR (graphically) which properties are for rent and which for sale?
+- Should a user be able to put up a property for sale AND rent?
+- Should interested users for an auction be able to bet whatever they like or do they have to choose from existing proposals?
+- Does the owner of the property need more information about the betters than just the amount they're betting? (Should they fill out a form with contact information)
+
 ### Requirement 2
 
 > A user can search for properties for sale similarly to the search form for properties for rent
