@@ -30,6 +30,10 @@ Bekommt der User eine Email vom System?
 
 > Extend the search capabilities to cover more filter criteria
 
+- Which additional criteria should the user be able to search for?
+- How should the user be able to enter these criteria? Over checkboxes, free text or by choosing search terms from predefined lists?
+- Should an "advanced search" button be added, with displays the additional search criteria, or should all the additional criteria be displayed at once in the normal search page?
+
 ### Requirement 5
 
 > Different user roles: Premium and Normal

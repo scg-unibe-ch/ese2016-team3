@@ -74,6 +74,40 @@ The following sections describe abbreviations and special terms used in this doc
 
 ### Use cases
 
+#### Use case index
+
+| Use Case ID | Use Case Name | Primary Actor | Complexity | Priority |
+|----------|:-------------:|------:|------:|------:|
+|uc01|Sign up|User visiting the web portal |Med|1|
+|uc02|Log in|The user of the web application |Low|1|
+|uc03|Edit public profile|The user of the web application|Med|2|
+|uc04|Logout|The user of the web application|Low|2|
+|uc05|Search ad|The user of the web application|High|1|
+|uc06|Sort search result|The user of the web application|Med|2| 
+|uc07|Filter search results|The user of the web application|Med|2| 
+|uc08|View ad|The user of the web application|Med|1| 
+|uc09|Bookmark ad|The user of the web application|Med|2| 
+|uc10|Delete bookmark|The user of the web application|Low|2| 
+|uc11|View advertiser profile|The user of the web application|Med|2| 
+|uc12|Send message to advertiser|The user of the web application|Med|1| 
+|uc13|Send enquiry to advertiser|The user of the web application|Med|1| 
+|uc14|View ad location|The user of the web application|Med|2| 
+|uc15|Create Ad|The user of the web application|High|1| 
+|uc16|Create and send Message|The user of the web application|Med|1| 
+|uc17|View sent messages|The user of the web application|Low|2| 
+|uc18|View incoming messages|The user of the web application|Med|2| 
+|uc19|Send enquiry|The user of the web application|High|1| 
+|uc20|View enquiries|The real estate manager|Med|1| 
+|uc21|Accept enquiry|The real estate manager|Med|2| 
+|uc22|Decline enquiry|The real estate manager|Med|2| 
+|uc23|View Schedule|The user of the web application|Med|2| 
+|uc24|See list of visitors|The real estate manager|Med|2| 
+|uc25|Visit Ad belonging to an enquiry|The user of the web application|Low|2| 
+|uc26|View alerts|The user of the web application|Low|2| 
+|uc27|Subscribe to alert|The user of the web application|Med|1| 
+|uc28|Delete alert|The user of the web application|Low|2| 
+
+
 #### User management
 ![User management](images/User_Management.png)
 
