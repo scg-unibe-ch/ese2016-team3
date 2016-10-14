@@ -606,11 +606,11 @@ If he has no account yet, he can sign up as a new user.
 
 #### Searching and viewing ads
 
-A user can search for ads by clicking the search button whether or not he's logged in. The initial search is filtered by room and/or studio, zip code with max radius and max price. After the result is displayed, the user can choose to:
+A user can search for ads by clicking the search button whether or not he's logged in. The initial search is filtered by zip code with max radius and max price. After the result is displayed, the user can choose to:
 
 - *Sort search:* The search results can be sorted by: ascending or descending price, move-in date earliest to latest or latest to earliest, or by the date the ad was created, youngest to oldest or oldest to youngest. 
 
-- *Filter search:* The search can be filtered further by filling out the earliest and latest move-in date in a dropdown calendar and optionally the earliest and latest move-out date. The user can also check boxes for; allowing smoking inside, allowing animals inside, co-use garden, balcony or patio, cellar or attic, furnished, cable TV, garage and/or WiFi. 
+- *Filter search:* The search can be filtered further by filling out the earliest and latest move-in date in a dropdown calendar and optionally the earliest and latest move-out date. The user can also check boxes for; allowing smoking inside, allowing animals inside, co-use garden, balcony or patio, cellar or attic, furnished, cable TV, garage and/or WiFi. The search criteria are always visible to the user.
 
 - *View ad:* The user can click on an ad to view it. 
 
@@ -618,23 +618,31 @@ From the view of the ad, the user can:
 
 - Bookmark ad or delete bookmark by clicking the button in the top right corner if the user is logged in.
 
-- View the ad information. On the left is listed: Type of room, address, date the flat is available from, move-out date, monthly rent, size of flat in square meters and the date the ad was created. The room description is displayed under this information box, with personal information on roommates underneath. Then comes their preferences, the visiting times and at the bottom the information of the advertiser.
+- View the ad information. On the left is listed: Address, date the property is available from, move-out date, monthly rent, size of property in square meters and the date the ad was created. The visiting times and the information of the advertiser are shown.
 
-- View the pictures of the room on the right of the information box. They can be viewed one after the other by clicking a button to the right or to the left of the picture. Under the pictures there is a list of the requirements that the user could check the boxes for, where it shows with green if the requirement is met and red if it isn't.
+- View the pictures of the property on the right of the information box. They can be viewed one after the other by clicking a button to the right or to the left of the picture. Under the pictures there is a list of the requirements that the user could check the boxes for, where it shows with green if the requirement is met and red if it isn't.
 
 - View advertiser profile, contact or send enquiry to advertiser if the user is logged in. If the user is not logged in, the boxes you can click to do these actions show "Login to send enquiries", "Login to visit profile" and "Login to contact advertiser" and will send you to the login screen.
 
 - View ad location. The address in the information box on the top left is clickable and will redirect the user to google maps where the address is shown.
 
-- **NEW** Search capabilities extended to cover more filter criteria.
+- **NEW** View distance from schools and public transport.
+
+- **NEW** Search capabilities extended to cover more/different filter criteria.
 
 - **NEW** User can search for properties for sale as well as for rent. 
+
+- **NEW** Ads belonging to premium users are at the top of the search and have bigger pictures than the ads from normal users.
+
+- **NEW** Auction function from the view of ads for sale.
 
 #### Alerts 
 
 A logged in user can view and modify his alerts by choosing "Alerts" from the Profile drop-down menu. He can create a new alert by filling in the initial search criteria and clicking "Subscribe". Below where the user can create new alerts is "Your active alerts", where he can vew a list of alerts in a table with type, city, radius, max price and a column "Action" with a button to delete the alert.
 
-- **NEW** A user can create search alerts which notify him about new ads corresponding the search criteria.
+- **NEW** A user can create search alerts which notify him about new ads corresponding more search criteria.
+- **NEW** Alerts are sent both to message inbox and by email to the user.
+- **NEW** Premium users get alerts instantly, regular users get them once a day.
 
 
 #### Placement of advertisements
