@@ -224,7 +224,7 @@ The following sections describe abbreviations and special terms used in this doc
 |:---|:---|
 |**ID**|`uc08`|
 |**Name**|View ad|
-|**Description**|The user reads the detailed information (attributes, images, roommates, description and others) of an advertisement.|
+|**Description**|The user reads the detailed information (attributes, images, description and others) of an advertisement.|
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user visits either the start page of the web portal or performed a successful search (`uc05`).|
 |**Trigger**|The user wants to see the details of an ad|
@@ -325,11 +325,10 @@ The following sections describe abbreviations and special terms used in this doc
 ||3. The form "Place an ad" is shown. Optional Fields are labelled with (optional)|
 ||4. The user specifies a) the Ad Title, b) Street, c) Move-in date, d) Price per month, e) Type (Studio or Room), f) City / Zip code, g) Move-out date (optional), h) Square Meters|
 ||5. The user adds room descriptions to the Ad. Descriptions are added when the user clicks on checkboxes. In addition, the user adds a description as free text.|
-||6. The user adds Roommates which live in the room|
-||7. The user describes his preferences in a textfield|
-||8. The user uploads pictures|
-||9. The user specifies preferred Visiting times|
-||10. The user clicks on "Submit" in order to create the Ad|
+||6. The user describes his preferences in a textfield|
+||7. The user uploads pictures|
+||8. The user specifies preferred Visiting times|
+||9. The user clicks on "Submit" in order to create the Ad|
 |**Alternate flow**|If a mandatory field is not filled out, an error message pops up which advises the user to add the missing field.|
 
 #### Messaging
@@ -555,7 +554,7 @@ The suitors
 6. checks his schedule to get an overview over his enquiries
 
 #### Real estate manager
-Real estate managers have a real estate to rent. They are expected to be a more diverse group than the suitors: Presumably, they reach from students searching a roommate to landholders.
+Real estate managers have a real estate to rent.
 
 **Expectations of at the application**
 Real estate managers expect, that the application
@@ -676,8 +675,6 @@ Additionally a *textual description* of the real estate can be added to the ad.
 *Images* of the real estate can be added to the advertisement to give users a better impression of the real estate. This is not mandatory.
 
 The advertiser can state his *preferences* in questions of tenants with a textual description. This is not mandatory.
-
-The *roommates* living in the real estate can be mentioned in the advertisement. The advertiser can add their email-address (flatfinder account) to the advertisement. Additionally a brief text describing the roommates can be stored. This is not mandatory.
 
 The advertiser can specify multiple possible *visiting times* for enquiries. A visiting time is specified by a date, a start time and an end time. This is not mandatory.
 
