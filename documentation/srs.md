@@ -698,6 +698,7 @@ The application behaves different for the different user roles as follows:
 A user can send an enquiry to a certain visiting time of a flat on that flat's advertisment page. All he needs to do is find the *Visiting Times* table on the flat's page and click the *Send enquiry to advertiser* button next to the date he'd like to visit the flat and his enquiry will show up on the owner of that flat's *Enquiry* page.
 
 A logged in user can see his enquiries by choosing "Enquiries" from the Profile drop-down menu. There he sees a table of enquiries sent to him entailing the following: 
+
 - *Sender*: The user name of the person who sent the enquiry,
 - *Ad*: The address of the flat the enquiry has been sent for,
 - *Date of the visit*: The date the sender has chosen to visit,
@@ -712,6 +713,7 @@ A logged in user can see his personal schedule by choosing "Schedule" from the P
 
 _Your presentations_-table:
 A table of the users owned flats, which he wants to rent to other people, containing the following:
+
 - *Address*: The address of the flat to be presented to interested people,
 - *Date*: The date of the flat presentation,
 - *Time*: The time of the flat presentation,
@@ -720,6 +722,7 @@ A table of the users owned flats, which he wants to rent to other people, contai
 
 _Your visits_-table:
 A table of the flats a user is interested in and will or has already visited, containing the following:
+
 - *Address*: The address of the flat, the user has visited,
 - *Date*: The date of the presentation the user has attended,
 - *Time*: The time of the presentation the user has attended,
