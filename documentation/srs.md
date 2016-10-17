@@ -587,21 +587,27 @@ If he has no account yet, he can sign up as a new user.
 
 - For signing up as a new user he has to enter his first and last name, select his gender and give his email-address and a password, which has to be at least 6 characters long. If any of these informations aren't fill in, an error occurs, which tells the user that he must fill in a valid information.
 
-- When the user is logged in, he can logout by clicking on his name on the top right and then selecting "logout".
+A logged in user can:
 
-- When the user is logged in, he can edit his public profile by clicking on his name on the top right  and selecting "Public Profile". Then he has to click on the Button "Edit Profile". There he can change his password, first name, last name, username and write something about himself. By clicking "update" his changes will be saved.
+- logout
+- edit his public profile.There he can change his password, first name, last name, username and write something about himself. By clicking "update" his changes will be saved.
+
 
 #### Messaging system
 
-- The logged in user can send messages by visiting the advertiser Profile and clicking on the button "Message". Then he can enter the subject and his message and click on "Send" if the want to send the message or click on "Cancel" to exit the message form. If no subject is filled in, the message won't be send. If the subject is entered but no message, then the message wont'be send. Only of both( subject and message) are entered, the message will be send.
+A logged in user can:
 
-- An other way of sending messages for logged in user is by clicking on his name on the top right and then selecting "Messages" then clicking on "New". Then he has to specify to whom he wants to send the email and give in the subject and write his message. Then he can click either "send"(for sending the message) or "cancel"(for leaving the message form).If the user puts in a invalid email address of the recipient then there will appear a box saying :"This user does not exist". Again all information (to, subject, and message) have to be filled in, if not, the message won't be send.
+- Send messages in two ways:
+ + sending messages by visiting the advertiser Profile and clicking on the button "Message".Then he can enter the subject and his message and click on "Send" if the want to send the message or click on "Cancel" to exit the message form. If no subject is filled in, the message won't be send. If the subject is entered but no message, then the message wont'be send. Only of both( subject and message) are entered, the message will be send.
+ + other way of sending messages is by sending the message from the users Profile. For the new message he has to specify to whom he wants to send the email and give in the subject and write his message. Then he can click either "send"(for sending the message) or "cancel"(for leaving the message form).If the user puts in a invalid email address of the recipient then there will appear a box saying :"This user does not exist". Again all information (to, subject, and message) have to be filled in, if not, the message won't be send.
 
-- The logged in user can view his sent messages by clicking on his name on the top right and then selecting "Messages" and then clicking on "Sent". In a chart he can see the subject, sender, recipient and the date sent from each message he has ever sent. By clicking on a line from this chart he gets a view of the send message.
+- view his sent messages. Furthermore  he can see in a chart the subject, sender, recipient and the date sent from each message he has ever sent. By clicking on a line from this chart he gets a view of the send message.
 
-- The logged in user can view incoming messages by clicking on his name on the top right, then selecting "Messages", then clicking "Inbox". In a chart at the right he can see the subject, sender, recipient and the date sent from the each message he has received. By clicking on a line from this chart he gets a view of the message.
+- view imcoming messages. Furthermore he can see in a chart the subject, sender, recipient and the date sent from the each message he has received. By clicking on a line from this chart he gets a view of the message.
 
-- **NEW** A user can create search alerts which notify him about new ads corresponding the search criteria.
+- **New** User can now receive real email to his email adress, not only messages to internal inbox.
+
+- **New** Automatic sendig (from the system) of alerts by email and by the inbox ????
 
 #### Searching and viewing ads
 
