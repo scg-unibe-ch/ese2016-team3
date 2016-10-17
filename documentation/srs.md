@@ -692,9 +692,9 @@ The advertiser can specify multiple possible *visiting times* for enquiries. A v
 
 The application behaves different for the different user roles as follows:
 
-- If a new advertisement meets the filter criteria of an alert of a premium user, he immediately gets a message.
-- In the same situation, a normal user gets the information with a specific delay.
-- The advertisement of premium users are shown at the top of the search result list.
+- If a new advertisement meets the filter criteria of an alert of a premium user, he immediately gets a message by the internal system mail box and by email.
+- In the same situation, a normal user gets a summary of all triggered alerts once a day. The summary is sent to the internal system mail box and also by email.
+- The advertisement of premium users are shown at the top of the search result list. The images of the property of premium users are larger.
 
 #### Enquiries
 
