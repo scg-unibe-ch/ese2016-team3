@@ -62,10 +62,10 @@ public class EnquiryServiceTest {
 	@Test
 	public void createVisits() throws Exception {		
 		//create user
-		User thomyF = createUser("thomy@f.ch", "password", "Thomy", "F",
+		User thomyG = createUser("thomy@g.ch", "password", "Thomy", "G",
 				Gender.MALE);
-		thomyF.setAboutMe("Supreme hustler");
-		userDao.save(thomyF);
+		thomyG.setAboutMe("Supreme hustler");
+		userDao.save(thomyG);
 		
 		//save an ad
 		Date date = new Date();
@@ -80,7 +80,7 @@ public class EnquiryServiceTest {
 		oltenResidence.setAnimals(false);
 		oltenResidence.setRoomDescription("blah");
 		oltenResidence.setPreferences("blah");
-		oltenResidence.setUser(thomyF);
+		oltenResidence.setUser(thomyG);
 		oltenResidence.setTitle("Olten Residence");
 		oltenResidence.setStreet("Florastr. 100");
 		oltenResidence.setCity("Olten");
@@ -119,10 +119,10 @@ public class EnquiryServiceTest {
 	@Test
 	public void enquireAndAccept() throws Exception {		
 		//create two users
-		User adolfOgi = createUser("adolf@ogi.ch", "password", "Adolf", "Ogi",
+		User ueliMaurer = createUser("ueli@maurer.ch", "password", "Ueli", "Maurer",
 				Gender.MALE);
-		adolfOgi.setAboutMe("Wallis rocks");
-		userDao.save(adolfOgi);
+		ueliMaurer.setAboutMe("Wallis rocks");
+		userDao.save(ueliMaurer);
 		
 		User blocher = createUser("christoph@blocher.eu", "svp", "Christoph", "Blocher", Gender.MALE);
 		blocher.setAboutMe("I own you");
@@ -141,7 +141,7 @@ public class EnquiryServiceTest {
 		oltenResidence.setAnimals(false);
 		oltenResidence.setRoomDescription("blah");
 		oltenResidence.setPreferences("blah");
-		oltenResidence.setUser(adolfOgi);
+		oltenResidence.setUser(ueliMaurer);
 		oltenResidence.setTitle("Olten Residence");
 		oltenResidence.setStreet("Florastr. 100");
 		oltenResidence.setCity("Olten");
@@ -169,14 +169,14 @@ public class EnquiryServiceTest {
 		visit2.setEndTimestamp(formatter.parse("18.12.2014 12:00"));
 		visitDao.save(visit2);
 		
-		//Ogi is enquiring about Blocher's apartment
+		//Maurer is enquiring about Blocher's apartment
 		VisitEnquiry enquiry = new VisitEnquiry();
 		enquiry.setVisit(visit);
-		enquiry.setSender(adolfOgi);
+		enquiry.setSender(ueliMaurer);
 		enquiry.setState(VisitEnquiryState.OPEN);
 		visitEnquiryDao.save(enquiry);
 		
-		Iterable<VisitEnquiry> ogiEnquiries = visitEnquiryDao.findBySender(adolfOgi);
+		Iterable<VisitEnquiry> ogiEnquiries = visitEnquiryDao.findBySender(ueliMaurer);
 		ArrayList<VisitEnquiry> ogiEnquiryList = new ArrayList<VisitEnquiry>();
 		for(VisitEnquiry venq: ogiEnquiries)
 			ogiEnquiryList.add(venq);

@@ -80,6 +80,7 @@ public class VisitTestDataSaver{
 		visit.setAd(ad1);
 		searchers = new LinkedList<>();
 		searchers.add(testerMuster);
+		searchers.add(oprah);
 		visit.setSearchers(searchers);
 		visit.setStartTimestamp(dateFormat.parse("14:00 26.12.2014"));
 		visit.setEndTimestamp(dateFormat.parse("16:00 26.12.2014"));

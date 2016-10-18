@@ -62,6 +62,11 @@ public class UserTestDataSaver {
 				"/img/test/oprah.jpg", Gender.FEMALE);
 		oprah.setAboutMe(getDummyText());
 		userDao.save(oprah);
+		
+		//User for updateUser test		
+		User mark = createUser("mark@knopfler.com", "straits", "Mark", "Knopfler", "/img/test/user.jpg", Gender.MALE);
+		mark.setAboutMe(getDummyText());
+		userDao.save(mark);
 	}
 
 	public User createUser(String email, String password, String firstName,
