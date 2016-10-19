@@ -709,6 +709,7 @@ A logged in user can see his enquiries by choosing "Enquiries" from the Profile 
 - *Actions*: Two buttons _decline_ and _accept_ where the user gives feedback to the sender on whether he accepts or declines the enquiry. After accepting or declining, the user can undo his choice by clicking the _undo_ button.
 
 **NEW** A user can see the auction for a property he wants to sell with information about who bid and how much.
+
 **NEW** A user who bid in an auction can see a list of all the properties he bid for and what their current state is.
 	
 #### Schedule 

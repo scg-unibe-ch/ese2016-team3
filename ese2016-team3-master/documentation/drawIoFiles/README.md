@@ -1,1 +1,0 @@
-The xml-Files can be opened and edited with [https://www.draw.io](https://www.draw.io), a free online diagram drawing tool.
