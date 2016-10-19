@@ -207,4 +207,9 @@ public class EnquiryServiceTest {
 		user.setUserRoles(userRoles);
 		return user;
 	}
+	
+	/*@test 
+	public void rateUserTest(){
+		enquiryController.rate(user);
+	}*/
 }
