@@ -100,14 +100,24 @@
       <div class="panel panel-default ad-content">
         <div class="panel-body">
           <div class="col-md-3 col-xs-12">
-            <img src="http://placehold.it/150x150" class="img-rounded">
+            <img width="100%" src="http://placehold.it/250x150" class="img-rounded">
           </div>
           <div class="col-md-6">
             <p><strong>Nice one-family house in silent environment</strong></p>
-            150 m^2, 5.5 rooms
+            <p>150 m<sup>2</sup>, 5.5 rooms</p>
+            <p>Stutz 17, 3507 Biglen</p>
           </div>
           <div class="col-md-3">
-            Auction
+            <p><strong>Auction</strong></p>
+            <p>Time remaining: <span id="timeRemaining">12:03:24</span></p>
+            <p>Current price: <span>CHF 9500.00</span></p>
+            <div class="input-group" role="group">
+              <div class="input-group-addon">CHF</div>
+              <input class="form-control" type="currency" name="bid" id="bid" value="10000">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-success">Bid</button>
+              </span> 
+            </div>
           </div>
         </div>
       </div>
@@ -115,6 +125,24 @@
   </div>
 
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    window.setInterval(ticker, 1000);
+  });
+
+  function ticker(){
+    var date = new Date(2016, 10, 28, 0, 0, 0, 0);
+
+    var today = new Date();
+
+    var diff = date - today;
+
+    var newDate = new Date(diff);
+
+    $('#timeRemaining').html(newDate.toLocaleTimeString());
+  }
+</script>
 
 </body>
 </html>
