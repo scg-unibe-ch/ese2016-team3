@@ -2,6 +2,7 @@
 .classpath
 .settings/
 .metadata
+.recommenders
 bin/
 
 # Intellij
