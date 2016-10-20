@@ -7,53 +7,50 @@
 
 <c:import url="template/header.jsp" />
 
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome to FlatFindr</title>
-</head>
-<body>
+<div class="row">
+	<div class="col-md-12 col-xs-12">
+		<c:choose>
+			<c:when test="${empty newest}">
+				<h3>No ads placed yet</h3>
+			</c:when>
+			<c:otherwise>
+				<h3>Highlights</h3>
+				<c:forEach var="ad" items="${newest}">
+					<div class="row">
+						<div class="col-xs-12 col-md-3">
+							<a href="<c:url value='/ad?id=${ad.id}' />">
+								<img class="img-responsive" src="${ad.pictures[0].filePath}" />
+							</a>
+						</div>
+						<div class="col-xs-12 col-md-6">
+							<h2>
+								<a class="link" href="<c:url value='/ad?id=${ad.id}' />">${ad.title}</a>
+							</h2>
+							<p>${ad.street},${ad.zipcode}${ad.city}</p>
+							<br />
+							<p>
+								<i><c:choose>
+										<c:when test="${ad.studio}">Studio</c:when>
+										<c:otherwise>Room</c:otherwise>
+									</c:choose></i>
+							</p>
+						</div>
+						<div class="col-xs-12 col-md-3">
+							<h2>CHF ${ad.prizePerMonth }</h2>
+							<br /> <br />
 
-<pre>Home</pre>
+							<fmt:formatDate value="${ad.moveInDate}"
+								var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 
-<h1>Welcome to FlatFindr!</h1>
-
-<c:choose>
-	<c:when test="${empty newest}">
-		<h2>No ads placed yet</h2>
-	</c:when>
-	<c:otherwise>
-		<div id="resultsDiv" class="resultsDiv">	
-			<h2>Our newest ads:</h2>		
-			<c:forEach var="ad" items="${newest}">
-				<div class="resultAd">
-					<div class="resultLeft">
-						<a href="<c:url value='/ad?id=${ad.id}' />"><img
-							src="${ad.pictures[0].filePath}" /></a>
-						<h2>
-							<a class="link" href="<c:url value='/ad?id=${ad.id}' />">${ad.title}</a>
-						</h2>
-						<p>${ad.street}, ${ad.zipcode} ${ad.city}</p>
-						<br />
-						<p>
-							<i><c:choose>
-									<c:when test="${ad.studio}">Studio</c:when>
-									<c:otherwise>Room</c:otherwise>
-								</c:choose></i>
-						</p>
+							<p>Move-in date: ${formattedMoveInDate }</p>
+						</div>
 					</div>
-					<div class="resultRight">
-						<h2>CHF ${ad.prizePerMonth }</h2>
-						<br /> <br />
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+	</div>
+</div>
 
-						<fmt:formatDate value="${ad.moveInDate}" var="formattedMoveInDate"
-							type="date" pattern="dd.MM.yyyy" />
 
-						<p>Move-in date: ${formattedMoveInDate }</p>
-					</div>
-				</div>
-			</c:forEach>
-		</div>
-	</c:otherwise>
-</c:choose>
 
-<c:import url="template/footer.jsp" /><br />
+<c:import url="template/footer.jsp" />
