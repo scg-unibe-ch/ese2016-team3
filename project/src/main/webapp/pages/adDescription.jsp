@@ -352,6 +352,17 @@
 				</c:choose>
 			</td>
 		</tr>
+<%-- new --%>
+		<tr>
+			<td><h2>Elevator</h2></td>
+			<td>
+				<c:choose>
+					<c:when test="${shownAd.elevator}"><img src="/img/check-mark.png"></c:when>
+					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
+				</c:choose>
+			</td>
+		</tr>
+
 
 	</table>
 </section>

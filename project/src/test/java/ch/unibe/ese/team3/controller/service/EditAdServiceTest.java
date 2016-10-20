@@ -1,21 +1,15 @@
 package ch.unibe.ese.team3.controller.service;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.EntityManager;
-
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,9 +120,10 @@ public class EditAdServiceTest {
 		PlaceAdForm placeAdForm = editadservice.fillForm(ad);
 		
 		
+		
 		assertEquals("This is a wonderful flat", placeAdForm.getRoomDescription());
-
 		assertEquals("no preferences", placeAdForm.getPreferences());
+		
 	}
 	
 	private User createUser(String email, String password, String firstName,
@@ -148,11 +143,6 @@ public class EditAdServiceTest {
 		userRoles.add(role);
 		user.setUserRoles(userRoles);
 		return user;
-	}
-	private AdPicture createPicture(Ad ad, String filePath) {
-		AdPicture picture = new AdPicture();
-		picture.setFilePath(filePath);
-		return picture;
 	}
 	
 

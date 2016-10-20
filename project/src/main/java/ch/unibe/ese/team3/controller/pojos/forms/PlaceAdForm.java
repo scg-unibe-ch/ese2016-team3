@@ -35,21 +35,36 @@ public class PlaceAdForm {
 
 	private String preferences;
 	
+	//@NotBlank(message = "Required")
+	//private int floorlevel;			//only for appartment
+	
+	//@NotBlank(message = "Required")
+	//private int = auswählen von radius entfernt von Schule / Öv / Shoppingcentre
+	
+	//@NotBlank(message = "Required")
+	//private String artInternetanschluss;
+	
 	// optional for input
 	private String roomFriends;
 	
+	//müssen wir wegnehmen
+	//und neu Type typ = studio, house, flat,etc...
 	//true if studio, false if room
 	private boolean studio;
 	
+	
+	//private boolean 
+	//private boolean dishwasher;		//only for renting
+	private boolean elevator;
 	private boolean smokers;
-	private boolean animals;
-	private boolean garden;
+	private boolean animals; //weg
+	private boolean garden; //weg
 	private boolean balcony;
-	private boolean cellar;
+	private boolean cellar;	//weg
 	private boolean furnished;
 	private boolean cable;
 	private boolean garage;
-	private boolean internet;
+	private boolean internet; // würde ersetzt werden
 	
 	private List<String> visits;
 
@@ -92,7 +107,12 @@ public class PlaceAdForm {
 	public void setSquareFootage(int squareFootage) {
 		this.squareFootage = squareFootage;
 	}
-
+	public boolean isElevator(){		//new
+		return elevator;
+	}
+	public void setElevator(boolean elevator){		//new
+		this.elevator = elevator;
+	}
 	public boolean isSmokers() {
 		return smokers;
 	}

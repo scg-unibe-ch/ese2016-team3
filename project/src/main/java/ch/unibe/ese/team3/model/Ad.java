@@ -64,6 +64,10 @@ public class Ad {
 	@Column(nullable = false)
 	@Lob
 	private String preferences;
+	
+	//new
+	@Column(nullable = false)
+	private boolean elevator;
 
 	@Column(nullable = false)
 	private boolean smokers;
@@ -121,7 +125,13 @@ public class Ad {
 	public void setStudio(boolean studio) {
 		this.studio = studio;
 	}
-
+	//new
+	public boolean getElevator(){
+		return elevator;
+	}
+	public void setElevator(boolean withElevator){
+		this.elevator =withElevator;
+	}
 	public boolean getSmokers() {
 		return smokers;
 	}
@@ -313,6 +323,7 @@ public class Ad {
 		this.visits = visits;
 	}
 
+	//neue hashCode weil mehr attribute zum vergleichen zb boolean elevator???
 	@Override
 	public int hashCode() {
 		final int prime = 31;

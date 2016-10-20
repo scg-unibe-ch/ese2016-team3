@@ -116,6 +116,7 @@ public class AdService {
 		ad.setPreferences(placeAdForm.getPreferences());
 
 		// ad description values
+		ad.setElevator(placeAdForm.isElevator());	//new
 		ad.setSmokers(placeAdForm.isSmokers());
 		ad.setAnimals(placeAdForm.isAnimals());
 		ad.setGarden(placeAdForm.getGarden());
@@ -221,7 +222,7 @@ public class AdService {
 	 * @return an Iterable of all search results
 	 */
 	@Transactional
-	public Iterable<Ad> queryResults(SearchForm searchForm) {
+	public Iterable<Ad> queryResults(SearchForm searchForm) {		//elevator noch hinzufügen
 		Iterable<Ad> results = null;
 
 		// we use this method if we are looking for rooms AND studios

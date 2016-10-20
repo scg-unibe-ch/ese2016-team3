@@ -173,6 +173,8 @@
 			<tr>
 				<td><form:checkbox id="field-internet" path="internet"
 						value="1" /><label>WiFi available</label></td>
+				<td><form:checkbox id="field-elevator" path="elevator" value="1" /><label>Elevator
+				</label></td>		<%-- new  --%>
 			</tr>
 
 		</table>
