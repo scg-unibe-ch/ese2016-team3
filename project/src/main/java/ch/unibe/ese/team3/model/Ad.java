@@ -56,7 +56,16 @@ public class Ad {
 
 	@Column(nullable = false)
 	private int squareFootage;
+	
+	//new
+	@Column(nullable = false)
+	private int distanceSchool;
+	@Column(nullable = false)
+	private int distanceShopping;
+	@Column(nullable = false)
+	private int distancePublicTransport;
 
+	
 	@Column(nullable = false)
 	@Lob
 	private String roomDescription;
@@ -247,7 +256,30 @@ public class Ad {
 	public void setSquareFootage(int squareFootage) {
 		this.squareFootage = squareFootage;
 	}
-
+	
+	//new
+	public int getDistanceSchool(){
+		return distanceSchool;
+	}
+	public void setDistanceSchool(int distanceToSchool){
+		this.distanceSchool = distanceToSchool;
+	}
+	public int getDistanceShopping(){
+		return distanceShopping;
+	}
+	public void setDistanceShopping(int distanceShopping){
+		this.distanceShopping = distanceShopping;
+	}
+	public int getDistancePublicTransport(){
+		return distancePublicTransport;
+	}
+	public void setDistancePublicTransportl(int distancePublicTransport){
+		this.distancePublicTransport = distancePublicTransport;
+	}
+	
+	
+	
+	
 	public String getRoomDescription() {
 		return roomDescription;
 	}

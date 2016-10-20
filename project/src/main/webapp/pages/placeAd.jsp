@@ -129,14 +129,36 @@
 				<td><label for="field-Prize">Prize per month</label></td>
 				<td><label for="field-SquareFootage">Square Meters</label></td>
 			</tr>
+			
 			<tr>
 				<td><form:input id="field-Prize" type="number" path="prize"
 						placeholder="Prize per month" step="50" /> <form:errors
-						path="prize" cssClass="validationErrorText" /></td>
+						path="prize" cssClass="validationErrorText" /></td>			
 				<td><form:input id="field-SquareFootage" type="number"
 						path="squareFootage" placeholder="Prize per month" step="5" /> <form:errors
 						path="squareFootage" cssClass="validationErrorText" /></td>
 			</tr>
+			<%-- new --%>
+			<tr>
+				<td><label for="field-DistanceSchool">Distance to school</label></td>
+				<td><label for="field-DistanceShopping">Distance to shopping center</label></td>
+				<td><label for="field-DistancePublicTransport">Distance to public transport</label></td>
+			</tr>
+			
+			<tr>
+				<td><form:input id="field-DistanceSchool" type="number" path="distanceSchool"
+						placeholder="Prize per month" step="100" /> <form:errors
+						path="distanceSchool" cssClass="validationErrorText" /></td>		
+							
+				<td><form:input id="field-DistanceShopping" type="number"
+						path="DistanceShopping" placeholder="Prize per month" step="100" /> <form:errors
+						path="DistanceShopping" cssClass="validationErrorText" /></td>
+						
+				<td><form:input id="field-DistancePublicTransport" type="number"
+						path="DistancePublicTransport" placeholder="Prize per month" step="100" /> <form:errors
+						path="DistancePublicTransport" cssClass="validationErrorText" /></td>		
+			</tr>
+			
 		</table>
 	</fieldset>
 

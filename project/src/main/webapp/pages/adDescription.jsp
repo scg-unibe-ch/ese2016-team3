@@ -195,6 +195,18 @@
 			<td>${shownAd.squareFootage}&#32;m²</td>
 		</tr>
 		<tr>
+			<td><h2>Distance to school</h2></td>
+			<td>${shownAd.distanceSchool}&#32;m</td>
+		</tr>
+		<tr>
+			<td><h2>Distance to shopping center</h2></td>
+			<td>${shownAd.distanceShopping}&#32;m</td>
+		</tr>
+		<tr>
+			<td><h2>Distance to public transport</h2></td>
+			<td>${shownAd.distancePublicTransport}&#32;m</td>
+		</tr>
+		<tr>
 			<td><h2>Ad created on</h2></td>
 			<td>${formattedCreationDate}</td>
 		</tr>

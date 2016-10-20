@@ -29,7 +29,19 @@ public class PlaceAdForm {
 
 	@Min(value = 1, message = "Has to be equal to 1 or more")
 	private int squareFootage;
-
+	
+	
+	//new
+	@Min(value = 1, message ="Has to be equal to 1 or more")
+	private int distanceSchool;
+	//new
+	@Min(value = 1, message ="Has to be equal to 1 or more")
+	private int distanceShopping;
+	//new
+	@Min(value = 1, message ="Has to be equal to 1 or more")
+	private int distancePublicTransport;
+	
+	
 	@NotBlank(message = "Required")
 	private String roomDescription;
 
@@ -103,6 +115,26 @@ public class PlaceAdForm {
 	public int getSquareFootage() {
 		return squareFootage;
 	}
+	//new
+	public int getDistanceSchool(){
+		return distanceSchool;
+	}
+	public void setDistanceSchool(int distanceToSchool){
+		this.distanceSchool = distanceToSchool;
+	}
+	public int getDistanceShopping(){
+		return distanceShopping;
+	}
+	public void setDistanceShopping(int distanceShopping){
+		this.distanceShopping = distanceShopping;
+	}
+	public int getDistancePublicTransport(){
+		return distancePublicTransport;
+	}
+	public void setDistancePublicTransportl(int distancePublicTransport){
+		this.distancePublicTransport = distancePublicTransport;
+	}
+	
 
 	public void setSquareFootage(int squareFootage) {
 		this.squareFootage = squareFootage;

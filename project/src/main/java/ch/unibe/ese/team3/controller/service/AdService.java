@@ -111,6 +111,10 @@ public class AdService {
 
 		ad.setPrizePerMonth(placeAdForm.getPrize());
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
+		//new
+		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
+		ad.setDistanceShopping(placeAdForm.getDistanceShopping());
+		ad.setDistancePublicTransportl(placeAdForm.getDistancePublicTransport());
 
 		ad.setRoomDescription(placeAdForm.getRoomDescription());
 		ad.setPreferences(placeAdForm.getPreferences());
