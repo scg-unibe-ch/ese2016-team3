@@ -2,10 +2,15 @@ package ch.unibe.ese.team3.controller.pojos.forms;
 
 import java.util.List;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import ch.unibe.ese.team3.model.Type;
 
 /** This form is used when a user wants to place a new ad. */
 public class PlaceAdForm {
@@ -29,8 +34,27 @@ public class PlaceAdForm {
 
 	@Min(value = 1, message = "Has to be equal to 1 or more")
 	private int squareFootage;
+	//new
+	@Min(value=1700, message ="Has to be equal to 1700 or more")
+	private int buildYear;
+
+	@Min(value=1900, message ="Has to be equal to 1900 or more")
+	private int renovationYear;
 	
+    @Min(value=1, message ="Has to be equal to 1 or more")
+	private int numberOfRooms;
+    
+    @Min(value=1, message ="Has to be equal to 1 or more")
+   	private int numberOfBath;
 	
+	public int getNumberOfBath() {
+		return numberOfBath;
+	}
+
+	public void setNumberOfBath(int numberOfBath) {
+		this.numberOfBath = numberOfBath;
+	}
+
 	//new
 	@Min(value = 1, message ="Has to be equal to 1 or more")
 	private int distanceSchool;
@@ -50,8 +74,7 @@ public class PlaceAdForm {
 	//@NotBlank(message = "Required")
 	//private int floorlevel;			//only for appartment
 	
-	//@NotBlank(message = "Required")
-	//private int = auswählen von radius entfernt von Schule / Öv / Shoppingcentre
+	
 	
 	//@NotBlank(message = "Required")
 	//private String artInternetanschluss;
@@ -64,9 +87,14 @@ public class PlaceAdForm {
 	//true if studio, false if room
 	private boolean studio;
 	
+	//new :Type typ = studio, house, flat,etc...
+//	@Enumerated(EnumType.STRING)
+//	@NotNull
+//	private Type type;
 	
 	//private boolean 
 	//private boolean dishwasher;		//only for renting
+	private boolean parking;
 	private boolean elevator;
 	private boolean smokers;
 	private boolean animals; //weg
@@ -116,6 +144,32 @@ public class PlaceAdForm {
 		return squareFootage;
 	}
 	//new
+	public int getBuildYear(){
+		return buildYear;
+	}
+	public void setBuildYear(int buildYear) {
+		this.buildYear = buildYear;
+	}
+	public int getRenovationYear(){
+		return renovationYear;
+	}
+	public void setRenovationYear(int renovationyear){
+		this.renovationYear = renovationyear;
+	}
+	
+	public int getNumberOfRooms() {
+		return numberOfRooms;
+	}
+
+	public void setNumberOfRooms(int numberOfRooms) {
+		this.numberOfRooms = numberOfRooms;
+	}
+
+	
+
+	
+
+	//new
 	public int getDistanceSchool(){
 		return distanceSchool;
 	}
@@ -131,7 +185,7 @@ public class PlaceAdForm {
 	public int getDistancePublicTransport(){
 		return distancePublicTransport;
 	}
-	public void setDistancePublicTransportl(int distancePublicTransport){
+	public void setDistancePublicTransport(int distancePublicTransport) {
 		this.distancePublicTransport = distancePublicTransport;
 	}
 	
@@ -257,6 +311,8 @@ public class PlaceAdForm {
 		this.roomFriends = roomFriends;
 	}
 	
+	
+	//will be removed
 	public boolean getStudio() {
 		return studio;
 	}
@@ -264,6 +320,14 @@ public class PlaceAdForm {
 	public void setStudio(boolean studio) {
 		this.studio = studio;
 	}
+	
+	//new
+//	public Type getType(){
+//		return type;
+//	}
+//	public void setType(Type type){
+//		this.type = type;
+//	}
 
 	public List<String> getVisits() {
 		return visits;
@@ -271,5 +335,13 @@ public class PlaceAdForm {
 
 	public void setVisits(List<String> visits) {
 		this.visits = visits;
+	}
+
+	public boolean isParking() {
+		return parking;
+	}
+
+	public void setParking(boolean parking) {
+		this.parking = parking;
 	}
 }

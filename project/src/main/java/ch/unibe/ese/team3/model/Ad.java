@@ -56,6 +56,15 @@ public class Ad {
 
 	@Column(nullable = false)
 	private int squareFootage;
+	//new
+	@Column(nullable = false)
+	private int numberOfRooms;
+	@Column(nullable = false)
+	private int numberOfBath;
+	@Column(nullable = false)
+	private int buildYear;
+	@Column(nullable = false)
+	private int renovationYear;
 	
 	//new
 	@Column(nullable = false)
@@ -77,6 +86,48 @@ public class Ad {
 	//new
 	@Column(nullable = false)
 	private boolean elevator;
+	@Column(nullable = false)
+	private boolean parking;
+
+	public int getNumberOfRooms() {
+		return numberOfRooms;
+	}
+
+	public void setNumberOfRooms(int numberOfRooms) {
+		this.numberOfRooms = numberOfRooms;
+	}
+
+	public int getNumberOfBath() {
+		return numberOfBath;
+	}
+
+	public void setNumberOfBath(int numberOfBath) {
+		this.numberOfBath = numberOfBath;
+	}
+
+	public int getBuildYear() {
+		return buildYear;
+	}
+
+	public void setBuildYear(int buildYear) {
+		this.buildYear = buildYear;
+	}
+
+	public int getRenovationYear() {
+		return renovationYear;
+	}
+
+	public void setRenovationYear(int renovationYear) {
+		this.renovationYear = renovationYear;
+	}
+
+	public boolean isParking() {
+		return parking;
+	}
+
+	public void setParking(boolean parking) {
+		this.parking = parking;
+	}
 
 	@Column(nullable = false)
 	private boolean smokers;
@@ -105,9 +156,12 @@ public class Ad {
 	@Column(nullable = false)
 	private boolean internet;
 
-	// true if studio, false if room
+	// true if studio, false if room	// will be removed
 	@Column(nullable = false)
 	private boolean studio;
+	
+//	@Column(nullable = false)	//new
+//	private Type type;
 
 	@Fetch(FetchMode.SELECT)
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -127,13 +181,20 @@ public class Ad {
 		this.creationDate = creationDate;
 	}
 
-	public boolean getStudio() {
+	public boolean getStudio() {	//remove
 		return studio;
 	}
 
-	public void setStudio(boolean studio) {
+	public void setStudio(boolean studio) {	//remove
 		this.studio = studio;
 	}
+	//new
+//	public Type getType(){
+//		return type;
+//	}
+//	public void setType(Type type){
+//		this.type = type;
+//	}
 	//new
 	public boolean getElevator(){
 		return elevator;

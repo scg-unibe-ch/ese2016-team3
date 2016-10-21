@@ -74,7 +74,8 @@ public class AdService {
 
 		ad.setStreet(placeAdForm.getStreet());
 
-		ad.setStudio(placeAdForm.getStudio());
+		ad.setStudio(placeAdForm.getStudio()); // will be removed
+//		ad.setType(placeAdForm.getType());		// instead
 
 		// take the zipcode - first four digits
 		String zip = placeAdForm.getCity().substring(0, 4);
@@ -115,6 +116,12 @@ public class AdService {
 		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
 		ad.setDistanceShopping(placeAdForm.getDistanceShopping());
 		ad.setDistancePublicTransportl(placeAdForm.getDistancePublicTransport());
+		ad.setBuildYear(placeAdForm.getBuildYear());
+		ad.setRenovationYear(placeAdForm.getRenovationYear());
+		ad.setNumberOfRooms(placeAdForm.getNumberOfRooms());
+		ad.setNumberOfBath(placeAdForm.getNumberOfBath());
+		ad.setParking(placeAdForm.isParking());
+		
 
 		ad.setRoomDescription(placeAdForm.getRoomDescription());
 		ad.setPreferences(placeAdForm.getPreferences());
