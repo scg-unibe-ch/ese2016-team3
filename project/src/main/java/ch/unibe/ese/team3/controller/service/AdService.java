@@ -75,7 +75,7 @@ public class AdService {
 		ad.setStreet(placeAdForm.getStreet());
 
 		ad.setStudio(placeAdForm.getStudio()); // will be removed
-//		ad.setType(placeAdForm.getType());		// instead
+		ad.setType(placeAdForm.getType());		// instead
 
 		// take the zipcode - first four digits
 		String zip = placeAdForm.getCity().substring(0, 4);
