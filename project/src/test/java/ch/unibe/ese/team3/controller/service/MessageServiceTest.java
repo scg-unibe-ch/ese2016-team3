@@ -2,6 +2,7 @@ package ch.unibe.ese.team3.controller.service;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,15 +44,6 @@ public class MessageServiceTest {
 	MessageDao messageDao;
 	
 	@Autowired
-	User recipient;
-	
-	@Autowired
-	User sender;
-	
-	@Autowired
-	Message message;
-	
-	@Autowired
 	MessageService messageService;
 	
 	@JsonFormat(pattern = "HH:mm, dd.MM.yyyy", timezone = "CET" )
@@ -64,22 +56,31 @@ public class MessageServiceTest {
 	@Test
 	public void sendMessage () {
 		
-		Date date = new Date(1993, 3, 20, 6, 20);
-		message.setId(1);
-		message.setRecipient(recipient);
-		message.setSender(sender);
-		message.setState(MessageState.UNREAD);
-		message.setDateSent(date);
-		message.setSubject("Your sweet home Alabama");
-		message.setText("where the skies are so blue");
+		User recipient = userDao.findByUsername("eric@clapton.com");
+		User sender = userDao.findByUsername("jane@doe.com");
+				
+		String subject = "Your sweet home Alabama";
+		String text = "where the skies are so blue";
 		
-		Iterable<Message> recipientList = messageService.getInboxForUser(recipient);
-	
-		messageService.readMessage(1);
-		assertTrue(message.getState() == MessageState.READ);
+		messageService.sendMessage(sender, recipient, subject, text);
 		
-		messageService.sendMessage(sender, recipient, "Your sweet home Alabama", "where the skies are so blue");
+		int count = 0;
 		
+		List<Message> messages = new ArrayList<Message>();
+		
+		for (Message receivedMessage: messageService.getInboxForUser(recipient)){
+			messages.add(receivedMessage);
+		}
+		
+		assertEquals(1, messages.size());
+		
+		Message receivedMessage = messages.get(0);
+		
+		assertEquals(recipient, receivedMessage.getRecipient());
+		assertEquals(sender, receivedMessage.getSender());
+		assertEquals(subject, receivedMessage.getSubject());
+		assertEquals(text, receivedMessage.getText());
+		assertEquals(MessageState.READ, receivedMessage.getState());
 		
 	}
 }

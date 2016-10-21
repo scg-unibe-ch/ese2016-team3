@@ -87,10 +87,8 @@ public class PlaceAdForm {
 	//true if studio, false if room
 	private boolean studio;
 	
-	//new :Type typ = studio, house, flat,etc...
-//	@Enumerated(EnumType.STRING)
-//	@NotNull
-//	private Type type;
+	
+	private Type type;
 	
 	//private boolean 
 	//private boolean dishwasher;		//only for renting
@@ -321,13 +319,12 @@ public class PlaceAdForm {
 		this.studio = studio;
 	}
 	
-	//new
-//	public Type getType(){
-//		return type;
-//	}
-//	public void setType(Type type){
-//		this.type = type;
-//	}
+	public Type getType(){
+		return type;
+	}
+	public void setType(Type type){
+		this.type = type;
+	}
 
 	public List<String> getVisits() {
 		return visits;
