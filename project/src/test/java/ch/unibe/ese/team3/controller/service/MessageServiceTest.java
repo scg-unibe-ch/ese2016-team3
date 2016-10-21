@@ -64,8 +64,6 @@ public class MessageServiceTest {
 		
 		messageService.sendMessage(sender, recipient, subject, text);
 		
-		int count = 0;
-		
 		List<Message> messages = new ArrayList<Message>();
 		
 		for (Message receivedMessage: messageService.getInboxForUser(recipient)){
@@ -81,6 +79,8 @@ public class MessageServiceTest {
 		assertEquals(subject, receivedMessage.getSubject());
 		assertEquals(text, receivedMessage.getText());
 		assertEquals(MessageState.READ, receivedMessage.getState());
+		
+		messageDao.delete(receivedMessage);
 		
 	}
 }
