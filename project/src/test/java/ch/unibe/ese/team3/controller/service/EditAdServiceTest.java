@@ -98,9 +98,6 @@ public class EditAdServiceTest {
 	
 	@Test
 	public void deletePictureFromAdTest() throws ParseException{
-		User hans = userDao.findByUsername("user@bern.com");
-		
-		
 		editadservice.deletePictureFromAd(1, 1);
 		
 		Ad adBern = adDao.findOne(1L);

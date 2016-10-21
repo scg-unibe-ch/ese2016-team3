@@ -2,12 +2,8 @@ package ch.unibe.ese.team3.controller.pojos.forms;
 
 import java.util.List;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
 import org.hibernate.validator.constraints.NotBlank;
 
 import ch.unibe.ese.team3.model.Type;
