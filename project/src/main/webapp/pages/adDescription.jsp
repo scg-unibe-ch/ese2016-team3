@@ -206,6 +206,7 @@
 			<td><h2>Distance to public transport</h2></td>
 			<td>${shownAd.distancePublicTransport}&#32;m</td>
 		</tr>
+		
 		<tr>
 			<td><h2>Ad created on</h2></td>
 			<td>${formattedCreationDate}</td>
@@ -370,6 +371,15 @@
 			<td>
 				<c:choose>
 					<c:when test="${shownAd.elevator}"><img src="/img/check-mark.png"></c:when>
+					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
+				</c:choose>
+			</td>
+		</tr>
+		<tr>
+			<td><h2>Parking</h2></td>
+			<td>
+				<c:choose>
+					<c:when test="${shownAd.parking}"><img src="/img/check-mark.png"></c:when>
 					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
 				</c:choose>
 			</td>
