@@ -33,7 +33,7 @@ public class UserTestDataSaver {
 
 		// Main test-user for the assistants (advertiser)
 		User ese = createUser("ese@unibe.ch", "ese", "John", "Wayne",
-				"/img/test/portrait.jpg", Gender.MALE, AccountType.BASIC);
+				"/img/test/portrait.jpg", Gender.MALE, AccountType.PREMIUM);
 		ese.setAboutMe(getDummyText());
 		userDao.save(ese);
 		

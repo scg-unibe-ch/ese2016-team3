@@ -63,6 +63,26 @@
 </table>
 
 <div>
+		<button type="button" id="premiumUser">Upgrade to Premium Account for only 5$!</button>
+</div>
+
+		<table id=creditcardForm>
+			<tr class="creditcardInfo">
+				<td style="display:none;">
+				<td class="signupDescription"><label for="field-creditcardNumber">Credit card number:</label></td>
+				<td><form:input path="creditCard" id="field-creditcardNumber" /> <form:errors
+						path="creditCard" cssClass="validationErrorText" /></td>
+			</tr>
+		</table>
+
+<script>
+$("#premiumUser").click(function(){
+	var self = this;
+	$("#creditcardForm tr.creditcardInfo").toggle(self.checked);
+}).change();
+</script>
+
+<div>
 		<button type="submit">Update</button>
 </div>
 

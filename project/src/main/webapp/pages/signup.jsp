@@ -62,6 +62,7 @@
 				<td><form:select path="gender">
 						<form:option value="FEMALE" label="Female" />
 						<form:option value="MALE" label="Male" />
+						<form:option value="OTHER" label="Other"/>
 					</form:select></td>
 			</tr>					
 		</table>
