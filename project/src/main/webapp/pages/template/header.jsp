@@ -40,66 +40,79 @@
 <!-- check if user is logged in -->
 <security:authorize var="loggedIn" url="/profile" />
 
-
-
 <body>
 	<div class="container">
 		<h1>
 			<img id="logo" src="/img/logoNew.png"> Compass
 		</h1>
 		<ul class="nav nav-tabs" role="tablist">
-			<li class="active"><a href="/">Buy</a></li>
-			<li><a href="/">Rent</a></li>
+			<c:choose>
+				<c:when test="${pagemode == 'buy'}">
+					<li class="active"><a href="/buy/">Buy</a></li>
+					<li><a href="/rent/">Rent</a></li>
+				</c:when>
+				<c:when test="${pagemode == 'rent'}">
+					<li><a href="/buy/">Buy</a></li>
+					<li class="active"><a href="/rent/">Rent</a></li>
+				</c:when>
+			</c:choose>
 		</ul>
 		<nav class="navbar navbar-default">
-			<ul class="nav navbar-nav">
-				<li><a href="/searchAd">Find</a></li>
-				<li><a href="/profile/placeAd">Place ad</a></li>
-				<li><a href="#">My Auctions</a></li>
-				<li class="navbar-right dropdown"><c:choose>
-						<c:when test="${loggedIn}">
-							<%@include file='/pages/getUserPicture.jsp'%>
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
-								class="glyphicon glyphicon-user"></span>
-								<% out.print(String.format("%s %s", realUser.getFirstName(), realUser.getLastName())); %>
-								<span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu">
-								<li><a href="/user?id=<%out.print(realUser.getId());%>">
-										<span class="glyphicon glyphicon-cog"></span> Show profile
-								</a></li>
-								<li><a href="/profile/myRooms"> <span
-										class="glyphicon glyphicon-home"></span> My Ads
-								</a></li>
-								<li><a href="/profile/messages"> <span
-										class="glyphicon glyphicon glyphicon-envelope"></span>
-										Messages <span class="badge"> <%
- 	
- %>
-									</span>
-								</a>
-								<li><a href="/profile/alerts"> <span
-										class="glyphicon glyphicon-alert"></span> Alerts
-								</a></li>
-								<li><a href="/profile/enquiries"> <span
-										class="glyphicon glyphicon-log-out"></span> Enquiries
-								</a></li>
-								<li><a href="/profile/schedule"> <span
-										class="glyphicon glyphicon glyphicon-calendar"></span>
-										Schedule
-								</a></li>
-								<li><a href="/logout"> <span
-										class="glyphicon glyphicon-log-out"></span> Logout
-								</a></li>
-							</ul>
-						</c:when>
-						<c:otherwise>
-							<li class="navbar-right"><a href="/login">Login</a></li>
-						</c:otherwise>
-					</c:choose></li>
-			</ul>
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav">
+						<li><a href="/${pagemode}/searchAd">Find</a></li>
+						<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
+						<li><a href="#">My Auctions</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="navbar-right dropdown">
+							<c:choose>
+								<c:when test="${loggedIn}">
+									<%@include file='/pages/getUserPicture.jsp' %>
+									<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
+										class="glyphicon glyphicon-user"></span>
+										<% 	out.print(String.format("%s %s", realUser.getFirstName(), realUser.getLastName())); %>
+										<span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu">
+										<li><a href="/${pagemode}/user?id=<%out.print(realUser.getId());%>">
+												<span class="glyphicon glyphicon-cog"></span> Show profile
+										</a></li>
+										<li><a href="/${pagemode}/profile/myRooms"> <span
+												class="glyphicon glyphicon-home"></span> My Ads
+										</a></li>
+										<li><a href="/${pagemode}/profile/messages"> <span
+												class="glyphicon glyphicon glyphicon-envelope"></span>
+												Messages <span class="badge"> <%
+		 	
+		 %>
+											</span>
+										</a>
+										<li><a href="/${pagemode}/profile/alerts"> <span
+												class="glyphicon glyphicon-alert"></span> Alerts
+										</a></li>
+										<li><a href="/${pagemode}/profile/enquiries"> <span
+												class="glyphicon glyphicon-log-out"></span> Enquiries
+										</a></li>
+										<li><a href="/${pagemode}/profile/schedule"> <span
+												class="glyphicon glyphicon glyphicon-calendar"></span>
+												Schedule
+										</a></li>
+										<li><a href="/${pagemode}/logout"> <span
+												class="glyphicon glyphicon-log-out"></span> Logout
+										</a></li>
+									</ul>
+								</c:when>
+								<c:otherwise>
+									<li class="navbar-right"><a href="/${pagemode}/login">Login</a></li>
+								</c:otherwise>
+							</c:choose>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</nav>
-
 
 		<c:if test="${not empty confirmationMessage }">
 			<div class="confirmation-message">

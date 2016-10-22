@@ -1,4 +1,4 @@
-package ch.unibe.ese.team3.logging;
+package ch.unibe.ese.team3.interceptors;
 
 import java.security.Principal;
 import java.util.Enumeration;
