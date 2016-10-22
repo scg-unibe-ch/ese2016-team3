@@ -65,6 +65,13 @@
 					</form:select></td>
 			</tr>
 			
+			<tr>
+				<td class="signupDescription"><label for="field-accountType">Account type:</label></td>
+				<td><form:select path="accountType">
+						<form:option value="BASIC" label="Basic" />
+						<form:option value="PREMIUM" label="Premium" />
+					</form:select></td>
+			</tr>
 			
 		</table>
 		<br />
