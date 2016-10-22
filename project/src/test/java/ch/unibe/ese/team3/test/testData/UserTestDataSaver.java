@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.User;
+import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.UserPicture;
 import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.UserDao;
@@ -26,25 +27,25 @@ public class UserTestDataSaver {
 	public void saveTestData() throws Exception {
 		// system account
 		User system = createUser("System", "1234", "FlatFindr", "Admin",
-				"/img/test/system.jpg", Gender.ADMIN);
+				"/img/test/system.jpg", Gender.ADMIN, AccountType.BASIC);
 		system.setAboutMe("We keep you off the streets.");
 		userDao.save(system);
 
 		// Main test-user for the assistants (advertiser)
 		User ese = createUser("ese@unibe.ch", "ese", "John", "Wayne",
-				"/img/test/portrait.jpg", Gender.MALE);
+				"/img/test/portrait.jpg", Gender.MALE, AccountType.BASIC);
 		ese.setAboutMe(getDummyText());
 		userDao.save(ese);
 		
 		// Searcher
 		User janeDoe = createUser("jane@doe.com", "password", "Jane", "Doe",
-				Gender.FEMALE);
+				Gender.FEMALE, AccountType.BASIC);
 		janeDoe.setAboutMe(getDummyText());
 		userDao.save(janeDoe);
 
 		// Another advertiser & searcher
 		User bernerBaer = createUser("user@bern.com", "password",
-				"Berner", "Bär", Gender.MALE);
+				"Berner", "Bär", Gender.MALE, AccountType.BASIC);
 		UserPicture picture = new UserPicture();
 		picture.setFilePath("/img/test/berner_baer.png");
 		picture.setUser(bernerBaer);
@@ -59,23 +60,23 @@ public class UserTestDataSaver {
 		
 		// Another advertiser & searcher
 		User oprah = createUser("oprah@winfrey.com", "password", "Oprah", "Winfrey",
-				"/img/test/oprah.jpg", Gender.FEMALE);
+				"/img/test/oprah.jpg", Gender.FEMALE, AccountType.BASIC);
 		oprah.setAboutMe(getDummyText());
 		userDao.save(oprah);
 		
 		//User for updateUser test		
-		User mark = createUser("mark@knopfler.com", "straits", "Mark", "Knopfler", "/img/test/user.jpg", Gender.MALE);
+		User mark = createUser("mark@knopfler.com", "straits", "Mark", "Knopfler", "/img/test/user.jpg", Gender.MALE, AccountType.BASIC);
 		mark.setAboutMe(getDummyText());
 		userDao.save(mark);
 		
 		//User for message test
-		User eric = createUser("eric@clapton.com", "guitar", "Eric", "Clapton", "/img/test/user.jpg", Gender.MALE);
+		User eric = createUser("eric@clapton.com", "guitar", "Eric", "Clapton", "/img/test/user.jpg", Gender.MALE, AccountType.BASIC);
 		eric.setAboutMe(getDummyText());
 		userDao.save(eric);
 	}
 
 	public User createUser(String email, String password, String firstName,
-			String lastName, Gender gender) {
+			String lastName, Gender gender, AccountType type) {
 		User user = new User();
 		user.setUsername(email);
 		user.setPassword(password);
@@ -90,11 +91,12 @@ public class UserTestDataSaver {
 		role.setUser(user);
 		userRoles.add(role);
 		user.setUserRoles(userRoles);
+		user.setAccountType(type);
 		return user;
 	}
 
 	public User createUser(String email, String password, String firstName,
-			String lastName, String picPath, Gender gender) {
+			String lastName, String picPath, Gender gender, AccountType type) {
 		User user = new User();
 		user.setUsername(email);
 		user.setPassword(password);
@@ -113,6 +115,7 @@ public class UserTestDataSaver {
 		role.setUser(user);
 		userRoles.add(role);
 		user.setUserRoles(userRoles);
+		user.setAccountType(type);
 		return user;
 	}
 

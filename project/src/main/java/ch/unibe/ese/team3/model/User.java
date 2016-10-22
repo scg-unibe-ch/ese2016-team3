@@ -50,7 +50,7 @@ public class User {
 	@Column(nullable = false)
 	private AccountType accountType;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String creditCard;
 
 	@JsonIgnore
