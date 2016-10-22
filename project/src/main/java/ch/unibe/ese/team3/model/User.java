@@ -46,6 +46,12 @@ public class User {
 
 	@Column(nullable = false)
 	private boolean enabled;
+	
+	@Column(nullable = false)
+	private AccountType accountType;
+	
+	@Column(nullable = false)
+	private String creditCard;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -109,6 +115,22 @@ public class User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+	public AccountType getAccountType(){
+		return accountType;
+	}
+	
+	public void setAccountType(AccountType type){
+		accountType = type;
+	}
+	
+	public String getCreditCard(){
+		return creditCard;
+	}
+	
+	public void setCreditCard(String card){
+		creditCard = card;
 	}
 
 	public Set<UserRole> getUserRoles() {

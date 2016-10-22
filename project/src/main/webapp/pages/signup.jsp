@@ -64,6 +64,8 @@
 						<form:option value="MALE" label="Male" />
 					</form:select></td>
 			</tr>
+			
+			
 		</table>
 		<br />
 		<button type="submit">Sign up</button>

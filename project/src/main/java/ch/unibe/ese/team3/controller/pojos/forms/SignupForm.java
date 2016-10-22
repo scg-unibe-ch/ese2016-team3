@@ -5,6 +5,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import ch.unibe.ese.team3.model.Gender;
+import ch.unibe.ese.team3.model.AccountType;
 
 /** This form is used when a user want to sign up for an account. */
 public class SignupForm {
@@ -27,6 +28,12 @@ public class SignupForm {
 	
 	@NotNull
 	private Gender gender;
+	
+	@NotNull
+	private AccountType accountType;
+	
+	@Pattern(regexp = "[0-9]{16}", message = "Credit card number must be 16 digits")
+	private String creditCard;
 
 	public String getEmail() {
 		return email;
@@ -68,4 +75,19 @@ public class SignupForm {
 		this.gender = gender;
 	}
 	
+	public AccountType getAccountType(){
+		return accountType;
+	}
+	
+	public void setAccountType(AccountType type){
+		accountType = type;
+	}
+	
+	public String getCreditCard(){
+		return creditCard;
+	}
+	
+	public void setCreditCard(String card){
+		creditCard = card;
+	}
 }
