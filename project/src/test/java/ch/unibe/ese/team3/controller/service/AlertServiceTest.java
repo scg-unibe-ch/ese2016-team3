@@ -16,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import ch.unibe.ese.team3.controller.pojos.forms.AlertForm;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Alert;
 import ch.unibe.ese.team3.model.Gender;
@@ -156,6 +157,12 @@ public class AlertServiceTest {
 		assertTrue(alertService.radiusMismatch(oltenResidence, alertList.get(1)));
 		assertTrue(alertService.typeMismatch(oltenResidence, alertList.get(0)));
 		assertFalse(alertService.typeMismatch(oltenResidence, alertList.get(1)));
+	}
+	
+	@Test
+	public void saveFromFormTest(){
+		AlertForm alertForm = new AlertForm();
+		alertForm.setBothRoomAndStudio();
 	}
 	
 	//Lean user creating method
