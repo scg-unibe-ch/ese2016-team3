@@ -3,34 +3,19 @@ package ch.unibe.ese.team3.model;
  * Enumerates all possible types a house
  */
 public enum Type {
-	APARTMENT {
-		public String getName(){
-			return "Appartment";
-		}
-	},
+	APARTMENT("Appartment"), 
+	VILLA("Villa"), 
+	HOUSE("House"), 
+	STUDIO ("Studio"), 
+	LOFT("Loft");
 	
-	VILLA {
-		public String getName(){
-			return "Villa";
-		}
-	},
+	private String name;
 	
-	HOUSE {
-		public String getName(){
-			return "House";
-		}
-	},
-	
-	STUDIO {
-		public String getName(){
-			return "Studio";
-		}
-	},
-	
-	LOFT {
-		public String getName(){
-			return "Loft";
-		}
+	private Type(String name){
+		this.name = name;
 	}
-
+	
+	public String getName(){
+		return name;
+	}
 }

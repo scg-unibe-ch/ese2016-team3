@@ -92,22 +92,14 @@
 			<tr>
 				<td><label for="field-title">Ad Title</label></td>
 				<td><label for="type-room">Type:</label></td>
-			<%-- 	<td><label for="type-roomOf">Type Of:</label></td>--%>
 			</tr>
 
 			<tr>
 				<td><form:input id="field-title" path="title"
 						placeholder="Ad Title" /></td>
-				<td><form:radiobutton id="type-room" path="studio" value="0"
-						checked="checked" />Room <form:radiobutton id="type-studio"
-						path="studio" value="1" />Studio</td>
-			<%-- 	<td><form:select path="type-roomOf">
-						<form:option value="APARTMENT" label="Apartment" />
-						<form:option value="VILLA" label="Villa" />
-						<form:option value="HOUSE" label="House" />
-						<form:option value="STUDIO" label="Studio" />
-						<form:option value="LOFT" label="Loft" />
-					</form:select></td>                                              --%>
+				<td><form:select id="type" path="type">
+						<form:options items="${types}" itemLabel="name" />
+					</form:select></td>
 			</tr>
 
 			<tr>
@@ -138,41 +130,46 @@
 				<td><label for="field-SquareFootage">Square Meters</label></td>
 				<td><label for="field-NumberOfRooms">Number of rooms</label></td>
 			</tr>
-			
+
 			<tr>
 				<td><form:input id="field-Prize" type="number" path="prize"
 						placeholder="Prize per month" step="50" /> <form:errors
-						path="prize" cssClass="validationErrorText" /></td>			
+						path="prize" cssClass="validationErrorText" /></td>
 				<td><form:input id="field-SquareFootage" type="number"
 						path="squareFootage" placeholder="Prize per month" step="5" /> <form:errors
 						path="squareFootage" cssClass="validationErrorText" /></td>
-				<td><form:input id="field-NumberOfRooms" type="number" 
+				<td><form:input id="field-NumberOfRooms" type="number"
 						path="numberOfRooms" placeholder="Prize per month" step="1" /> <form:errors
 						path="numberOfRooms" cssClass="validationErrorText" /></td>
 			</tr>
 			<%-- new --%>
 			<tr>
-				<td><label for="field-DistanceSchool">Distance to school</label></td>
-				<td><label for="field-DistanceShopping">Distance to shopping center</label></td>
-				<td><label for="field-DistancePublicTransport">Distance to public transport</label></td>
+				<td><label for="field-DistanceSchool">Distance to
+						school</label></td>
+				<td><label for="field-DistanceShopping">Distance to
+						shopping center</label></td>
+				<td><label for="field-DistancePublicTransport">Distance
+						to public transport</label></td>
 			</tr>
-			
+
 			<tr>
-				<td><form:input id="field-DistanceSchool" type="number" path="distanceSchool"
-						placeholder="Prize per month" step="100" /> <form:errors
-						path="distanceSchool" cssClass="validationErrorText" /></td>		
-							
+				<td><form:input id="field-DistanceSchool" type="number"
+						path="distanceSchool" placeholder="Prize per month" step="100" />
+					<form:errors path="distanceSchool" cssClass="validationErrorText" /></td>
+
 				<td><form:input id="field-DistanceShopping" type="number"
-						path="DistanceShopping" placeholder="Prize per month" step="100" /> <form:errors
-						path="DistanceShopping" cssClass="validationErrorText" /></td>
-						
-				<td><form:input id="field-DistancePublicTransport" type="number"
-						path="DistancePublicTransport" placeholder="Prize per month" step="100" /> <form:errors
-						path="DistancePublicTransport" cssClass="validationErrorText" /></td>		
+						path="DistanceShopping" placeholder="Prize per month" step="100" />
+					<form:errors path="DistanceShopping" cssClass="validationErrorText" /></td>
+
+				<td><form:input id="field-DistancePublicTransport"
+						type="number" path="DistancePublicTransport"
+						placeholder="Prize per month" step="100" /> <form:errors
+						path="DistancePublicTransport" cssClass="validationErrorText" /></td>
 			</tr>
 			<tr>
 				<td><label for="field-BuildYear">Year of construction</label></td>
-				<td><label for="field-RenovationYear">Year of renovation </label></td>
+				<td><label for="field-RenovationYear">Year of
+						renovation </label></td>
 			</tr>
 			<tr>
 				<td><form:input id="field-BuildYear" path="buildYear" /></td>
@@ -193,11 +190,11 @@
 				<td><form:checkbox id="field-animals" path="animals" value="1" /><label>Smoking
 						inside allowed</label></td>
 				<td><label for="field-NumberOfBath">Number of bath</label></td>
-				<td><form:input id="field-NumberOfBath" type="number" 
+				<td><form:input id="field-NumberOfBath" type="number"
 						path="numberOfBath" placeholder="Prize per month" step="1" /> <form:errors
 						path="numberOfBath" cssClass="validationErrorText" /></td>
 			</tr>
-			
+
 			<tr>
 				<td><form:checkbox id="field-garden" path="garden" value="1" /><label>Garden
 						(co-use)</label></td>
@@ -220,8 +217,9 @@
 			<tr>
 				<td><form:checkbox id="field-internet" path="internet"
 						value="1" /><label>WiFi available</label></td>
-				<td><form:checkbox id="field-elevator" path="elevator" value="1" /><label>Elevator
-				</label></td>		<%-- new  --%>
+				<td><form:checkbox id="field-elevator" path="elevator"
+						value="1" /><label>Elevator </label></td>
+				<%-- new  --%>
 			</tr>
 
 		</table>
@@ -264,32 +262,28 @@
 						<%
 							for (int i = 0; i < 24; i++) {
 									String hour = String.format("%02d", i);
-									out.print("<option value=\"" + hour + "\">" + hour
-											+ "</option>");
+									out.print("<option value=\"" + hour + "\">" + hour + "</option>");
 								}
 						%>
 				</select> <select id="startMinutes">
 						<%
 							for (int i = 0; i < 60; i++) {
 									String minute = String.format("%02d", i);
-									out.print("<option value=\"" + minute + "\">" + minute
-											+ "</option>");
+									out.print("<option value=\"" + minute + "\">" + minute + "</option>");
 								}
 						%>
 				</select> <span>to&thinsp; </span> <select id="endHour">
 						<%
 							for (int i = 0; i < 24; i++) {
 									String hour = String.format("%02d", i);
-									out.print("<option value=\"" + hour + "\">" + hour
-											+ "</option>");
+									out.print("<option value=\"" + hour + "\">" + hour + "</option>");
 								}
 						%>
 				</select> <select id="endMinutes">
 						<%
 							for (int i = 0; i < 60; i++) {
 									String minute = String.format("%02d", i);
-									out.print("<option value=\"" + minute + "\">" + minute
-											+ "</option>");
+									out.print("<option value=\"" + minute + "\">" + minute + "</option>");
 								}
 						%>
 				</select>

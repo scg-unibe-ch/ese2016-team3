@@ -160,10 +160,7 @@
 		<tr>
 			<td><h2>Type</h2></td>
 			<td>
-				<c:choose>
-					<c:when test="${shownAd.studio}">Studio</c:when>
-					<c:otherwise>Room</c:otherwise>
-				</c:choose>
+				${shownAd.type.name}
 			</td>
 		</tr>
 
