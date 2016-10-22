@@ -13,7 +13,10 @@ public class SignupForm {
 	@Size(min = 6, message = "Password must be at least 6 characters long")
 	@NotNull
 	private String password;
-
+	
+	/*@Pattern(regexp = password, message = "Your password validation doesn't match the original password");
+	private String passwordValidation;*/
+	
 	@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Must be valid email address")
 	@NotNull
 	private String email;

@@ -72,6 +72,11 @@
 						<form:option value="PREMIUM" label="Premium" />
 					</form:select></td>
 			</tr>
+			<tr>
+				<td class="signupDescription"><label for="field-creditcardNumber">Credit card number:</label></td>
+				<td><form:input path="creditCard" id="field-creditcardNumber" /> <form:errors
+						path="creditCard" cssClass="validationErrorText" /></td>
+			</tr>
 			
 		</table>
 		<br />
