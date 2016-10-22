@@ -10,33 +10,6 @@
 <pre><a href="/">Home</a>   &gt;   <a href="/searchAd/">Search</a>   &gt;   Results</pre>
 
 <script>
-function validateType(form)
-{
-	var room = document.getElementById('room');
-	var studio = document.getElementById('studio');
-	var neither = document.getElementById('neither');
-	var both = document.getElementById('both');
-	var type = document.getElementById('type');
-	var filtered = document.getElementById('filtered');
-	
-	if(room.checked && studio.checked) {
-		both.checked = true;
-		neither.checked = false;
-	}
-	else if(!room.checked && !studio.checked) {
-		both.checked = false;
-		neither.checked = true;
-	}
-	else {
-		both.checked = false;
-		neither.checked = false;
-		type.checked = studio.checked;
-	}
-	filtered.checked = true;
-}
-</script>
-
-<script>
 /*
  * This script takes all the resultAd divs and sorts them by a parameter specified by the user.
  * No arguments need to be passed, since the function simply looks up the dropdown selection.
@@ -152,10 +125,7 @@ function sort_div_attribute() {
 						<p>${ad.street}, ${ad.zipcode} ${ad.city}</p>
 						<br />
 						<p>
-							<i><c:choose>
-									<c:when test="${ad.studio}">Studio</c:when>
-									<c:otherwise>Room</c:otherwise>
-								</c:choose></i>
+							<i>${ad.type.name}</i>
 						</p>
 					</div>
 					<div class="resultRight">
@@ -178,15 +148,8 @@ function sort_div_attribute() {
 
 	<div id="filterDiv">
 		<h2>Filter results:</h2>
-		<form:checkbox name="room" id="room" path="roomHelper" /><label>Room</label>
-		<form:checkbox name="studio" id="studio" path="studioHelper" /><label>Studio</label>
-	
-		<form:checkbox style="display:none" name="neither" id="neither" path="noRoomNoStudio" />
-		<form:checkbox style="display:none" name="both" id="both" path="bothRoomAndStudio" />
-		<form:checkbox style="display:none" name="type" id="type" path="studio" />
-		<form:checkbox style="display:none" name="filtered" id="filtered" path="filtered" />
-		<form:errors path="noRoomNoStudio" cssClass="validationErrorText" /> <br />
-	
+		<form:checkboxes items="${types}" path="types" itemLabel="name"/>
+		<br/>
 		<label for="city">City / zip code:</label>
 		<form:input type="text" name="city" id="city" path="city"
 			placeholder="e.g. Bern" tabindex="3" />
@@ -256,7 +219,7 @@ function sort_div_attribute() {
 		</table>
 			
 		
-		<button type="submit" onClick="validateType(this.form)">Filter</button>	
+		<button type="submit">Filter</button>	
 		<button type="reset">Cancel</button>
 	</div>
 </form:form>

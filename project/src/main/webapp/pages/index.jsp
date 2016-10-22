@@ -29,10 +29,7 @@
 							<p>${ad.street},${ad.zipcode}${ad.city}</p>
 							<br />
 							<p>
-								<i><c:choose>
-										<c:when test="${ad.studio}">Studio</c:when>
-										<c:otherwise>Room</c:otherwise>
-									</c:choose></i>
+								<i>${ad.type.name}</i>
 							</p>
 						</div>
 						<div class="col-xs-12 col-md-3">

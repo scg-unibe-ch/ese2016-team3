@@ -32,6 +32,7 @@ import ch.unibe.ese.team3.controller.service.AlertService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.PictureMeta;
+import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 
 /**
@@ -76,6 +77,7 @@ public class PlaceAdController {
 	@RequestMapping(value = "/profile/placeAd", method = RequestMethod.GET)
 	public ModelAndView placeAd() throws IOException {
 		ModelAndView model = new ModelAndView("placeAd");
+		model.addObject("types", Type.values());
 
 		String realPath = servletContext.getRealPath(IMAGE_DIRECTORY);
 		if (pictureUploader == null) {

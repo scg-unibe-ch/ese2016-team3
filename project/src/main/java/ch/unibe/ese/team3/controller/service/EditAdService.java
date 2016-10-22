@@ -187,7 +187,8 @@ public class EditAdService {
 
 		adForm.setRoomDescription(ad.getRoomDescription());
 		adForm.setPreferences(ad.getPreferences());
-
+		adForm.setType(ad.getType());
+		
 		return adForm;
 	}
 
