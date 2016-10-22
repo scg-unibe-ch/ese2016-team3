@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.controller.service.AdService;
-import ch.unibe.ese.team3.controller.service.UserService;
+import ch.unibe.ese.team3.model.Type;
 
 /** Handles all requests concerning the search for ads. */
 @Controller
@@ -20,9 +20,6 @@ public class SearchController {
 
 	@Autowired
 	private AdService adService;
-
-	@Autowired
-	private UserService userService;
 
 	/**
 	 * The search form that is used for searching. It is saved between request
@@ -34,6 +31,7 @@ public class SearchController {
 	@RequestMapping(value = "/searchAd", method = RequestMethod.GET)
 	public ModelAndView searchAd() {
 		ModelAndView model = new ModelAndView("searchAd");
+		model.addObject("types", Type.values());
 		return model;
 	}
 
@@ -47,6 +45,7 @@ public class SearchController {
 		if (!result.hasErrors()) {
 			ModelAndView model = new ModelAndView("results");
 			model.addObject("results", adService.queryResults(searchForm));
+			model.addObject("types", Type.values());
 			return model;
 		} else {
 			// go back

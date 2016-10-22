@@ -29,6 +29,10 @@
 		<property name="prefix" value="/pages/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	<mvc:interceptors>
+    	<bean class="ch.unibe.ese.team3.logging.LoggingInterceptor" />
+	</mvc:interceptors>
 
 
 	<!-- resources -->

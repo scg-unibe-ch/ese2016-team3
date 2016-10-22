@@ -23,6 +23,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Gender;
+import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.UserDao;
@@ -54,6 +55,7 @@ public class AdServiceTest {
 		//Preparation
 		PlaceAdForm placeAdForm = new PlaceAdForm();
 		placeAdForm.setCity("3018 - Bern");
+		placeAdForm.setType(Type.APARTMENT);
 		placeAdForm.setPreferences("Test preferences");
 		placeAdForm.setRoomDescription("Test Room description");
 		placeAdForm.setPrize(600);

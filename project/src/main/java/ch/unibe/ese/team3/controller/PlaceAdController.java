@@ -22,20 +22,18 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ch.unibe.ese.team3.controller.pojos.PictureUploader;
 import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.controller.service.AlertService;
-import ch.unibe.ese.team3.controller.service.BookmarkService;
-import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.controller.service.UserService;
-import ch.unibe.ese.team3.controller.service.VisitService;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.PictureMeta;
+import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * This controller handles all requests concerning placing ads.
@@ -70,15 +68,6 @@ public class PlaceAdController {
 	private ServletContext servletContext;
 
 	@Autowired
-	private MessageService messageService;
-
-	@Autowired
-	private VisitService visitService;
-
-	@Autowired
-	private BookmarkService bookmarkService;
-
-	@Autowired
 	private UserService userService;
 
 	@Autowired
@@ -88,6 +77,7 @@ public class PlaceAdController {
 	@RequestMapping(value = "/profile/placeAd", method = RequestMethod.GET)
 	public ModelAndView placeAd() throws IOException {
 		ModelAndView model = new ModelAndView("placeAd");
+		model.addObject("types", Type.values());
 
 		String realPath = servletContext.getRealPath(IMAGE_DIRECTORY);
 		if (pictureUploader == null) {

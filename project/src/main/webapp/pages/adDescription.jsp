@@ -160,10 +160,7 @@
 		<tr>
 			<td><h2>Type</h2></td>
 			<td>
-				<c:choose>
-					<c:when test="${shownAd.studio}">Studio</c:when>
-					<c:otherwise>Room</c:otherwise>
-				</c:choose>
+				${shownAd.type.name}
 			</td>
 		</tr>
 
@@ -194,6 +191,19 @@
 			<td><h2>Square Meters</h2></td>
 			<td>${shownAd.squareFootage}&#32;m²</td>
 		</tr>
+		<tr>
+			<td><h2>Distance to school</h2></td>
+			<td>${shownAd.distanceSchool}&#32;m</td>
+		</tr>
+		<tr>
+			<td><h2>Distance to shopping center</h2></td>
+			<td>${shownAd.distanceShopping}&#32;m</td>
+		</tr>
+		<tr>
+			<td><h2>Distance to public transport</h2></td>
+			<td>${shownAd.distancePublicTransport}&#32;m</td>
+		</tr>
+		
 		<tr>
 			<td><h2>Ad created on</h2></td>
 			<td>${formattedCreationDate}</td>
@@ -352,6 +362,26 @@
 				</c:choose>
 			</td>
 		</tr>
+<%-- new --%>
+		<tr>
+			<td><h2>Elevator</h2></td>
+			<td>
+				<c:choose>
+					<c:when test="${shownAd.elevator}"><img src="/img/check-mark.png"></c:when>
+					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
+				</c:choose>
+			</td>
+		</tr>
+		<tr>
+			<td><h2>Parking</h2></td>
+			<td>
+				<c:choose>
+					<c:when test="${shownAd.parking}"><img src="/img/check-mark.png"></c:when>
+					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
+				</c:choose>
+			</td>
+		</tr>
+
 
 	</table>
 </section>

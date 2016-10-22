@@ -53,7 +53,6 @@ public class MessageServiceTest {
 	
 	@Before
 	public void setUp() throws ParseException{		
-		
 		sender = userDao.findByUsername("mark@knopfler.com");
 		recipient = userDao.findByUsername("Kim@kardashian.com");
 		message.setSender(sender);
@@ -74,18 +73,32 @@ public class MessageServiceTest {
 		
 	@Test
 	public void sendNewMessage(){
-			
+		
+		String subject = "Your sweet home Alabama";
+		String text = "where the skies are so blue";
+		assertEquals(1, messageDao.findByRecipient(recipient).spliterator().getExactSizeIfKnown());
+		messageService.sendMessage(sender, recipient, subject, text);	
 		assertEquals(2, messageDao.findByRecipient(recipient).spliterator().getExactSizeIfKnown());
-		messageService.sendMessage(sender, recipient, "Your sweet home Alabama", "where the skies are so blue");	
-		assertEquals(3, messageDao.findByRecipient(recipient).spliterator().getExactSizeIfKnown());
 		
 		ArrayList<Message> messageList = new ArrayList();
 		Iterable<Message> messages = messageService.getInboxForUser(recipient);
 		for(Message inboxMessage: messages)
 			messageList.add(inboxMessage);
 		
+		assertEquals(2, messageList.size());
+		
+		Message receivedMessage = messageList.get(0);
+		
+		assertEquals(recipient, receivedMessage.getRecipient());
+		assertEquals(sender, receivedMessage.getSender());
+		assertEquals(subject, receivedMessage.getSubject());
+		assertEquals(text, receivedMessage.getText());
+		assertEquals(MessageState.READ, receivedMessage.getState());
+			
 		assertEquals(message.getSubject(), messageList.get(0).getSubject());
 		assertEquals(message2.getSubject(), messageList.get(1).getSubject());
+		
+		messageDao.delete(receivedMessage);
 	}
 	
 	@Test

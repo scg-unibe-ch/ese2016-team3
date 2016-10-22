@@ -162,7 +162,7 @@ public class AlertServiceTest {
 	@Test
 	public void saveFromFormTest(){
 		AlertForm alertForm = new AlertForm();
-		alertForm.setBothRoomAndStudio();
+		alertForm.setBothRoomAndStudio(true);
 	}
 	
 	//Lean user creating method

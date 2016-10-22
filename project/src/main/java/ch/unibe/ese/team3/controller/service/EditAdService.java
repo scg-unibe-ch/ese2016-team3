@@ -34,9 +34,6 @@ public class EditAdService {
 	@Autowired
 	private AdPictureDao adPictureDao;
 
-	@Autowired
-	private UserService userService;
-
 	/**
 	 * Handles persisting an edited ad to the database.
 	 * 
@@ -190,7 +187,8 @@ public class EditAdService {
 
 		adForm.setRoomDescription(ad.getRoomDescription());
 		adForm.setPreferences(ad.getPreferences());
-
+		adForm.setType(ad.getType());
+		
 		return adForm;
 	}
 

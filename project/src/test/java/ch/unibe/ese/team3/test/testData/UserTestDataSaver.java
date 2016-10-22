@@ -72,6 +72,11 @@ public class UserTestDataSaver {
 		User kim = createUser("Kim@kardashian.com", "1234", "Kim", "Kardashian",
 				"/img/test/system.jpg", Gender.FEMALE);
 		userDao.save(kim);
+		
+		//User for message test
+		User eric = createUser("eric@clapton.com", "guitar", "Eric", "Clapton", "/img/test/user.jpg", Gender.MALE);
+		eric.setAboutMe(getDummyText());
+		userDao.save(eric);
 	}
 
 	public User createUser(String email, String password, String firstName,

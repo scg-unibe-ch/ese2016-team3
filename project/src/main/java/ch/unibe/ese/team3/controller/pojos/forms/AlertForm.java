@@ -13,7 +13,8 @@ import ch.unibe.ese.team3.model.User;
 public class AlertForm {
 	
 	private User user;
-
+	
+	// muss weg -> Type type = (studio, house, villa, flat,...)
 	private boolean studio;
 	private boolean room;
 
