@@ -159,12 +159,6 @@ public class AlertServiceTest {
 		assertFalse(alertService.typeMismatch(oltenResidence, alertList.get(1)));
 	}
 	
-	@Test
-	public void saveFromFormTest(){
-		AlertForm alertForm = new AlertForm();
-		alertForm.setBothRoomAndStudio(true);
-	}
-	
 	//Lean user creating method
 	User createUser(String email, String password, String firstName,
 			String lastName, Gender gender) {
