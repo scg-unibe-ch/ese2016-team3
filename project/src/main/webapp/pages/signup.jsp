@@ -63,25 +63,29 @@
 						<form:option value="FEMALE" label="Female" />
 						<form:option value="MALE" label="Male" />
 					</form:select></td>
-			</tr>
-			
-			<tr>
-				<td class="signupDescription"><label for="field-accountType">Account type:</label></td>
-				<td><form:select path="accountType">
-						<form:option value="BASIC" label="Basic" />
-						<form:option value="PREMIUM" label="Premium" />
-					</form:select></td>
-			</tr>
-			<tr>
+			</tr>					
+		</table>
+		<br />
+		<input type="checkbox" id="premiumUser">Do you want to sign up as a Premium User for only 5$ per month?
+		<br>
+		<table id=creditcardForm>
+			<tr class="creditcardInfo">
+				<td style="display:none;">
 				<td class="signupDescription"><label for="field-creditcardNumber">Credit card number:</label></td>
 				<td><form:input path="creditCard" id="field-creditcardNumber" /> <form:errors
 						path="creditCard" cssClass="validationErrorText" /></td>
 			</tr>
-			
 		</table>
-		<br />
-		<button type="submit">Sign up</button>
+		<br />		
+		<button type="submit">Sign up</button>	
 	</fieldset>
 </form:form>
+
+<script>
+$("#premiumUser").change(function(){
+	var self = this;
+	$("#creditcardForm tr.creditcardInfo").toggle(self.checked);
+}).change();
+</script>
 
 <c:import url="template/footer.jsp" />
