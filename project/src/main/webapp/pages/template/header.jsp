@@ -59,6 +59,7 @@
 			<div class="navbar-inner">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav">
+						<li><a href="/${pagemode}/">Home</a></li>
 						<li><a href="/${pagemode}/searchAd">Find ad</a></li>
 						<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
 						<li><a href="#">My Auctions</a></li>

@@ -24,7 +24,7 @@
 									<img class="img-responsive" src="${ad.pictures[0].filePath}" />
 								</a>
 								<h4>
-									<a class="link" href="<c:url value='/ad?id=${ad.id}' />">${ad.title}</a>
+									<a class="link" href="<c:url value='./ad?id=${ad.id}' />">${ad.title}</a>
 								</h4>
 								<p>${ad.street}, ${ad.zipcode} ${ad.city}</p>
 								<p>

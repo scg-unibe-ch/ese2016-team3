@@ -252,17 +252,17 @@ function sort_div_attribute() {
 							<div class="col-md-12 ad-wide-preview-inner">
 								<div class="row">
 									<div class="col-sm-4 col-md-4">
-										<a href="<c:url value='../ad?id=${ad.id}' />"> <img
+										<a href="<c:url value='./ad?id=${ad.id}' />"> <img
 											class="img-responsive" src="${ad.pictures[0].filePath}" />
 										</a>
 									</div>
 									<div class="col-sm-5 col-md-5">
 										<p>
 											<strong> <a class="link"
-												href="<c:url value='/ad?id=${ad.id}' />">${ad.title}</a>
+												href="<c:url value='./ad?id=${ad.id}' />">${ad.title}</a>
 											</strong>
 										</p>
-										<p>${ad.street},${ad.zipcode}${ad.city}</p>
+										<p>${ad.street}, ${ad.zipcode} ${ad.city}</p>
 										<p>
 											<i>${ad.type.name}</i>
 										</p>
