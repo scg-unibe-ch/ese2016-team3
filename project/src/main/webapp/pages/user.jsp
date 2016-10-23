@@ -1,5 +1,4 @@
 <%@page import="ch.unibe.ese.team3.model.Ad"%>
-<%@page import="ch.unibe.ese.team3.model.AccountType"%>
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -72,6 +71,7 @@ $(document).ready(function() {
 			opacity : 1
 		}, 300);
 	});
+});
 </script>
 <pre>
 	<a href="/">Home</a>   &gt;   Profile</pre>
@@ -79,7 +79,7 @@ $(document).ready(function() {
 <div id="userDiv">
 	<c:choose>
 		<c:when test="${user.accountType == 'PREMIUM'}">
-			<h2>This is a PREMIUM Account</h3>
+			<h2>This is a PREMIUM Account</h2>
 		</c:when>
 		<c:otherwise></c:otherwise>
 	</c:choose>
@@ -109,21 +109,12 @@ $(document).ready(function() {
 							<c:choose>
 							<c:when test="${user.accountType != 'PREMIUM'}">
 								<button type="button" id="premiumUser">Do you want to upgrade to Premium User for only 5$ per month?</button>
-										<% /**<table id=creditcardForm>
-											<tr class="creditcardInfo">
-												<td style="display:none;">
-												<td class="signupDescription"><label for="field-creditcardNumber">Credit card number:</label></td>
-												<td><form:input path="user.creditCard" id="field-creditcardNumber" /> <form:errors
-														path="creditCard" cssClass="validationErrorText" /></td>
-											</tr>
-										</table>**/%>
-									</c:when>
+							</c:when>
 							<c:otherwise></c:otherwise>
 							</c:choose>
 					</c:when>
 					<c:otherwise></c:otherwise>
 				</c:choose>
-
 			</c:when>
 			<c:otherwise>
 				<p>Please log in to contact this person.</p>
@@ -133,18 +124,19 @@ $(document).ready(function() {
 </div>
 
 
-<div id="upgrade">
-	<form class="upgradeForm">
+<div id="upgrade" style="display:none;" >
+	<form class="upgradeForm" >
 		<h2>Upgrade to Premium User</h2>
 		<br>Please enter your credit card number:<br>
 			<form:input path="user.creditCard" id="field-creditcardNumber" /> <form:errors
 				path="creditCard" cssClass="validationErrorText" />
+		<br>
 		<button type="submit" id="UpgradeNow">Upgrade Now</button>
 		<button type="button" id="CancelUpgrade">Cancel</button>
 	</form>
 </div>
 
-<div id="msgDiv">
+<div id="msgDiv" style="display:none;">
 	<form class="msgForm">
 		<h2>Message this user</h2>
 		<br> <br> <label>Subject: <span>*</span></label> <input
