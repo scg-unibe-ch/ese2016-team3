@@ -1,19 +1,17 @@
 package ch.unibe.ese.team3.controller.pojos.forms;
 
-import javax.validation.constraints.AssertFalse;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import ch.unibe.ese.team3.model.Type;
+
 /** This form is used for searching for an ad. */
 public class SearchForm {
 
 	private boolean filtered;
-
-	// studio: true, room: false
-	private boolean studio;
 
 	@NotBlank(message = "Required")
 	@Pattern(regexp = "^[0-9]{4} - [-\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
@@ -27,11 +25,8 @@ public class SearchForm {
 	@Min(value = 0, message = "In your dreams.")
 	private Integer prize;
 
-	@AssertFalse(message = "Please select either or both types")
-	private boolean noRoomNoStudio;
-
-	private boolean bothRoomAndStudio;
-
+	private Type[] types;
+	
 	public String getCity() {
 		return city;
 	}
@@ -54,30 +49,6 @@ public class SearchForm {
 
 	public void setPrize(Integer prize) {
 		this.prize = prize;
-	}
-
-	public boolean getStudio() {
-		return studio;
-	}
-
-	public void setStudio(boolean studio) {
-		this.studio = studio;
-	}
-
-	public boolean getNoRoomNoStudio() {
-		return noRoomNoStudio;
-	}
-
-	public void setNoRoomNoStudio(boolean noRoomNoStudio) {
-		this.noRoomNoStudio = noRoomNoStudio;
-	}
-
-	public boolean getBothRoomAndStudio() {
-		return bothRoomAndStudio;
-	}
-
-	public void setBothRoomAndStudio(boolean bothRoomAndStudio) {
-		this.bothRoomAndStudio = bothRoomAndStudio;
 	}
 
 	// //////////////////
@@ -266,5 +237,13 @@ public class SearchForm {
 
 	public void setRoomHelper(boolean helper) {
 		this.roomHelper = helper;
+	}
+
+	public Type[] getTypes() {
+		return types;
+	}
+
+	public void setTypes(Type[] types) {
+		this.types = types;
 	}
 }

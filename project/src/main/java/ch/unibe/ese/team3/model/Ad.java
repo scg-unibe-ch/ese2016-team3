@@ -3,18 +3,7 @@ package ch.unibe.ese.team3.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -22,14 +11,14 @@ import org.hibernate.annotations.FetchMode;
 /** Describes an advertisement that users can place and search for. */
 @Entity
 public class Ad {
-
+	
 	@Id
 	@GeneratedValue
 	private long id;
 
 	@Column(nullable = false)
 	private String title;
-
+	
 	@Column(nullable = false)
 	private String street;
 
@@ -56,21 +45,27 @@ public class Ad {
 
 	@Column(nullable = false)
 	private int squareFootage;
+	
 	//new
 	@Column(nullable = false)
 	private int numberOfRooms;
+	
 	@Column(nullable = false)
 	private int numberOfBath;
+	
 	@Column(nullable = false)
 	private int buildYear;
+	
 	@Column(nullable = false)
 	private int renovationYear;
 	
 	//new
 	@Column(nullable = false)
 	private int distanceSchool;
+	
 	@Column(nullable = false)
 	private int distanceShopping;
+	
 	@Column(nullable = false)
 	private int distancePublicTransport;
 
@@ -86,8 +81,54 @@ public class Ad {
 	//new
 	@Column(nullable = false)
 	private boolean elevator;
+	
 	@Column(nullable = false)
 	private boolean parking;
+
+
+	@Column(nullable = false)
+	private boolean smokers;
+
+	@Column(nullable = false)
+	private boolean animals;
+
+	@Column(nullable = false)
+	private boolean garden;
+
+	@Column(nullable = false)
+	private boolean balcony;
+
+	@Column(nullable = false)
+	private boolean cellar;
+
+	@Column(nullable = false)
+	private boolean furnished;
+
+	@Column(nullable = false)
+	private boolean cable;
+
+	@Column(nullable = false)
+	private boolean garage;
+
+	@Column(nullable = false)
+	private boolean internet;
+
+	// true if studio, false if room	// will be removed
+	@Column(nullable = false)
+	private boolean studio;
+
+	@Enumerated(EnumType.STRING)
+	private Type type;
+
+	@Fetch(FetchMode.SELECT)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<AdPicture> pictures;
+
+	@ManyToOne(optional = false)
+	private User user;
+
+	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Visit> visits;
 
 	public int getNumberOfRooms() {
 		return numberOfRooms;
@@ -129,50 +170,6 @@ public class Ad {
 		this.parking = parking;
 	}
 
-	@Column(nullable = false)
-	private boolean smokers;
-
-	@Column(nullable = false)
-	private boolean animals;
-
-	@Column(nullable = false)
-	private boolean garden;
-
-	@Column(nullable = false)
-	private boolean balcony;
-
-	@Column(nullable = false)
-	private boolean cellar;
-
-	@Column(nullable = false)
-	private boolean furnished;
-
-	@Column(nullable = false)
-	private boolean cable;
-
-	@Column(nullable = false)
-	private boolean garage;
-
-	@Column(nullable = false)
-	private boolean internet;
-
-	// true if studio, false if room	// will be removed
-	@Column(nullable = false)
-	private boolean studio;
-	
-//	@Column(nullable = false)	//new
-//	private Type type;
-
-	@Fetch(FetchMode.SELECT)
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<AdPicture> pictures;
-
-	@ManyToOne(optional = false)
-	private User user;
-	
-	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Visit> visits;
-
 	public Date getCreationDate() {
 		return creationDate;
 	}
@@ -188,19 +185,20 @@ public class Ad {
 	public void setStudio(boolean studio) {	//remove
 		this.studio = studio;
 	}
-	//new
-//	public Type getType(){
-//		return type;
-//	}
-//	public void setType(Type type){
-//		this.type = type;
-//	}
+	
+	public Type getType(){
+		return type;
+	}
+	public void setType(Type type){
+		this.type = type;
+	}
+	
 	//new
 	public boolean getElevator(){
 		return elevator;
 	}
 	public void setElevator(boolean withElevator){
-		this.elevator =withElevator;
+		this.elevator = withElevator;
 	}
 	public boolean getSmokers() {
 		return smokers;
@@ -322,25 +320,27 @@ public class Ad {
 	public int getDistanceSchool(){
 		return distanceSchool;
 	}
+	
 	public void setDistanceSchool(int distanceToSchool){
 		this.distanceSchool = distanceToSchool;
 	}
+	
 	public int getDistanceShopping(){
 		return distanceShopping;
 	}
+	
 	public void setDistanceShopping(int distanceShopping){
 		this.distanceShopping = distanceShopping;
 	}
+	
 	public int getDistancePublicTransport(){
 		return distancePublicTransport;
 	}
+	
 	public void setDistancePublicTransportl(int distancePublicTransport){
 		this.distancePublicTransport = distancePublicTransport;
 	}
-	
-	
-	
-	
+		
 	public String getRoomDescription() {
 		return roomDescription;
 	}
@@ -401,8 +401,8 @@ public class Ad {
 		this.city = city;
 	}
 
-	public Date getDate(boolean date) {
-		if (date)
+	public Date getDate(boolean moveIn) {
+		if (moveIn)
 			return moveInDate;
 		else
 			return moveOutDate;

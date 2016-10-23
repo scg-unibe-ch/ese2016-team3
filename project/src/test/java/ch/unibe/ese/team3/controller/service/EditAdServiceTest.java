@@ -21,6 +21,7 @@ import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.AdPicture;
 import ch.unibe.ese.team3.model.Gender;
+import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.AdDao;
@@ -51,6 +52,7 @@ public class EditAdServiceTest {
 		//Perparation
 		PlaceAdForm placeAdForm = new PlaceAdForm();
 		placeAdForm.setCity("3018 - Bern");
+		placeAdForm.setType(Type.APARTMENT);
 		placeAdForm.setPreferences("Test preferences");
 		placeAdForm.setRoomDescription("Test Room description");
 		placeAdForm.setPrize(600);
@@ -74,9 +76,9 @@ public class EditAdServiceTest {
 		ArrayList<String> filePaths = new ArrayList<>();
 		filePaths.add("/img/test/ad1_1.jpg");
 		
-		User hans = createUser("hans@kanns.ch", "password", "Hans", "Kanns",
+		User hans = createUser("fritz@flitzt.ch", "password", "Fritz", "Flitzt",
 				Gender.MALE);
-		hans.setAboutMe("Hansi Hinterseer");
+		hans.setAboutMe("Wie der Blitz");
 		userDao.save(hans);
 		
 		Ad ad = adService.saveFrom(placeAdForm, filePaths, hans);
@@ -96,9 +98,6 @@ public class EditAdServiceTest {
 	
 	@Test
 	public void deletePictureFromAdTest() throws ParseException{
-		User hans = userDao.findByUsername("user@bern.com");
-		
-		
 		editadservice.deletePictureFromAd(1, 1);
 		
 		Ad adBern = adDao.findOne(1L);

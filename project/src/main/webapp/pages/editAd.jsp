@@ -102,18 +102,9 @@
 			<tr>
 				<td><form:input id="field-title" path="title" value="${ad.title}" /></td>
 				<td>
-					<c:choose>
-						<c:when test="${ad.studio == 'true'}">
-							<form:radiobutton id="type-room" path="studio" value="1"
-								checked="checked" />Room <form:radiobutton id="type-studio"
-								path="studio" value="0" />Studio
-						</c:when>
-						<c:otherwise>
-							<form:radiobutton id="type-room" path="studio" value="0"
-								checked="checked" />Room <form:radiobutton id="type-studio"
-								path="studio" value="1" />Studio
-						</c:otherwise>
-					</c:choose>
+					<form:select id="type-room" path="type">
+						<form:options items="${types}" itemLabel="name" />
+					</form:select>
 			</tr>
 
 			<tr>

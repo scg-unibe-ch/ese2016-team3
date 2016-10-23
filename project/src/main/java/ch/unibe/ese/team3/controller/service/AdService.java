@@ -25,9 +25,6 @@ import ch.unibe.ese.team3.model.Location;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
 import ch.unibe.ese.team3.model.dao.AdDao;
-import ch.unibe.ese.team3.model.dao.AlertDao;
-import ch.unibe.ese.team3.model.dao.MessageDao;
-import ch.unibe.ese.team3.model.dao.UserDao;
 
 /** Handles all persistence operations concerning ad placement and retrieval. */
 @Service
@@ -35,18 +32,6 @@ public class AdService {
 
 	@Autowired
 	private AdDao adDao;
-
-	@Autowired
-	private UserDao userDao;
-
-	@Autowired
-	private AlertDao alertDao;
-
-	@Autowired
-	private MessageDao messageDao;
-
-	@Autowired
-	private UserService userService;
 
 	@Autowired
 	private GeoDataService geoDataService;
@@ -75,7 +60,7 @@ public class AdService {
 		ad.setStreet(placeAdForm.getStreet());
 
 		ad.setStudio(placeAdForm.getStudio()); // will be removed
-//		ad.setType(placeAdForm.getType());		// instead
+		ad.setType(placeAdForm.getType());		// instead
 
 		// take the zipcode - first four digits
 		String zip = placeAdForm.getCity().substring(0, 4);
@@ -236,16 +221,8 @@ public class AdService {
 	public Iterable<Ad> queryResults(SearchForm searchForm) {		
 		Iterable<Ad> results = null;
 
-		// we use this method if we are looking for rooms AND studios
-		if (searchForm.getBothRoomAndStudio()) {
-			results = adDao
-					.findByPrizePerMonthLessThan(searchForm.getPrize() + 1);
-		}
-		// we use this method if we are looking EITHER for rooms OR for studios
-		else {
-			results = adDao.findByStudioAndPrizePerMonthLessThan(
-					searchForm.getStudio(), searchForm.getPrize() + 1);
-		}
+		
+		results = adDao.findByPrizePerMonthLessThanAndTypeIn(searchForm.getPrize() + 1, searchForm.getTypes());
 
 		// filter out zipcode
 		String city = searchForm.getCity().substring(7);

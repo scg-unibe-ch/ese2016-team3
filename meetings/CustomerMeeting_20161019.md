@@ -9,11 +9,13 @@
 #### GUI Mockups
 
 *Start screen:*
+
 - Splash screen is unnecessary
 - Should be a *MUST SEE* page
 - Should feature ads from premium user (a premium user can pay to be displayed on the start page)
 
 *Other:*
+
 - Tabs are a good option, auctions will *NOT* be a separate tab
 - User needs to be able to check properties for sale *WITHOUT* having to to look at auctions (check box options)
 
@@ -21,6 +23,7 @@
 #### Name Ideas 
 
 Name should be:
+
 - Metaphorical (e.g. compass) 
 - Just one name (one component) 
 - something catchy
@@ -28,6 +31,7 @@ Name should be:
 #### Search Criteria and Attributes for/of Properties 
 
 **NOT** necessary from current list:
+
 - Garden 
 - Cellar 
 - Attic 
@@ -36,6 +40,7 @@ Name should be:
 - Dishwasher only for renting
 
 **TO ADD** to current list:
+
 - Distance to public transport, shopping schools should be shown in 100 m steps (until 1000)
 - Type of infrastructure for TV and internet (cable, etc.)
 - Floor level for appartments
@@ -49,11 +54,13 @@ Name should be:
 #### Which features are most important for v2.0?
 
 **1. Priority**
+
 - Creation of premium and normal users (premium users pay, normal users don't)
 - Normal user can upgrade account
 - Paying mechanisms should be implemented
 
 **2. Priority**
+
 - The new features, new attributes and their search, alerts, display etc.
 
 Auctions can be implemented later 

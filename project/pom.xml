@@ -95,6 +95,12 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.4.3</version>
 		</dependency>
+		<!-- Log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
 	</dependencies>
 
 	<profiles>
@@ -258,5 +264,6 @@
 	<packaging>war</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<log4j.version>1.2.17</log4j.version>
 	</properties>
 </project>

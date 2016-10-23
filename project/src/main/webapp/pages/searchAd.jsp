@@ -31,34 +31,6 @@
 	});
 </script>
 
-
-<script>
-function validateType(form)
-{
-	var room = document.getElementById('room');
-	var studio = document.getElementById('studio');
-	var neither = document.getElementById('neither');
-	var both = document.getElementById('both');
-	var type = document.getElementById('type');
-	var filtered = document.getElementById('filtered');
-	
-	if(room.checked && studio.checked) {
-		both.checked = true;
-		neither.checked = false;
-	}
-	else if(!room.checked && !studio.checked) {
-		both.checked = false;
-		neither.checked = true;
-	}
-	else {
-		both.checked = false;
-		neither.checked = false;
-		type.checked = studio.checked;
-	}
-	filtered.checked = false;
-}
-</script>
-
 <h1>Search for an ad</h1>
 <hr />
 
@@ -66,14 +38,7 @@ function validateType(form)
 	id="searchForm" autocomplete="off">
 
 	<fieldset>
-		<form:checkbox name="room" id="room" path="roomHelper" /><label>Room</label>
-		<form:checkbox name="studio" id="studio" path="studioHelper" /><label>Studio</label>
-		
-		<form:checkbox style="display:none" name="neither" id="neither" path="noRoomNoStudio" />
-		<form:checkbox style="display:none" name="both" id="both" path="bothRoomAndStudio" />
-		<form:checkbox style="display:none" name="type" id="type" path="studio" />
-		<form:checkbox style="display:none" name="filtered" id="filtered" path="filtered" />
-		<form:errors path="noRoomNoStudio" cssClass="validationErrorText" />
+		<form:checkboxes items="${types}" path="types" itemLabel="name"/>
 		
 		<br />
 		
@@ -95,7 +60,7 @@ function validateType(form)
 		<form:errors path="prize" cssClass="validationErrorText" />
 		<br />
 
-		<button type="submit" tabindex="7" onClick="validateType(this.form)">Search</button>
+		<button type="submit" tabindex="7">Search</button>
 		<button type="reset" tabindex="8">Cancel</button>
 	</fieldset>
 

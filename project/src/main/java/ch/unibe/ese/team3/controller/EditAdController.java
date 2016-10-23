@@ -28,6 +28,7 @@ import ch.unibe.ese.team3.controller.service.EditAdService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.PictureMeta;
+import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -72,6 +73,7 @@ public class EditAdController {
 		PlaceAdForm form = editAdService.fillForm(ad);
 
 		model.addObject("placeAdForm", form);
+		model.addObject("types", Type.values());
 
 		String realPath = servletContext.getRealPath(IMAGE_DIRECTORY);
 		if (pictureUploader == null) {
@@ -88,7 +90,7 @@ public class EditAdController {
 	public ModelAndView editAdPageWithForm(@Valid PlaceAdForm placeAdForm,
 			BindingResult result, Principal principal,
 			RedirectAttributes redirectAttributes, @RequestParam long adId) {
-		ModelAndView model = new ModelAndView("placeAd");
+		ModelAndView model = new ModelAndView("editAd");
 		if (!result.hasErrors()) {
 			String username = principal.getName();
 			User user = userService.findUserByUsername(username);
