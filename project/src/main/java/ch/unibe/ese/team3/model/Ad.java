@@ -121,7 +121,7 @@ public class Ad {
 		this.renovationYear = renovationYear;
 	}
 
-	public boolean isParking() {
+	public boolean getParking() {
 		return parking;
 	}
 
