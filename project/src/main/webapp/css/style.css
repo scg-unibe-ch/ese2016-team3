@@ -37,3 +37,12 @@ h1 {
 .ad-content {
 	margin-top: 10px;
 }
+
+.ad-small-preview-outer {
+	margin-bottom: 15px;
+}
+
+.ad-small-preview-inner {
+	border: 1px solid lightgray;
+	padding: 15px;
+}

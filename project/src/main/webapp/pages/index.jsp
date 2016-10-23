@@ -15,34 +15,28 @@
 			</c:when>
 			<c:otherwise>
 				<h3>Highlights</h3>
-				<c:forEach var="ad" items="${newest}">
-					<div class="row">
-						<div class="col-xs-12 col-md-3">
-							<a href="<c:url value='/ad?id=${ad.id}' />">
-								<img class="img-responsive" src="${ad.pictures[0].filePath}" />
-							</a>
+			
+				<div class="row">
+					<c:forEach var="ad" items="${newest}">
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 ad-small-preview-outer">
+							<div class="col-md-12 ad-small-preview-inner">
+								<a href="<c:url value='/ad?id=${ad.id}' />">
+									<img class="img-responsive" src="${ad.pictures[0].filePath}" />
+								</a>
+								<h4>
+									<a class="link" href="<c:url value='/ad?id=${ad.id}' />">${ad.title}</a>
+								</h4>
+								<p>${ad.street}, ${ad.zipcode} ${ad.city}</p>
+								<p>
+									<i>${ad.type.name}</i>
+								</p>
+								<strong>CHF ${ad.prizePerMonth }</strong>	
+								<fmt:formatDate value="${ad.moveInDate}" var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+								<p>Move-in date: ${formattedMoveInDate }</p>
+							</div>
 						</div>
-						<div class="col-xs-12 col-md-6">
-							<h2>
-								<a class="link" href="<c:url value='/ad?id=${ad.id}' />">${ad.title}</a>
-							</h2>
-							<p>${ad.street},${ad.zipcode}${ad.city}</p>
-							<br />
-							<p>
-								<i>${ad.type.name}</i>
-							</p>
-						</div>
-						<div class="col-xs-12 col-md-3">
-							<h2>CHF ${ad.prizePerMonth }</h2>
-							<br /> <br />
-
-							<fmt:formatDate value="${ad.moveInDate}"
-								var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
-
-							<p>Move-in date: ${formattedMoveInDate }</p>
-						</div>
-					</div>
-				</c:forEach>
+					</c:forEach>
+				</div>
 			</c:otherwise>
 		</c:choose>
 	</div>

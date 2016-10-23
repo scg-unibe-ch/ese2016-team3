@@ -8,32 +8,30 @@
 
 <!DOCTYPE html>
 <head>
-<link rel="stylesheet" type="text/css" media="screen"
-	href="/css/main.css">
 
-<Title>Compass</Title>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script
-	src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-<link rel="stylesheet"
-	href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/style.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="/js/unreadMessages.js"></script>
+	<Title>Compass</Title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script
+		src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+	<link rel="stylesheet"
+		href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/js/unreadMessages.js"></script>
 
 
-<style>
-/* ensure that autocomplete lists are not too long and have a scrollbar */
-.ui-autocomplete {
-	max-height: 200px;
-	overflow-y: auto;
-	overflow-x: hidden;
-}
-</style>
+	<style>
+	/* ensure that autocomplete lists are not too long and have a scrollbar */
+	.ui-autocomplete {
+		max-height: 200px;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+	</style>
 
 </head>
 
@@ -61,7 +59,7 @@
 			<div class="navbar-inner">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav">
-						<li><a href="/${pagemode}/searchAd">Find</a></li>
+						<li><a href="/${pagemode}/searchAd">Find ad</a></li>
 						<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
 						<li><a href="#">My Auctions</a></li>
 					</ul>
