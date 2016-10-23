@@ -85,6 +85,7 @@ public class Ad {
 	@Column(nullable = false)
 	private boolean parking;
 
+
 	@Column(nullable = false)
 	private boolean smokers;
 
@@ -161,7 +162,7 @@ public class Ad {
 		this.renovationYear = renovationYear;
 	}
 
-	public boolean isParking() {
+	public boolean getParking() {
 		return parking;
 	}
 

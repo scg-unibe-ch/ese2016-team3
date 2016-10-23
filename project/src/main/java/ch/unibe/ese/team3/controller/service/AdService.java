@@ -218,7 +218,7 @@ public class AdService {
 	 * @return an Iterable of all search results
 	 */
 	@Transactional
-	public Iterable<Ad> queryResults(SearchForm searchForm) {		//elevator noch hinzufügen
+	public Iterable<Ad> queryResults(SearchForm searchForm) {		
 		Iterable<Ad> results = null;
 
 		
@@ -308,6 +308,24 @@ public class AdService {
 					earliestOutDate, latestOutDate);
 
 			// filtering for the rest
+			//elevator
+			if(searchForm.getElevator()){
+				Iterator<Ad>iterator = locatedResults.iterator();
+				while(iterator.hasNext()){
+					Ad ad = iterator.next();
+					if(!ad.getElevator())
+						iterator.remove();
+				}
+			}
+			//parking
+			if(searchForm.getParking()){
+				Iterator<Ad>iterator = locatedResults.iterator();
+				while(iterator.hasNext()){
+					Ad ad = iterator.next();
+					if(!ad.getParking())
+						iterator.remove();
+				}
+			}
 			// smokers
 			if (searchForm.getSmokers()) {
 				Iterator<Ad> iterator = locatedResults.iterator();
