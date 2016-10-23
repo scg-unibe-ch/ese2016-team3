@@ -54,13 +54,32 @@
 	});
 </script>
 
+<script>
+$(document).ready(function() {
+	$("#premiumUser").click(function() {
+		$("#content").children().animate({
+			opacity : 0.4
+		}, 300, function() {
+			$("#upgrade").css("display", "block");
+			$("#upgrade").css("opacity", "1");
+		});
+	});
+	
+	$("#CancelUpgrade").click(function() {
+		$("#upgrade").css("display", "none");
+		$("#upgrade").css("opacity", "0");
+		$("#content").children().animate({
+			opacity : 1
+		}, 300);
+	});
+</script>
 <pre>
 	<a href="/">Home</a>   &gt;   Profile</pre>
 
 <div id="userDiv">
 	<c:choose>
 		<c:when test="${user.accountType == 'PREMIUM'}">
-			<h3>This is a PREMIUM Account</h3>
+			<h2>This is a PREMIUM Account</h3>
 		</c:when>
 		<c:otherwise></c:otherwise>
 	</c:choose>
@@ -88,20 +107,18 @@
 					<c:when test="${principalID eq user.id}">
 						<a class="button" href="/profile/editProfile">Edit Profile</a>
 							<c:choose>
-							<c:when test="${user.accountType == 'PREMIUM'}">
-								<h3>This is a PREMIUM Account<h3>
-							</c:when>
-							<c:otherwise>
+							<c:when test="${user.accountType != 'PREMIUM'}">
 								<button type="button" id="premiumUser">Do you want to upgrade to Premium User for only 5$ per month?</button>
-										<table id=creditcardForm>
+										<% /**<table id=creditcardForm>
 											<tr class="creditcardInfo">
 												<td style="display:none;">
 												<td class="signupDescription"><label for="field-creditcardNumber">Credit card number:</label></td>
 												<td><form:input path="user.creditCard" id="field-creditcardNumber" /> <form:errors
 														path="creditCard" cssClass="validationErrorText" /></td>
 											</tr>
-										</table>
-							</c:otherwise>
+										</table>**/%>
+									</c:when>
+							<c:otherwise></c:otherwise>
 							</c:choose>
 					</c:when>
 					<c:otherwise></c:otherwise>
@@ -115,12 +132,17 @@
 	</form>
 </div>
 
-<script>
-$("#premiumUser").click(function(){
-	var self = this;
-	$("#creditcardForm tr.creditcardInfo").toggle(self.checked);
-}).change();
-</script>
+
+<div id="upgrade">
+	<form class="upgradeForm">
+		<h2>Upgrade to Premium User</h2>
+		<br>Please enter your credit card number:<br>
+			<form:input path="user.creditCard" id="field-creditcardNumber" /> <form:errors
+				path="creditCard" cssClass="validationErrorText" />
+		<button type="submit" id="UpgradeNow">Upgrade Now</button>
+		<button type="button" id="CancelUpgrade">Cancel</button>
+	</form>
+</div>
 
 <div id="msgDiv">
 	<form class="msgForm">
