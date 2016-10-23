@@ -71,7 +71,7 @@ public class UserTestDataSaver {
 		
 		//User with no previous messages for MessageServiceTest
 		User kim = createUser("Kim@kardashian.com", "1234", "Kim", "Kardashian",
-				"/img/test/system.jpg", Gender.FEMALE);
+				"/img/test/system.jpg", Gender.FEMALE, AccountType.BASIC);
 		userDao.save(kim);
 		
 		//User for message test
