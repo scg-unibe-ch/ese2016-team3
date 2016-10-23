@@ -38,11 +38,15 @@ h1 {
 	margin-top: 10px;
 }
 
-.ad-small-preview-outer {
+.ad-small-preview-outer, .ad-wide-preview-outer {
 	margin-bottom: 15px;
 }
 
-.ad-small-preview-inner {
+.ad-small-preview-inner, .ad-wide-preview-inner {
 	border: 1px solid lightgray;
 	padding: 15px;
+}
+
+.bottom15 {
+	margin-bottom: 15px;
 }

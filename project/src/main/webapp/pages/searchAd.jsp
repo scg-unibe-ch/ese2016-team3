@@ -13,13 +13,9 @@
 
 <script>
 	$(document).ready(function() {
-		$("#city").autocomplete({
-			minLength : 2
-		});
-		$("#city").autocomplete({
-			source : <c:import url="getzipcodes.jsp" />
-		});
-		$("#city").autocomplete("option", {
+		$("#cityInput").autocomplete({
+			minLength : 2,
+			source : <c:import url="getzipcodes.jsp" />,
 			enabled : true,
 			autoFocus : true
 		});
@@ -40,50 +36,56 @@
 		<h3>Search for an ad</h3>
 		<div class="row">
 			<div class="col-md-12">
-				<form:form method="post" modelAttribute="searchForm" action="/${pagemode}/results"
-							id="searchForm" autocomplete="off" class="form-horizontal">						
-						<div class="panel panel-default">
-							<div class="panel-body">
+				<form:form method="post" modelAttribute="searchForm"
+					action="/${pagemode}/results" id="searchForm" autocomplete="off"
+					class="form-horizontal">
+					<div class="panel panel-default">
+						<div class="panel-body">
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Type</label>
 								<div class="col-sm-6">
 									<c:forEach var="type" items="${types}">
-										<label class="checkbox-inline">
-											<form:checkbox path="types" value="${type}"/>
-											${type.name}
+										<label class="checkbox-inline"> <form:checkbox
+												path="types" value="${type}" /> ${type.name}
 										</label>
 									</c:forEach>
 								</div>
 							</div>
 							<spring:bind path="city">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label for="cityInput" class="col-sm-2 control-label">City / zip code</label>
+									<label for="cityInput" class="col-sm-2 control-label">City
+										/ zip code</label>
 									<div class="col-sm-4">
-										<form:input type="text" name="city" id="cityInput" path="city" placeholder="e.g. Bern" cssClass="form-control" />
-										<form:errors path="city"/>
+										<form:input type="text" name="city" id="cityInput" path="city"
+											placeholder="e.g. Bern" cssClass="form-control" />
+										<form:errors path="city" />
 									</div>
 								</div>
 							</spring:bind>
 							<spring:bind path="radius">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label for="radiusInput" class="col-sm-2 control-label">Within radius of (max.)</label>
+									<label for="radiusInput" class="col-sm-2 control-label">Within
+										radius of (max.)</label>
 									<div class="col-sm-4">
 										<div class="input-group">
-											<form:input id="radiusInput" type="number" path="radius" placeholder="e.g. 5" step="5" cssClass="form-control"/>
+											<form:input id="radiusInput" type="number" path="radius"
+												placeholder="e.g. 5" step="5" cssClass="form-control" />
 											<span class="input-group-addon">km</span>
-											<form:errors path="radius"/>
+											<form:errors path="radius" />
 										</div>
 									</div>
 								</div>
 							</spring:bind>
 							<spring:bind path="prize">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-2 control-label" for="prizeInput">Price (max.)</label>
+									<label class="col-sm-2 control-label" for="prizeInput">Price
+										(max.)</label>
 									<div class="col-sm-4">
 										<div class="input-group">
 											<span class="input-group-addon">Fr.</span>
-											<form:input id="prizeInput" type="number" path="prize" placeholder="e.g. 5" step="50" cssClass="form-control"/>
-											<form:errors path="prize"/>
+											<form:input id="prizeInput" type="number" path="prize"
+												placeholder="e.g. 5" step="50" cssClass="form-control" />
+											<form:errors path="prize" />
 										</div>
 									</div>
 								</div>
@@ -92,8 +94,8 @@
 					</div>
 					<div class="form-group pull-right">
 						<div class="col-sm-12">
-							<button type="reset" class="btn btn-default" >Cancel</button>
-							<button type="submit" class="btn btn-primary" >Search</button>
+							<button type="reset" class="btn btn-default">Cancel</button>
+							<button type="submit" class="btn btn-primary">Search</button>
 						</div>
 					</div>
 				</form:form>
