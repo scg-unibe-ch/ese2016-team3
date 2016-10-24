@@ -112,11 +112,7 @@ public class Ad {
 
 	@Column(nullable = false)
 	private boolean internet;
-
-	// true if studio, false if room	// will be removed
-	@Column(nullable = false)
-	private boolean studio;
-
+	
 	@Enumerated(EnumType.STRING)
 	private Type type;
 
@@ -176,14 +172,6 @@ public class Ad {
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
-	}
-
-	public boolean getStudio() {	//remove
-		return studio;
-	}
-
-	public void setStudio(boolean studio) {	//remove
-		this.studio = studio;
 	}
 	
 	public Type getType(){

@@ -2,6 +2,8 @@ package ch.unibe.ese.team3.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -41,6 +43,8 @@ public class Alert {
 
 	@Column
 	private boolean bothRoomAndStudio;
+	
+	private Type type; 
 
 	public long getId() {
 		return id;
@@ -89,7 +93,17 @@ public class Alert {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-
+	
+	
+	// new 
+	public Type getType(){
+		return type;
+	}
+	public void setType(Type type){
+		this.type = type;
+	}
+	
+	/*
 	public boolean getStudio() {
 		return studio;
 	}
@@ -97,6 +111,7 @@ public class Alert {
 	public void setStudio(boolean studio) {
 		this.studio = studio;
 	}
+	*/
 
 	public boolean getRoom() {
 		return room;
