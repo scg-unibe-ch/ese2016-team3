@@ -58,8 +58,10 @@ public class AlertService {
 
 		alert.setPrice(alertForm.getPrice());
 
+		
+		
 		alert.setRadius(alertForm.getRadius());
-		// alert.setRoom(alertForm.getRoom());
+		//alert.setRoom(alertForm.getRoom());		
 		alert.setType(alertForm.getType());
 
 		alert.setUser(user);
@@ -136,10 +138,12 @@ public class AlertService {
 	/** Checks if an ad is conforming to the criteria in an alert. */
 	private boolean typeMismatchWith(Ad ad, Alert alert) {
 		/*
-		 * boolean mismatch = false; if (!alert.getBothRoomAndStudio() &&
-		 * ad.getStudio() != alert.getStudio()) mismatch = true; return
-		 * mismatch;
-		 */
+		boolean mismatch = false;
+		if (!alert.getBothRoomAndStudio()
+				&& ad.getStudio() != alert.getStudio())
+			mismatch = true;
+		return mismatch;
+		*/
 		return false;
 	}
 

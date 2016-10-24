@@ -188,14 +188,6 @@ public class Ad {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
-
-	public boolean getStudio() {	//remove
-		return studio;
-	}
-
-	public void setStudio(boolean studio) {	//remove
-		this.studio = studio;
-	}
 	
 	public Type getType(){
 		return type;

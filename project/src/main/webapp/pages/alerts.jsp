@@ -82,12 +82,15 @@ function typeOfAlert(alert) {
 	id="alertForm" autocomplete="off">
 
 	<fieldset>
+		<%-- <form:checkboxes items="${types}" path="types" itemLabel="name"/>
+		<br />--%>
+		
 		<form:checkbox name="room" id="room" path="room" /><label>Room</label>
 		<form:checkbox name="studio" id="studio" path="studio" /><label>Studio</label>
 		
 		<form:checkbox style="display:none" name="neither" id="neither" path="noRoomNoStudio" />
 		<form:checkbox style="display:none" name="both" id="both" path="bothRoomAndStudio" />
-		<form:errors path="noRoomNoStudio" cssClass="validationErrorText" /><br />
+		<form:errors path="noRoomNoStudio" cssClass="validationErrorText" /><br /> 
 		
 		<label for="city">City / zip code:</label>
 		<form:input type="text" name="city" id="city" path="city"

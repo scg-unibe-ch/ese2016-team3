@@ -61,7 +61,7 @@ public class AlertServiceTest {
 		alert.setUser(adolfOgi);
 		alert.setBothRoomAndStudio(false);
 		alert.setRoom(false);
-		alert.setStudio(true);
+		//alert.setStudio(true);
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
 		alert.setPrice(1500);
@@ -72,7 +72,7 @@ public class AlertServiceTest {
 		alert.setUser(adolfOgi);
 		alert.setBothRoomAndStudio(true);
 		alert.setRoom(true);
-		alert.setStudio(true);
+		//alert.setStudio(true);
 		alert.setCity("Bern");
 		alert.setZipcode(3002);
 		alert.setPrice(1000);
@@ -105,7 +105,7 @@ public class AlertServiceTest {
 		alert.setUser(thomyF);
 		alert.setBothRoomAndStudio(false);
 		alert.setRoom(false);
-		alert.setStudio(true);
+		//alert.setStudio(true);
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
 		alert.setPrice(1500);
@@ -116,7 +116,7 @@ public class AlertServiceTest {
 		alert.setUser(thomyF);
 		alert.setBothRoomAndStudio(true);
 		alert.setRoom(true);
-		alert.setStudio(true);
+		//alert.setStudio(true);
 		alert.setCity("Bern");
 		alert.setZipcode(3002);
 		alert.setPrice(1000);
@@ -135,7 +135,7 @@ public class AlertServiceTest {
 		oltenResidence.setCreationDate(date);
 		oltenResidence.setPrizePerMonth(1200);
 		oltenResidence.setSquareFootage(42);
-		oltenResidence.setStudio(false);
+		// oltenResidence.setStudio(false);
 		oltenResidence.setSmokers(true);
 		oltenResidence.setAnimals(false);
 		oltenResidence.setRoomDescription("blah");
