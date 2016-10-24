@@ -69,7 +69,6 @@ public class Ad {
 	@Column(nullable = false)
 	private int distancePublicTransport;
 
-	
 	@Column(nullable = false)
 	@Lob
 	private String roomDescription;
@@ -82,37 +81,42 @@ public class Ad {
 	@Column(nullable = false)
 	private boolean elevator;
 	
+	@Enumerated(EnumType.STRING)
+	private InfrastructureType infrastructureType;
+	
 	@Column(nullable = false)
 	private boolean parking;
-
-
-	@Column(nullable = false)
-	private boolean smokers;
-
-	@Column(nullable = false)
-	private boolean animals;
-
-	@Column(nullable = false)
-	private boolean garden;
 
 	@Column(nullable = false)
 	private boolean balcony;
 
 	@Column(nullable = false)
-	private boolean cellar;
-
-	@Column(nullable = false)
-	private boolean furnished;
-
-	@Column(nullable = false)
-	private boolean cable;
-
-	@Column(nullable = false)
 	private boolean garage;
-
-	@Column(nullable = false)
-	private boolean internet;
 	
+	@Column(nullable = false)
+	private int floorLevel;
+
+	
+	
+	public void setFloorLevel(int floorLevel) {
+		this.floorLevel = floorLevel;
+	}
+	public int getFloorLevel() {
+		return this.floorLevel;
+	}
+
+	public InfrastructureType getInfrastructureType() {
+		return this.infrastructureType;
+	}
+
+	public void setInfrastructureType(InfrastructureType infrastructureType) {
+		this.infrastructureType = infrastructureType;
+	}
+
+	public void setDistancePublicTransport(int distancePublicTransport) {
+		this.distancePublicTransport = distancePublicTransport;
+	}
+
 	@Column(nullable = false)
 	private boolean dishwasher;
 
@@ -123,10 +127,6 @@ public class Ad {
 	public void setDishwasher(boolean dishwasher) {
 		this.dishwasher = dishwasher;
 	}
-
-	// true if studio, false if room	// will be removed
-	@Column(nullable = false)
-	private boolean studio;
 
 	@Enumerated(EnumType.STRING)
 	private Type type;
@@ -203,29 +203,7 @@ public class Ad {
 	public void setElevator(boolean withElevator){
 		this.elevator = withElevator;
 	}
-	public boolean getSmokers() {
-		return smokers;
-	}
-
-	public void setSmokers(boolean allowsSmokers) {
-		this.smokers = allowsSmokers;
-	}
-
-	public boolean getAnimals() {
-		return animals;
-	}
-
-	public void setAnimals(boolean allowsAnimals) {
-		this.animals = allowsAnimals;
-	}
-
-	public boolean getGarden() {
-		return garden;
-	}
-
-	public void setGarden(boolean hasGarden) {
-		this.garden = hasGarden;
-	}
+	
 
 	public boolean getBalcony() {
 		return balcony;
@@ -235,44 +213,12 @@ public class Ad {
 		this.balcony = hasBalcony;
 	}
 
-	public boolean getCellar() {
-		return cellar;
-	}
-
-	public void setCellar(boolean hasCellar) {
-		this.cellar = hasCellar;
-	}
-
-	public boolean getFurnished() {
-		return furnished;
-	}
-
-	public void setFurnished(boolean furnished) {
-		this.furnished = furnished;
-	}
-
-	public boolean getCable() {
-		return cable;
-	}
-
-	public void setCable(boolean hasCable) {
-		this.cable = hasCable;
-	}
-
 	public boolean getGarage() {
 		return garage;
 	}
 
 	public void setGarage(boolean garage) {
 		this.garage = garage;
-	}
-
-	public boolean getInternet() {
-		return internet;
-	}
-
-	public void setInternet(boolean internet) {
-		this.internet = internet;
 	}
 
 	public long getId() {

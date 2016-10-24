@@ -7,59 +7,61 @@
 
 
 <c:import url="template/header.jsp" />
-<pre><a href="/">Home</a>   &gt;   <a href="/searchAd/">Search</a>   &gt;   Results</pre>
+<pre>
+	<a href="/">Home</a>   &gt;   <a href="/searchAd/">Search</a>   &gt;   Results</pre>
 
 <script>
-/*
- * This script takes all the resultAd divs and sorts them by a parameter specified by the user.
- * No arguments need to be passed, since the function simply looks up the dropdown selection.
- */
-function sort_div_attribute() {
-    //determine sort modus (by which attribute, asc/desc)
-    var sortmode = $('#modus').find(":selected").val();   
-    
-    //only start the process if a modus has been selected
-    if(sortmode.length > 0) {
-    	var attname;
-		
-    	//determine which variable we pass to the sort function
-		if(sortmode == "price_asc" || sortmode == "price_desc")
-			attname = 'data-price';
-	    else if(sortmode == "moveIn_asc" || sortmode == "moveIn_desc")	
-			attname = 'data-moveIn';
-	    else
-			attname = 'data-age';
-    	
-		//copying divs into an array which we're going to sort
-	    var divsbucket = new Array();
-	    var divslist = $('div.resultAd');
-	    var divlength = divslist.length;
-	    for (a = 0; a < divlength; a++) {
-			divsbucket[a] = new Array();
-			divsbucket[a][0] = divslist[a].getAttribute(attname);
-			divsbucket[a][1] = divslist[a];
-			divslist[a].remove();
-	    }
-		
-	    //sort the array
-		divsbucket.sort(function(a, b) {
-	    if (a[0] == b[0])
-			return 0;
-	    else if (a[0] > b[0])
-			return 1;
-        else
-			return -1;
-		});
+	/*
+	 * This script takes all the resultAd divs and sorts them by a parameter specified by the user.
+	 * No arguments need to be passed, since the function simply looks up the dropdown selection.
+	 */
+	function sort_div_attribute() {
+		//determine sort modus (by which attribute, asc/desc)
+		var sortmode = $('#modus').find(":selected").val();
 
-	    //invert sorted array for certain sort options
-		if(sortmode == "price_desc" || sortmode == "moveIn_asc" || sortmode == "dateAge_asc")
-			divsbucket.reverse();
-        
-	    //insert sorted divs into document again
-		for(a = 0; a < divlength; a++)
-        	$("#resultsDiv").append($(divsbucket[a][1]));
+		//only start the process if a modus has been selected
+		if (sortmode.length > 0) {
+			var attname;
+
+			//determine which variable we pass to the sort function
+			if (sortmode == "price_asc" || sortmode == "price_desc")
+				attname = 'data-price';
+			else if (sortmode == "moveIn_asc" || sortmode == "moveIn_desc")
+				attname = 'data-moveIn';
+			else
+				attname = 'data-age';
+
+			//copying divs into an array which we're going to sort
+			var divsbucket = new Array();
+			var divslist = $('div.resultAd');
+			var divlength = divslist.length;
+			for (a = 0; a < divlength; a++) {
+				divsbucket[a] = new Array();
+				divsbucket[a][0] = divslist[a].getAttribute(attname);
+				divsbucket[a][1] = divslist[a];
+				divslist[a].remove();
+			}
+
+			//sort the array
+			divsbucket.sort(function(a, b) {
+				if (a[0] == b[0])
+					return 0;
+				else if (a[0] > b[0])
+					return 1;
+				else
+					return -1;
+			});
+
+			//invert sorted array for certain sort options
+			if (sortmode == "price_desc" || sortmode == "moveIn_asc"
+					|| sortmode == "dateAge_asc")
+				divsbucket.reverse();
+
+			//insert sorted divs into document again
+			for (a = 0; a < divlength; a++)
+				$("#resultsDiv").append($(divsbucket[a][1]));
+		}
 	}
-}
 </script>
 
 <script>
@@ -74,7 +76,7 @@ function sort_div_attribute() {
 			enabled : true,
 			autoFocus : true
 		});
-		
+
 		$("#field-earliestMoveInDate").datepicker({
 			dateFormat : 'dd-mm-yy'
 		});
@@ -95,34 +97,35 @@ function sort_div_attribute() {
 <hr />
 
 <div>
-<select id="modus">
-    <option value="">Sort by:</option>
-    <option value="price_asc">Price (ascending)</option>
-    <option value="price_desc">Price (descending)</option>
-    <option value="moveIn_desc">Move-in date (earliest to latest)</option>
-    <option value="moveIn_asc">Move-in date (latest to earliest)</option>
-    <option value="dateAge_asc">Date created (youngest to oldest)</option>
-    <option value="dateAge_desc">Date created (oldest to youngest)</option>
-</select>
+	<select id="modus">
+		<option value="">Sort by:</option>
+		<option value="price_asc">Price (ascending)</option>
+		<option value="price_desc">Price (descending)</option>
+		<option value="moveIn_desc">Move-in date (earliest to latest)</option>
+		<option value="moveIn_asc">Move-in date (latest to earliest)</option>
+		<option value="dateAge_asc">Date created (youngest to oldest)</option>
+		<option value="dateAge_desc">Date created (oldest to
+			youngest)</option>
+	</select>
 
-<button onClick="sort_div_attribute()">Sort</button>	
+	<button onClick="sort_div_attribute()">Sort</button>
 </div>
 <c:choose>
 	<c:when test="${empty results}">
 		<p>No results found!
 	</c:when>
 	<c:otherwise>
-		<div id="resultsDiv" class="resultsDiv">			
+		<div id="resultsDiv" class="resultsDiv">
 			<c:forEach var="ad" items="${results}">
-				<div class="resultAd" data-price="${ad.prizePerMonth}" 
-								data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
+				<div class="resultAd" data-price="${ad.prizePerMonth}"
+					data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
 					<div class="resultLeft">
 						<a href="<c:url value='/ad?id=${ad.id}' />"><img
 							src="${ad.pictures[0].filePath}" /></a>
 						<h2>
 							<a class="link" href="<c:url value='/ad?id=${ad.id}' />">${ad.title }</a>
 						</h2>
-						<p>${ad.street}, ${ad.zipcode} ${ad.city}</p>
+						<p>${ad.street},${ad.zipcode}${ad.city}</p>
 						<br />
 						<p>
 							<i>${ad.type.name}</i>
@@ -148,14 +151,12 @@ function sort_div_attribute() {
 
 	<div id="filterDiv">
 		<h2>Filter results:</h2>
-		<form:checkboxes items="${types}" path="types" itemLabel="name"/>
-		<br/>
-		<label for="city">City / zip code:</label>
+		<form:checkboxes items="${types}" path="types" itemLabel="name" />
+		<br /> <label for="city">City / zip code:</label>
 		<form:input type="text" name="city" id="city" path="city"
 			placeholder="e.g. Bern" tabindex="3" />
-		<form:errors path="city" cssClass="validationErrorText" /><br />
-			
-		<label for="radius">Within radius of (max.):</label>
+		<form:errors path="city" cssClass="validationErrorText" />
+		<br /> <label for="radius">Within radius of (max.):</label>
 		<form:input id="radiusInput" type="number" path="radius"
 			placeholder="e.g. 5" step="5" />
 		km
@@ -164,14 +165,17 @@ function sort_div_attribute() {
 		<form:input id="prizeInput" type="number" path="prize"
 			placeholder="e.g. 5" step="50" />
 		CHF
-		<form:errors path="prize" cssClass="validationErrorText" /><br />
-		
-		<hr class="slim">		
-		
+		<form:errors path="prize" cssClass="validationErrorText" />
+		<br />
+
+		<hr class="slim">
+
 		<table style="width: 80%">
 			<tr>
-				<td><label for="earliestMoveInDate">Earliest move-in date</label></td>
-				<td><label for="earliestMoveOutDate">Earliest move-out date (optional)</label></td>
+				<td><label for="earliestMoveInDate">Earliest move-in
+						date</label></td>
+				<td><label for="earliestMoveOutDate">Earliest move-out
+						date (optional)</label></td>
 			</tr>
 			<tr>
 				<td><form:input type="text" id="field-earliestMoveInDate"
@@ -181,7 +185,8 @@ function sort_div_attribute() {
 			</tr>
 			<tr>
 				<td><label for="latestMoveInDate">Latest move-in date</label></td>
-				<td><label for="latestMoveOutDate">Latest move-out date (optional)</label></td>
+				<td><label for="latestMoveOutDate">Latest move-out date
+						(optional)</label></td>
 			</tr>
 			<tr>
 				<td><form:input type="text" id="field-latestMoveInDate"
@@ -190,41 +195,39 @@ function sort_div_attribute() {
 						path="latestMoveOutDate" /></td>
 			</tr>
 			<tr>
-				<td><form:checkbox id="field-smoker" path="smokers" value="1" /><label>Smoking inside
-						allowed</label></td>
-				<td><form:checkbox id="field-animals" path="animals" value="1" /><label>Animals
-						inside allowed</label></td>
+				<label for="FloorLevel">Floor level:</label>
+				<form:input id="FloorLevel" type="number" path="floorLevel"
+					placeholder="e.g. 3" step="1" />
+
+				<form:errors path="radius" cssClass="validationErrorText" />
 			</tr>
 			<tr>
-				<td><form:checkbox id="field-garden" path="garden" value="1" /><label>Garden
-						(co-use)</label></td>
 				<td><form:checkbox id="field-balcony" path="balcony" value="1" /><label>Balcony
 						or Patio</label></td>
 			</tr>
 			<tr>
-				<td><form:checkbox id="field-cellar" path="cellar" value="1" /><label>Cellar
-						or Attic</label></td>
-				<td><form:checkbox id="field-furnished" path="furnished"
-						value="1" /><label>Furnished</label></td>
+				<td><label for="field-NumberOfBath">Number of bath</label></td>
+				<td><form:input id="field-NumberOfBath" type="number"
+						path="numberOfBath" placeholder="Prize per month" step="1" /> <form:errors
+						path="numberOfBath" cssClass="validationErrorText" /></td>
 			</tr>
 			<tr>
-				<td><form:checkbox id="field-cable" path="cable" value="1" /><label>Cable
-						TV</label></td>
 				<td><form:checkbox id="field-garage" path="garage" value="1" /><label>Garage</label>
 				</td>
 			</tr>
 			<tr>
-				<td><form:checkbox id="field-internet" path="internet" value="1" /><label>WiFi</label></td>
-				<td><form:checkbox id="field-elevator" path="elevator" value="1" /><label>Elevator</label></td>
+				<td><form:checkbox id="field-elevator" path="elevator"
+						value="1" /><label>Elevator</label></td>
 			</tr>
 			<tr>
 				<td><form:checkbox id="field-parking" path="parking" value="1" /><label>Parking</label></td>
-				<td><form:checkbox id="field-dishwasher" path="dishwasher" value="1" /><label>Dishwasher</label></td>
+				<td><form:checkbox id="field-dishwasher" path="dishwasher"
+						value="1" /><label>Dishwasher</label></td>
 			</tr>
 		</table>
-			
-		
-		<button type="submit">Filter</button>	
+
+
+		<button type="submit">Filter</button>
 		<button type="reset">Cancel</button>
 	</div>
 </form:form>

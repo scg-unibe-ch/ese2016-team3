@@ -6,6 +6,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
 
 /** This form is used for searching for an ad. */
@@ -73,45 +74,18 @@ public class SearchForm {
 
 	private boolean elevator;
 	private boolean parking;
-	private boolean smokers;
-	private boolean animals;
-	private boolean garden;
 	private boolean balcony;
-	private boolean cellar;
-	private boolean furnished;
-	private boolean cable;
 	private boolean garage;
-	private boolean internet;
 	private boolean dishwasher;
 
 	private boolean roomHelper;
+	
+	// new
+	private int floorLevel;
+	private InfrastructureType infrastructureType;
 
 	// the ugly stuff
 	private boolean studioHelper;
-
-	public boolean getSmokers() {
-		return smokers;
-	}
-
-	public void setSmokers(boolean smokers) {
-		this.smokers = smokers;
-	}
-
-	public boolean getAnimals() {
-		return animals;
-	}
-
-	public void setAnimals(boolean animals) {
-		this.animals = animals;
-	}
-
-	public boolean getGarden() {
-		return garden;
-	}
-
-	public void setGarden(boolean garden) {
-		this.garden = garden;
-	}
 
 	public boolean getBalcony() {
 		return balcony;
@@ -120,31 +94,7 @@ public class SearchForm {
 	public void setBalcony(boolean balcony) {
 		this.balcony = balcony;
 	}
-
-	public boolean getCellar() {
-		return cellar;
-	}
-
-	public void setCellar(boolean cellar) {
-		this.cellar = cellar;
-	}
-
-	public boolean getFurnished() {
-		return furnished;
-	}
-
-	public void setFurnished(boolean furnished) {
-		this.furnished = furnished;
-	}
-
-	public boolean getCable() {
-		return cable;
-	}
-
-	public void setCable(boolean cable) {
-		this.cable = cable;
-	}
-
+	
 	public boolean getGarage() {
 		return garage;
 	}
@@ -153,13 +103,6 @@ public class SearchForm {
 		this.garage = garage;
 	}
 
-	public boolean getInternet() {
-		return internet;
-	}
-
-	public void setInternet(boolean internet) {
-		this.internet = internet;
-	}
 	public boolean getElevator() {
 		return elevator;
 	}
@@ -255,4 +198,21 @@ public class SearchForm {
 	public void setDishwasher(boolean dishwasher) {
 		this.dishwasher = dishwasher;
 	}
+	public InfrastructureType getInfrastructureType() {
+		return infrastructureType;
+	}
+
+	public void setInfrastructureType(InfrastructureType infrastructureType) {
+		this.infrastructureType = infrastructureType;
+	}
+
+
+	public int getFloorLevel() {
+		return floorLevel;
+	}
+
+	public void setFloorLevel(int floorLevel) {
+		this.floorLevel = floorLevel;
+	}
+	
 }

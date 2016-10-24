@@ -67,19 +67,14 @@ public class AdServiceTest {
 		placeAdForm.setSquareFootage(50);
 		placeAdForm.setTitle("title");
 		placeAdForm.setStreet("Hauptstrasse 13");
-		placeAdForm.setStudio(true);
 		placeAdForm.setMoveInDate("27-02-2015");
 		placeAdForm.setMoveOutDate("27-04-2015");
 		
-		placeAdForm.setSmokers(true);
-		placeAdForm.setAnimals(false);
-		placeAdForm.setGarden(true);
+
 		placeAdForm.setBalcony(false);
-		placeAdForm.setCellar(true);
-		placeAdForm.setFurnished(false);
-		placeAdForm.setCable(false);
+
 		placeAdForm.setGarage(true);
-		placeAdForm.setInternet(false);
+
 		
 		ArrayList<String> filePaths = new ArrayList<>();
 		filePaths.add("/img/test/ad1_1.jpg");
@@ -100,8 +95,6 @@ public class AdServiceTest {
 		}
 		
 		//Testing
-		assertTrue(ad.getSmokers());
-		assertFalse(ad.getAnimals());
 		assertEquals("Bern", ad.getCity());
 		assertEquals(3018, ad.getZipcode());
 		assertEquals("Test preferences", ad.getPreferences());
@@ -157,9 +150,7 @@ public class AdServiceTest {
 		searchForm.setCity("3001 - Bern");
 		searchForm.setPrize(600);
 		searchForm.setRadius(80);
-		searchForm.setCable(true);
 		searchForm.setBalcony(true);
-		searchForm.setAnimals(false);
 		searchForm.setBalcony(true);
 		searchForm.setGarage(true);
 		Type[] types = {Type.APARTMENT}; // why changes the the Id of the existing Elements in the database ? 

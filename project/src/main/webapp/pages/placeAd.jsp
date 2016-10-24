@@ -174,6 +174,7 @@
 			<tr>
 				<td><form:input id="field-BuildYear" path="buildYear" /></td>
 				<td><form:input id="field-RenovationYear" path="renovationYear" /></td>
+				<td><label for="field-Floor">Floor Level</label></td>
 			</tr>
 		</table>
 	</fieldset>
@@ -185,38 +186,27 @@
 
 		<table class="placeAdTable">
 			<tr>
-				<td><form:checkbox id="field-smoker" path="smokers" value="1" /><label>Animals
-						allowed</label></td>
-				<td><form:checkbox id="field-animals" path="animals" value="1" /><label>Smoking
-						inside allowed</label></td>
 				<td><label for="field-NumberOfBath">Number of bath</label></td>
 				<td><form:input id="field-NumberOfBath" type="number"
 						path="numberOfBath" placeholder="Prize per month" step="1" /> <form:errors
 						path="numberOfBath" cssClass="validationErrorText" /></td>
+						
+				<td><label for="type-room">InfrastructureType:</label></td>
 			</tr>
 
 			<tr>
-				<td><form:checkbox id="field-garden" path="garden" value="1" /><label>Garden
-						(co-use)</label></td>
 				<td><form:checkbox id="field-balcony" path="balcony" value="1" /><label>Balcony
 						or Patio</label></td>
 				<td><form:checkbox id="field-parking" path="parking" value="1" /><label>Parking</label></td>
 			</tr>
 			<tr>
-				<td><form:checkbox id="field-cellar" path="cellar" value="1" /><label>Cellar
-						or Attic</label></td>
-				<td><form:checkbox id="field-furnished" path="furnished"
-						value="1" /><label>Furnished</label></td>
+
 			</tr>
 			<tr>
-				<td><form:checkbox id="field-cable" path="cable" value="1" /><label>Cable
-						TV</label></td>
 				<td><form:checkbox id="field-garage" path="garage" value="1" /><label>Garage</label>
 				</td>
 			</tr>
 			<tr>
-				<td><form:checkbox id="field-internet" path="internet"
-						value="1" /><label>WiFi available</label></td>
 				<td><form:checkbox id="field-elevator" path="elevator"
 						value="1" /><label>Elevator </label></td>
 				<%-- new  --%>
