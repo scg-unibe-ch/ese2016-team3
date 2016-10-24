@@ -67,7 +67,7 @@
 			</tr>					
 		</table>
 		<br />
-		<input type="checkbox" path="isPremium" id="premiumUser">Do you want to sign up as a Premium User for only 5$ per month?
+		<form:checkbox path="isPremium" id="premiumUser"/>Do you want to sign up as a Premium User for only 5$ per month?
 		<br>
 		<table id=creditcardForm>
 			<tr class="creditcardInfo">
