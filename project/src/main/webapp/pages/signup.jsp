@@ -62,12 +62,31 @@
 				<td><form:select path="gender">
 						<form:option value="FEMALE" label="Female" />
 						<form:option value="MALE" label="Male" />
+						<form:option value="OTHER" label="Other"/>
 					</form:select></td>
-			</tr>
+			</tr>					
 		</table>
 		<br />
-		<button type="submit">Sign up</button>
+		<form:checkbox path="isPremium" id="premiumUser"/>Do you want to sign up as a Premium User for only 5$ per month?
+		<br>
+		<table id=creditcardForm>
+			<tr class="creditcardInfo">
+				<td style="display:none;">
+				<td class="signupDescription"><label for="field-creditcardNumber">Credit card number:</label></td>
+				<td><form:input path="creditCard" id="field-creditcardNumber" /> <form:errors
+						path="creditCard" cssClass="validationErrorText" /></td>
+			</tr>
+		</table>
+		<br />		
+		<button type="submit">Sign up</button>	
 	</fieldset>
 </form:form>
+
+<script>
+$("#premiumUser").change(function(){
+	var self = this;
+	$("#creditcardForm tr.creditcardInfo").toggle(self.checked);
+}).change();
+</script>
 
 <c:import url="template/footer.jsp" />
