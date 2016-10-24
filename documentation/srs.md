@@ -105,7 +105,8 @@ The following sections describe abbreviations and special terms used in this doc
 |uc25|Visit Ad belonging to an enquiry|The user of the web application|Low|2| 
 |uc26|View alerts|The user of the web application|Low|2| 
 |uc27|Subscribe to alert|The user of the web application|Med|1| 
-|uc28|Delete alert|The user of the web application|Low|2| 
+|uc28|Delete alert|The user of the web application|Low|2|
+|uc29|Upgrade account|The user of the web application|Med|1|
 
 
 #### User management
@@ -124,10 +125,11 @@ The following sections describe abbreviations and special terms used in this doc
 ||2. The login form and a link "sign up" is shown|
 ||3. The user clicks on the link "sign up"|
 ||4. The sign up form is shown|
-||5. The user enter his name, his email address, a password and selects his gender|
+||5. The user enter his name, his email address, a password and selects his gender. He selects the type of his account (normal or premium)|
 ||6. The user clicks on the button "Sign up"|
 ||7. The login page and a success message are shown|
 |**Alternate flow**|If the user doesn't fill up the entire sign up form in step 5, validation error messages are shown.|
+||If the user selects "premium" as account type in step 5, additional form elements to get his credit card information is shown.|
 
 |Use case element|Description|
 |:---|:---|
@@ -173,6 +175,20 @@ The following sections describe abbreviations and special terms used in this doc
 |**Normal flow**|1. The user hovers over his user image in the header line of the web portal|
 ||2. The user clicks on the appearing button "Logout"|
 ||3. The user is logged out and the start page of the web portal is shown|
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc29`|
+|**Name**|Upgrade user account|
+|**Description**|The user upgrades his account from normal to premium|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the the application (`uc02`) and visits his profile page (`uc03`).|
+|**Trigger**|The user wants to upgrade his account to get more benefit of the application|
+|**Normal flow**|1. The user clicks on the button "Upgrade account"|
+||2. A form to get the credit card information of the user is shown|
+||3. The user fills out the form and clicks on "Save"|
+||4. The account is upgraded to premium|
 |**Alternate flow**|None|
 
 #### Searching and viewing ads
@@ -581,37 +597,49 @@ The real estate manager
 
 #### User management
 
-- The user can login to the application.
-Therefore he has to enters his email-address and his password into the login-form. 
-If he has no account yet, he can sign up as a new user.
+##### Login
 
-- For signing up as a new user he has to enter his first and last name, select his gender and give his email-address and a password, which has to be at least 6 characters long. If any of these informations aren't fill in, an error occurs, which tells the user that he must fill in a valid information.
+The user can login to the application. Therefore he has to enter his email-address and his password into the login-form. If he has no account yet, he can sign up as a new user.
+
+##### Signup
+
+For signing up as a new user he has to enter his first and last name, select his gender and give his email-address and a password, which has to be at least 6 characters long.
+
+The user can choose the account type. There are two account types (premium and normal) If the user chooses premium, he has to enter his credit card information during signup.
+
+If any of these informations aren't filled in, an error occurs, which tells the user that he must fill in a valid information.
+
+##### Logged in users
 
 A logged in user can:
 
 - logout
-- edit his public profile.There he can change his password, first name, last name, username and write something about himself. By clicking "update" his changes will be saved.
+- edit his public profile.There he can change his password, first name, last name, username and write something about himself. By clicking "update" his changes will be saved. Normal users can upgrade their account to a premium account there as well.
 
 
 #### Messaging system
 
 A logged in user can:
 
-- Send messages in two ways:
+- **Send messages** in two ways:
  + sending messages by visiting the advertiser Profile and clicking on the button "Message".Then he can enter the subject and his message and click on "Send" if the want to send the message or click on "Cancel" to exit the message form. If no subject is filled in, the message won't be send. If the subject is entered but no message, then the message wont'be send. Only of both( subject and message) are entered, the message will be send.
  + other way of sending messages is by sending the message from the users Profile. For the new message he has to specify to whom he wants to send the email and give in the subject and write his message. Then he can click either "send"(for sending the message) or "cancel"(for leaving the message form).If the user puts in a invalid email address of the recipient then there will appear a box saying :"This user does not exist". Again all information (to, subject, and message) have to be filled in, if not, the message won't be send.
 
-- view his sent messages. Furthermore  he can see in a chart the subject, sender, recipient and the date sent from each message he has ever sent. By clicking on a line from this chart he gets a view of the send message.
+- **view his sent messages**. Furthermore  he can see in a chart the subject, sender, recipient and the date sent from each message he has ever sent. By clicking on a line from this chart he gets a view of the send message.
 
-- view imcoming messages. Furthermore he can see in a chart the subject, sender, recipient and the date sent from the each message he has received. By clicking on a line from this chart he gets a view of the message.
+- **view imcoming messages**. Furthermore he can see in a chart the subject, sender, recipient and the date sent from the each message he has received. By clicking on a line from this chart he gets a view of the message.
 
-- **New** User can now receive real email to his email adress, not only messages to internal inbox.
+##### E-Mail
 
-- **New** Automatic sendig (from the system) of alerts by email and by the inbox ????
+Messages to the inbox of the user aren't just sent to the internal inbox of the application. The user also receives them by email.
 
 #### Searching and viewing ads
 
-A user can search for ads by clicking the search button whether or not he's logged in. The initial search is filtered by zip code with max radius and max price. After the result is displayed, the user can choose to:
+A user can search for ads by clicking the search button whether or not he's logged in. The initial search is filtered by zip code with max radius and max price.
+
+In the result lists, the ads of premium users are displayed slightly different than the ads of normal users, to catch more attention. They're also ranked higher than normal ads (see section "User roles" below).
+
+After the results are displayed, the user can choose to:
 
 - *Sort search:* The search results can be sorted by: ascending or descending price, move-in date earliest to latest or latest to earliest, or by the date the ad was created, youngest to oldest or oldest to youngest. 
 
@@ -631,23 +659,13 @@ From the view of the ad, the user can:
 
 - View ad location. The address in the information box on the top left is clickable and will redirect the user to google maps where the address is shown.
 
-- **NEW** View distance from schools and public transport.
-
-- **NEW** Search capabilities extended to cover more/different filter criteria.
-
-- **NEW** User can search for properties for sale as well as for rent. 
-
-- **NEW** Ads belonging to premium users are at the top of the search and have bigger pictures than the ads from normal users.
-
-- **NEW** Auction function from the view of ads for sale.
-
 #### Alerts 
 
-A logged in user can view and modify his alerts by choosing "Alerts" from the Profile drop-down menu. He can create a new alert by filling in the initial search criteria and clicking "Subscribe". Below where the user can create new alerts is "Your active alerts", where he can vew a list of alerts in a table with type, city, radius, max price and a column "Action" with a button to delete the alert.
+A logged in user can view and modify his alerts by choosing "Alerts" from the Profile drop-down menu. He can create a new alert by filling in the initial search criteria and clicking "Subscribe". Below where the user can create new alerts is "Your active alerts", where he can view a list of alerts in a table with type, city, radius, max price and a column "Action" with a button to delete the alert.
 
-- **NEW** A user can create search alerts which notify him about new ads corresponding more search criteria.
-- **NEW** Alerts are sent both to message inbox and by email to the user.
-- **NEW** Premium users get alerts instantly, regular users get them once a day.
+If an alert is triggered, the user gets a message to his inbox in the application. The message is also sent to his mail account.
+
+The application distinguishes between normal and premium users (see section 'User roles' below).
 
 
 #### Placement of advertisements
@@ -657,24 +675,33 @@ A real estate manager can create a new advertisement for real estate. An adverti
 The following general information can be declared:
 
 - The *title* of the advertisement (text)
-- The *type* of the real estate (room or studio)
+- The *type* of the real estate (appartment, house, villa, loft, studio)
 - The *location* of the real estate (*street* and *zip code*)
 - The *move-in date*
 - The *move-out date* (optional)
-- The *price per month*
+- The *construction / renovation date*
+- The *price* (per month for renting or total price for buying)
 - The *size* of the real estate in square meters
+- The *number of rooms*
 
 The following *additional attributes* of the real estate can be specified in a yes/no manner:
 
-- animals are allowed
-- smoking inside is allowed
-- a garden belongs to the real estate
-- a cellar or attic belongs to the real estate
-- cable TV is available
-- WIFI is available
-- the real estate is furnished
-- a balcony or patio belongs to the real estate
-- a garage belongs to the real estate
+- a *balcony* belongs to the real estate
+- a *garage* or *parking space* belongs to the real estate
+- *elevator* available
+- *dishwasher* available (only for rent)
+
+The following attributes can be specified in 100 m steps up to 1 km:
+
+- distance to *public transport*
+- distance to *shopping possibilities*
+- distance to *schools*
+
+The following information can be specified with a number or with a selection of options:
+
+- *floor level*
+- number of *bath rooms*
+- type of *infrastructure* for TV/internet (satellite, fiber, cable etc.)
 
 Additionally a *textual description* of the real estate can be added to the ad.
 
@@ -684,11 +711,18 @@ The advertiser can state his *preferences* in questions of tenants with a textua
 
 The advertiser can specify multiple possible *visiting times* for enquiries. A visiting time is specified by a date, a start time and an end time. This is not mandatory.
 
-**NEW** User can choose between whether he wants to rent or sell his property and open an auction or decide on a fix price in the case of selling
+The advertiser can specify, whether he wants to sell or rent a real estate.
+
+If he chooses to sell real estate, he can sell it by *auction*. If he chooses so, he can specify the following parameters of the auction:
+
+- *start time* and *end time*
+- *start price*
+- *increment* of the price
+- *direct buy* price
 
 #### User roles
 
-**NEW** The application distinguishes two different user types: *premium* and *normal*.
+As already mentioned, the application distinguishes two different user types: *premium* and *normal*.
 
 The application behaves different for the different user roles as follows:
 
@@ -737,4 +771,4 @@ A table of the flats a user is interested in and will or has already visited, co
 
 #### Design of the application
 
-The application should have a modern look and feel.
+The application should have a modern look and feel. It should be mobile ready.
