@@ -49,4 +49,6 @@ public class GeoDataServiceTest {
 		assertEquals("Lenzburg", locations.get(0).getCity());
 		assertEquals("Ammerswil", locations.get(1).getCity());
 	}
+	
+	
 }

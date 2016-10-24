@@ -220,6 +220,10 @@ function sort_div_attribute() {
 						<label><form:checkbox id="field-internet" path="internet"
 								value="1" />WiFi</label>
 					</div>
+					<div class="checkbox">
+						<label><form:checkbox id="field-internet" path="dishwasher"
+								value="1" />Dishwasher</label>
+					</div>
 				</div>
 			</div>
 			<div class="form-group pull-right">

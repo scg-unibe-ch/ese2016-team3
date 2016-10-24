@@ -85,6 +85,7 @@ public class Ad {
 	@Column(nullable = false)
 	private boolean parking;
 
+
 	@Column(nullable = false)
 	private boolean smokers;
 
@@ -111,6 +112,17 @@ public class Ad {
 
 	@Column(nullable = false)
 	private boolean internet;
+	
+	@Column(nullable = false)
+	private boolean dishwasher;
+
+	public boolean getDishwasher() {
+		return dishwasher;
+	}
+
+	public void setDishwasher(boolean dishwasher) {
+		this.dishwasher = dishwasher;
+	}
 
 	// true if studio, false if room	// will be removed
 	@Column(nullable = false)
@@ -161,7 +173,7 @@ public class Ad {
 		this.renovationYear = renovationYear;
 	}
 
-	public boolean isParking() {
+	public boolean getParking() {
 		return parking;
 	}
 

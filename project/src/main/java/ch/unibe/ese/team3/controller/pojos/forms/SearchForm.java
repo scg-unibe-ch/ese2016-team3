@@ -67,7 +67,12 @@ public class SearchForm {
 	private String latestMoveInDate;
 	private String earliestMoveOutDate;
 	private String latestMoveOutDate;
+	
+	private int numberOfRooms;
+	private int numberOfBath;
 
+	private boolean elevator;
+	private boolean parking;
 	private boolean smokers;
 	private boolean animals;
 	private boolean garden;
@@ -77,6 +82,7 @@ public class SearchForm {
 	private boolean cable;
 	private boolean garage;
 	private boolean internet;
+	private boolean dishwasher;
 
 	private boolean roomHelper;
 
@@ -154,6 +160,37 @@ public class SearchForm {
 	public void setInternet(boolean internet) {
 		this.internet = internet;
 	}
+	public boolean getElevator() {
+		return elevator;
+	}
+
+	public void setElevator(boolean elevator) {
+		this.elevator = elevator;
+	}
+
+	public boolean getParking() {
+		return parking;
+	}
+
+	public void setParking(boolean parking) {
+		this.parking = parking;
+	}
+
+	public int getNumberOfRooms() {
+		return numberOfRooms;
+	}
+
+	public void setNumberOfRooms(int numberOfRooms) {
+		this.numberOfRooms = numberOfRooms;
+	}
+
+	public int getNumberOfBath() {
+		return numberOfBath;
+	}
+
+	public void setNumberOfBath(int numberOfBath) {
+		this.numberOfBath = numberOfBath;
+	}
 
 	public String getEarliestMoveInDate() {
 		return earliestMoveInDate;
@@ -209,5 +246,13 @@ public class SearchForm {
 
 	public void setTypes(Type[] types) {
 		this.types = types;
+	}
+
+	public boolean getDishwasher() {
+		return dishwasher;
+	}
+
+	public void setDishwasher(boolean dishwasher) {
+		this.dishwasher = dishwasher;
 	}
 }

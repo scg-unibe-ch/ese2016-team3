@@ -220,6 +220,8 @@
 				<td><form:checkbox id="field-elevator" path="elevator"
 						value="1" /><label>Elevator </label></td>
 				<%-- new  --%>
+				<td><form:checkbox id="field-dishwasher" path="dishwasher"
+						value="1" /><label>Dishwasher (only for renting) </label></td>
 			</tr>
 
 		</table>
