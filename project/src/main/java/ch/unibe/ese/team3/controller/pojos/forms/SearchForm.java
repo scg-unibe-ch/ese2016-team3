@@ -82,6 +82,7 @@ public class SearchForm {
 	private boolean cable;
 	private boolean garage;
 	private boolean internet;
+	private boolean dishwasher;
 
 	private boolean roomHelper;
 
@@ -245,5 +246,13 @@ public class SearchForm {
 
 	public void setTypes(Type[] types) {
 		this.types = types;
+	}
+
+	public boolean getDishwasher() {
+		return dishwasher;
+	}
+
+	public void setDishwasher(boolean dishwasher) {
+		this.dishwasher = dishwasher;
 	}
 }
