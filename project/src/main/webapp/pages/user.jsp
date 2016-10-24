@@ -53,10 +53,36 @@
 	});
 </script>
 
+<script>
+$(document).ready(function() {
+	$("#premiumUser").click(function() {
+		$("#content").children().animate({
+			opacity : 0.4
+		}, 300, function() {
+			$("#upgrade").css("display", "block");
+			$("#upgrade").css("opacity", "1");
+		});
+	});
+	
+	$("#CancelUpgrade").click(function() {
+		$("#upgrade").css("display", "none");
+		$("#upgrade").css("opacity", "0");
+		$("#content").children().animate({
+			opacity : 1
+		}, 300);
+	});
+});
+</script>
 <pre>
 	<a href="/">Home</a>   &gt;   Profile</pre>
 
 <div id="userDiv">
+	<c:choose>
+		<c:when test="${user.accountType == 'PREMIUM'}">
+			<h2>This is a PREMIUM Account</h2>
+		</c:when>
+		<c:otherwise></c:otherwise>
+	</c:choose>
 	<c:choose>
 		<c:when test="${user.picture.filePath != null}">
 			<img src="${user.picture.filePath}">
@@ -80,10 +106,15 @@
 				<c:choose>
 					<c:when test="${principalID eq user.id}">
 						<a class="button" href="/profile/editProfile">Edit Profile</a>
+							<c:choose>
+							<c:when test="${user.accountType != 'PREMIUM'}">
+								<button type="button" id="premiumUser">Do you want to upgrade to Premium User for only 5$ per month?</button>
+							</c:when>
+							<c:otherwise></c:otherwise>
+							</c:choose>
 					</c:when>
 					<c:otherwise></c:otherwise>
 				</c:choose>
-
 			</c:when>
 			<c:otherwise>
 				<p>Please log in to contact this person.</p>
@@ -91,7 +122,21 @@
 		</c:choose>
 	</form>
 </div>
-<div id="msgDiv">
+
+
+<div id="upgrade" style="display:none;" >
+	<form class="upgradeForm" >
+		<h2>Upgrade to Premium User</h2>
+		<br>Please enter your credit card number:<br>
+			<form:input path="user.creditCard" id="field-creditcardNumber" /> <form:errors
+				path="creditCard" cssClass="validationErrorText" />
+		<br>
+		<button type="submit" id="UpgradeNow">Upgrade Now</button>
+		<button type="button" id="CancelUpgrade">Cancel</button>
+	</form>
+</div>
+
+<div id="msgDiv" style="display:none;">
 	<form class="msgForm">
 		<h2>Message this user</h2>
 		<br> <br> <label>Subject: <span>*</span></label> <input

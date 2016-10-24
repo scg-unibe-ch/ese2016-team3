@@ -5,6 +5,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import ch.unibe.ese.team3.model.Gender;
+import ch.unibe.ese.team3.model.AccountType;
 
 /** This form is used when a user want to sign up for an account. */
 public class SignupForm {
@@ -12,7 +13,10 @@ public class SignupForm {
 	@Size(min = 6, message = "Password must be at least 6 characters long")
 	@NotNull
 	private String password;
-
+	
+	/*@Pattern(regexp = password, message = "Your password validation doesn't match the original password");
+	private String passwordValidation;*/
+	
 	@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Must be valid email address")
 	@NotNull
 	private String email;
@@ -27,6 +31,15 @@ public class SignupForm {
 	
 	@NotNull
 	private Gender gender;
+	
+	@NotNull
+	private AccountType accountType;
+	
+	@NotNull
+	private boolean isPremium;
+	
+	@Pattern(regexp = "[0-9]{16}", message = "Credit card number must be 16 digits")
+	private String creditCard;
 
 	public String getEmail() {
 		return email;
@@ -68,4 +81,27 @@ public class SignupForm {
 		this.gender = gender;
 	}
 	
+	public AccountType getAccountType(){
+		return accountType;
+	}
+	
+	public void setAccountType(AccountType type){
+		this.accountType = type;
+	}
+	
+	public boolean getIsPremium(){
+		return isPremium;
+	}
+	
+	public void setIsPremium(boolean premium){
+		this.isPremium = premium;
+	}
+	
+	public String getCreditCard(){
+		return creditCard;
+	}
+	
+	public void setCreditCard(String card){
+		this.creditCard = card;
+	}
 }

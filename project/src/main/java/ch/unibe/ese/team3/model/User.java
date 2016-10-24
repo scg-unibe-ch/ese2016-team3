@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -46,6 +48,12 @@ public class User {
 
 	@Column(nullable = false)
 	private boolean enabled;
+	
+	@Enumerated(EnumType.STRING)
+	private AccountType accountType;
+	
+	@Column(nullable = true)
+	private String creditCard;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -109,6 +117,22 @@ public class User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+	public AccountType getAccountType(){
+		return accountType;
+	}
+	
+	public void setAccountType(AccountType type){
+		accountType = type;
+	}
+	
+	public String getCreditCard(){
+		return creditCard;
+	}
+	
+	public void setCreditCard(String card){
+		creditCard = card;
 	}
 
 	public Set<UserRole> getUserRoles() {

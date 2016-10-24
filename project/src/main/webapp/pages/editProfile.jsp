@@ -63,11 +63,46 @@
 </table>
 
 <div>
-		<button type="submit">Update</button>
+		<button type="button" id="premiumUser">Upgrade to Premium Account for only 5$!</button>
 </div>
 
+<script>
+$(document).ready(function() {
+	$("#premiumUser").click(function() {
+		$("#content").children().animate({
+			opacity : 0.4
+		}, 300, function() {
+			$("#upgrade").css("display", "block");
+			$("#upgrade").css("opacity", "1");
+		});
+	});
+	
+	$("#CancelUpgrade").click(function() {
+		$("#upgrade").css("display", "none");
+		$("#upgrade").css("opacity", "0");
+		$("#content").children().animate({
+			opacity : 1
+		}, 300);
+	});
+});
+</script>
+
+<div>
+	<button type="submit">Update</button>
+</div>
 </form:form>
 
+<div id="upgrade" style="display:none;" >
+	<form class="upgradeForm" >
+		<h2>Upgrade to Premium User</h2>
+		<br>Please enter your credit card number:<br>
+			<form:input path="currentUser.creditCard" id="field-creditcardNumber" /> <form:errors
+				path="creditCard" cssClass="validationErrorText" />
+		<br>
+		<button type="submit" id="UpgradeNow">Upgrade Now</button>
+		<button type="button" id="CancelUpgrade">Cancel</button>
+	</form>
+</div>
 
 <c:import url="template/footer.jsp" />
 
