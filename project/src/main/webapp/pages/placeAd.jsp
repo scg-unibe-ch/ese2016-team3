@@ -168,13 +168,15 @@
 			</tr>
 			<tr>
 				<td><label for="field-BuildYear">Year of construction</label></td>
-				<td><label for="field-RenovationYear">Year of
-						renovation </label></td>
+				<td><label for="field-RenovationYear">Year of renovation </label></td>
+				<td><label for="field-Floor">Floor Level</label></td>
 			</tr>
 			<tr>
 				<td><form:input id="field-BuildYear" path="buildYear" /></td>
 				<td><form:input id="field-RenovationYear" path="renovationYear" /></td>
-				<td><label for="field-Floor">Floor Level</label></td>
+				<td><form:input id="field-Floor" type="number"
+						path="floorLevel" placeholder="0" step="1" /> <form:errors
+						path="floorLevel" cssClass="validationErrorText" /></td>
 			</tr>
 		</table>
 	</fieldset>
