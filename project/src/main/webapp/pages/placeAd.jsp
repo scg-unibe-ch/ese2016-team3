@@ -148,13 +148,13 @@
 			</tr>
 
 			<tr>
-				<td><form:input id="field-Prize" type="number" path="prize"
+				<td><form:input id="field-Prize" type="number" min="0" path="prize"
 						placeholder="Prize per month" step="50" /> <form:errors
 						path="prize" cssClass="validationErrorText" /></td>
-				<td><form:input id="field-SquareFootage" type="number"
+				<td><form:input id="field-SquareFootage" type="number" min="0"
 						path="squareFootage" placeholder="Square footage" step="5" /> <form:errors
 						path="squareFootage" cssClass="validationErrorText" /></td>
-				<td><form:input id="field-NumberOfRooms" type="number"
+				<td><form:input id="field-NumberOfRooms" type="number" min="0"
 						path="numberOfRooms" placeholder="numberOfRooms" step="1" /> <form:errors
 						path="numberOfRooms" cssClass="validationErrorText" /></td>
 			</tr>
@@ -169,16 +169,16 @@
 			</tr>
 
 			<tr>
-				<td><form:input id="field-DistanceSchool" type="number"
+				<td><form:input id="field-DistanceSchool" type="number" min="0"
 						path="distanceSchool" placeholder="" step="100" /> <form:errors
 						path="distanceSchool" cssClass="validationErrorText" /></td>
 
-				<td><form:input id="field-DistanceShopping" type="number"
+				<td><form:input id="field-DistanceShopping" type="number" min="0"
 						path="DistanceShopping" placeholder="Distance shopping" step="100" />
 					<form:errors path="DistanceShopping" cssClass="validationErrorText" /></td>
 
 				<td><form:input id="field-DistancePublicTransport"
-						type="number" path="DistancePublicTransport"
+						type="number" min="0" path="DistancePublicTransport" 
 						placeholder="Distance transport" step="100" /> <form:errors
 						path="DistancePublicTransport" cssClass="validationErrorText" /></td>
 			</tr>
@@ -190,11 +190,11 @@
 				<td><label for="field-FloorLevel">Floor level </label></td>
 			</tr>
 			<tr>
-				<td><form:input id="field-BuildYear" path="buildYear" /></td>
-				<td><form:input id="field-RenovationYear" path="renovationYear" /></td>
+				<td><form:input id="field-BuildYear" path="buildYear" min="0" /></td>
+				<td><form:input id="field-RenovationYear" path="renovationYear" min="0" /></td>
 
 
-				<td><form:input id="field-Floor" type="number"
+				<td><form:input id="field-Floor" type="number" min="0"
 						path="floorLevel" placeholder="0" step="1" /> <form:errors
 						path="floorLevel" cssClass="validationErrorText" /></td>
 			</tr>
@@ -212,7 +212,7 @@
 				<td><label for="infrastructureType-room">InfrastructureType</label></td>
 			</tr>
 			<tr>
-				<td><form:input id="field-NumberOfBath" type="number"
+				<td><form:input id="field-NumberOfBath" type="number" min="0"
 						path="numberOfBath" placeholder="Number of baths" step="1" /> <form:errors
 						path="numberOfBath" cssClass="validationErrorText" /></td>
 				<td><form:select id="infrastructureType"
