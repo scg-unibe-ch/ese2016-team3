@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.controller.pojos.forms.SignupForm;
 import ch.unibe.ese.team3.model.User;
+import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
@@ -32,6 +33,16 @@ public class SignupService {
 		user.setPassword(signupForm.getPassword());
 		user.setEnabled(true);
 		user.setGender(signupForm.getGender());
+		
+		if(signupForm.getIsPremium() == true){
+			user.setAccountType(AccountType.PREMIUM);
+			user.setCreditCard(signupForm.getCreditCard());
+		}
+		else {
+			user.setAccountType(AccountType.BASIC);
+			user.setCreditCard("0000000000000000");
+		}
+		
 		
 		Set<UserRole> userRoles = new HashSet<>();
 		UserRole role = new UserRole();
