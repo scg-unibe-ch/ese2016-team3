@@ -195,34 +195,42 @@
 						path="latestMoveOutDate" /></td>
 			</tr>
 			<tr>
-				<label for="FloorLevel">Floor level:</label>
+				<label for="FloorLevel">Floor level</label>
 				<form:input id="FloorLevel" type="number" path="floorLevel"
 					placeholder="e.g. 3" step="1" />
+				<label for="SquareFootage">Square Footage</label>
+				<form:input id="SquareFootage" type="number" path="squareFootage"
+					placeholder="e.g. 30" step="5" />
 
 				<form:errors path="radius" cssClass="validationErrorText" />
 			</tr>
 			<tr>
-				<td><form:checkbox id="field-balcony" path="balcony" value="1" /><label>Balcony
-						or Patio</label></td>
+				<td><label for="field-NumberOfBath">Number of baths</label></td>
+				<td><label for="infrastructureType-room">InfrastructureType</label></td>
 			</tr>
 			<tr>
-				<td><label for="field-NumberOfBath">Number of bath</label></td>
 				<td><form:input id="field-NumberOfBath" type="number"
-						path="numberOfBath" placeholder="Prize per month" step="1" /> <form:errors
-						path="numberOfBath" cssClass="validationErrorText" /></td>
+					path="numberOfBath" placeholder="Prize per month" step="1" /> <form:errors
+					path="numberOfBath" cssClass="validationErrorText" /></td>
+				<td><form:select id="infrastructureType"
+						path="infrastructureType">
+						<form:options items="${infrastructureTypes}" itemLabel="name" />
+					</form:select></td>
 			</tr>
 			<tr>
 				<td><form:checkbox id="field-garage" path="garage" value="1" /><label>Garage</label>
 				</td>
+				<td><form:checkbox id="field-balcony" path="balcony" value="1" /><label>Balcony
+						or Patio</label></td>
 			</tr>
 			<tr>
 				<td><form:checkbox id="field-elevator" path="elevator"
 						value="1" /><label>Elevator</label></td>
+				<td><form:checkbox id="field-dishwasher" path="dishwasher"
+						value="1" /><label>Dishwasher</label></td>
 			</tr>
 			<tr>
 				<td><form:checkbox id="field-parking" path="parking" value="1" /><label>Parking</label></td>
-				<td><form:checkbox id="field-dishwasher" path="dishwasher"
-						value="1" /><label>Dishwasher</label></td>
 			</tr>
 		</table>
 

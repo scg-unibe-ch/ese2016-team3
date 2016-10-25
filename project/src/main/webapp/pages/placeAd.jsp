@@ -167,7 +167,7 @@
 				<td><label for="field-DistancePublicTransport">Distance
 						to public transport</label></td>
 			</tr>
-
+			<%-- it is possible to enter numbers below zero, even though min="0" is specified --%>
 			<tr>
 				<td><form:input id="field-DistanceSchool" type="number" min="0"
 						path="distanceSchool" placeholder="" step="100" /> <form:errors
