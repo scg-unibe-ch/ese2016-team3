@@ -12,68 +12,84 @@
 
 <script src="/js/pictureUpload.js"></script>
 
-
 <script>
-	$(document).ready(function() {
-		
-		// Go to controller take what you need from user
-		// save it to a hidden field
-		// iterate through it
-		// if there is id == x then make "Bookmark Me" to "bookmarked"
-		
-		$("#field-city").autocomplete({
-			minLength : 2
-		});
-		$("#field-city").autocomplete({
-			source : <c:import url="getzipcodes.jsp" />
-		});
-		$("#field-city").autocomplete("option", {
-			enabled : true,
-			autoFocus : true
-		});
-		$("#field-moveInDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		$("#field-moveOutDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		
-		$("#field-visitDay").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		
-		$("#addVisitButton").click(function() {
-			var date = $("#field-visitDay").val();
-			if(date == ""){
-				return;
-			}
-			
-			var startHour = $("#startHour").val();
-			var startMinutes = $("#startMinutes").val();
-			var endHour = $("#endHour").val();
-			var endMinutes = $("#endMinutes").val();
-			
-			if (startHour > endHour) {
-				alert("Invalid times. The visit can't end before being started.");
-				return;
-			} else if (startHour == endHour && startMinutes >= endMinutes) {
-				alert("Invalid times. The visit can't end before being started.");
-				return;
-			}
-			
-			var newVisit = date + ";" + startHour + ":" + startMinutes + 
-				";" + endHour + ":" + endMinutes; 
-			var newVisitLabel = date + " " + startHour + ":" + startMinutes + 
-			" to " + endHour + ":" + endMinutes; 
-			
-			var index = $("#addedVisits input").length;
-			
-			var label = "<p>" + newVisitLabel + "</p>";
-			var input = "<input type='hidden' value='" + newVisit + "' name='visits[" + index + "]' />";
-			
-			$("#addedVisits").append(label + input);
-		});
-	});
+	$(document)
+			.ready(
+					function() {
+
+						// Go to controller take what you need from user
+						// save it to a hidden field
+						// iterate through it
+						// if there is id == x then make "Bookmark Me" to "bookmarked"
+
+						$("#field-city").autocomplete({
+							minLength : 2
+						});
+						$("#field-city").autocomplete({
+							source : <c:import url="getzipcodes.jsp" />
+						});
+						$("#field-city").autocomplete("option", {
+							enabled : true,
+							autoFocus : true
+						});
+						$("#field-moveInDate").datepicker({
+							dateFormat : 'dd-mm-yy'
+						});
+						$("#field-moveOutDate").datepicker({
+							dateFormat : 'dd-mm-yy'
+						});
+
+						$("#field-visitDay").datepicker({
+							dateFormat : 'dd-mm-yy'
+						});
+
+						$("#addVisitButton")
+								.click(
+										function() {
+											var date = $("#field-visitDay")
+													.val();
+											if (date == "") {
+												return;
+											}
+
+											var startHour = $("#startHour")
+													.val();
+											var startMinutes = $(
+													"#startMinutes").val();
+											var endHour = $("#endHour").val();
+											var endMinutes = $("#endMinutes")
+													.val();
+
+											if (startHour > endHour) {
+												alert("Invalid times. The visit can't end before being started.");
+												return;
+											} else if (startHour == endHour
+													&& startMinutes >= endMinutes) {
+												alert("Invalid times. The visit can't end before being started.");
+												return;
+											}
+
+											var newVisit = date + ";"
+													+ startHour + ":"
+													+ startMinutes + ";"
+													+ endHour + ":"
+													+ endMinutes;
+											var newVisitLabel = date + " "
+													+ startHour + ":"
+													+ startMinutes + " to "
+													+ endHour + ":"
+													+ endMinutes;
+
+											var index = $("#addedVisits input").length;
+
+											var label = "<p>" + newVisitLabel
+													+ "</p>";
+											var input = "<input type='hidden' value='" + newVisit + "' name='visits[" + index + "]' />";
+
+											$("#addedVisits").append(
+													label + input);
+										});
+					});
 </script>
 
 <pre>
@@ -136,10 +152,10 @@
 						placeholder="Prize per month" step="50" /> <form:errors
 						path="prize" cssClass="validationErrorText" /></td>
 				<td><form:input id="field-SquareFootage" type="number"
-						path="squareFootage" placeholder="Prize per month" step="5" /> <form:errors
+						path="squareFootage" placeholder="Square footage" step="5" /> <form:errors
 						path="squareFootage" cssClass="validationErrorText" /></td>
 				<td><form:input id="field-NumberOfRooms" type="number"
-						path="numberOfRooms" placeholder="Prize per month" step="1" /> <form:errors
+						path="numberOfRooms" placeholder="numberOfRooms" step="1" /> <form:errors
 						path="numberOfRooms" cssClass="validationErrorText" /></td>
 			</tr>
 			<%-- new --%>
@@ -154,27 +170,32 @@
 
 			<tr>
 				<td><form:input id="field-DistanceSchool" type="number"
-						path="distanceSchool" placeholder="Prize per month" step="100" />
-					<form:errors path="distanceSchool" cssClass="validationErrorText" /></td>
+						path="distanceSchool" placeholder="" step="100" /> <form:errors
+						path="distanceSchool" cssClass="validationErrorText" /></td>
 
 				<td><form:input id="field-DistanceShopping" type="number"
-						path="DistanceShopping" placeholder="Prize per month" step="100" />
+						path="DistanceShopping" placeholder="Distance shopping" step="100" />
 					<form:errors path="DistanceShopping" cssClass="validationErrorText" /></td>
 
 				<td><form:input id="field-DistancePublicTransport"
 						type="number" path="DistancePublicTransport"
-						placeholder="Prize per month" step="100" /> <form:errors
+						placeholder="Distance transport" step="100" /> <form:errors
 						path="DistancePublicTransport" cssClass="validationErrorText" /></td>
 			</tr>
 			<tr>
 				<td><label for="field-BuildYear">Year of construction</label></td>
 				<td><label for="field-RenovationYear">Year of
 						renovation </label></td>
+				<td><label for="field-FloorLevel">Floor level </label></td>
 			</tr>
 			<tr>
 				<td><form:input id="field-BuildYear" path="buildYear" /></td>
 				<td><form:input id="field-RenovationYear" path="renovationYear" /></td>
-				<td><label for="field-Floor">Floor Level</label></td>
+
+				<%-- new floorLevel --%>
+				<td><form:input id="field-floorLevel" type="number"
+						path="floorLevel" placeholder="floor level" step="1" /> <form:errors
+						path="floorLevel" cssClass="validationErrorText" /></td>
 			</tr>
 		</table>
 	</fieldset>
@@ -186,12 +207,17 @@
 
 		<table class="placeAdTable">
 			<tr>
-				<td><label for="field-NumberOfBath">Number of bath</label></td>
+				<td><label for="field-NumberOfBath">Number of baths</label></td>
+				<td><label for="infrastructureType-room">InfrastructureType</label></td>
+			</tr>
+			<tr>
 				<td><form:input id="field-NumberOfBath" type="number"
-						path="numberOfBath" placeholder="Prize per month" step="1" /> <form:errors
+						path="numberOfBath" placeholder="Number of baths" step="1" /> <form:errors
 						path="numberOfBath" cssClass="validationErrorText" /></td>
-						
-				<td><label for="type-room">InfrastructureType:</label></td>
+				<td><form:select id="infrastructureType"
+						path="infrastructureType">
+						<form:options items="${infrastructureTypes}" itemLabel="name" />
+					</form:select></td>
 			</tr>
 
 			<tr>
@@ -205,13 +231,13 @@
 			<tr>
 				<td><form:checkbox id="field-garage" path="garage" value="1" /><label>Garage</label>
 				</td>
+				<%-- new  --%>
+				<td><form:checkbox id="field-dishwasher" path="dishwasher"
+						value="1" /><label>Dishwasher</label></td>
 			</tr>
 			<tr>
 				<td><form:checkbox id="field-elevator" path="elevator"
 						value="1" /><label>Elevator </label></td>
-				<%-- new  --%>
-				<td><form:checkbox id="field-dishwasher" path="dishwasher"
-						value="1" /><label>Dishwasher (only for renting) </label></td>
 			</tr>
 
 		</table>

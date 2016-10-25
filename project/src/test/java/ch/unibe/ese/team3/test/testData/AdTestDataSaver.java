@@ -80,7 +80,7 @@ public class AdTestDataSaver {
 		adBern.setMoveOutDate(moveOutDate1);
 		adBern.setPrizePerMonth(400);
 		adBern.setSquareFootage(50);
-		//adBern.setStudio(false);
+		adBern.setNumberOfBath(1);
 		adBern.setRoomDescription(roomDescription1);
 		adBern.setPreferences(preferences1);
 		adBern.setUser(bernerBaer);
@@ -117,6 +117,7 @@ public class AdTestDataSaver {
 		adBern2.setCreationDate(creationDate2);
 		adBern2.setMoveOutDate(moveOutDate4);
 		adBern2.setPrizePerMonth(700);
+		adBern2.setNumberOfBath(1);
 		adBern2.setSquareFootage(60);
 		//adBern2.setStudio(true);
 		adBern2.setRoomDescription(studioDescription2);
@@ -159,6 +160,7 @@ public class AdTestDataSaver {
 		adBasel.setRoomDescription(studioDescription3);
 		adBasel.setPreferences(roomPreferences3);
 		adBasel.setUser(bernerBaer);
+		adBasel.setNumberOfBath(1);
 		adBasel.setTitle("Nice, bright studio in the center of Basel");
 		adBasel.setStreet("Bruderholzstrasse 32");
 		adBasel.setCity("Basel");
@@ -191,6 +193,7 @@ public class AdTestDataSaver {
 		adOlten.setRoomDescription(studioDescription4);
 		adOlten.setPreferences(roomPreferences4);
 		adOlten.setUser(ese);
+		adOlten.setNumberOfBath(1);
 		adOlten.setTitle("Roommate wanted in Olten City");
 		adOlten.setStreet("Zehnderweg 5");
 		adOlten.setCity("Olten");
@@ -221,6 +224,7 @@ public class AdTestDataSaver {
 		//adNeuchâtel.setStudio(true);
 		adNeuchâtel.setRoomDescription(studioDescription5);
 		adNeuchâtel.setPreferences(roomPreferences5);
+		adNeuchâtel.setNumberOfBath(2);
 		adNeuchâtel.setUser(bernerBaer);
 		adNeuchâtel.setTitle("Studio extrèmement bon marché à Neuchâtel");
 		adNeuchâtel.setStreet("Rue de l'Hôpital 11");
@@ -247,6 +251,7 @@ public class AdTestDataSaver {
 		adBiel.setCreationDate(creationDate6);
 		adBiel.setPrizePerMonth(480);
 		adBiel.setSquareFootage(10);
+		adBiel.setNumberOfBath(1);
 		//adBiel.setStudio(true);
 		adBiel.setRoomDescription(studioDescription6);
 		adBiel.setPreferences(roomPreferences6);
@@ -291,6 +296,7 @@ public class AdTestDataSaver {
 		adZurich.setStreet("Hauptstrasse 61");
 		adZurich.setCity("Zürich");
 		adZurich.setBalcony(true);
+		adZurich.setNumberOfBath(2);
 		adZurich.setGarage(true);
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adZurich, "/img/test/ad1_3.jpg"));
@@ -325,6 +331,7 @@ public class AdTestDataSaver {
 		adLuzern.setRoomDescription(studioDescription8);
 		adLuzern.setPreferences(roomPreferences8);
 		adLuzern.setUser(oprah);
+		adLuzern.setNumberOfBath(1);
 		adLuzern.setTitle("Elegant Studio in Lucerne");
 		adLuzern.setStreet("Schwanenplatz 61");
 		adLuzern.setCity("Luzern");
@@ -365,6 +372,7 @@ public class AdTestDataSaver {
 		adAarau.setStreet("Bruderholzstrasse 32");
 		adAarau.setCity("Aarau");
 		adAarau.setBalcony(true);
+		adAarau.setNumberOfBath(1);
 		adAarau.setGarage(false);
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adAarau, "/img/test/ad3_3.jpg"));
@@ -401,6 +409,7 @@ public class AdTestDataSaver {
 		adDavos.setCity("Davos");
 		adDavos.setBalcony(true);
 		adDavos.setGarage(false);
+		adDavos.setNumberOfBath(1);
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adDavos, "/img/test/ad4_3.png"));
 		pictures.add(createPicture(adDavos, "/img/test/ad4_2.png"));
@@ -431,6 +440,7 @@ public class AdTestDataSaver {
 		adLausanne.setStreet("Rue de l'Eglise 26");
 		adLausanne.setCity("Lausanne");
 		adLausanne.setBalcony(false);
+		adLausanne.setNumberOfBath(1);
 		adLausanne.setGarage(false);
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adLausanne, "/img/test/ad5_3.jpg"));
@@ -460,6 +470,7 @@ public class AdTestDataSaver {
 		adLocarno.setStreet("Kirchweg 12");
 		adLocarno.setCity("Locarno");
 		adLocarno.setBalcony(false);
+		adLocarno.setNumberOfBath(1);
 		adLocarno.setGarage(false);
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adLocarno, "/img/test/ad6_3.png"));

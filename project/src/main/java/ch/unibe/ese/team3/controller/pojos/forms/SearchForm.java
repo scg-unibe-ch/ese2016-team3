@@ -83,9 +83,10 @@ public class SearchForm {
 	// new
 	private int floorLevel;
 	private InfrastructureType infrastructureType;
+	private int squareFootage;
 
 	// the ugly stuff
-	private boolean studioHelper;
+	private boolean studioHelper; // to remove?
 
 	public boolean getBalcony() {
 		return balcony;
@@ -206,13 +207,20 @@ public class SearchForm {
 		this.infrastructureType = infrastructureType;
 	}
 
-
 	public int getFloorLevel() {
 		return floorLevel;
 	}
 
 	public void setFloorLevel(int floorLevel) {
 		this.floorLevel = floorLevel;
+	}
+	
+	public int getSquareFootage() {
+		return squareFootage;
+	}
+
+	public void setSquareFootage(int squareFootage) {
+		this.squareFootage = squareFootage;
 	}
 	
 }
