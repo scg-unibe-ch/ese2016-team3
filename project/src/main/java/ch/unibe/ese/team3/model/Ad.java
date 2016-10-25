@@ -112,6 +112,17 @@ public class Ad {
 
 	@Column(nullable = false)
 	private boolean internet;
+	
+	@Column(nullable = false)
+	private boolean dishwasher;
+
+	public boolean getDishwasher() {
+		return dishwasher;
+	}
+
+	public void setDishwasher(boolean dishwasher) {
+		this.dishwasher = dishwasher;
+	}
 
 	// true if studio, false if room	// will be removed
 	@Column(nullable = false)

@@ -21,11 +21,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
+import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.UserRole;
+import ch.unibe.ese.team3.model.dao.AdDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
 
@@ -42,7 +44,10 @@ public class AdServiceTest {
 	
 	@Autowired
 	private UserDao userDao;
-
+	
+	@Autowired
+	private AdDao adDao;
+	
 	/**
 	 * In order to test the saved ad, I need to get it back from the DB again, so these
 	 * two methods need to be tested together, normally we want to test things isolated of
@@ -111,6 +116,109 @@ public class AdServiceTest {
 		
 		assertEquals(0, result.compareTo(ad.getMoveInDate()));
 	}
+	
+	@Test
+	public void getAdById() {
+		Ad ad = adService.getAdById(4);
+		assertEquals(ad.getId(), 4);
+	}
+	
+	@Test
+	public void getAllAds() {
+		int adsInDb = 13;
+		Iterable<Ad> ads = adService.getAllAds();
+		int adsCount = 0;
+		
+		// convert to List
+		ArrayList<Ad> adList = (ArrayList) ads;
+		
+		// assert number of returned ads equals number in DB
+		assertEquals(adsInDb, adList.size());		
+	}
+	
+	@Test
+	public void queryResults() {
+		SearchForm searchForm = new SearchForm();	
+		searchForm.setCity("3001 - Bern");
+		searchForm.setPrize(500);
+		searchForm.setRadius(5);
+		Type[] types = {Type.APARTMENT}; 
+		searchForm.setTypes(types); 
+		Iterable<Ad> queryedAds = adService.queryResults(searchForm);
+		ArrayList<Ad> adList = (ArrayList) queryedAds;
+		
+		assertEquals(adList.size(), 1);
+		assertEquals(adList.get(0).getId(), 1);
+	}
+	
+	@Test
+	public void extendedQuery() {
+		SearchForm searchForm = new SearchForm();	
+		searchForm.setCity("3001 - Bern");
+		searchForm.setPrize(600);
+		searchForm.setRadius(80);
+		searchForm.setCable(true);
+		searchForm.setBalcony(true);
+		searchForm.setAnimals(false);
+		searchForm.setBalcony(true);
+		searchForm.setGarage(true);
+		Type[] types = {Type.APARTMENT}; // why changes the the Id of the existing Elements in the database ? 
+		searchForm.setTypes(types); 
+		Iterable<Ad> queryedAds = adService.queryResults(searchForm);
+		ArrayList<Ad> adList = (ArrayList) queryedAds;
+		
+		assertEquals(adList.size(), 4);     // in the flatfindr app, only 3 ads are displayed
+		assertEquals(adList.get(0).getId(), 1);
+		assertEquals(adList.get(1).getId(), 6);
+		assertEquals(adList.get(2).getId(), 11);
+		//assertEquals(adList.get(3).getId(), 13); // where does 4th element come from?
+		
+		// assert right ads are returned
+		
+		assertEquals(adList.get(0).getId(), 1);
+		assertEquals(adList.get(1).getId(), 1);
+		assertEquals(adList.get(2).getId(), 1);
+	}
+	@Test
+	public void getNewestAds() {
+		Iterable<Ad> newestdAds = adService.getNewestAds(3);
+		ArrayList<Ad> listNewestAds = (ArrayList) newestdAds;
+		
+		assertEquals(listNewestAds.size(), 3);
+		
+		assertEquals(listNewestAds.get(0).getId(), 13);
+		assertEquals(listNewestAds.get(1).getId(), 6);
+		assertEquals(listNewestAds.get(2).getId(), 12);
+	}
+	
+	
+	@Test
+	public void getAdsByUser() {
+		User user = userDao.findByUsername("ese@unibe.ch");
+		
+		Iterable<Ad> adsFromService = adService.getAdsByUser(user);
+		ArrayList<Ad> listFromService = (ArrayList) adsFromService;
+		
+		Iterable<Ad> adsFromDB = adDao.findByUser(user);
+		ArrayList<Ad> listFromDB = (ArrayList) adsFromDB;
+		
+		// make sure same number of elements are returned
+		assertEquals(listFromService.size(), listFromDB.size());
+		
+		// make sure right ads are returned
+		assertEquals(listFromDB.get(0).getId(), listFromService.get(0).getId());
+		assertEquals(listFromDB.get(1).getId(), listFromService.get(1).getId());
+		assertEquals(listFromDB.get(2).getId(), listFromService.get(2).getId());
+	}
+	
+	/*
+	@Test
+	public void checkIfAlreadyAdded() {
+		assertTrue(adService.checkIfAlreadyAdded("ese@unibe.ch", alreadyAdded));
+	}
+	*/
+		
+	
 	
 	private User createUser(String email, String password, String firstName,
 			String lastName, Gender gender) {

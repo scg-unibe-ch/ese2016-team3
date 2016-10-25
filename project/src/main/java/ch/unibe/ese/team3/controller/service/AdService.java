@@ -106,6 +106,7 @@ public class AdService {
 		ad.setNumberOfRooms(placeAdForm.getNumberOfRooms());
 		ad.setNumberOfBath(placeAdForm.getNumberOfBath());
 		ad.setParking(placeAdForm.isParking());
+		ad.setDishwasher(placeAdForm.getDishwasher());
 		
 
 		ad.setRoomDescription(placeAdForm.getRoomDescription());
@@ -308,6 +309,15 @@ public class AdService {
 					earliestOutDate, latestOutDate);
 
 			// filtering for the rest
+			//dishwasher
+			if(searchForm.getDishwasher()){
+				Iterator<Ad>iterator = locatedResults.iterator();
+				while(iterator.hasNext()){
+					Ad ad = iterator.next();
+					if(!ad.getDishwasher())
+						iterator.remove();
+				}
+			}
 			//elevator
 			if(searchForm.getElevator()){
 				Iterator<Ad>iterator = locatedResults.iterator();
