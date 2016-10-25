@@ -33,9 +33,6 @@ public class SignupForm {
 	private Gender gender;
 	
 	@NotNull
-	private AccountType accountType;
-	
-	@NotNull
 	private boolean isPremium;
 	
 	@Pattern(regexp = "[0-9]{16}", message = "Credit card number must be 16 digits")
@@ -79,14 +76,6 @@ public class SignupForm {
 
 	public void setGender(Gender gender) {
 		this.gender = gender;
-	}
-	
-	public AccountType getAccountType(){
-		return accountType;
-	}
-	
-	public void setAccountType(AccountType type){
-		this.accountType = type;
 	}
 	
 	public boolean getIsPremium(){

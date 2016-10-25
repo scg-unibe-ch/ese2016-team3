@@ -23,7 +23,7 @@ public class EditProfileForm {
 	private String lastName;
 	
 	@NotNull
-	private AccountType accountType;
+	boolean isPremium;
 	
 	@Pattern(regexp = "[0-9]{16}", message = "Credit card number must be 16 digits")
 	private String creditCard;
@@ -70,12 +70,12 @@ public class EditProfileForm {
 		this.username = username;
 	}
 	
-	public AccountType getAccountType(){
-		return accountType;
+	public boolean getIsPremium(){
+		return isPremium;
 	}
 	
-	public void setAccountType(AccountType type){
-		accountType = type;
+	public void setIsPremium(boolean isPremium){
+		this.isPremium = isPremium;
 	}
 	
 	public String getCreditCard(){

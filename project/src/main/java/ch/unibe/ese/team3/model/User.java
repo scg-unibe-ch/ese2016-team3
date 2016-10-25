@@ -127,6 +127,15 @@ public class User {
 		accountType = type;
 	}
 	
+	public boolean isPremium(){
+		if(accountType == AccountType.PREMIUM){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
 	public String getCreditCard(){
 		return creditCard;
 	}
