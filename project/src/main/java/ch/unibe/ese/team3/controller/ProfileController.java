@@ -22,7 +22,9 @@ import ch.unibe.ese.team3.controller.service.SignupService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.controller.service.UserUpdateService;
 import ch.unibe.ese.team3.controller.service.VisitService;
+import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.Ad;
+import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
 
@@ -59,6 +61,8 @@ public class ProfileController {
 	public ModelAndView signupPage() {
 		ModelAndView model = new ModelAndView("signup");
 		model.addObject("signupForm", new SignupForm());
+		model.addObject("genders", Gender.valuesForDisplay());
+		model.addObject("accountTypes", AccountType.values());
 		return model;
 	}
 
