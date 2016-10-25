@@ -131,6 +131,8 @@ $(document).ready(function() {
 			<form:input path="user.creditCard" id="field-creditcardNumber" /> <form:errors
 				path="creditCard" cssClass="validationErrorText" />
 		<br>
+		<form:checkbox path="user.accountType" value="PREMIUM" id="tac"/>Please accept the terms and conditions
+		<br>
 		<button type="submit" id="UpgradeNow">Upgrade Now</button>
 		<button type="button" id="CancelUpgrade">Cancel</button>
 	</form>
