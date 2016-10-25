@@ -95,6 +95,8 @@ public class Ad {
 	
 	@Column(nullable = false)
 	private int floorLevel;
+	
+	
 
 	
 	

@@ -184,6 +184,7 @@
 			</tr>
 			<tr>
 				<td><label for="field-BuildYear">Year of construction</label></td>
+
 				<td><label for="field-RenovationYear">Year of
 						renovation </label></td>
 				<td><label for="field-FloorLevel">Floor level </label></td>
@@ -192,9 +193,9 @@
 				<td><form:input id="field-BuildYear" path="buildYear" /></td>
 				<td><form:input id="field-RenovationYear" path="renovationYear" /></td>
 
-				<%-- new floorLevel --%>
-				<td><form:input id="field-floorLevel" type="number"
-						path="floorLevel" placeholder="floor level" step="1" /> <form:errors
+
+				<td><form:input id="field-Floor" type="number"
+						path="floorLevel" placeholder="0" step="1" /> <form:errors
 						path="floorLevel" cssClass="validationErrorText" /></td>
 			</tr>
 		</table>

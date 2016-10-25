@@ -191,6 +191,16 @@
 			<td><h2>Square Meters</h2></td>
 			<td>${shownAd.squareFootage}&#32;m²</td>
 		</tr>
+		
+		<tr>
+			<td><h2>Number of Rooms</h2></td>
+			<td>${shownAd.numberOfRooms}</td>
+		</tr>
+		<tr>
+			<td><h2>Number of Bath</h2></td>
+			<td>${shownAd.numberOfBath}</td>
+		</tr>
+		
 		<tr>
 			<td><h2>Distance to school</h2></td>
 			<td>${shownAd.distanceSchool}&#32;m</td>
@@ -203,7 +213,18 @@
 			<td><h2>Distance to public transport</h2></td>
 			<td>${shownAd.distancePublicTransport}&#32;m</td>
 		</tr>
-		
+		<tr>
+			<td><h2>Year of construction</h2></td>
+			<td>${shownAd.buildYear}</td>
+		</tr>
+		<tr>
+			<td><h2>Year of renovation</h2></td>
+			<td>${shownAd.renovationYear}</td>
+		</tr>
+		<tr>
+			<td><h2>Floor level</h2></td>
+			<td>${shownAd.floorLevel}</td>
+		</tr>
 		<tr>
 			<td><h2>Ad created on</h2></td>
 			<td>${formattedCreationDate}</td>
@@ -273,6 +294,7 @@
 	</div>
 
 	<table id="checkBoxTable" class="adDescDiv">
+
 		<tr>
 			<td><h2>Garage</h2></td>
 			<td>
@@ -282,6 +304,7 @@
 				</c:choose>
 			</td>
 		</tr>
+
 		<tr>
 			<td><h2>Balcony</h2></td>
 			<td>
@@ -291,6 +314,7 @@
 				</c:choose>
 			</td>
 		</tr>
+
 <%-- new --%>
 		<tr>
 			<td><h2>Elevator</h2></td>
@@ -309,6 +333,15 @@
 					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
 				</c:choose>
 			</td>
+		</tr>
+		<tr>
+			<td><h2>Dishwasher</h2></td>
+			<td>
+				<c:choose>
+					<c:when test="${shownAd.dishwasher}"><img src="/img/check-mark.png"></c:when>
+					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
+				</c:choose>
+			</td>
 		</tr>		<tr>
 			<td><h2>Dishwasher</h2></td>
 			<td>
@@ -318,7 +351,6 @@
 				</c:choose>
 			</td>
 		</tr>
-
 
 	</table>
 </section>
