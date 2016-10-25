@@ -33,14 +33,16 @@ public class SignupService {
 		user.setPassword(signupForm.getPassword());
 		user.setEnabled(true);
 		user.setGender(signupForm.getGender());
-		user.setAccountType(signupForm.getAccountType());
 		
-		if(user.getAccountType() == AccountType.PREMIUM){
+		if(signupForm.getIsPremium() == true){
+			user.setAccountType(AccountType.PREMIUM);
 			user.setCreditCard(signupForm.getCreditCard());
 		}
-		else{
+		else {
+			user.setAccountType(AccountType.BASIC);
 			user.setCreditCard("0000000000000000");
 		}
+		
 		
 		Set<UserRole> userRoles = new HashSet<>();
 		UserRole role = new UserRole();

@@ -18,6 +18,7 @@
 				}
 			});
 		});
+		$("#field-creditcardNumber").val("0000000000000000");
 	});
 </script>
 
@@ -67,7 +68,7 @@
 			</tr>					
 		</table>
 		<br />
-		<form:checkbox path="accountType" value="PREMIUM" id="premiumUser"/>Do you want to sign up as a Premium User for only 5$ per month?
+		<form:checkbox path="isPremium" value="on" id="premiumUser"/>Do you want to sign up as a Premium User for only 5$ per month?
 		<br>
 		<table id=creditcardForm>
 			<tr class="creditcardInfo">
@@ -78,14 +79,25 @@
 			</tr>
 		</table>
 		<br />		
-		<button type="submit">Sign up</button>	
+		<button type="submit" value="clicked">Sign up</button>	
 	</fieldset>
 </form:form>
+
 
 <script>
 $("#premiumUser").change(function(){
 	var self = this;
+	
+	if ( self.checked){
+		$("#field-creditcardNumber").val("");
+	}
+	else if ( !(self.checked) ){
+		$("#field-creditcardNumber").val("0000000000000000");
+	}
+	
 	$("#creditcardForm tr.creditcardInfo").toggle(self.checked);
+	
+	
 }).change();
 </script>
 
