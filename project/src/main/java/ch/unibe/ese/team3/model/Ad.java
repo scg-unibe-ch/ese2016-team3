@@ -112,7 +112,14 @@ public class Ad {
 
 	@Column(nullable = false)
 	private boolean internet;
-	
+
+	@Column(nullable = false)
+	private boolean dishwasher;
+
+	// true if studio, false if room	// will be removed
+	@Column(nullable = false)
+	private boolean studio;
+
 	@Enumerated(EnumType.STRING)
 	private Type type;
 
@@ -402,6 +409,14 @@ public class Ad {
 
 	public void setVisits(List<Visit> visits) {
 		this.visits = visits;
+	}
+	
+	public boolean getDishwasher() {
+		return dishwasher;
+	}
+
+	public void setDishwasher(boolean dishwasher) {
+		this.dishwasher = dishwasher;
 	}
 
 	//neue hashCode weil mehr attribute zum vergleichen zb boolean elevator???

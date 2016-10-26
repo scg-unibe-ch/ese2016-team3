@@ -99,7 +99,16 @@ public class PlaceAdForm {
 	private boolean cable;
 	private boolean garage;
 	private boolean internet; // würde ersetzt werden
+	private boolean dishwasher;
 	
+	public boolean getDishwasher() {
+		return dishwasher;
+	}
+
+	public void setDishwasher(boolean dishwasher) {
+		this.dishwasher = dishwasher;
+	}
+
 	private List<String> visits;
 
 	public String getCity() {

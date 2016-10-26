@@ -9,8 +9,13 @@
 
 <script>
 	$(document).ready(function() {
-		$("#about-me").val("${currentUser.aboutMe}")
-		});		
+		$("#about-me").val("${currentUser.aboutMe}");
+		$("#field-creditcardNumber").val("0000000000000000");
+		var premiumCheck = ${currentUser.isPremium()};
+		document.getElementById("premiumUser").disabled=premiumCheck == 1 ? true : false;
+		});
+	
+		
 </script>
 
 <pre><a href="/">Home</a>   &gt;   <a href="/user?id=${currentUser.id}">Public Profile</a>   &gt;   Edit profile</pre>
@@ -62,11 +67,39 @@
 	</tr>
 </table>
 
-<div>
-		<button type="submit">Update</button>
-</div>
+<form:checkbox path="isPremium" value="on" id="premiumUser"/>Do you want to upgrade to Premium User for only 5$ per month?
+		<br>
+		<table id=creditcardForm>
+			<tr class="creditcardInfo">
+				<td style="display:none;">
+				<td class="signupDescription"><label for="field-creditcardNumber">Credit card number:</label></td>
+				<td><form:input path="creditCard" id="field-creditcardNumber" /> <form:errors
+						path="creditCard" cssClass="validationErrorText" /></td>
+			</tr>
+		</table>
+		<br />
 
+<div>
+	<button type="submit">Update</button>
+</div>
 </form:form>
+
+<script>
+$("#premiumUser").change(function(){
+	var self = this;
+	
+	if ( self.checked){
+		$("#field-creditcardNumber").val("");
+	}
+	else if ( !(self.checked) ){
+		$("#field-creditcardNumber").val("0000000000000000");
+	}
+	
+	$("#creditcardForm tr.creditcardInfo").toggle(self.checked);
+	
+	
+}).change();
+</script>
 
 
 <c:import url="template/footer.jsp" />
