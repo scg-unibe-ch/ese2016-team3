@@ -225,6 +225,7 @@
 			<td><h2>Floor level</h2></td>
 			<td>${shownAd.floorLevel}</td>
 		</tr>
+		
 		<tr>
 			<td><h2>Ad created on</h2></td>
 			<td>${formattedCreationDate}</td>

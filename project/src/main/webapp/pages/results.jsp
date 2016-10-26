@@ -195,27 +195,36 @@
 						path="latestMoveOutDate" /></td>
 			</tr>
 			<tr>
-				<label for="FloorLevel">Floor level</label>
+				<td><label for="FloorLevelMin">Floorlevel from</label></td>
+				<td><form:input id="FloorLevelMin" type="number"
+					path="floorLevelMin" placeholder="e.g. 3" step="1" /> <form:errors
+					path="floorLevelMin" cssClass="validationErrorText" /></td>
+				<td>    <label for="FloorLevelMax">until</label></td>
+				<td><form:input id="FloorLevelMax" type="number"
+					path="floorLevelMax" placeholder="e.g. 3" step="1" /> <form:errors
+					path="floorLevelMax" cssClass="validationErrorText" /></td>
+				
+	<%-- 		<label for="FloorLevel">Floor level</label>
 				<form:input id="FloorLevel" type="number" path="floorLevel"
 					placeholder="e.g. 3" step="1" />
 				<label for="SquareFootage">Square Footage</label>
 				<form:input id="SquareFootage" type="number" path="squareFootage"
 					placeholder="e.g. 30" step="5" />
 
-				<form:errors path="radius" cssClass="validationErrorText" />
+				<form:errors path="radius" cssClass="validationErrorText" />            --%>	
 			</tr>
 			<tr>
-				<td><label for="field-NumberOfBath">Number of baths</label></td>
-				<td><label for="infrastructureType-room">InfrastructureType</label></td>
+	<%-- 			<td><label for="field-NumberOfBath">Number of baths</label></td>
+				<td><label for="infrastructureType-room">InfrastructureType</label></td>        --%>
 			</tr>
 			<tr>
-				<td><form:input id="field-NumberOfBath" type="number"
+	<%-- 			<td><form:input id="field-NumberOfBath" type="number"
 					path="numberOfBath" placeholder="Prize per month" step="1" /> <form:errors
 					path="numberOfBath" cssClass="validationErrorText" /></td>
 				<td><form:select id="infrastructureType"
 						path="infrastructureType">
 						<form:options items="${infrastructureTypes}" itemLabel="name" />
-					</form:select></td>
+					</form:select></td>																	--%>
 			</tr>
 			<tr>
 				<td><form:checkbox id="field-garage" path="garage" value="1" /><label>Garage</label>

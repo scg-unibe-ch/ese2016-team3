@@ -94,12 +94,73 @@ public class Ad {
 	private boolean garage;
 	
 	@Column(nullable = false)
+	private boolean dishwasher;
+	
+	@Enumerated(EnumType.STRING)
+	private Type type;
+
+	@Fetch(FetchMode.SELECT)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<AdPicture> pictures;
+
+	@ManyToOne(optional = false)
+	private User user;
+
+	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Visit> visits;
+	
+	@Column(nullable = false)
 	private int floorLevel;
 	
+	// auction specific attributes
+	@Column(nullable = true)
+	@Temporal(TemporalType.DATE)
+	private Date startDate;
 	
+	@Column(nullable = true)
+	@Temporal(TemporalType.DATE)
+	private Date endDate;
+	
+	@Column(nullable = true)
+	private int startPrice;
 
+	@Column(nullable = true)
+	private int increaseBidPrice;
+	
+	@Column(nullable = true)
+	private int buyItNowPrice;
 	
 	
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	public int getStartPrice() {
+		return startPrice;
+	}
+	public void setStartPrice(int startPrice) {
+		this.startPrice = startPrice;
+	}
+	public int getIncreaseBidPrice() {
+		return increaseBidPrice;
+	}
+	public void setIncreaseBidPrice(int increaseBidPrice) {
+		this.increaseBidPrice = increaseBidPrice;
+	}
+	public int getBuyItNowPrice() {
+		return buyItNowPrice;
+	}
+	public void setBuyItNowPrice(int buyItNowPrice) {
+		this.buyItNowPrice = buyItNowPrice;
+	}
 	public void setFloorLevel(int floorLevel) {
 		this.floorLevel = floorLevel;
 	}
@@ -119,30 +180,7 @@ public class Ad {
 		this.distancePublicTransport = distancePublicTransport;
 	}
 
-	@Column(nullable = false)
 
-	private boolean internet;
-
-	@Column(nullable = false)
-	private boolean dishwasher;
-
-	// true if studio, false if room	// will be removed
-	@Column(nullable = false)
-	private boolean studio;
-
-
-	@Enumerated(EnumType.STRING)
-	private Type type;
-
-	@Fetch(FetchMode.SELECT)
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<AdPicture> pictures;
-
-	@ManyToOne(optional = false)
-	private User user;
-
-	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Visit> visits;
 
 	public int getNumberOfRooms() {
 		return numberOfRooms;
