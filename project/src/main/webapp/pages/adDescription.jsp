@@ -295,7 +295,6 @@
 	</div>
 
 	<table id="checkBoxTable" class="adDescDiv">
-	
 
 		<tr>
 			<td><h2>Garage</h2></td>
@@ -317,6 +316,7 @@
 			</td>
 		</tr>
 
+<%-- new --%>
 		<tr>
 			<td><h2>Elevator</h2></td>
 			<td>
@@ -336,6 +336,14 @@
 			</td>
 		</tr>
 		<tr>
+			<td><h2>Dishwasher</h2></td>
+			<td>
+				<c:choose>
+					<c:when test="${shownAd.dishwasher}"><img src="/img/check-mark.png"></c:when>
+					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
+				</c:choose>
+			</td>
+		</tr>		<tr>
 			<td><h2>Dishwasher</h2></td>
 			<td>
 				<c:choose>
@@ -377,7 +385,6 @@
 				<a href="/login"><button class="thinInactiveButton" type="button">Login to visit profile</button></a>
 			</c:otherwise>
 		</c:choose>
-
 		<td>
 			<form>
 				<c:choose>

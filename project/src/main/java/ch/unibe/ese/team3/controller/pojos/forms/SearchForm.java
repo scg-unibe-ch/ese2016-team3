@@ -69,9 +69,6 @@ public class SearchForm {
 	private String earliestMoveOutDate;
 	private String latestMoveOutDate;
 	
-	private int numberOfRooms;
-	private int numberOfBath;
-
 	private boolean elevator;
 	private boolean parking;
 	private boolean balcony;
@@ -81,11 +78,22 @@ public class SearchForm {
 	private boolean roomHelper;
 	
 	// new
-	private int floorLevel;
+
 	private InfrastructureType infrastructureType;
+	private int squareFootage;
+	private int buildYear;
+	private int renovationYear;
+	private int numberOfRooms;
+   	private int numberOfBath;
+	
+	//new
+	private int distanceSchool;
+	private int distanceShopping;
+	private int distancePublicTransport;
+	private int floorLevel;
 
 	// the ugly stuff
-	private boolean studioHelper;
+	private boolean studioHelper; // to remove?
 
 	public boolean getBalcony() {
 		return balcony;
@@ -206,7 +214,6 @@ public class SearchForm {
 		this.infrastructureType = infrastructureType;
 	}
 
-
 	public int getFloorLevel() {
 		return floorLevel;
 	}
@@ -215,4 +222,11 @@ public class SearchForm {
 		this.floorLevel = floorLevel;
 	}
 	
+	public int getSquareFootage() {
+		return squareFootage;
+	}
+
+	public void setSquareFootage(int squareFootage) {
+		this.squareFootage = squareFootage;
+	}	
 }

@@ -352,6 +352,25 @@ public class AdService {
 						iterator.remove();
 				}
 			}
+			
+			//--------------------
+			// added search logic
+			
+			// filter based on number of baths. Search Results are removed, if the number of baths of the ad is
+			// smaller than the desired number of baths in the searchForm
+			Iterator<Ad> iterator = locatedResults.iterator();
+			while (iterator.hasNext()) {
+				Ad ad = iterator.next();
+				if (ad.getNumberOfBath() <= searchForm.getNumberOfBath())
+					iterator.remove();
+				
+			// filter for size
+				
+			// filter for infrastructureType 
+				
+			// filter for number of Rooms
+				
+			}
 		}
 		return locatedResults;
 	}
