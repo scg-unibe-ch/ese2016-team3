@@ -57,12 +57,13 @@ public class AlertService {
 		alert.setCity(alertForm.getCity().substring(7));
 
 		alert.setPrice(alertForm.getPrice());
+
 		
 		
 		alert.setRadius(alertForm.getRadius());
 		//alert.setRoom(alertForm.getRoom());		
 		alert.setType(alertForm.getType());
-		
+
 		alert.setUser(user);
 		alertDao.save(alert);
 	}
@@ -95,8 +96,7 @@ public class AlertService {
 		Iterator<Alert> alertIterator = alerts.iterator();
 		while (alertIterator.hasNext()) {
 			Alert alert = alertIterator.next();
-			if (typeMismatchWith(ad, alert) || radiusMismatchWith(ad, alert)
-					|| ad.getUser().equals(alert.getUser()))
+			if (typeMismatchWith(ad, alert) || radiusMismatchWith(ad, alert) || ad.getUser().equals(alert.getUser()))
 				alertIterator.remove();
 		}
 
@@ -130,13 +130,8 @@ public class AlertService {
 	 */
 	private String getAlertText(Ad ad) {
 		return "Dear user,<br>good news. A new ad matching one of your alerts has been "
-				+ "entered into our system. You can visit it here:<br><br>"
-				+ "<a class=\"link\" href=/ad?id="
-				+ ad.getId()
-				+ ">"
-				+ ad.getTitle()
-				+ "</a><br><br>"
-				+ "Good luck and enjoy,<br>"
+				+ "entered into our system. You can visit it here:<br><br>" + "<a class=\"link\" href=/ad?id="
+				+ ad.getId() + ">" + ad.getTitle() + "</a><br><br>" + "Good luck and enjoy,<br>"
 				+ "Your FlatFindr crew";
 	}
 
@@ -165,10 +160,8 @@ public class AlertService {
 	 */
 	private boolean radiusMismatchWith(Ad ad, Alert alert) {
 		final int earthRadiusKm = 6380;
-		Location adLocation = geoDataService.getLocationsByCity(ad.getCity())
-				.get(0);
-		Location alertLocation = geoDataService.getLocationsByCity(
-				alert.getCity()).get(0);
+		Location adLocation = geoDataService.getLocationsByCity(ad.getCity()).get(0);
+		Location alertLocation = geoDataService.getLocationsByCity(alert.getCity()).get(0);
 
 		double radSinLat = Math.sin(Math.toRadians(adLocation.getLatitude()));
 		double radCosLat = Math.cos(Math.toRadians(adLocation.getLatitude()));
@@ -176,18 +169,16 @@ public class AlertService {
 		double radLongitude = Math.toRadians(alertLocation.getLongitude());
 		double radLatitude = Math.toRadians(alertLocation.getLatitude());
 		double distance = Math.acos(radSinLat * Math.sin(radLatitude)
-				+ radCosLat * Math.cos(radLatitude)
-				* Math.cos(radLong - radLongitude))
-				* earthRadiusKm;
+				+ radCosLat * Math.cos(radLatitude) * Math.cos(radLong - radLongitude)) * earthRadiusKm;
 		return (distance > alert.getRadius());
 	}
-	
-	//for testing
+
+	// for testing
 	public boolean radiusMismatch(Ad ad, Alert alert) {
 		return radiusMismatchWith(ad, alert);
 	}
-	
-	//for testing
+
+	// for testing
 	public boolean typeMismatch(Ad ad, Alert alert) {
 		return typeMismatchWith(ad, alert);
 	}

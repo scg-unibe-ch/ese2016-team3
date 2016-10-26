@@ -191,6 +191,16 @@
 			<td><h2>Square Meters</h2></td>
 			<td>${shownAd.squareFootage}&#32;m²</td>
 		</tr>
+		
+		<tr>
+			<td><h2>Number of Rooms</h2></td>
+			<td>${shownAd.numberOfRooms}</td>
+		</tr>
+		<tr>
+			<td><h2>Number of Bath</h2></td>
+			<td>${shownAd.numberOfBath}</td>
+		</tr>
+		
 		<tr>
 			<td><h2>Distance to school</h2></td>
 			<td>${shownAd.distanceSchool}&#32;m</td>
@@ -203,7 +213,18 @@
 			<td><h2>Distance to public transport</h2></td>
 			<td>${shownAd.distancePublicTransport}&#32;m</td>
 		</tr>
-		
+		<tr>
+			<td><h2>Year of construction</h2></td>
+			<td>${shownAd.buildYear}</td>
+		</tr>
+		<tr>
+			<td><h2>Year of renovation</h2></td>
+			<td>${shownAd.renovationYear}</td>
+		</tr>
+		<tr>
+			<td><h2>Floor level</h2></td>
+			<td>${shownAd.floorLevel}</td>
+		</tr>
 		<tr>
 			<td><h2>Ad created on</h2></td>
 			<td>${formattedCreationDate}</td>
@@ -273,71 +294,12 @@
 	</div>
 
 	<table id="checkBoxTable" class="adDescDiv">
-		<tr>
-			<td><h2>Smoking inside allowed</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.smokers}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-
-		<tr>
-			<td><h2>Animals allowed</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.animals}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-
-		<tr>
-			<td><h2>Furnished Room</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.furnished}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-		
-		<tr>
-			<td><h2>WiFi available</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.internet}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-
-		<tr>
-			<td><h2>Cable TV</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.cable}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
 
 		<tr>
 			<td><h2>Garage</h2></td>
 			<td>
 				<c:choose>
 					<c:when test="${shownAd.garage}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-
-		<tr>
-			<td><h2>Cellar</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.cellar}"><img src="/img/check-mark.png"></c:when>
 					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
 				</c:choose>
 			</td>
@@ -353,15 +315,6 @@
 			</td>
 		</tr>
 
-		<tr>
-			<td><h2>Garden</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.garden}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
 <%-- new --%>
 		<tr>
 			<td><h2>Elevator</h2></td>
@@ -381,7 +334,23 @@
 				</c:choose>
 			</td>
 		</tr>
-
+		<tr>
+			<td><h2>Dishwasher</h2></td>
+			<td>
+				<c:choose>
+					<c:when test="${shownAd.dishwasher}"><img src="/img/check-mark.png"></c:when>
+					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
+				</c:choose>
+			</td>
+		</tr>		<tr>
+			<td><h2>Dishwasher</h2></td>
+			<td>
+				<c:choose>
+					<c:when test="${shownAd.dishwasher}"><img src="/img/check-mark.png"></c:when>
+					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
+				</c:choose>
+			</td>
+		</tr>
 
 	</table>
 </section>
@@ -415,7 +384,6 @@
 				<a href="/login"><button class="thinInactiveButton" type="button">Login to visit profile</button></a>
 			</c:otherwise>
 		</c:choose>
-
 		<td>
 			<form>
 				<c:choose>
