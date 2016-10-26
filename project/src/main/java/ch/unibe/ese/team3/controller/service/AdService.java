@@ -392,14 +392,35 @@ public class AdService {
 			Iterator<Ad> iterator = locatedResults.iterator();
 			while (iterator.hasNext()) {
 				Ad ad = iterator.next();
-				if (ad.getNumberOfBath() <= searchForm.getNumberOfBath())
+				if (ad.getNumberOfBath() < searchForm.getNumberOfBathMin() || ad.getNumberOfBath() > searchForm.getNumberOfBathMax())
 					iterator.remove();
 				
 			// filter for size
+				if(ad.getSquareFootage() < searchForm.getSquareFootageMin() || ad.getSquareFootage() > searchForm.getSquareFootageMax())
+					iterator.remove();
 				
 			// filter for infrastructureType 
 				
 			// filter for number of Rooms
+				if(ad.getNumberOfRooms() < searchForm.getNumberOfBathMin() || ad.getNumberOfRooms() > searchForm.getNumberOfRoomsMax())
+					iterator.remove();
+				
+			// filter for floorLevel
+				if(ad.getFloorLevel() < searchForm.getFloorLevelMin() || ad.getFloorLevel() > searchForm.getFloorLevelMax())
+					iterator.remove();
+				
+			// filter for distance to school
+				if(ad.getDistanceSchool() < searchForm.getDistanceSchoolMin() || ad.getDistanceSchool() > searchForm.getDistanceSchoolMax())
+					iterator.remove();
+				
+			// filter for distance to shopping center
+				if(ad.getDistanceShopping() < searchForm.getDistanceShoppingMin() || ad.getDistanceShopping() > searchForm.getDistanceShoppingMax())
+					iterator.remove();
+				
+			// filter for distance to public transport
+				if(ad.getDistancePublicTransport() < searchForm.getDistancePublicTransportMin() || ad.getDistancePublicTransport() > searchForm.getDistancePublicTransportMax())
+					iterator.remove();
+				
 				
 			}
 		}
