@@ -93,10 +93,43 @@ public class AdService {
 			}
 		} catch (NumberFormatException e) {
 		}
+		
+		//this is for auction
+		// java.util.Calendar uses a month range of 0-11 instead of the
+		// XMLGregorianCalendar which uses 1-12
+		try {
+			if (placeAdForm.getStartDate().length() >= 1) {
+				int dayMoveIn = Integer.parseInt(placeAdForm.getStartDate()
+						.substring(0, 2));
+				int monthMoveIn = Integer.parseInt(placeAdForm.getStartDate()
+						.substring(3, 5));
+				int yearMoveIn = Integer.parseInt(placeAdForm.getStartDate()
+						.substring(6, 10));
+				calendar.set(yearMoveIn, monthMoveIn - 1, dayMoveIn);
+				ad.setStartDate(calendar.getTime());
+			}
 
+			if (placeAdForm.getEndDate().length() >= 1) {
+				int dayMoveOut = Integer.parseInt(placeAdForm.getEndDate()
+						.substring(0, 2));
+				int monthMoveOut = Integer.parseInt(placeAdForm
+						.getEndDate().substring(3, 5));
+				int yearMoveOut = Integer.parseInt(placeAdForm.getEndDate()
+						.substring(6, 10));
+				calendar.set(yearMoveOut, monthMoveOut - 1, dayMoveOut);
+				ad.setEndDate(calendar.getTime());
+			}
+		} catch (NumberFormatException e) {
+		}
+		// for auction
+		ad.setStartPrice(placeAdForm.getStartPrice());
+		ad.setBuyItNowPrice(placeAdForm.getBuyItNowPrice());
+		ad.setIncreaseBidPrice(placeAdForm.getIncreaseBidPrice());
+
+		
+		
 		ad.setPrizePerMonth(placeAdForm.getPrize());
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
-		//new
 		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
 		ad.setDistanceShopping(placeAdForm.getDistanceShopping());
 		ad.setDistancePublicTransportl(placeAdForm.getDistancePublicTransport());
@@ -106,10 +139,8 @@ public class AdService {
 		ad.setNumberOfBath(placeAdForm.getNumberOfBath());
 		ad.setParking(placeAdForm.isParking());
 		ad.setDishwasher(placeAdForm.getDishwasher());
-
 		ad.setRoomDescription(placeAdForm.getRoomDescription());
 		ad.setPreferences(placeAdForm.getPreferences());
-
 		ad.setBalcony(placeAdForm.getBalcony());
 		ad.setGarage(placeAdForm.getGarage());
 		

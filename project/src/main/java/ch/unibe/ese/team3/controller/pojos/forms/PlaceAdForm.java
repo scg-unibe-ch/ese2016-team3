@@ -1,7 +1,11 @@
 package ch.unibe.ese.team3.controller.pojos.forms;
 
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
@@ -56,34 +60,62 @@ public class PlaceAdForm {
 	
 	// new
 	private InfrastructureType infrastructureType;
-
+	private Type type;
 
 	@NotBlank(message = "Required")
 	private String roomDescription;
 
 	private String preferences;
 	
-	//@NotBlank(message = "Required")
-	//private int floorlevel;			//only for appartment
 	
+	// auction specific attributes
 	
+	private String startDate;
+	private String endDate;
+	private int startPrice;
+	private int increaseBidPrice;
+	private int buyItNowPrice;
 	
-	//@NotBlank(message = "Required")
-	//private String artInternetanschluss;
 	
 	// optional for input
-	
-	private Type type;
-	
-	//private boolean 
-	//private boolean dishwasher;		//only for renting
 	private boolean parking;
 	private boolean elevator;
-
 	private boolean balcony;
 	private boolean garage;
 	private boolean dishwasher;
 	
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public int getIncreaseBidPrice() {
+		return increaseBidPrice;
+	}
+
+	public void setIncreaseBidPrice(int increaseBidPrice) {
+		this.increaseBidPrice = increaseBidPrice;
+	}
+
+	public int getBuyItNowPrice() {
+		return buyItNowPrice;
+	}
+
+	public void setBuyItNowPrice(int buyItNowPrice) {
+		this.buyItNowPrice = buyItNowPrice;
+	}
+
 	public boolean getDishwasher() {
 		return dishwasher;
 	}
@@ -273,5 +305,13 @@ public class PlaceAdForm {
 	}
 	public int getFloorLevel() {
 		return this.floorLevel;
+	}
+
+	public int getStartPrice() {
+		return startPrice;
+	}
+
+	public void setStartPrice(int startPrice) {
+		this.startPrice = startPrice;
 	}
 }
