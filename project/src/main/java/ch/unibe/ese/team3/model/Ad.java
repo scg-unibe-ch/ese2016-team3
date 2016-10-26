@@ -376,7 +376,7 @@ public class Ad {
 		this.dishwasher = dishwasher;
 	}
 
-	//neue hashCode weil mehr attribute zum vergleichen zb boolean elevator???
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
