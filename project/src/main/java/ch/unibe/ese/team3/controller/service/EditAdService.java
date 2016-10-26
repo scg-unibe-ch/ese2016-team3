@@ -57,7 +57,7 @@ public class EditAdService {
 
 		ad.setStreet(placeAdForm.getStreet());
 
-		ad.setStudio(placeAdForm.getStudio());
+		//ad.setStudio(placeAdForm.getStudio());
 
 		// take the zipcode - first four digits
 		String zip = placeAdForm.getCity().substring(0, 4);
@@ -99,15 +99,11 @@ public class EditAdService {
 		ad.setPreferences(placeAdForm.getPreferences());
 
 		// ad description values
-		ad.setSmokers(placeAdForm.isSmokers());
-		ad.setAnimals(placeAdForm.isAnimals());
-		ad.setGarden(placeAdForm.getGarden());
+
 		ad.setBalcony(placeAdForm.getBalcony());
-		ad.setCellar(placeAdForm.getCellar());
-		ad.setFurnished(placeAdForm.isFurnished());
-		ad.setCable(placeAdForm.getCable());
+		
 		ad.setGarage(placeAdForm.getGarage());
-		ad.setInternet(placeAdForm.getInternet());
+
 
 		/*
 		 * Save the paths to the picture files, the pictures are assumed to be

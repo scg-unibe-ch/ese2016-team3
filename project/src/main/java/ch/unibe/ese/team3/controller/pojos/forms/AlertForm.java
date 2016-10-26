@@ -7,16 +7,17 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 
 /** This form is used when a user wants to create a new alert. */
 public class AlertForm {
 	
+	
+	private Type type;
 	private User user;
 	
-	// muss weg -> Type type = (studio, house, villa, flat,...)
-	private boolean studio;
-	private boolean room;
+
 
 	@NotBlank(message = "Required")
 	@Pattern(regexp = "^[0-9]{4} - [-\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
@@ -67,7 +68,7 @@ public class AlertForm {
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
-
+	/*
 	public boolean getStudio() {
 		return studio;
 	}
@@ -83,6 +84,7 @@ public class AlertForm {
 	public void setRoom(boolean room) {
 		this.room = room;
 	}
+	*/
 
 	public boolean getNoRoomNoStudio() {
 		return noRoomNoStudio;
@@ -99,6 +101,14 @@ public class AlertForm {
 	public void setBothRoomAndStudio(boolean bothRoomAndStudio) {
 		this.bothRoomAndStudio = bothRoomAndStudio;
 	}
+
+	public Type getType(){
+		return type;
+	}
+	public void setTypes(Type type){
+		this.type = type;
+	}
+
 	
 	public User getUser() {
 		return user;

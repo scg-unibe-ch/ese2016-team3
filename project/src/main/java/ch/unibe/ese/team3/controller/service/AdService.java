@@ -56,12 +56,11 @@ public class AdService {
 		ad.setCreationDate(now);
 
 		ad.setTitle(placeAdForm.getTitle());
-
+		
 		ad.setStreet(placeAdForm.getStreet());
 
-		ad.setStudio(placeAdForm.getStudio()); // will be removed
-		ad.setType(placeAdForm.getType());		// instead
-
+		ad.setType(placeAdForm.getType());		
+		
 		// take the zipcode - first four digits
 		String zip = placeAdForm.getCity().substring(0, 4);
 		ad.setZipcode(Integer.parseInt(zip));
@@ -107,23 +106,19 @@ public class AdService {
 		ad.setNumberOfBath(placeAdForm.getNumberOfBath());
 		ad.setParking(placeAdForm.isParking());
 		ad.setDishwasher(placeAdForm.getDishwasher());
-		
 
 		ad.setRoomDescription(placeAdForm.getRoomDescription());
 		ad.setPreferences(placeAdForm.getPreferences());
 
-		// ad description values
-		ad.setElevator(placeAdForm.isElevator());	//new
-		ad.setSmokers(placeAdForm.isSmokers());
-		ad.setAnimals(placeAdForm.isAnimals());
-		ad.setGarden(placeAdForm.getGarden());
 		ad.setBalcony(placeAdForm.getBalcony());
-		ad.setCellar(placeAdForm.getCellar());
-		ad.setFurnished(placeAdForm.isFurnished());
-		ad.setCable(placeAdForm.getCable());
 		ad.setGarage(placeAdForm.getGarage());
-		ad.setInternet(placeAdForm.getInternet());
 		
+		// new description variables
+		ad.setElevator(placeAdForm.isElevator());	
+		ad.setInfrastructureType(placeAdForm.getInfrastructureType());
+		ad.setFloorLevel(placeAdForm.getFloorLevel());
+
+	
 		/*
 		 * Save the paths to the picture files, the pictures are assumed to be
 		 * uploaded at this point!
@@ -336,36 +331,7 @@ public class AdService {
 						iterator.remove();
 				}
 			}
-			// smokers
-			if (searchForm.getSmokers()) {
-				Iterator<Ad> iterator = locatedResults.iterator();
-				while (iterator.hasNext()) {
-					Ad ad = iterator.next();
-					if (!ad.getSmokers())
-						iterator.remove();
-				}
-			}
-
-			// animals
-			if (searchForm.getAnimals()) {
-				Iterator<Ad> iterator = locatedResults.iterator();
-				while (iterator.hasNext()) {
-					Ad ad = iterator.next();
-					if (!ad.getAnimals())
-						iterator.remove();
-				}
-			}
-
-			// garden
-			if (searchForm.getGarden()) {
-				Iterator<Ad> iterator = locatedResults.iterator();
-				while (iterator.hasNext()) {
-					Ad ad = iterator.next();
-					if (!ad.getGarden())
-						iterator.remove();
-				}
-			}
-
+			
 			// balcony
 			if (searchForm.getBalcony()) {
 				Iterator<Ad> iterator = locatedResults.iterator();
@@ -376,35 +342,6 @@ public class AdService {
 				}
 			}
 
-			// cellar
-			if (searchForm.getCellar()) {
-				Iterator<Ad> iterator = locatedResults.iterator();
-				while (iterator.hasNext()) {
-					Ad ad = iterator.next();
-					if (!ad.getCellar())
-						iterator.remove();
-				}
-			}
-
-			// furnished
-			if (searchForm.getFurnished()) {
-				Iterator<Ad> iterator = locatedResults.iterator();
-				while (iterator.hasNext()) {
-					Ad ad = iterator.next();
-					if (!ad.getFurnished())
-						iterator.remove();
-				}
-			}
-
-			// cable
-			if (searchForm.getCable()) {
-				Iterator<Ad> iterator = locatedResults.iterator();
-				while (iterator.hasNext()) {
-					Ad ad = iterator.next();
-					if (!ad.getCable())
-						iterator.remove();
-				}
-			}
 
 			// garage
 			if (searchForm.getGarage()) {
@@ -415,15 +352,24 @@ public class AdService {
 						iterator.remove();
 				}
 			}
-
-			// internet
-			if (searchForm.getInternet()) {
-				Iterator<Ad> iterator = locatedResults.iterator();
-				while (iterator.hasNext()) {
-					Ad ad = iterator.next();
-					if (!ad.getInternet())
-						iterator.remove();
-				}
+			
+			//--------------------
+			// added search logic
+			
+			// filter based on number of baths. Search Results are removed, if the number of baths of the ad is
+			// smaller than the desired number of baths in the searchForm
+			Iterator<Ad> iterator = locatedResults.iterator();
+			while (iterator.hasNext()) {
+				Ad ad = iterator.next();
+				if (ad.getNumberOfBath() <= searchForm.getNumberOfBath())
+					iterator.remove();
+				
+			// filter for size
+				
+			// filter for infrastructureType 
+				
+			// filter for number of Rooms
+				
 			}
 		}
 		return locatedResults;
