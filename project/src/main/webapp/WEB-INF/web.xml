@@ -51,10 +51,24 @@
 		</multipart-config> 
 	</servlet>
 
+	<!-- Servlet mapping for /buy/ urls -->
 	<servlet-mapping>
 		<servlet-name>dispatcherServlet</servlet-name>
-		<url-pattern>/</url-pattern>			<!-- use servlet for any page matching url pattern -->
+		<url-pattern>/buy/*</url-pattern>
 	</servlet-mapping>
+	
+	<!-- Servlet mapping for /rent/ urls -->
+	<servlet-mapping>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<url-pattern>/rent/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Servlet mapping for / urls, will be redirected to other servlets -->
+	<servlet-mapping>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

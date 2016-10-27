@@ -2,10 +2,12 @@ package ch.unibe.ese.team3.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.team3.controller.service.AdService;
+import ch.unibe.ese.team3.enums.PageMode;
 
 /**
  * This controller handles request concerning the home page and several other
@@ -19,7 +21,8 @@ public class IndexController {
 
 	/** Displays the home page. */
 	@RequestMapping(value = "/")
-	public ModelAndView index() {
+	public ModelAndView index(@RequestAttribute("pageMode") PageMode pageMode) {
+		
 		ModelAndView model = new ModelAndView("index");
 		model.addObject("newest", adService.getNewestAds(4));
 		return model;

@@ -42,7 +42,7 @@
 
 <header>
 	<div class="left">
-		<a href="/"><img src="/img/logo.png"></a>
+		<a href="/${pagemode}/"><img src="/img/logo.png"></a>
 	</div>
 	<div class="right">
 		<nav>
@@ -64,23 +64,23 @@
 						%>
 						</a>
 							<ul>
-								<li><a href="/profile/placeAd">Place an ad</a></li>
-								<li><a href="/profile/myRooms">My rooms</a></li>
-								<li><a id="messageLink" href="/profile/messages"></a></li>
-								<li><a href="/profile/enquiries">Enquiries</a></li>
-								<li><a href="/profile/schedule">Schedule</a></li>
-								<li><a href="/profile/alerts">Alerts</a></li>
+								<li><a href="/${pagemode}/profile/placeAd">Place an ad</a></li>
+								<li><a href="/${pagemode}/profile/myRooms">My rooms</a></li>
+								<li><a id="messageLink" href="/${pagemode}/profile/messages"></a></li>
+								<li><a href="/${pagemode}/profile/enquiries">Enquiries</a></li>
+								<li><a href="/${pagemode}/profile/schedule">Schedule</a></li>
+								<li><a href="/${pagemode}/profile/alerts">Alerts</a></li>
 								<li>
 								<% out.print("<a href=\"/user?id=" + realUser.getId() + "\">Public Profile</a>"); %>
 								</li>
-								<li><a href="/logout">Logout</a></li>
+								<li><a href="/${pagemode}/logout">Logout</a></li>
 							</ul></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="/login">Login</a></li>
+						<li><a href="/${pagemode}/login">Login</a></li>
 					</c:otherwise>
 				</c:choose>
-				<li><a href="<c:url value='/searchAd' />">Search</a></li>
+				<li><a href="<c:url value='/${pagemode}/searchAd' />">Search</a></li>
 			</ul>
 		</nav>
 	</div>
