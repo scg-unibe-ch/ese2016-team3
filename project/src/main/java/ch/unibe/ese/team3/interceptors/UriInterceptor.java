@@ -31,7 +31,7 @@ public class UriInterceptor extends HandlerInterceptorAdapter {
 			pageMode = PageMode.RENT;
 		}
 		if (uri.startsWith("/buy/")){
-			pageMode = PageMode.RENT;
+			pageMode = PageMode.BUY;
 		}
 		
 		//Redirect users to default page mode

@@ -1,5 +1,6 @@
 package ch.unibe.ese.team3.controller.pojos.forms;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -35,8 +36,31 @@ public class SignupForm {
 	@NotNull
 	private boolean isPremium;
 	
-	@Pattern(regexp = "[0-9]{16}", message = "Credit card number must be 16 digits")
 	private String creditCard;
+	
+	@AssertTrue(message = "Credit card number must be 16 digits")
+	private boolean validCreditCard;
+	
+	public boolean isValidCreditCard() {
+		return validCreditCard;
+	}
+
+	public void setValidCreditCard(boolean validCreditCard) {
+		this.validCreditCard = validCreditCard;
+	}
+
+	private boolean validCreditCardWhenPremium(){
+		boolean valid = true;
+		
+		if (isPremium){
+			if (!java.util.regex.Pattern.matches("^[0-9]{16}$", creditCard)){
+				valid = false;
+			}
+		}
+		
+		this.validCreditCard = valid;
+		return valid;
+	}
 
 	public String getEmail() {
 		return email;
@@ -84,6 +108,7 @@ public class SignupForm {
 	
 	public void setIsPremium(boolean premium){
 		this.isPremium = premium;
+		validCreditCardWhenPremium();
 	}
 	
 	public String getCreditCard(){
@@ -92,5 +117,6 @@ public class SignupForm {
 	
 	public void setCreditCard(String card){
 		this.creditCard = card;
+		validCreditCardWhenPremium();
 	}
 }

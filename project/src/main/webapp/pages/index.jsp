@@ -7,51 +7,43 @@
 
 <c:import url="template/header.jsp" />
 
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome to FlatFindr</title>
-</head>
-<body>
-
-	<pre>Home</pre>
-
-	<h1>Welcome to FlatFindr!</h1>
-
-	<c:choose>
-		<c:when test="${empty newest}">
-			<h2>No ads placed yet</h2>
-		</c:when>
-		<c:otherwise>
-			<div id="resultsDiv" class="resultsDiv">
-				<h2>Our newest ads:</h2>
-				<c:forEach var="ad" items="${newest}">
-					<div class="resultAd">
-						<div class="resultLeft">
-							<a href="<c:url value='/ad?id=${ad.id}' />"><img
-								src="${ad.pictures[0].filePath}" /></a>
-							<h2>
-								<a class="link" href="<c:url value='/ad?id=${ad.id}' />">${ad.title}</a>
-							</h2>
-							<p>${ad.street},${ad.zipcode} ${ad.city}</p>
-							<br />
-							<p>
-								<i> ${ad.type.name} </i>
-							</p>
+<div class="row">
+	<div class="col-md-12 col-xs-12">
+		<c:choose>
+			<c:when test="${empty newest}">
+				<h3>No ads placed yet</h3>
+			</c:when>
+			<c:otherwise>
+				<h3>Highlights</h3>
+			
+				<div class="row">
+					<c:forEach var="ad" items="${newest}">
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 ad-small-preview-outer">
+							<div class="col-md-12 ad-small-preview-inner">
+								<a href="<c:url value='./ad?id=${ad.id}' />">
+									<img class="img-responsive" src="${ad.pictures[0].filePath}" />
+								</a>
+								<h4>
+									<a class="link" href="<c:url value='./ad?id=${ad.id}' />">${ad.title}</a>
+								</h4>
+								<p>${ad.street}, ${ad.zipcode} ${ad.city}</p>
+								<p>
+									<i>${ad.type.name}</i>
+								</p>
+								<strong>CHF ${ad.prizePerMonth }</strong>	
+								<fmt:formatDate value="${ad.moveInDate}" var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+								<p>Move-in date: ${formattedMoveInDate }</p>
+							</div>
 						</div>
-						<div class="resultRight">
-							<h2>CHF ${ad.prizePerMonth }</h2>
-							<br /> <br />
+					</c:forEach>
+				</div>
+			</c:otherwise>
+		</c:choose>
+	</div>
+</div>
 
-							<fmt:formatDate value="${ad.moveInDate}"
-								var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+<c:import url="template/footer.jsp" />
 
-							<p>Move-in date: ${formattedMoveInDate }</p>
-						</div>
-					</div>
-				</c:forEach>
-			</div>
-		</c:otherwise>
-	</c:choose>
 
-	<c:import url="template/footer.jsp" />
-	<br />
+
+<c:import url="template/footer.jsp" />

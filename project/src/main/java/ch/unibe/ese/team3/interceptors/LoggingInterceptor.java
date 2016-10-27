@@ -2,7 +2,6 @@ package ch.unibe.ese.team3.interceptors;
 
 import java.security.Principal;
 import java.util.Enumeration;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

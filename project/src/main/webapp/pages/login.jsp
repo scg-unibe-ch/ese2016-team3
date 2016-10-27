@@ -14,7 +14,7 @@
 <pre>
 	<a href="/">Home</a>   &gt;   Login</pre>
 
-<h1>Login</h1>
+<h2>Login</h2>
 
 <c:choose>
 	<c:when test="${loggedIn}">
