@@ -147,10 +147,10 @@ public class AlertServiceTest {
 
 		adDao.save(oltenResidence);
 		
-		assertFalse(alertService.radiusMismatch(oltenResidence, alertList.get(0)));
-		assertTrue(alertService.radiusMismatch(oltenResidence, alertList.get(1)));
-		assertTrue(alertService.typeMismatch(oltenResidence, alertList.get(0)));
-		assertFalse(alertService.typeMismatch(oltenResidence, alertList.get(1)));
+		assertFalse("Olten no radius mismatch first alert", alertService.radiusMismatch(oltenResidence, alertList.get(0)));
+		assertTrue("Olten radius mismatch second alert", alertService.radiusMismatch(oltenResidence, alertList.get(1)));
+		assertTrue("Olten type mismatch fist alert", alertService.typeMismatch(oltenResidence, alertList.get(0)));
+		assertFalse("Olten no type mismatch second alert", alertService.typeMismatch(oltenResidence, alertList.get(1)));
 	}
 	
 	//Lean user creating method

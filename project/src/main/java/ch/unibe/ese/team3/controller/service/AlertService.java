@@ -137,14 +137,7 @@ public class AlertService {
 
 	/** Checks if an ad is conforming to the criteria in an alert. */
 	private boolean typeMismatchWith(Ad ad, Alert alert) {
-		/*
-		boolean mismatch = false;
-		if (!alert.getBothRoomAndStudio()
-				&& ad.getStudio() != alert.getStudio())
-			mismatch = true;
-		return mismatch;
-		*/
-		return false;
+		throw new UnsupportedOperationException();
 	}
 
 	/**
