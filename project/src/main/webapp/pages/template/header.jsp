@@ -41,7 +41,7 @@
 <body>
 	<div class="container">
 		<h1>
-			<img id="logo" src="/img/logoNew.png"> Compass
+			<img id="logo" src="/img/logoNew.png"> Ithaca
 		</h1>
 		<ul class="nav nav-tabs" role="tablist">
 			<c:choose>
@@ -59,7 +59,7 @@
 			<div class="navbar-inner">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav">
-						<li><a href="/${pagemode}/">Home</a></li>
+						<li><a href="/${pagemode}/">Homepage</a></li>
 						<li><a href="/${pagemode}/searchAd">Find ad</a></li>
 						<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
 						<li><a href="#">My Auctions</a></li>
