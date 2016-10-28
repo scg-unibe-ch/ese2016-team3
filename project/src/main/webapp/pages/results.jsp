@@ -262,7 +262,7 @@
 												href="<c:url value='./ad?id=${ad.id}' />">${ad.title}</a>
 											</strong>
 										</p>
-										<p>${ad.street},${ad.zipcode}${ad.city}</p>
+										<p>${ad.street},&nbsp;${ad.zipcode}&nbsp;${ad.city}</p>
 										<p>
 											<i>${ad.type.name}</i>
 										</p>

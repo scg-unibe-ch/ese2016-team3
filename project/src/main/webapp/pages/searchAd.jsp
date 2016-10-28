@@ -58,7 +58,7 @@
 									<div class="col-sm-4">
 										<form:input type="text" name="city" id="cityInput" path="city"
 											placeholder="e.g. Bern" cssClass="form-control" />
-										<form:errors path="city" />
+										<form:errors path="city"/>
 									</div>
 								</div>
 							</spring:bind>
@@ -71,8 +71,8 @@
 											<form:input id="radiusInput" type="number" path="radius"
 												placeholder="e.g. 5" step="5" cssClass="form-control" />
 											<span class="input-group-addon">km</span>
-											<form:errors path="radius" />
 										</div>
+										<form:errors path="radius"/>
 									</div>
 								</div>
 							</spring:bind>
@@ -85,8 +85,8 @@
 											<span class="input-group-addon">Fr.</span>
 											<form:input id="prizeInput" type="number" path="prize"
 												placeholder="e.g. 5" step="50" cssClass="form-control" />
-											<form:errors path="prize" />
 										</div>
+										<form:errors path="prize"/>
 									</div>
 								</div>
 							</spring:bind>
