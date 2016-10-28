@@ -6,7 +6,10 @@
 
 <c:import url="template/header.jsp" />
 
-<pre><a href="/">Home</a>   &gt;   Alerts</pre>
+<ol class="breadcrumb">
+	<li><a href="/${pagemode}/">Home</a></li>
+	<li class="active">Alerts</li>
+</ol>
 
 <script>
 function deleteAlert(button) {
