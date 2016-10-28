@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <head>
 
-	<Title>Compass</Title>
+	<Title>Ithaca</Title>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script
 		src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
@@ -32,6 +32,14 @@
 		overflow-x: hidden;
 	}
 	</style>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			unreadMessages(function(unread){
+				$('#navUnread').html(unread);
+			});
+		});
+	</script>
 
 </head>
 
@@ -55,7 +63,7 @@
 				</c:when>
 			</c:choose>
 		</ul>
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-default" id="mainNav">
 			<div class="navbar-inner">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav">
@@ -83,10 +91,7 @@
 										</a></li>
 										<li><a href="/${pagemode}/profile/messages"> <span
 												class="glyphicon glyphicon glyphicon-envelope"></span>
-												Messages <span class="badge"> <%
-		 	
-		 %>
-											</span>
+												Messages <span class="badge" id="navUnread"></span>
 										</a>
 										<li><a href="/${pagemode}/profile/alerts"> <span
 												class="glyphicon glyphicon-alert"></span> Alerts
