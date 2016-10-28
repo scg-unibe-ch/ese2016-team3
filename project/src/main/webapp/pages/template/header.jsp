@@ -9,18 +9,18 @@
 <!DOCTYPE html>
 <head>
 
-	<Title>Compass</Title>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<Title>Ithaca</Title>
+	<script src="/js/jquery.min.js"></script>
 	<script
-		src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+		src="/js/jquery-ui.min.js"></script>
 	<link rel="stylesheet"
-		href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+		href="/css/jquery-ui.css" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/style.css">
 	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		src="/js/bootstrap.min.js"></script>
 	<script src="/js/unreadMessages.js"></script>
 
 
@@ -32,6 +32,14 @@
 		overflow-x: hidden;
 	}
 	</style>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			unreadMessages(function(unread){
+				$('#navUnread').html(unread);
+			});
+		});
+	</script>
 
 </head>
 
@@ -41,7 +49,7 @@
 <body>
 	<div class="container">
 		<h1>
-			<img id="logo" src="/img/logoNew.png"> Compass
+			<img id="logo" src="/img/logoNew.png"> Ithaca
 		</h1>
 		<ul class="nav nav-tabs" role="tablist">
 			<c:choose>
@@ -55,11 +63,11 @@
 				</c:when>
 			</c:choose>
 		</ul>
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-default" id="mainNav">
 			<div class="navbar-inner">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav">
-						<li><a href="/${pagemode}/">Home</a></li>
+						<li><a href="/${pagemode}/">Homepage</a></li>
 						<li><a href="/${pagemode}/searchAd">Find ad</a></li>
 						<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
 						<li><a href="#">My Auctions</a></li>
@@ -83,10 +91,7 @@
 										</a></li>
 										<li><a href="/${pagemode}/profile/messages"> <span
 												class="glyphicon glyphicon glyphicon-envelope"></span>
-												Messages <span class="badge"> <%
-		 	
-		 %>
-											</span>
+												Messages <span class="badge" id="navUnread"></span>
 										</a>
 										<li><a href="/${pagemode}/profile/alerts"> <span
 												class="glyphicon glyphicon-alert"></span> Alerts

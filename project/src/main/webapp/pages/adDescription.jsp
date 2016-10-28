@@ -386,5 +386,45 @@
 	</div>
 </div>
 
+<div class="modal fade" id="messageModal" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Contact the
+					advertiser</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-group">
+						<label for="msgSubject">Subject</label> <input
+							class="form-control" type="text" id="msgSubject"
+							placeholder="Subject">
+					</div>
+					<div class="form-group">
+						<label for="msgTextarea">Message</label>
+						<textarea id="msgTextarea" class="form-control"
+							placeholder="Message"></textarea>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-primary" id="messageSend">Send</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="confirmationDialog">
+	<form>
+		<p>Send enquiry to advertiser?</p>
+		<button type="button" id="confirmationDialogSend">Send</button>
+		<button type="button" id="confirmationDialogCancel">Cancel</button>
+	</form>
+</div>
+
 
 <c:import url="template/footer.jsp" />

@@ -1,17 +1,17 @@
 ul.nav-tabs {
-  padding-left: 260px;
+  padding-left: 210px;
 }
 
-.navbar-inner {
+#mainNav .navbar-inner {
 	border-bottom: 1px solid lightgray;
 }
 
-nav.navbar-default {
+ nav.navbar-default {
 	background-color: white;
 	border: none;
 }
 
-nav.navbar-default > ul > li.active {
+#mainNav nav.navbar-default > ul > li.active {
 	background-color: none;
 	font-weight: bold;
 }
@@ -20,7 +20,7 @@ nav.navbar-default > ul > li.active {
 	margin-right: 0;
 }
 
-.navbar-default .navbar-nav > .active > a {
+#mainNav .navbar-default .navbar-nav > .active > a {
 	background-color: white;
 }
 
@@ -49,4 +49,12 @@ h1 {
 
 .bottom15 {
 	margin-bottom: 15px;
+}
+
+tr.message-unread {
+	font-weight: bold;
+}
+
+tr.message-row {
+	cursor: pointer;
 }

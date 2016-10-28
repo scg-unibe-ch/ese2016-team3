@@ -1,43 +1,44 @@
-
 function loadMessages(data) {
 	$("#messageList table tr:gt(0)").remove();
-	$.each(data, function(index, message) {
-		var result = '<tr data-id="' + message.id + '" class="' + message.state + '" >';
-		result += '<td>' + message.subject + '</td>';
-		result += '<td>' + message.sender.email + '</td>';
-		result += '<td>' + message.recipient.email + '</td>';
-		result += '<td>' + message.dateSent + '</td></tr>';
+	if (data.length > 0) {
+		$.each(data, function(index, message) {
+			var result = '<tr data-id="' + message.id + '" class="message-row ' + (message.state == 'UNREAD' ? 'message-unread' : '') + '" >';
+			result += '<td>' + message.subject + '</td>';
+			result += '<td>' + message.sender.email + '</td>';
+			result += '<td>' + message.recipient.email + '</td>';
+			result += '<td>' + message.dateSent + '</td></tr>';
 
-		$("#messageList table").append(result);
-	});
+			$("#messageList table").append(result);
+		});
+	}
+	else {
+		$("#messageList table").append('<tr><td colspan="4">No messages</td></tr>');
+	}
 }
 
 function prepareRows() {
 	var rows = $("#messageList table tr:gt(0)");
-	$(rows).hover(function() {
-		$(this).children().css("background-color", "#ececec");
-	}, function() {
-		var color;
-		if($(this).hasClass("UNREAD"))
-			color = "#AFFFEE;";
-		else
-			color = "white";
-		$(this).children().css("background-color", color);
-	});
 	$(rows).click(function() {
+		rows.each(function(index, row){
+			$(row).removeClass('info');
+		});
+		var me = $(this);
+		me.addClass('info');
 		var id = $(this).attr("data-id");
-		$(this).removeClass("UNREAD");
-		$.get("/profile/readMessage?id=" + id, function (data) {
+		$.get("/profile/readMessage?id=" + id, function(data) {
 			$.get("/profile/messages/getMessage?id=" + id, function(data) {
-				var result = '<h2>' + data.subject + '</h2>';
-				result += '<h3><b>To: </b>' + data.recipient.email + '</h3>';
-				result += '<h3><b>From: </b>' + data.sender.email + '</h3>';
-				result += '<h3><b>Date sent: </b>' + data.dateSent + '</h3>';
-				result += '<br /><p>' + data.text + '</p>';
-				$("#messageDetail").html(result);
+				$('#messageDetail').show();
+				$('#message-preview-subject').html(data.subject);
+				$('#message-preview-sender').html(data.sender.email);
+				$('#message-preview-receiver').html(data.recipient.email);
+				$('#message-preview-date').html(data.dateSent);
+				$('#message-preview-content').html(data.text);
 			}, 'json');
-			unreadMessages("header");
-			unreadMessages("messages");
+			unreadMessages(function(unread) {
+				$('#navUnread').html(unread);
+				$('#unreadMessages').html(unread);
+				me.removeClass('message-unread')
+			});
 		});
 	});
 }
@@ -46,48 +47,42 @@ $(document).ready(function() {
 	prepareRows();
 
 	$("#inbox").click(function() {
+		$('#messageDetail').hide();
 		$.post("/profile/message/inbox", function(data) {
+			$("#inbox").addClass('active');
+			$("#sent").removeClass('active');
 			loadMessages(data);
 			prepareRows();
 		}, 'json');
 	});
 
 	$("#sent").click(function() {
+		$('#messageDetail').hide();
 		$.post("/profile/message/sent", function(data) {
+			$("#sent").addClass('active');
+			$("#inbox").removeClass('active');
 			loadMessages(data);
 			prepareRows();
 		}, 'json');
 	});
-	
-	$("#newMessage").click(function(){
-		$("#content").children().animate({opacity: 0.4}, 300, function(){
-			$("#msgDiv").css("display", "block");
-			$("#msgDiv").css("opacity", "1");
-		});
-	});
-	
-	$("#messageCancel").click(function(){
-		$("#msgDiv").css("display", "none");
-		$("#msgDiv").css("opacity", "0");
-		$("#content").children().animate({opacity: 1}, 300);
-	});
-	
-	
+
 	$("#receiverEmail").focusout(function() {
 		var text = $("#receiverEmail").val();
-		
-		$.post("/profile/messages/validateEmail", {email:text}, function(data) {
+
+		$.post("/profile/messages/validateEmail", {
+			email : text
+		}, function(data) {
 			if (data != text) {
 				alert(data);
 				$("#receiverEmail").val("");
 			}
 		});
 	});
-	
-	$("#messageForm").submit(function (event){
-		if($("#receiverEmail").val() == ""){
+
+	$("#messageForm").submit(function(event) {
+		if ($("#receiverEmail").val() == "") {
 			event.preventDefault();
 		}
 	});
-	
+
 });
