@@ -217,6 +217,18 @@
 						<form:input type="number" step="1" id="field-floorLevelMax"
 							path="floorLevelMax" cssClass="form-control" />
 					</div>
+					
+					<div class="form-group">
+						<label for="field-NumberOfBathMin">Number of Bath (min)</label>
+						<input type="number" class="form-control" id="field-NumberOfBathMin">
+					</div>
+					<div class="form-group">
+						<label for="field-NumberOfBathMax">Number of Bath (max)</label>
+						<input type="number" class="form-control" id="field-NumberOfBathMax">
+					</div>
+					
+					
+					
 				</div>
 			</div>
 			<div class="form-group pull-right">

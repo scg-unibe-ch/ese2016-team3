@@ -1,6 +1,5 @@
 package ch.unibe.ese.team3.controller.pojos.forms;
 
-import javax.validation.constraints.AssertFalse;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -33,11 +32,6 @@ public class AlertForm {
 	
 	private int zipCode;
 
-	@AssertFalse(message = "Please select either or both types")
-	private boolean noRoomNoStudio;
-
-	private boolean bothRoomAndStudio;
-
 	public String getCity() {
 		return city;
 	}
@@ -67,39 +61,6 @@ public class AlertForm {
 
 	public void setPrice(Integer price) {
 		this.price = price;
-	}
-	/*
-	public boolean getStudio() {
-		return studio;
-	}
-
-	public void setStudio(boolean studio) {
-		this.studio = studio;
-	}
-
-	public boolean getRoom() {
-		return room;
-	}
-
-	public void setRoom(boolean room) {
-		this.room = room;
-	}
-	*/
-
-	public boolean getNoRoomNoStudio() {
-		return noRoomNoStudio;
-	}
-
-	public void setNoRoomNoStudio(boolean noRoomNoStudio) {
-		this.noRoomNoStudio = noRoomNoStudio;
-	}
-
-	public boolean getBothRoomAndStudio() {
-		return bothRoomAndStudio;
-	}
-
-	public void setBothRoomAndStudio(boolean bothRoomAndStudio) {
-		this.bothRoomAndStudio = bothRoomAndStudio;
 	}
 
 	public Type getType(){
