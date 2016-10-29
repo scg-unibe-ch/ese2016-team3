@@ -13,7 +13,7 @@
 	
 <%
 	ApplicationContext ac = RequestContextUtils
-			.getWebApplicationContext(request);
+		.getWebApplicationContext(request);
 	UserService userService = (UserService) ac
 			.getBean(UserService.class);
 
