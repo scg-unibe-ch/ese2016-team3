@@ -88,13 +88,6 @@ function typeOfAlert(alert) {
 		<%-- <form:checkboxes items="${types}" path="types" itemLabel="name"/>
 		<br />--%>
 		
-		<form:checkbox name="room" id="room" path="room" /><label>Room</label>
-		<form:checkbox name="studio" id="studio" path="studio" /><label>Studio</label>
-		
-		<form:checkbox style="display:none" name="neither" id="neither" path="noRoomNoStudio" />
-		<form:checkbox style="display:none" name="both" id="both" path="bothRoomAndStudio" />
-		<form:errors path="noRoomNoStudio" cssClass="validationErrorText" /><br /> 
-		
 		<label for="city">City / zip code:</label>
 		<form:input type="text" name="city" id="city" path="city"
 			placeholder="e.g. Bern" tabindex="3" />
@@ -137,19 +130,7 @@ function typeOfAlert(alert) {
 			</thead>
 		<c:forEach var="alert" items="${alerts}">
 			<tr>
-				<td>
-				<c:choose>
-					<c:when test="${alert.bothRoomAndStudio}">
-						Both
-					</c:when>
-					<c:when test="${alert.studio}">
-						Studio
-					</c:when>
-					<c:otherwise>
-						Room
-					</c:otherwise>
-				</c:choose>
-				</td>
+				<td>${alert.type}</td>
 				<td>${alert.city}</td>
 				<td>${alert.radius} km</td>
 				<td>${alert.price} Chf</td>
