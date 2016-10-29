@@ -9,7 +9,11 @@
 
 <script>
 	$(document).ready(function() {
-		$("#about-me").val("${currentUser.aboutMe}");
+		$("#field-aboutMe").val("${currentUser.aboutMe}");
+		$("#field-username").val("${currentUser.username}");
+		$("#field-firstName").val("${currentUser.firstName}");
+		$("#field-lastName").val("${currentUser.lastName}");
+		$("#field-password").val("${currentUser.password}");
 		$("#field-creditcardNumber").val("0000000000000000");
 		var premiumCheck = ${currentUser.isPremium()};
 		document.getElementById("premiumUser").disabled=premiumCheck == 1 ? true : false;
@@ -18,10 +22,12 @@
 		
 </script>
 
-<pre><a href="/">Homepage</a>   &gt;   <a href="/user?id=${currentUser.id}">Public Profile</a>   &gt;   Edit profile</pre>
 
-<h1>Edit your Profile</h1>
-<hr />
+<ol class="breadcrumb">
+	<li><a href="./">Homepage</a></li>
+	<li><a href="/user?id=${currentUser.id}">Profile</a></li>
+	<li class="active">Edit profile</li>
+</ol>
 
 <!-- check if user is logged in -->
 <security:authorize var="loggedIn" url="/profile" />
@@ -38,51 +44,121 @@
 	</c:otherwise>
 </c:choose>
 
-<form:form method="post" modelAttribute="editProfileForm"
-	action="/profile/editProfile" id="editProfileForm" autocomplete="off"
-	enctype="multipart/form-data">
 
-<table class="editProfileTable">
-	<tr>
-		<td class="spacingTable"><label for="user-name">Username:</label><a>&emsp;</a>
-		<form:input id="user-name" path="username" value="${currentUser.username}" /></td>
-		
-	</tr>
-	<tr>
-		<td class="spacingTable"><label for="first-name">First name:</label><a>&emsp;</a>
-		<form:input id="first-name" path="firstName" value="${currentUser.firstName}" /></td>
-	</tr>
-	<tr>	
-		<td class="spacingTable"><label for="last-name">Last name:</label><a>&emsp;</a>
-		<form:input id="last-name" path="lastName" value="${currentUser.lastName}" /></td>
-	</tr>
-	<tr>	
-		<td class="spacingTable"><label for="password">Password:</label><a>&emsp;&thinsp;</a>
-		<form:input type="password" id="password" path="password" value="${currentUser.password}" /></td>
-	</tr>
 
-	<tr>
-		<td class="spacingTable"><label for="about-me">About me:</label><a>&emsp;&thinsp;</a><br>
-		<form:textarea id="about-me" path="aboutMe" rows="10" cols="100" /></td>
-	</tr>
-</table>
+<div class="row">
+	<div class="col-md-12 col-xs-12">
+		<h3>Edit profile</h3>
+		<form:form id="editProfileForm" class="form-horizontal" method="post"
+			modelAttribute="editProfileForm" action="./editProfile">
+			<div class="panel panel-default">
+				<div class="panel-body">
 
-<form:checkbox path="isPremium" value="on" id="premiumUser"/>Do you want to upgrade to Premium User for only 5$ per month?
-		<br>
-		<table id=creditcardForm>
-			<tr class="creditcardInfo">
-				<td style="display:none;">
-				<td class="signupDescription"><label for="field-creditcardNumber">Credit card number:</label></td>
-				<td><form:input path="creditCard" id="field-creditcardNumber" /> <form:errors
-						path="creditCard" cssClass="validationErrorText" /></td>
-			</tr>
-		</table>
-		<br />
+					<spring:bind path="username">
+						<div class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label" for="field-username">Username
+							</label>
+							<div class="col-sm-6">
+								<form:input path="username" cssClass="form-control"
+									id="field-username" />
+								<form:errors path="username" cssClass="text-danger" />
+							</div>
 
-<div>
-	<button type="submit">Update</button>
+
+						</div>
+					</spring:bind>
+					
+					<spring:bind path="password">
+						<div class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label" for="field-password">Password</label>
+							<div class="col-sm-6">
+								<form:input path="password" id="field-password" type="password"
+									cssClass="form-control" />
+								<form:errors path="password" cssClass="text-danger" />
+							</div>
+
+
+						</div>
+					</spring:bind>
+					
+					<spring:bind path="firstName">
+						<div class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label" for="field-firstName">First
+								Name</label>
+							<div class="col-sm-6">
+								<form:input path="firstName" cssClass="form-control"
+									id="field-firstName" />
+								<form:errors path="firstName" cssClass="text-danger" />
+							</div>
+
+
+						</div>
+					</spring:bind>
+
+					<spring:bind path="lastName">
+						<div class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label" for="field-lastName">Last
+								Name</label>
+							<div class="col-sm-6">
+								<form:input path="lastName" id="field-lastName"
+									cssClass="form-control" />
+								<form:errors path="lastName" cssClass="text-danger" />
+							</div>
+
+
+						</div>
+					</spring:bind>
+					
+					<spring:bind path="aboutMe">
+						<div class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label" for="field-aboutMe">About me
+							</label>
+							<div class="col-sm-6">
+								<form:textarea class="form-control" rows="5" path="aboutMe"
+								id="field-aboutMe" cssClass="form-control" />
+								<form:errors path="aboutMe" cssClass="text-danger" />
+								</textarea>
+							</div>
+							
+						</div>
+					</spring:bind>
+
+					<div class="form-group">
+						<div class="col-sm-6 col-sm-offset-2">							
+							<label class="checkbox-inline">
+								<form:checkbox path="isPremium" value="on" id="premiumUser"/>
+								 Sign up as a Premium User for only 5$ per month</label>
+						</div>
+					</div>
+
+					<spring:bind path="creditCard">
+						<div id="form-creditcard"
+							class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label"
+								for="field-creditcardNumber">Credit card number</label>
+							<div class="col-sm-6">
+								<form:input path="creditCard" id="field-creditcardNumber"
+									class="form-control" />
+								<form:errors path="creditCard" cssClass="text-danger" />
+							</div>
+
+
+						</div>
+					</spring:bind>
+				</div>
+			</div>
+			<div class="form-group pull-right">
+				<div class="col-sm-12">
+					<a href="./" class="btn btn-default">Cancel</a>
+					<button type="submit" class="btn btn-primary" value="update">Update</button>
+				</div>
+			</div>
+		</form:form>
+	</div>
 </div>
-</form:form>
+
+
+
 
 <script>
 $("#premiumUser").change(function(){
