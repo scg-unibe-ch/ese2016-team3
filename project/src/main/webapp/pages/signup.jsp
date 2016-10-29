@@ -22,7 +22,7 @@
 </script>
 
 <ol class="breadcrumb">
-	<li><a href="./">Home</a></li>
+	<li><a href="./">Homepage</a></li>
 	<li class="active">Sign up</li>
 </ol>
 

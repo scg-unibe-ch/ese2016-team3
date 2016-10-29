@@ -8,7 +8,7 @@
 
 <c:import url="template/header.jsp" />
 <ol class="breadcrumb">
-	<li><a href="./">Home</a></li>
+	<li><a href="./">Homepage</a></li>
 	<li><a href="./searchAd/">Find ad</a></li>
 	<li class="active">Results</li>
 </ol>
@@ -274,7 +274,7 @@
 												href="<c:url value='./ad?id=${ad.id}' />">${ad.title}</a>
 											</strong>
 										</p>
-										<p>${ad.street},${ad.zipcode}${ad.city}</p>
+										<p>${ad.street},&nbsp;${ad.zipcode}&nbsp;${ad.city}</p>
 										<p>
 											<i>${ad.type.name}</i>
 										</p>

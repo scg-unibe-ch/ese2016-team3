@@ -14,7 +14,7 @@
 <c:import url="template/header.jsp" />
 
 <ol class="breadcrumb">
-	<li><a href="./">Home</a></li>
+	<li><a href="./">Homepage</a></li>
 	<li class="active">Ad Description</li>
 </ol>
 
@@ -28,7 +28,7 @@
 		$("#bookmarkButton").click(function() {
 			
 			$.post("/bookmark", {id: shownAdvertisementID, screening: false, bookmarked: false}, function(data) {
-				$('#bookmarkButton').replaceWith($('<a class="right" id="bookmarkedButton">' + "Bookmarked" + '</a>'));
+				$('#bookmarkButton').replaceWith($('<button class="btn btn-default active" id="bookmarkedButton">' + "Bookmarked" + '</button>'));
 				switch(data) {
 				case 0:
 					alert("You must be logged in to bookmark ads.");
@@ -38,7 +38,7 @@
 					alert("Return value 1. Please contact the WebAdmin.");
 					break;
 				case 3:
-					$('#bookmarkButton').replaceWith($('<button class="btn btn-default" id="bookmarkedButton">' + "Bookmarked" + '</button>'));
+					$('#bookmarkButton').replaceWith($('<button class="btn btn-default active" id="bookmarkedButton">' + "Bookmarked" + '</button>'));
 					break;
 				default:
 					alert("Default error. Please contact the WebAdmin.");	
@@ -52,7 +52,7 @@
 	function attachBookmarkedClickHandler(){
 		$("#bookmarkedButton").click(function() {
 			$.post("/bookmark", {id: shownAdvertisementID, screening: false, bookmarked: true}, function(data) {
-				$('#bookmarkedButton').replaceWith($('<button class="btn btn-default" id="bookmarkButton">' + "Bookmark Ad" + '</button>'));
+				$('#bookmarkedButton').replaceWith($('<button class="btn btn-default" id="bookmarkButton"><span class="glyphicon glyphicon-star"></span> ' + "Bookmark Ad" + '</button>'));
 				switch(data) {
 				case 0:
 					alert("You must be logged in to bookmark ads.");
@@ -62,7 +62,7 @@
 					alert("Return value 1. Please contact the WebAdmin.");
 					break;
 				case 2:
-					$('#bookmarkedButton').replaceWith($('<button class="btn btn-default" id="bookmarkButton">' + "Bookmark Ad" + '</button>'));
+					$('#bookmarkedButton').replaceWith($('<button class="btn btn-default" id="bookmarkButton"><span class="glyphicon glyphicon-star"></span> ' + "Bookmark Ad" + '</button>'));
 					break;
 				default:
 					alert("Default error. Please contact the WebAdmin.");
@@ -79,11 +79,8 @@
 		
 		$.post("/bookmark", {id: shownAdvertisementID, screening: true, bookmarked: true}, function(data) {
 			if(data == 3) {
-				$('#bookmarkButton').replaceWith($('<button class="btn btn-default" id="bookmarkedButton">' + "Bookmarked" + '</button>'));
+				$('#bookmarkButton').replaceWith($('<button class="btn btn-default active" id="bookmarkedButton">' + "Bookmarked" + '</button>'));
 				attachBookmarkedClickHandler();
-			}
-			if(data == 4) {
-				$('#shownAdTitle').replaceWith($('<h3>' + "${shownAd.title}" + '</h3>'));
 			}
 		});
 		
@@ -118,7 +115,7 @@
 					subjectControl.val("");
 					messageControl.val("");
 					$('#messageModal').modal('hide')
-				})
+				});
 			}
 		});
 	});
@@ -144,37 +141,69 @@
 <div class="row">
 	<div class="col-md-12 col-xs-12">
 		<h3 id="shownAdTitle">${shownAd.title}</h3>
-		<div class="btn-group">
+		<div class="btn-group bottom15">
 			<c:choose>
 				<c:when test="${loggedIn}">
-					<button class="btn btn-default" id="bookmarkButton">
-						<span class="glyphicon glyphicon-star"></span> Bookmark Ad
-					</button>
-				</c:when>
-			</c:choose>
-			<c:choose>
-				<c:when test="${loggedIn}">
-					<c:if test="${loggedInUserEmail == shownAd.user.username }">
-						<button class="btn btn-primary" type="button">Edit Ad</button>
-					</c:if>
+					<c:choose>
+						<c:when test="${loggedInUserEmail != shownAd.user.username }">
+							<button class="btn btn-default" id="bookmarkButton">
+								<span class="glyphicon glyphicon-star"></span> Bookmark Ad
+							</button>
+						</c:when>
+						<c:otherwise>
+							<button class="btn btn-primary" type="button">Edit Ad</button>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 			</c:choose>
 		</div>
-		<div class="row bottom15">
+		<div class="row">
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="row bottom15">
+							<div class="col-sm-8">
+								<div class="row">
+									<div class="col-sm-3">
+										<strong>Type</strong>
+									</div>
+									<div class="col-sm-9">${shownAd.type.name}</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-3">
+										<strong>Address</strong>
+									</div>
+									<div class="col-sm-9">
+										<a target="_blank"
+											href="http://maps.google.com/?q=${shownAd.street},&nbsp;${shownAd.zipcode}, ${shownAd.city}">${shownAd.street},
+											${shownAd.zipcode}&nbsp;${shownAd.city}</a>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-3">
+										<strong>Rooms</strong>
+									</div>
+									<div class="col-sm-9">${shownAd.numberOfRooms}</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="pull-right">
+									<h3>${shownAd.prizePerMonth}&#32;CHF</h3>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<h4>Description</h4>
+								<p>${shownAd.roomDescription}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<h4>Details</h4>
 				<table id="adDescTable" class="table table-striped">
-					<tr>
-						<th>Type</th>
-						<td>${shownAd.type.name}</td>
-					</tr>
-
-					<tr>
-						<th>Address</th>
-						<td><a target="_blank"
-							href="http://maps.google.com/?q=${shownAd.street}, ${shownAd.zipcode}, ${shownAd.city}">${shownAd.street},
-								${shownAd.zipcode} ${shownAd.city}</a></td>
-					</tr>
-
 					<tr>
 						<th>Available from</th>
 						<td>${formattedMoveInDate}</td>
@@ -186,18 +215,8 @@
 					</tr>
 
 					<tr>
-						<th>Monthly rent</th>
-						<td>${shownAd.prizePerMonth}&#32;CHF</td>
-					</tr>
-
-					<tr>
 						<th>Square meters</th>
 						<td>${shownAd.squareFootage}&#32;m²</td>
-					</tr>
-
-					<tr>
-						<th>Number of rooms</th>
-						<td>${shownAd.numberOfRooms}</td>
 					</tr>
 
 					<tr>
@@ -231,9 +250,59 @@
 						<td>${shownAd.floorLevel}</td>
 					</tr>
 				</table>
+				<h4>Additional information</h4>
+				<table class="table">
+					<tr>
+						<td><span
+							class="glyphicon glyphicon-${ shownAd.garage ? 'ok': 'remove' }"></span>
+							Garage</td>
+						<td><span
+							class="glyphicon glyphicon-${ shownAd.parking ? 'ok': 'remove' }"></span>
+							Parking</td>
+					</tr>
+					<tr>
+						<td><span
+							class="glyphicon glyphicon-${ shownAd.balcony ? 'ok': 'remove' }"></span>
+							Balcony</td>
+						<td><span
+							class="glyphicon glyphicon-${ shownAd.elevator ? 'ok': 'remove' }"></span>
+							Elevator</td>
+					</tr>
+					<tr>
+						<td><span
+							class="glyphicon glyphicon-${ shownAd.dishwasher ? 'ok': 'remove' }"></span>
+							Dishwasher</td>
+						<td></td>
+					</tr>
+				</table>
+				<h4>Visiting times</h4>
+				<table class="table table-striped" id="visitList">
+					<c:forEach items="${visits }" var="visit">
+						<tr>
+							<td><fmt:formatDate value="${visit.startTimestamp}"
+									pattern="dd-MM-yyyy " /> &nbsp; from <fmt:formatDate
+									value="${visit.startTimestamp}" pattern=" HH:mm " /> until <fmt:formatDate
+									value="${visit.endTimestamp}" pattern=" HH:mm" /></td>
+							<td><c:choose>
+									<c:when test="${loggedIn}">
+										<c:if test="${loggedInUserEmail != shownAd.user.username}">
+											<button class="btn btn-primary" type="button"
+												data-id="${visit.id}" onclick="sendEnquiry(${visit.id});">Send
+												enquiry to advertiser</button>
+										</c:if>
+									</c:when>
+									<c:otherwise>
+										<a href="./login"><button class="btn btn-default"
+												type="button" data-id="${visit.id}">Login to send
+												enquiries</button></a>
+									</c:otherwise>
+								</c:choose></td>
+						</tr>
+					</c:forEach>
+				</table>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-				<div id="carousel-example-generic" class="carousel slide"
+				<div id="carousel-example-generic" class="carousel slide bottom15"
 					data-ride="carousel">
 					<!-- Indicators -->
 					<ol class="carousel-indicators">
@@ -266,123 +335,56 @@
 						<span class="sr-only">Next</span>
 					</a>
 				</div>
-			</div>
-		</div>
-		<div class="row bottom15">
-			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-				<h4>Room description</h4>
-				<p>${shownAd.roomDescription}</p>
-				<h4>Preferences</h4>
-				<p>${shownAd.preferences}</p>
-			</div>
-		</div>
-		<div class="row bottom15">
-			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-				<h4>Additional information</h4>
-				<table class="table">
-					<tr>
-						<td><span
-							class="glyphicon glyphicon-${ shownAd.garage ? 'ok': 'remove' }"></span>
-							Garage</td>
-						<td><span
-							class="glyphicon glyphicon-${ shownAd.parking ? 'ok': 'remove' }"></span>
-							Parking</td>
-					</tr>
-					<tr>
-						<td><span
-							class="glyphicon glyphicon-${ shownAd.balcony ? 'ok': 'remove' }"></span>
-							Balcony</td>
-						<td><span
-							class="glyphicon glyphicon-${ shownAd.elevator ? 'ok': 'remove' }"></span>
-							Elevator</td>
-					</tr>
-					<tr>
-						<td><span
-							class="glyphicon glyphicon-${ shownAd.dishwasher ? 'ok': 'remove' }"></span>
-							Dishwasher</td>
-						<td></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-		<div class="row bottom15">
-			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-				<h4>Visiting times</h4>
-				<table class="table table-striped">
-					<c:forEach items="${visits }" var="visit">
-						<tr>
-							<td><fmt:formatDate value="${visit.startTimestamp}"
-									pattern="dd-MM-yyyy " /> &nbsp; from <fmt:formatDate
-									value="${visit.startTimestamp}" pattern=" HH:mm " /> until <fmt:formatDate
-									value="${visit.endTimestamp}" pattern=" HH:mm" /></td>
-							<td><c:choose>
-									<c:when test="${loggedIn}">
-										<c:if test="${loggedInUserEmail != shownAd.user.username}">
-											<button class="btn btn-primary" type="button"
-												data-id="${visit.id}">Send enquiry to advertiser</button>
-										</c:if>
-									</c:when>
-									<c:otherwise>
-										<a href="./login"><button class="btn btn-default"
-												type="button" data-id="${visit.id}">Login to send
-												enquiries</button></a>
-									</c:otherwise>
-								</c:choose></td>
-						</tr>
-					</c:forEach>
-				</table>
-			</div>
-		</div>
-
-		<div class="row bottom15">
-			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-				<h4>Advertiser</h4>
-				<div class="row">
-					<div class="col-sm-4">
-						<c:choose>
-							<c:when test="${shownAd.user.picture.filePath != null}">
-								<img class="img-responsive"
-									src="${shownAd.user.picture.filePath}">
-							</c:when>
-							<c:otherwise>
-								<img src="/img/avatar.png">
-							</c:otherwise>
-						</c:choose>
-					</div>
-					<div class="col-sm-8">
-						<h5>${shownAd.user.username}</h5>
-						<div class="btn-group">
-							<c:choose>
-								<c:when test="${loggedIn}">
-									<a class="btn btn-default" href="./user?id=${shownAd.user.id}">
-										<span class="glyphicon glyphicon-user"></span> Visit profile
-									</a>
-								</c:when>
-								<c:otherwise>
-									<a class="btn btn-default" href="./login">Login to visit
-										profile</a>
-								</c:otherwise>
-							</c:choose>
-							<c:choose>
-								<c:when test="${loggedIn}">
-									<c:if test="${loggedInUserEmail != shownAd.user.username }">
-										<button class="btn btn-default" id="newMsg" type="button"
-											data-toggle="modal" data-target="#messageModal">
-											<span class="glyphicon glyphicon-envelope"></span> Contact
-											Advertiser
-										</button>
-									</c:if>
-								</c:when>
-								<c:otherwise>
-									<a class="btn btn-default" href="./login">Login to contact
-										advertiser</a>
-								</c:otherwise>
-							</c:choose>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-sm-4">
+								<img class="img-responsive img-circle"
+									src="${shownAd.user.picture.filePath != null ? shownAd.user.picture.filePath : '/img/avatar.png'}" />
+							</div>
+							<div class="col-sm-8">
+								<h4>Advertiser</h4>
+								<h5>${shownAd.user.firstName}${shownAd.user.lastName}</h5>
+								<p>${shownAd.user.username}</p>
+								<div class="btn-group">
+									<c:choose>
+										<c:when test="${loggedIn}">
+											<a class="btn btn-default"
+												href="./user?id=${shownAd.user.id}"> <span
+												class="glyphicon glyphicon-user"></span> Visit profile
+											</a>
+										</c:when>
+										<c:otherwise>
+											<a class="btn btn-default" href="./login">Login to visit
+												profile</a>
+										</c:otherwise>
+									</c:choose>
+									<c:choose>
+										<c:when test="${loggedIn}">
+											<c:if test="${loggedInUserEmail != shownAd.user.username }">
+												<button class="btn btn-default" id="newMsg" type="button"
+													data-toggle="modal" data-target="#messageModal">
+													<span class="glyphicon glyphicon-envelope"></span> Contact
+													Advertiser
+												</button>
+											</c:if>
+										</c:when>
+										<c:otherwise>
+											<a class="btn btn-default" href="./login">Login to
+												contact</a>
+										</c:otherwise>
+									</c:choose>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
+
+
+
 	</div>
 </div>
 
@@ -418,13 +420,5 @@
 		</div>
 	</div>
 </div>
-<div id="confirmationDialog">
-	<form>
-		<p>Send enquiry to advertiser?</p>
-		<button type="button" id="confirmationDialogSend">Send</button>
-		<button type="button" id="confirmationDialogCancel">Cancel</button>
-	</form>
-</div>
-
 
 <c:import url="template/footer.jsp" />
