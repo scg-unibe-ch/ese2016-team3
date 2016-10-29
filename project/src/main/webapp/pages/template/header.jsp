@@ -69,8 +69,10 @@
 					<ul class="nav navbar-nav">
 						<li><a href="/${pagemode}/">Homepage</a></li>
 						<li><a href="/${pagemode}/searchAd">Find ad</a></li>
-						<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
-						<li><a href="#">My Auctions</a></li>
+						<c:if test="${loggedIn}">
+							<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
+							<li><a href="#">My Auctions</a></li>
+						</c:if>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li class="navbar-right dropdown">

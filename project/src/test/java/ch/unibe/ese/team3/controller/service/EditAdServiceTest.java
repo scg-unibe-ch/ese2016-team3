@@ -20,6 +20,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.AdPicture;
+import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
@@ -75,7 +76,7 @@ public class EditAdServiceTest {
 		hans.setAboutMe("Wie der Blitz");
 		userDao.save(hans);
 		
-		Ad ad = adService.saveFrom(placeAdForm, filePaths, hans);
+		Ad ad = adService.saveFrom(placeAdForm, filePaths, hans, BuyMode.BUY);
 		long adId = ad.getId();
 		
 		// veränderung von placeAdForm

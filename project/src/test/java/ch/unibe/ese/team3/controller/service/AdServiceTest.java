@@ -23,6 +23,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.model.Ad;
+import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
@@ -100,7 +101,7 @@ public class AdServiceTest {
 		hans.setAboutMe("Hansi Hinterseer");
 		userDao.save(hans);
 
-		adService.saveFrom(placeAdForm, filePaths, hans);
+		adService.saveFrom(placeAdForm, filePaths, hans, BuyMode.BUY);
 
 		Ad ad = new Ad();
 		Iterable<Ad> ads = adService.getAllAds();
@@ -129,6 +130,7 @@ public class AdServiceTest {
 
 		assertEquals(ad.getNumberOfBath(), 2);
 		assertEquals(ad.getType(), Type.APARTMENT);
+		assertEquals(ad.getBuyMode(), BuyMode.BUY);
 		assertEquals(ad.getInfrastructureType(), InfrastructureType.CABLE);
 
 		assertEquals(ad.getDistancePublicTransport(), 1000);
@@ -173,7 +175,7 @@ public class AdServiceTest {
 		searchForm.setRadius(5);
 		Type[] types = { Type.APARTMENT };
 		searchForm.setTypes(types);
-		Iterable<Ad> queryedAds = adService.queryResults(searchForm);
+		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
 		ArrayList<Ad> adList = (ArrayList) queryedAds;
 
 		assertEquals(adList.size(), 1);
@@ -193,7 +195,7 @@ public class AdServiceTest {
 											// existing Elements in the database
 											// ?
 		searchForm.setTypes(types);
-		Iterable<Ad> queryedAds = adService.queryResults(searchForm);
+		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
 		ArrayList<Ad> adList = (ArrayList) queryedAds;
 
 		assertEquals(adList.size(), 4); // in the flatfindr app, only 3 ads are
@@ -225,7 +227,7 @@ public class AdServiceTest {
 		searchForm.setTypes(types);
 	//	searchForm.setNumberOfRooms(1000);
 	//	searchForm.setNumberOfBath(10);
-		Iterable<Ad> queryedAds = adService.queryResults(searchForm);
+		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
 		ArrayList<Ad> adList = (ArrayList) queryedAds;
 
 		assertEquals(adList.size(), 0);
@@ -233,7 +235,7 @@ public class AdServiceTest {
 
 	@Test
 	public void getNewestAds() {
-		Iterable<Ad> newestdAds = adService.getNewestAds(3);
+		Iterable<Ad> newestdAds = adService.getNewestAds(3, BuyMode.BUY);
 		ArrayList<Ad> listNewestAds = (ArrayList) newestdAds;
 
 		assertEquals(listNewestAds.size(), 3);

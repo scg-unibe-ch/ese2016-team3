@@ -21,6 +21,7 @@ import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.AdPicture;
+import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Location;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
@@ -47,7 +48,7 @@ public class AdService {
 	 *            currently logged in user
 	 */
 	@Transactional
-	public Ad saveFrom(PlaceAdForm placeAdForm, List<String> filePaths, User user) {
+	public Ad saveFrom(PlaceAdForm placeAdForm, List<String> filePaths, User user, BuyMode buyMode) {
 
 		Ad ad = new Ad();
 
@@ -59,6 +60,7 @@ public class AdService {
 		ad.setStreet(placeAdForm.getStreet());
 
 		ad.setType(placeAdForm.getType());
+		ad.setBuyMode(buyMode);
 
 		// take the zipcode - first four digits
 		String zip = placeAdForm.getCity().substring(0, 4);
@@ -203,11 +205,14 @@ public class AdService {
 	 * Returns the newest ads in the database. Parameter 'newest' says how many.
 	 */
 	@Transactional
-	public Iterable<Ad> getNewestAds(int newest) {
+	public Iterable<Ad> getNewestAds(int newest, BuyMode buyMode) {
 		Iterable<Ad> allAds = adDao.findAll();
 		List<Ad> ads = new ArrayList<Ad>();
-		for (Ad ad : allAds)
-			ads.add(ad);
+		for (Ad ad : allAds){
+			if (ad.getBuyMode() == buyMode){
+				ads.add(ad);
+			}
+		}
 		Collections.sort(ads, new Comparator<Ad>() {
 			@Override
 			public int compare(Ad ad1, Ad ad2) {
@@ -215,7 +220,10 @@ public class AdService {
 			}
 		});
 		List<Ad> fourNewest = new ArrayList<Ad>();
-		for (int i = 0; i < newest; i++)
+		
+		int limit = newest <= ads.size() ? newest : ads.size();
+		
+		for (int i = 0; i < limit; i++)
 			fourNewest.add(ads.get(i));
 		return fourNewest;
 	}
@@ -229,14 +237,14 @@ public class AdService {
 	 * @return an Iterable of all search results
 	 */
 	@Transactional
-	public Iterable<Ad> queryResults(SearchForm searchForm) {
+	public Iterable<Ad> queryResults(SearchForm searchForm, BuyMode buyMode) {
 		Iterable<Ad> results = null;
 
 		if (searchForm.getTypes().length > 0) {
-			results = adDao.findByPrizePerMonthLessThanAndTypeIn(searchForm.getPrize() + 1, searchForm.getTypes());
+			results = adDao.findByPrizePerMonthLessThanAndTypeInAndBuyMode(searchForm.getPrize() + 1, searchForm.getTypes(), buyMode);
 		}
 		else {
-			results = adDao.findByPrizePerMonthLessThan(searchForm.getPrize() + 1);
+			results = adDao.findByPrizePerMonthLessThanAndBuyMode(searchForm.getPrize() + 1, buyMode);
 		}
 
 		// filter out zipcode

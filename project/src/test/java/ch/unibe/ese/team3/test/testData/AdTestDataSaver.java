@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.AdPicture;
+import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.AdDao;
@@ -75,6 +76,7 @@ public class AdTestDataSaver {
 		Ad adBern = new Ad();
 		adBern.setZipcode(3011);
 		adBern.setType(Type.APARTMENT);
+		adBern.setBuyMode(BuyMode.BUY);
 		adBern.setMoveInDate(moveInDate1);
 		adBern.setCreationDate(creationDate1);
 		adBern.setMoveOutDate(moveOutDate1);
@@ -113,6 +115,7 @@ public class AdTestDataSaver {
 		Ad adBern2 = new Ad();
 		adBern2.setZipcode(3012);
 		adBern2.setType(Type.APARTMENT);
+		adBern2.setBuyMode(BuyMode.BUY);
 		adBern2.setMoveInDate(moveInDate2);
 		adBern2.setCreationDate(creationDate2);
 		adBern2.setMoveOutDate(moveOutDate4);
@@ -151,6 +154,7 @@ public class AdTestDataSaver {
 		Ad adBasel = new Ad();
 		adBasel.setZipcode(4051);
 		adBasel.setType(Type.STUDIO);
+		adBasel.setBuyMode(BuyMode.BUY);
 		adBasel.setMoveInDate(moveInDate3);
 		adBasel.setMoveOutDate(moveOutDate2);
 		adBasel.setCreationDate(creationDate3);
@@ -185,6 +189,7 @@ public class AdTestDataSaver {
 		Ad adOlten = new Ad();
 		adOlten.setZipcode(4600);
 		adOlten.setType(Type.LOFT);
+		adOlten.setBuyMode(BuyMode.BUY);
 		adOlten.setMoveInDate(moveInDate4);
 		adOlten.setCreationDate(creationDate4);
 		adOlten.setPrizePerMonth(430);
@@ -216,6 +221,7 @@ public class AdTestDataSaver {
 		Ad adNeuchâtel = new Ad();
 		adNeuchâtel.setZipcode(2000);
 		adNeuchâtel.setType(Type.VILLA);
+		adNeuchâtel.setBuyMode(BuyMode.BUY);
 		adNeuchâtel.setMoveInDate(moveInDate5);
 		adNeuchâtel.setMoveOutDate(moveOutDate3);
 		adNeuchâtel.setCreationDate(creationDate5);
@@ -246,6 +252,7 @@ public class AdTestDataSaver {
 		Ad adBiel = new Ad();
 		adBiel.setZipcode(2503);
 		adBiel.setType(Type.APARTMENT);
+		adBiel.setBuyMode(BuyMode.BUY);
 		adBiel.setMoveInDate(moveInDate6);
 		adBiel.setMoveOutDate(moveOutDate5);
 		adBiel.setCreationDate(creationDate6);
@@ -283,6 +290,7 @@ public class AdTestDataSaver {
 		Ad adZurich = new Ad();
 		adZurich.setZipcode(8000);
 		adZurich.setType(Type.HOUSE);
+		adZurich.setBuyMode(BuyMode.BUY);
 		adZurich.setMoveInDate(moveInDate7);
 		adZurich.setCreationDate(creationDate7);
 		adZurich.setMoveOutDate(moveOutDate5);
@@ -323,6 +331,7 @@ public class AdTestDataSaver {
 		Ad adLuzern = new Ad();
 		adLuzern.setZipcode(6000);
 		adLuzern.setType(Type.APARTMENT);
+		adLuzern.setBuyMode(BuyMode.BUY);
 		adLuzern.setMoveInDate(moveInDate8);
 		adLuzern.setCreationDate(creationDate2);
 		adLuzern.setPrizePerMonth(700);
@@ -359,6 +368,7 @@ public class AdTestDataSaver {
 		Ad adAarau = new Ad();
 		adAarau.setZipcode(5000);
 		adAarau.setType(Type.APARTMENT);
+		adAarau.setBuyMode(BuyMode.BUY);
 		adAarau.setMoveInDate(moveInDate3);
 		adAarau.setMoveOutDate(moveOutDate4);
 		adAarau.setCreationDate(creationDate8);
@@ -396,6 +406,7 @@ public class AdTestDataSaver {
 		Ad adDavos = new Ad();
 		adDavos.setZipcode(7260);
 		adDavos.setType(Type.APARTMENT);
+		adDavos.setBuyMode(BuyMode.BUY);
 		adDavos.setMoveInDate(moveInDate2);
 		adDavos.setCreationDate(creationDate4);
 		adDavos.setPrizePerMonth(1100);
@@ -427,6 +438,7 @@ public class AdTestDataSaver {
 		Ad adLausanne = new Ad();
 		adLausanne.setZipcode(1000);
 		adLausanne.setType(Type.APARTMENT);
+		adLausanne.setBuyMode(BuyMode.BUY);
 		adLausanne.setMoveInDate(moveInDate5);
 		adLausanne.setMoveOutDate(moveOutDate3);
 		adLausanne.setCreationDate(creationDate5);
@@ -457,6 +469,7 @@ public class AdTestDataSaver {
 		Ad adLocarno = new Ad();
 		adLocarno.setZipcode(6600);
 		adLocarno.setType(Type.VILLA);
+		adLocarno.setBuyMode(BuyMode.BUY);
 		adLocarno.setMoveInDate(moveInDate6);
 		adLocarno.setMoveOutDate(moveOutDate5);
 		adLocarno.setCreationDate(creationDate6);

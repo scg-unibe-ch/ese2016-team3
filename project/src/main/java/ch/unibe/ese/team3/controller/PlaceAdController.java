@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +31,9 @@ import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.controller.service.AlertService;
 import ch.unibe.ese.team3.controller.service.UserService;
+import ch.unibe.ese.team3.enums.PageMode;
 import ch.unibe.ese.team3.model.Ad;
+import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.PictureMeta;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
@@ -131,14 +134,14 @@ public class PlaceAdController {
 	@RequestMapping(value = "/profile/placeAd", method = RequestMethod.POST)
 	public ModelAndView create(@Valid PlaceAdForm placeAdForm,
 			BindingResult result, RedirectAttributes redirectAttributes,
-			Principal principal) {
+			Principal principal, @RequestAttribute("pageMode") PageMode pageMode ) {
 		ModelAndView model = new ModelAndView("placeAd");
 		if (!result.hasErrors()) {
 			String username = principal.getName();
 			User user = userService.findUserByUsername(username);
 
 			List<String> fileNames = pictureUploader.getFileNames();
-			Ad ad = adService.saveFrom(placeAdForm, fileNames, user);
+			Ad ad = adService.saveFrom(placeAdForm, fileNames, user, BuyMode.fromPageMode(pageMode));
 
 			// triggers all alerts that match the placed ad
 			alertService.triggerAlerts(ad);
