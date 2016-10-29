@@ -18,7 +18,7 @@
 		
 </script>
 
-<pre><a href="/">Home</a>   &gt;   <a href="/user?id=${currentUser.id}">Public Profile</a>   &gt;   Edit profile</pre>
+<pre><a href="/">Homepage</a>   &gt;   <a href="/user?id=${currentUser.id}">Public Profile</a>   &gt;   Edit profile</pre>
 
 <h1>Edit your Profile</h1>
 <hr />

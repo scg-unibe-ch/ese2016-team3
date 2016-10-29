@@ -54,7 +54,7 @@
 </script>
 
 <pre>
-	<a href="/">Home</a>   &gt;   Profile</pre>
+	<a href="/">Homepage</a>   &gt;   Profile</pre>
 
 <div id="userDiv">
 	<c:choose>

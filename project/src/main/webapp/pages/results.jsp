@@ -8,7 +8,7 @@
 
 <c:import url="template/header.jsp" />
 <ol class="breadcrumb">
-	<li><a href="./">Home</a></li>
+	<li><a href="./">Homepage</a></li>
 	<li><a href="./searchAd/">Find ad</a></li>
 	<li class="active">Results</li>
 </ol>

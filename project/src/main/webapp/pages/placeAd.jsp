@@ -97,7 +97,7 @@
 	<a href="/">Home</a>   &gt;   Place ad</pre>  new --%>
 
 <ol class="breadcrumb">
-	<li><a href="/${pagemode}/">Home</a></li>
+	<li><a href="/${pagemode}/">Homepage</a></li>
 	<li class="active">Place ad</li>
 </ol>
 

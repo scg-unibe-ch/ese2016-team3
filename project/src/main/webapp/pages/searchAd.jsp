@@ -7,7 +7,7 @@
 <c:import url="template/header.jsp" />
 
 <ol class="breadcrumb">
-	<li><a href="/${pagemode}/">Home</a></li>
+	<li><a href="/${pagemode}/">Homepage</a></li>
 	<li class="active">Find ad</li>
 </ol>
 

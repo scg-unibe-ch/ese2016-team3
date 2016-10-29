@@ -10,7 +10,7 @@
 <c:import url="template/header.jsp" />
 
 <pre>
-	<a href="/">Home</a>   &gt;   Login</pre>
+	<a href="/">Homepage</a>   &gt;   Login</pre>
 
 <h2>Login</h2>
 
