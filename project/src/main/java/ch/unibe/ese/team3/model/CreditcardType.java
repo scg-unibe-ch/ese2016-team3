@@ -9,7 +9,7 @@ public enum CreditcardType {
 		this.creditcardTypeName = creditcardTypeName;
 	}
 	
-	private String getCreditcardName(){
+	public String getCreditcardTypeName(){
 		return this.creditcardTypeName;
 	}
 }

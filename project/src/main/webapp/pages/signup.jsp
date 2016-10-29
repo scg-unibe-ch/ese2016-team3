@@ -108,6 +108,34 @@
 						</div>
 					</div>
 
+					<spring:bind path="validCreditcardType">
+						<div id="form-creditcardType"
+							class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label"
+								for="field-creditcardNumber">Type of credit card</label>
+							<div class="col-sm-6">
+								<form:select path="creditcardType" id="field-creditcardType"
+									class="form-control"> 
+								<form:options items="${creditcardTypes}" itemLabel="creditcardTypeName"/>
+								</form:select>
+								<form:errors path="validCreditcardType" cssClass="text-danger" />
+							</div>
+						</div>
+					</spring:bind>
+					
+					<spring:bind path="validCreditcardName">
+						<div id="form-creditcardName"
+							class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label"
+								for="field-creditcardName">Name as written on credit card</label>
+							<div class="col-sm-6">
+								<form:input path="creditcardName" id="field-creditcardName"
+									class="form-control" />
+								<form:errors path="validCreditcardName" cssClass="text-danger" />
+							</div>
+						</div>
+					</spring:bind>
+					
 					<spring:bind path="validCreditCard">
 						<div id="form-creditcard"
 							class="form-group ${status.error ? 'has-error' : '' }">
@@ -118,10 +146,48 @@
 									class="form-control" />
 								<form:errors path="validCreditCard" cssClass="text-danger" />
 							</div>
-
-
 						</div>
 					</spring:bind>
+					
+					<spring:bind path="validSecurityNumber">
+						<div id="form-securityNumber"
+							class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label"
+								for="field-securityNumber">Security Number</label>
+							<div class="col-sm-6">
+								<form:input path="securityNumber" id="field-securityNumber"
+									class="form-control" />
+								<form:errors path="validSecurityNumber" cssClass="text-danger" />
+							</div>
+						</div>
+					</spring:bind>
+					
+					<spring:bind path="validExpirationMonth">
+						<div id="form-expirationMonth"
+							class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label"
+								for="field-expirationMonth">Date of Expiration</label>
+							<div class="col-sm-6">
+								<form:input type="number" min="1" max="12" value="1" path="expirationMonth" id="field-expirationMonth"
+									class="form-control" />
+								<form:errors path="validExpirationMonth" cssClass="text-danger" />
+							</div>
+						</div>
+					</spring:bind>	
+				
+					<spring:bind path="validExpirationYear">
+						<div id="form-expirationYear"
+							class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label"
+								for="field-expirationYear"></label>
+							<div class="col-sm-6">
+								<form:input type="number" min="2016" max="2030" value="1" path="expirationYear" id="field-expirationYear"
+									class="form-control" />
+								<form:errors path="validExpirationYear" cssClass="text-danger" />
+							</div>
+						</div>
+					</spring:bind>
+					
 				</div>
 			</div>
 			<div class="form-group pull-right">
@@ -143,9 +209,20 @@ $("#premiumUser").change(function(){
 	
 	if ( self.checked){
 		$("#field-creditcardNumber").val("");
+		$("#field-creditcardType").val("");
+		$("#field-creditcardName").val("");
+		$("#field-securityNumber").val("");
+		$("#field-expirationMonth").val("");
+		$("#field-expirationYear").val("");
+
 	}
 	
 	$("#form-creditcard").toggle(self.checked);
+	$("#form-creditcardType").toggle(self.checked);
+	$("#form-creditcardName").toggle(self.checked);
+	$("#form-securityNumber").toggle(self.checked);
+	$("#form-expirationMonth").toggle(self.checked);
+	$("#form-expirationYear").toggle(self.checked);
 	
 	
 }).change();

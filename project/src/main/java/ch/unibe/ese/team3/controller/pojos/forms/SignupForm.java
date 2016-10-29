@@ -52,27 +52,70 @@ public class SignupForm {
 	@AssertTrue(message = "Credit card number must be 16 digits")
 	private boolean validCreditCard;
 	
+	@AssertTrue(message = "Not a valid Name")
+	private boolean validCreditcardName;
+	
+	@AssertTrue(message = "Month must be between 1 and 12")
+	private boolean validExpirationMonth;
+	
+	@AssertTrue(message = "Your credit card has expired!")
+	private boolean validExpirationYear;
+	
+	@AssertTrue(message = "Security number must be 3 digits")
+	private boolean validSecurityNumber;
+	
+	@AssertTrue(message = "Please choose the type of your creditcard")
+	private boolean validCreditcardType;
+	
 	public boolean isValidCreditCard() {
 		return validCreditCard;
 	}
+	
+	public boolean isValidCreditcardName() {
+		return validCreditcardName;
+	}
+	
+	public boolean isValidCreditcardType() {
+		return validCreditcardType;
+	}
+	
+	public boolean isValidExpirationMonth() {
+		return validExpirationMonth;
+	}
+	
+	public boolean isValidExpirationYear() {
+		return validExpirationYear;
+	}
+	
+	public boolean isValidSecurityNumber() {
+		return validSecurityNumber;
+	}
 
-	public void setValidCreditCard(boolean validCreditCard) {
-		this.validCreditCard = validCreditCard;
+	public void setValidCreditcardName(boolean validCreditCardName) {
+		this.validCreditcardName = validCreditCardName;
+	}
+	
+	public void setValidCreditcardType(boolean validCreditcardType) {
+		this.validCreditcardType = validCreditcardType;
+	}
+	
+	public void setValidExpirationMonth(boolean validExpirationMonth) {
+		this.validExpirationMonth = validExpirationMonth;
+	}
+	
+	public void setValidExpirationYear(boolean validExpirationYear) {
+		this.validExpirationYear = validExpirationYear;
+	}
+	
+	public void setValidSecurityNumber(boolean validSecurityNumber) {
+		this.validSecurityNumber = validSecurityNumber;
 	}
 
 	private boolean validCreditCardWhenPremium(){
 		boolean valid = true;
 		
 		if (isPremium){
-			try{
-			if (!java.util.regex.Pattern.matches("^[0-9]{16}$", creditCard)
-					&& !(1 <= Integer.parseInt(expirationMonth) && Integer.parseInt(expirationMonth) <= 12)
-					&& !(2016 <= Integer.parseInt(expirationYear))
-					&& !(java.util.regex.Pattern.matches("[a-zA-Z ]+", creditcardName))
-					&& !(99 < Integer.parseInt(securityNumber) && Integer.parseInt(securityNumber) < 1000)){
-				valid = false;
-			}
-			}catch(NumberFormatException e) {
+			if (!java.util.regex.Pattern.matches("^[0-9]{16}$", creditCard)){
 				valid = false;
 			}
 		}
@@ -85,12 +128,73 @@ public class SignupForm {
 		boolean valid = true;
 		
 		if (isPremium){
-		
 			if (!(java.util.regex.Pattern.matches("[a-zA-Z ]+", creditcardName)))
 				valid = false;
 		}
 		
-		this.validCreditCard = valid;
+		this.validCreditcardName = valid;
+		return valid;
+	}
+	
+	private boolean validExpirationMonthWhenPremium(){
+		boolean valid = true;
+		
+		try{
+		if (isPremium){
+			
+			if (!(1 <= Integer.parseInt(expirationMonth) && Integer.parseInt(expirationMonth) <= 12))
+				valid = false;
+		}
+		}catch(NumberFormatException e) {
+			valid = false;
+		}
+		
+		this.validExpirationMonth = valid;
+		return valid;
+	}
+	
+	private boolean validExpirationYearWhenPremium(){
+		boolean valid = true;
+		
+		try{
+		if (isPremium){
+			
+			if (!(2016 <= Integer.parseInt(expirationMonth)))
+				valid = false;
+		}
+		}catch(NumberFormatException e) {
+			valid = false;
+		}
+		
+		this.validExpirationYear = valid;
+		return valid;
+	}
+	
+	private boolean validSecurityNumberWhenPremium(){
+		boolean valid = true;
+		
+		try{
+		if (isPremium){
+			if (!(99 < Integer.parseInt(securityNumber) && Integer.parseInt(securityNumber) < 1000))
+				valid = false;
+		}
+		}catch(NumberFormatException e) {
+			valid = false;
+		}
+		
+		this.validSecurityNumber = valid;
+		return valid;
+	}
+	
+	private boolean validCreditcardTypeWhenPremium(){
+		boolean valid = true;
+		
+		if (isPremium){
+			if (creditcardType == null)
+				valid = false;
+		}
+		
+		this.validCreditcardType = valid;
 		return valid;
 	}
 
@@ -167,7 +271,7 @@ public class SignupForm {
 	
 	public void setExpirationMonth(String month){
 		this.expirationMonth = month;
-		validCreditCardWhenPremium();
+		validExpirationMonthWhenPremium();
 	}
 	
 	public String getExpirationYear(){
@@ -176,7 +280,7 @@ public class SignupForm {
 	
 	public void setExpirationYear(String year){
 		this.expirationYear = year;
-		validCreditCardWhenPremium();
+		validExpirationYearWhenPremium();
 	}
 	
 	public String getSecurityNumber(){
@@ -185,7 +289,7 @@ public class SignupForm {
 	
 	public void setSecurityNumber(String number){
 		this.securityNumber = number;
-		validCreditCardWhenPremium();
+		validSecurityNumberWhenPremium();
 	}
 	
 	public CreditcardType getCreditcardType(){
@@ -194,6 +298,6 @@ public class SignupForm {
 	
 	public void setCreditcardType(CreditcardType type){
 		this.creditcardType = type;
-		validCreditCardWhenPremium();
+		validCreditcardTypeWhenPremium();
 	}
 }
