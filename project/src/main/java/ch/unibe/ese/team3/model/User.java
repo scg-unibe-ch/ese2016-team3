@@ -52,8 +52,23 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private AccountType accountType;
 	
+	@Enumerated(EnumType.STRING)
+	private CreditcardType creditcardType;
+	
 	@Column(nullable = true)
 	private String creditCard;
+	
+	@Column(nullable = true)
+	private String securityNumber;
+	
+	@Column(nullable = true)
+	private String expirationMonth;
+	
+	@Column(nullable = true)
+	private String expirationYear;
+	
+	@Column(nullable = true)
+	private String creditcardName;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -127,6 +142,14 @@ public class User {
 		accountType = type;
 	}
 	
+	public CreditcardType getCreditcardType(){
+		return creditcardType;
+	}
+	
+	public void setCreditcardType(CreditcardType type){
+		creditcardType = type;
+	}
+	
 	public boolean isPremium(){
 		if(accountType == AccountType.PREMIUM){
 			return true;
@@ -142,6 +165,38 @@ public class User {
 	
 	public void setCreditCard(String card){
 		creditCard = card;
+	}
+	
+	public String getSecurityNumber(){
+		return securityNumber;
+	}
+	
+	public void setSecurityNumber(String number){
+		securityNumber = number;
+	}
+	
+	public String getExpirationMonth(){
+		return expirationMonth;
+	}
+	
+	public void setExpirationMonth(String month){
+		expirationMonth = month;
+	}
+	
+	public String getExpirationYear(){
+		return expirationYear;
+	}
+	
+	public void setExpirationYear(String year){
+		expirationYear = year;
+	}
+	
+	public String getCreditcardName(){
+		return creditcardName;
+	}
+	
+	public void setCreditcardName(String name){
+		creditcardName = name;
 	}
 
 	public Set<UserRole> getUserRoles() {

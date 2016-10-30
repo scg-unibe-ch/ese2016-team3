@@ -7,8 +7,11 @@
 
 
 <c:import url="template/header.jsp" />
-<pre>
-	<a href="/">Home</a>   &gt;   <a href="/searchAd/">Search</a>   &gt;   Results</pre>
+<ol class="breadcrumb">
+	<li><a href="./">Homepage</a></li>
+	<li><a href="./searchAd/">Find ad</a></li>
+	<li class="active">Results</li>
+</ol>
 
 <script>
 	/*
@@ -66,13 +69,9 @@
 
 <script>
 	$(document).ready(function() {
-		$("#city").autocomplete({
-			minLength : 2
-		});
-		$("#city").autocomplete({
-			source : <c:import url="getzipcodes.jsp" />
-		});
-		$("#city").autocomplete("option", {
+		$("#cityInput").autocomplete({
+			minLength : 2,
+			source : <c:import url="getzipcodes.jsp" />,
 			enabled : true,
 			autoFocus : true
 		});
@@ -92,152 +91,206 @@
 	});
 </script>
 
-<h1>Search results:</h1>
+<div class="row">
 
-<hr />
-
-<div>
-	<select id="modus">
-		<option value="">Sort by:</option>
-		<option value="price_asc">Price (ascending)</option>
-		<option value="price_desc">Price (descending)</option>
-		<option value="moveIn_desc">Move-in date (earliest to latest)</option>
-		<option value="moveIn_asc">Move-in date (latest to earliest)</option>
-		<option value="dateAge_asc">Date created (youngest to oldest)</option>
-		<option value="dateAge_desc">Date created (oldest to
-			youngest)</option>
-	</select>
-
-	<button onClick="sort_div_attribute()">Sort</button>
-</div>
-<c:choose>
-	<c:when test="${empty results}">
-		<p>No results found!
-	</c:when>
-	<c:otherwise>
-		<div id="resultsDiv" class="resultsDiv">
-			<c:forEach var="ad" items="${results}">
-				<div class="resultAd" data-price="${ad.prizePerMonth}"
-					data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
-					<div class="resultLeft">
-						<a href="<c:url value='/ad?id=${ad.id}' />"><img
-							src="${ad.pictures[0].filePath}" /></a>
-						<h2>
-							<a class="link" href="<c:url value='/ad?id=${ad.id}' />">${ad.title }</a>
-						</h2>
-						<p>${ad.street},${ad.zipcode}${ad.city}</p>
-						<br />
-						<p>
-							<i>${ad.type.name}</i>
-						</p>
+	<div class="col-xs-12 col-sm-12 col-md-4 col-ls-4">
+		<h4>Filter results</h4>
+		<div class="panel panel-default form-inline">
+			<div class="panel-body">
+				<div class="form-group">
+					<select id="modus" class="form-control">
+						<option value="">Sort by:</option>
+						<option value="price_asc">Price (ascending)</option>
+						<option value="price_desc">Price (descending)</option>
+						<option value="moveIn_desc">Move-in date (earliest to
+							latest)</option>
+						<option value="moveIn_asc">Move-in date (latest to
+							earliest)</option>
+						<option value="dateAge_asc">Date created (youngest to
+							oldest)</option>
+						<option value="dateAge_desc">Date created (oldest to
+							youngest)</option>
+					</select>
+					<button class="btn btn-default" onClick="sort_div_attribute()">Sort</button>
+				</div>
+			</div>
+		</div>
+		<form:form method="post" modelAttribute="searchForm"
+			action="./results" id="filterForm" autocomplete="off">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="form-group">
+						<label>Type</label>
+						<c:forEach var="type" items="${types}">
+							<div class="checkbox">
+								<label> <form:checkbox path="types" value="${type}" />
+									${type.name}
+								</label>
+							</div>
+						</c:forEach>
 					</div>
-					<div class="resultRight">
-						<h2>CHF ${ad.prizePerMonth }</h2>
-						<br /> <br />
+					<spring:bind path="city">
+						<div class="form-group ${status.error ? 'has-error' : '' }">
+							<label for="cityInput">City / zip code</label>
+							<form:input type="text" name="cityInput" id="cityInput"
+								path="city" placeholder="e.g. Bern" cssClass="form-control" />
+							<form:errors path="city" />
+						</div>
+					</spring:bind>
+					<spring:bind path="radius">
+						<div class="form-group ${status.error ? 'has-error' : '' }">
+							<label for="radiusInput">Within radius of (max.)</label>
+							<div class="input-group">
+								<form:input id="radiusInput" type="number" path="radius"
+									placeholder="e.g. 5" step="5" cssClass="form-control" />
+								<span class="input-group-addon">km</span>
+								<form:errors path="radius" />
+							</div>
+						</div>
+					</spring:bind>
+					<spring:bind path="prize">
+						<div class="form-group ${status.error ? 'has-error' : '' }">
+							<label for="prizeInput">Price (max.)</label>
+							<div class="input-group">
+								<span class="input-group-addon">Fr.</span>
+								<form:input id="prizeInput" type="number" path="prize"
+									placeholder="e.g. 5" step="50" cssClass="form-control" />
+								<form:errors path="prize" />
+							</div>
+						</div>
+					</spring:bind>
+					<div class="form-group">
 
-						<fmt:formatDate value="${ad.moveInDate}" var="formattedMoveInDate"
-							type="date" pattern="dd.MM.yyyy" />
+						<label for="earliestMoveInDate">Earliest move-in date</label>
+						<form:input type="text" id="field-earliestMoveInDate"
+							path="earliestMoveInDate" cssClass="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="earliestMoveOutDate">Earliest move-out date
+							(optional)</label>
+						<form:input type="text" id="field-earliestMoveOutDate"
+							path="earliestMoveOutDate" cssClass="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="latestMoveInDate">Latest move-in date</label>
+						<form:input type="text" id="field-latestMoveInDate"
+							path="latestMoveInDate" cssClass="form-control" />
+					</div>
 
-						<p>Move-in date: ${formattedMoveInDate }</p>
+					<div class="form-group">
+						<label for="latestMoveOutDate">Latest move-out date
+							(optional)</label>
+						<form:input type="text" id="field-latestMoveOutDate"
+							path="latestMoveOutDate" cssClass="form-control" />
+					</div>
+					<div class="checkbox">
+						<label><form:checkbox id="field-balcony" path="balcony"
+								value="1" />Balcony or Patio</label>
+					</div>
+					<div class="checkbox">
+						<label><form:checkbox id="field-garage" path="garage"
+								value="1" />Garage</label>
+					</div>
+					<div class="checkbox">
+						<label><form:checkbox id="field-parking" path="parking"
+								value="1" />Parking</label>
+					</div>
+
+					<div class="checkbox">
+						<label><form:checkbox id="field-elevator" path="elevator"
+								value="1" />Elevator</label>
+					</div>
+
+					<div class="checkbox">
+						<label><form:checkbox id="field-dishwasher"
+								path="dishwasher" value="1" />Dishwasher</label>
+					</div>
+
+					<div class="form-group">
+						<label for="field-floorLevelMin">Floor level (min)</label>
+						<form:input type="number" step="1" id="field-floorLevelMin"
+							path="floorLevelMin" cssClass="form-control" />
+					</div>
+
+					<div class="form-group">
+						<label for="field-floorLevelMax">Floor level (max)</label>
+						<form:input type="number" step="1" id="field-floorLevelMax"
+							path="floorLevelMax" cssClass="form-control" />
+					</div>
+					
+					<div class="form-group">
+						<label for="field-NumberOfBathMin">Number of Bath (min)</label>
+						<input type="number" class="form-control" id="field-NumberOfBathMin">
+					</div>
+					<div class="form-group">
+						<label for="field-NumberOfBathMax">Number of Bath (max)</label>
+						<input type="number" class="form-control" id="field-NumberOfBathMax">
+					</div>
+					
+					
+					
+				</div>
+			</div>
+			<div class="form-group pull-right">
+				<button type="reset" class="btn btn-default">Cancel</button>
+				<button type="submit" class="btn btn-primary">Filter</button>
+			</div>
+		</form:form>
+	</div>
+
+	<div class="col-xs-12 col-sm-12 col-md-8 col-ls-8">
+		<h4>Results</h4>
+		<c:choose>
+			<c:when test="${empty results}">
+				<p>No results found!
+			</c:when>
+			<c:otherwise>
+				<div class="row bottom15">
+					<div class="col-xs-12">
+						<div class="btn-group">
+							<button type="button" class="btn btn-default">All</button>
+							<button type="button" class="btn btn-default">Buy
+								directly</button>
+							<button type="button" class="btn btn-default">Buy by
+								auction</button>
+						</div>
 					</div>
 				</div>
-			</c:forEach>
-		</div>
-	</c:otherwise>
-</c:choose>
-
-<form:form method="post" modelAttribute="searchForm" action="/results"
-	id="filterForm" autocomplete="off">
-
-	<div id="filterDiv">
-		<h2>Filter results:</h2>
-		<form:checkboxes items="${types}" path="types" itemLabel="name" />
-		<br /> <label for="city">City / zip code:</label>
-		<form:input type="text" name="city" id="city" path="city"
-			placeholder="e.g. Bern" tabindex="3" />
-		<form:errors path="city" cssClass="validationErrorText" />
-		<br /> <label for="radius">Within radius of (max.):</label>
-		<form:input id="radiusInput" type="number" path="radius"
-			placeholder="e.g. 5" step="5" />
-		km
-		<form:errors path="radius" cssClass="validationErrorText" />
-		<br /> <label for="prize">Price (max.):</label>
-		<form:input id="prizeInput" type="number" path="prize"
-			placeholder="e.g. 5" step="50" />
-		CHF
-		<form:errors path="prize" cssClass="validationErrorText" />
-		<br />
-
-		<hr class="slim">
-
-		<table style="width: 80%">
-			<tr>
-				<td><label for="earliestMoveInDate">Earliest move-in
-						date</label></td>
-				<td><label for="earliestMoveOutDate">Earliest move-out
-						date (optional)</label></td>
-			</tr>
-			<tr>
-				<td><form:input type="text" id="field-earliestMoveInDate"
-						path="earliestMoveInDate" /></td>
-				<td><form:input type="text" id="field-earliestMoveOutDate"
-						path="earliestMoveOutDate" /></td>
-			</tr>
-			<tr>
-				<td><label for="latestMoveInDate">Latest move-in date</label></td>
-				<td><label for="latestMoveOutDate">Latest move-out date
-						(optional)</label></td>
-			</tr>
-			<tr>
-				<td><form:input type="text" id="field-latestMoveInDate"
-						path="latestMoveInDate" /></td>
-				<td><form:input type="text" id="field-latestMoveOutDate"
-						path="latestMoveOutDate" /></td>
-			</tr>
-			<tr>
-				<label for="FloorLevel">Floor level</label>
-				<form:input id="FloorLevel" type="number" path="floorLevel"
-					placeholder="e.g. 3" step="1" />
-				<label for="SquareFootage">Square Footage</label>
-				<form:input id="SquareFootage" type="number" path="squareFootage"
-					placeholder="e.g. 30" step="5" />
-
-				<form:errors path="radius" cssClass="validationErrorText" />
-			</tr>
-			<tr>
-				<td><label for="field-NumberOfBath">Number of baths</label></td>
-				<td><label for="infrastructureType-room">InfrastructureType</label></td>
-			</tr>
-			<tr>
-				<td><form:input id="field-NumberOfBath" type="number"
-					path="numberOfBath" placeholder="Prize per month" step="1" /> <form:errors
-					path="numberOfBath" cssClass="validationErrorText" /></td>
-				<td><form:select id="infrastructureType"
-						path="infrastructureType">
-						<form:options items="${infrastructureTypes}" itemLabel="name" />
-					</form:select></td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-garage" path="garage" value="1" /><label>Garage</label>
-				</td>
-				<td><form:checkbox id="field-balcony" path="balcony" value="1" /><label>Balcony
-						or Patio</label></td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-elevator" path="elevator"
-						value="1" /><label>Elevator</label></td>
-				<td><form:checkbox id="field-dishwasher" path="dishwasher"
-						value="1" /><label>Dishwasher</label></td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-parking" path="parking" value="1" /><label>Parking</label></td>
-			</tr>
-		</table>
-
-
-		<button type="submit">Filter</button>
-		<button type="reset">Cancel</button>
+				<div class="row" id="resultsDiv">
+					<c:forEach var="ad" items="${results}">
+						<div data-price="${ad.prizePerMonth}"
+							data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}"
+							class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ad-wide-preview-outer resultAd">
+							<div class="col-md-12 ad-wide-preview-inner">
+								<div class="row">
+									<div class="col-sm-4 col-md-4">
+										<a href="<c:url value='./ad?id=${ad.id}' />"> <img
+											class="img-responsive" src="${ad.pictures[0].filePath}" />
+										</a>
+									</div>
+									<div class="col-sm-5 col-md-5">
+										<p>
+											<strong> <a class="link"
+												href="<c:url value='./ad?id=${ad.id}' />">${ad.title}</a>
+											</strong>
+										</p>
+										<p>${ad.street},&nbsp;${ad.zipcode}&nbsp;${ad.city}</p>
+										<p>
+											<i>${ad.type.name}</i>
+										</p>
+										<strong>CHF ${ad.prizePerMonth }</strong>
+										<fmt:formatDate value="${ad.moveInDate}"
+											var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+										<p>Move-in date: ${formattedMoveInDate }</p>
+									</div>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+					</c:forEach>
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</div>
-</form:form>
-
+</div>
 <c:import url="template/footer.jsp" />

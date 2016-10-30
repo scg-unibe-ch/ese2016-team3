@@ -8,7 +8,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.persistence.Column;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,22 +48,24 @@ public class MessageServiceTest {
 	@Column(nullable = false)
 	private MessageState state;
 	
-	Message message = new Message();
-	Message message2 = new Message();
+	Message message;
+	Message message2;
 	User sender;
 	User recipient;
 
-	
+	@Transactional
 	@Before
 	public void setUp() throws ParseException{		
 		sender = userDao.findByUsername("mark@knopfler.com");
 		recipient = userDao.findByUsername("Kim@kardashian.com");
+		message = new Message();
 		message.setSender(sender);
 		message.setState(MessageState.UNREAD);
 		message.setSubject("Your sweet home Alabama");
 		message.setText("where the skies are so blue");
 		messageDao.save(message);
 		
+		message2 = new Message();
 		message2.setSender(sender);
 		message2.setRecipient(recipient);
 		message2.setState(MessageState.UNREAD);
@@ -70,7 +75,8 @@ public class MessageServiceTest {
 		messageDao.save(message2);
 		
 	}	
-		
+	
+	@Transactional
 	@Test
 	public void sendNewMessage(){
 		
@@ -98,9 +104,9 @@ public class MessageServiceTest {
 		assertEquals(message.getSubject(), messageList.get(0).getSubject());
 		assertEquals(message2.getSubject(), messageList.get(1).getSubject());
 		
-		messageDao.delete(receivedMessage);
 	}
 	
+	@Transactional
 	@Test
 	public void readMessage(){
 		
@@ -108,6 +114,13 @@ public class MessageServiceTest {
 		messageService.readMessage(message2.getId());
 		assertEquals(MessageState.READ, message2.getState());
 		assertEquals(0, messageService.unread(recipient.getId()));	
+	}
+	
+	@Transactional
+	@After
+	public void tearDown(){
+		messageDao.delete(message);
+		messageDao.delete(message2);
 	}
 	
 	/*@Test 

@@ -7,7 +7,7 @@
 
 <c:import url="template/header.jsp" />
 <pre>
-<a href="/">Home</a>   &gt;   Enquiries</pre>
+<a href="/">Homepage</a>   &gt;   Enquiries</pre>
 
 <!-- format the dates -->
 <fmt:formatDate value="${enquiries[0].dateSent}" var="formattedDateSent"

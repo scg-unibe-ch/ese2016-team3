@@ -80,20 +80,175 @@ public class SearchForm {
 	// new
 
 	private InfrastructureType infrastructureType;
-	private int squareFootage;
-	private int buildYear;
-	private int renovationYear;
-	private int numberOfRooms;
-   	private int numberOfBath;
+	private InfrastructureType[] infrastructureTypes;
+	private int squareFootageMin;
+	private int squareFootageMax;
+	private int buildYearMin;
+	private int buildYearMax;
+	private int renovationYearMin;
+	private int renovationYearMax;
+	private int numberOfRoomsMin;
+	private int numberOfRoomsMax;
+   	private int numberOfBathMin;
+   	private int numberOfBathMax;
+	
 	
 	//new
-	private int distanceSchool;
-	private int distanceShopping;
-	private int distancePublicTransport;
-	private int floorLevel;
+	private int distanceSchoolMin;
+	private int distanceSchoolMax;
+	private int distanceShoppingMin;
+	private int distanceShoppingMax;
+	private int distancePublicTransportMin;
+	private int distancePublicTransportMax;
+	private int floorLevelMin;
+	private int floorLevelMax;
 
 	// the ugly stuff
 	private boolean studioHelper; // to remove?
+
+	public int getSquareFootageMin() {
+		return squareFootageMin;
+	}
+
+	public void setSquareFootageMin(int squareFootageMin) {
+		this.squareFootageMin = squareFootageMin;
+	}
+
+	public int getSquareFootageMax() {
+		return squareFootageMax;
+	}
+
+	public void setSquareFootageMax(int squareFootageMax) {
+		this.squareFootageMax = squareFootageMax;
+	}
+
+	public int getBuildYearMin() {
+		return buildYearMin;
+	}
+
+	public void setBuildYearMin(int buildYearMin) {
+		this.buildYearMin = buildYearMin;
+	}
+
+	public int getBuildYearMax() {
+		return buildYearMax;
+	}
+
+	public void setBuildYearMax(int buildYearMax) {
+		this.buildYearMax = buildYearMax;
+	}
+
+	public int getRenovationYearMin() {
+		return renovationYearMin;
+	}
+
+	public void setRenovationYearMin(int renovationYearMin) {
+		this.renovationYearMin = renovationYearMin;
+	}
+
+	public int getRenovationYearMax() {
+		return renovationYearMax;
+	}
+
+	public void setRenovationYearMax(int renovationYearMax) {
+		this.renovationYearMax = renovationYearMax;
+	}
+
+	public int getNumberOfRoomsMin() {
+		return numberOfRoomsMin;
+	}
+
+	public void setNumberOfRoomsMin(int numberOfRoomsMin) {
+		this.numberOfRoomsMin = numberOfRoomsMin;
+	}
+
+	public int getNumberOfRoomsMax() {
+		return numberOfRoomsMax;
+	}
+
+	public void setNumberOfRoomsMax(int numberOfRoomsMax) {
+		this.numberOfRoomsMax = numberOfRoomsMax;
+	}
+
+	public int getNumberOfBathMin() {
+		return numberOfBathMin;
+	}
+
+	public void setNumberOfBathMin(int numberOfBathMin) {
+		this.numberOfBathMin = numberOfBathMin;
+	}
+
+	public int getNumberOfBathMax() {
+		return numberOfBathMax;
+	}
+
+	public void setNumberOfBathMax(int numberOfBathMax) {
+		this.numberOfBathMax = numberOfBathMax;
+	}
+
+	public int getDistanceSchoolMin() {
+		return distanceSchoolMin;
+	}
+
+	public void setDistanceSchoolMin(int distanceSchoolMin) {
+		this.distanceSchoolMin = distanceSchoolMin;
+	}
+
+	public int getDistanceSchoolMax() {
+		return distanceSchoolMax;
+	}
+
+	public void setDistanceSchoolMax(int distanceSchoolMax) {
+		this.distanceSchoolMax = distanceSchoolMax;
+	}
+
+	public int getDistanceShoppingMin() {
+		return distanceShoppingMin;
+	}
+
+	public void setDistanceShoppingMin(int distanceShoppingMin) {
+		this.distanceShoppingMin = distanceShoppingMin;
+	}
+
+	public int getDistanceShoppingMax() {
+		return distanceShoppingMax;
+	}
+
+	public void setDistanceShoppingMax(int distanceShoppingMax) {
+		this.distanceShoppingMax = distanceShoppingMax;
+	}
+
+	public int getDistancePublicTransportMin() {
+		return distancePublicTransportMin;
+	}
+
+	public void setDistancePublicTransportMin(int distancePublicTransportMin) {
+		this.distancePublicTransportMin = distancePublicTransportMin;
+	}
+
+	public int getDistancePublicTransportMax() {
+		return distancePublicTransportMax;
+	}
+
+	public void setDistancePublicTransportMax(int distancePublicTransportMax) {
+		this.distancePublicTransportMax = distancePublicTransportMax;
+	}
+
+	public int getFloorLevelMin() {
+		return floorLevelMin;
+	}
+
+	public void setFloorLevelMin(int floorLevelMin) {
+		this.floorLevelMin = floorLevelMin;
+	}
+
+	public int getFloorLevelMax() {
+		return floorLevelMax;
+	}
+
+	public void setFloorLevelMax(int floorLevelMax) {
+		this.floorLevelMax = floorLevelMax;
+	}
 
 	public boolean getBalcony() {
 		return balcony;
@@ -127,21 +282,6 @@ public class SearchForm {
 		this.parking = parking;
 	}
 
-	public int getNumberOfRooms() {
-		return numberOfRooms;
-	}
-
-	public void setNumberOfRooms(int numberOfRooms) {
-		this.numberOfRooms = numberOfRooms;
-	}
-
-	public int getNumberOfBath() {
-		return numberOfBath;
-	}
-
-	public void setNumberOfBath(int numberOfBath) {
-		this.numberOfBath = numberOfBath;
-	}
 
 	public String getEarliestMoveInDate() {
 		return earliestMoveInDate;
@@ -214,19 +354,12 @@ public class SearchForm {
 		this.infrastructureType = infrastructureType;
 	}
 
-	public int getFloorLevel() {
-		return floorLevel;
+	public InfrastructureType[] getInfrastructureTypes() {
+		return infrastructureTypes;
 	}
 
-	public void setFloorLevel(int floorLevel) {
-		this.floorLevel = floorLevel;
-	}
-	
-	public int getSquareFootage() {
-		return squareFootage;
+	public void setInfrastructureTypes(InfrastructureType[] infrastructureTypes) {
+		this.infrastructureTypes = infrastructureTypes;
 	}
 
-	public void setSquareFootage(int squareFootage) {
-		this.squareFootage = squareFootage;
-	}	
 }

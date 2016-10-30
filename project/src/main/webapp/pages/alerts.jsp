@@ -6,7 +6,10 @@
 
 <c:import url="template/header.jsp" />
 
-<pre><a href="/">Home</a>   &gt;   Alerts</pre>
+<ol class="breadcrumb">
+	<li><a href="/${pagemode}/">Homepage</a></li>
+	<li class="active">Alerts</li>
+</ol>
 
 <script>
 function deleteAlert(button) {
@@ -74,88 +77,131 @@ function typeOfAlert(alert) {
 	});
 </script>
 
-<h1>Create and manage alerts</h1>
-<hr />
+<div class="row">
+	<div class="col-md-12 col-xs-12">
+		<h3>Create and manage alerts</h3>
 
-<h2>Create new alert</h2><br />
-<form:form method="post" modelAttribute="alertForm" action="/profile/alerts"
-	id="alertForm" autocomplete="off">
+		<div class="row">
+			<div class="col-md-12">
 
-	<fieldset>
-		<%-- <form:checkboxes items="${types}" path="types" itemLabel="name"/>
-		<br />--%>
-		
-		<form:checkbox name="room" id="room" path="room" /><label>Room</label>
-		<form:checkbox name="studio" id="studio" path="studio" /><label>Studio</label>
-		
-		<form:checkbox style="display:none" name="neither" id="neither" path="noRoomNoStudio" />
-		<form:checkbox style="display:none" name="both" id="both" path="bothRoomAndStudio" />
-		<form:errors path="noRoomNoStudio" cssClass="validationErrorText" /><br /> 
-		
-		<label for="city">City / zip code:</label>
-		<form:input type="text" name="city" id="city" path="city"
-			placeholder="e.g. Bern" tabindex="3" />
-		<form:errors path="city" cssClass="validationErrorText" />
-		
-		<label for="radius">Within radius of (max.):</label>
-		<form:input id="radiusInput" type="number" path="radius"
-			placeholder="e.g. 5" step="5" />
-		km
-		<form:errors path="radius" cssClass="validationErrorText" />
-		<br /> <label for="price">Price (max.):</label>
-		<form:input id="priceInput" type="number" path="price"
-			placeholder="e.g. 5" step="50" />
-		CHF
-		<form:errors path="price" cssClass="validationErrorText" />
-		<br />
+				<h4>Create new alert</h4>
+				<form:form method="post" modelAttribute="alertForm"
+					action="/profile/alerts" id="alertForm" autocomplete="off"
+					class="form-horizontal">
+					<div class="panel panel-default">
+						<div class="panel-body">
+						
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Type</label>
+								<div class="col-sm-6">
+									<c:forEach var="type" items="${types}">
+										<label class="checkbox-inline"> <form:checkbox
+												path="types" value="${type}" /> ${type.name}
+										</label>
+									</c:forEach>
+								</div>
+							</div>
 
-		<button type="submit" tabindex="7" onClick="validateType(this.form)">Subscribe</button>
-		<button type="reset" tabindex="8">Cancel</button>
-	</fieldset>
+							<spring:bind path="city">
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="city">City /
+										zip code:</label>
+									<div class="col-sm-4">
+										<form:input type="text" name="city" id="city" path="city"
+											placeholder="e.g. Bern" tabindex="3" cssClass="form-control" />
+										<form:errors path="city" cssClass="validationErrorText" />
+									</div>
+								</div>
+							</spring:bind>
+							
+							<spring:bind path="radius">
+								<div class="form-group ${status.error ? 'has-error' : '' }">
+									<label for="radiusInput" class="col-sm-2 control-label">Within
+										radius of (max.)</label>
+									<div class="col-sm-4">
+										<div class="input-group">
+											<form:input id="radiusInput" type="number" path="radius"
+												placeholder="e.g. 5" step="5" cssClass="form-control" />
+											<span class="input-group-addon">km</span>
+										</div>
+										<form:errors path="radius" />
+									</div>
+								</div>
+							</spring:bind>
+							
+							<spring:bind path="price">
+								<div class="form-group ${status.error ? 'has-error' : '' }">
+									<label class="col-sm-2 control-label" for="price">Price
+										(max.)</label>
+									<div class="col-sm-4">
+										<div class="input-group">
+											<span class="input-group-addon">Fr.</span>
+											<form:input id="priceInput" type="number" path="price"
+												placeholdr="e.g. 5" step="50" cssClass="form-control" />
+										</div>
+										<form:errors path="price" cssClass="validationErrorText" />
+									</div>
+								</div>
+							</spring:bind>
+						</div>
+					</div>
 
-</form:form> <br />
-<h2>Your active alerts</h2>
+					<div class="form-group pull-right">
+						<div class="col-sm-12">
+							<button type="reset" class="btn btn-primary">Cancel</button>
+							<button type="submit" class="btn btn-default"
+								onClick="validateType(this.form)">Subscribe</button>
 
-<div id="alertsDiv" class="alertsDiv">			
-<c:choose>
-	<c:when test="${empty alerts}">
-		<p>You currently aren't subscribed to any alerts.
-	</c:when>
-	<c:otherwise>
-		<table class="styledTable" id="alerts">
-			<thead>
-			<tr>
-				<th>Type</th>
-				<th>City</th>
-				<th>Radius</th>
-				<th>max. Price</th>
-				<th>Action</th>
-			</tr>
-			</thead>
-		<c:forEach var="alert" items="${alerts}">
-			<tr>
-				<td>
-				<c:choose>
-					<c:when test="${alert.bothRoomAndStudio}">
-						Both
-					</c:when>
-					<c:when test="${alert.studio}">
-						Studio
-					</c:when>
-					<c:otherwise>
-						Room
-					</c:otherwise>
-				</c:choose>
-				</td>
-				<td>${alert.city}</td>
-				<td>${alert.radius} km</td>
-				<td>${alert.price} Chf</td>
-				<td><button class="deleteButton" data-id="${alert.id}" onClick="deleteAlert(this)">Delete</button></td>
-			</tr>
-		</c:forEach>
-		</table>
-	</c:otherwise>
-</c:choose>
+						</div>
+					</div>
+
+				</form:form>
+				<br />
+
+
+				<h4>Your active alerts</h4>
+				<form:form method="post" modelAttribute="alertForm"
+					action="/profile/alerts" id="alertForm" autocomplete="off"
+					class="form-horizontal">
+					<div class="panel panel-default">
+						<div class="panel-body">
+
+							<div id="alertsDiv" class="alertsDiv">
+								<c:choose>
+									<c:when test="${empty alerts}">
+										<p>You currently aren't subscribed to any alerts.
+									</c:when>
+									<c:otherwise>
+										<table class="table" id="alerts">
+											<thead>
+												<tr>
+													<th>Type</th>
+													<th>City</th>
+													<th>Radius</th>
+													<th>max. Price</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<c:forEach var="alert" items="${alerts}">
+												<tr>
+													<td>${alert.type}</td>
+													<td>${alert.city}</td>
+													<td>${alert.radius}km</td>
+													<td>${alert.price}Chf</td>
+													<td><button type="button" class="deleteButton"
+															data-id="${alert.id}" onClick="deleteAlert(this)">Delete</button></td>
+												</tr>
+											</c:forEach>
+										</table>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+					</div>
+				</form:form>
+			</div>
+		</div>
+	</div>
 </div>
 
 <c:import url="template/footer.jsp" />
