@@ -111,91 +111,114 @@ public class SignupForm {
 		this.validSecurityNumber = validSecurityNumber;
 	}
 
+	private void validCreditcardDetails(){
+		
+		if (isPremium){
+			try{
+			this.validCreditCard = validCreditCardWhenPremium();
+			this.validCreditcardName = validCreditcardNameWhenPremium();
+			this.validCreditcardType = validCreditcardTypeWhenPremium();
+			this.validSecurityNumber = validSecurityNumberWhenPremium();
+			this.validExpirationMonth = validExpirationMonthWhenPremium();
+			this.validExpirationYear = validExpirationYearWhenPremium();
+			}catch(NumberFormatException e) {
+			}
+		}else {
+			this.validCreditCard = true;
+			this.validCreditcardName = true;
+			this.validCreditcardType = true;
+			this.validSecurityNumber = true;
+			this.validExpirationMonth = true;
+			this.validExpirationYear = true;
+		}
+		
+	}
+	
 	private boolean validCreditCardWhenPremium(){
-		boolean valid = true;
+		boolean validCreditcard = true;
 		
 		if (isPremium){
 			if (!java.util.regex.Pattern.matches("^[0-9]{16}$", creditCard)){
-				valid = false;
+				validCreditcard = false;
 			}
 		}
 		
-		this.validCreditCard = valid;
-		return valid;
+		this.validCreditCard = validCreditcard;
+		return validCreditcard;
 	}
 	
 	private boolean validCreditcardNameWhenPremium(){
-		boolean valid = true;
+		boolean validCreditcardName = true;
 		
 		if (isPremium){
 			if (!(java.util.regex.Pattern.matches("[a-zA-Z ]+", creditcardName)))
-				valid = false;
+				validCreditcardName = false;
 		}
 		
-		this.validCreditcardName = valid;
-		return valid;
+		this.validCreditcardName = validCreditcardName;
+		return validCreditcardName;
 	}
 	
 	private boolean validExpirationMonthWhenPremium(){
-		boolean valid = true;
+		boolean validExpirationMonth = true;
 		
 		try{
 		if (isPremium){
 			
 			if (!(1 <= Integer.parseInt(expirationMonth) && Integer.parseInt(expirationMonth) <= 12))
-				valid = false;
+				validExpirationMonth = false;
 		}
 		}catch(NumberFormatException e) {
-			valid = false;
+			validExpirationMonth = false;
 		}
 		
-		this.validExpirationMonth = valid;
-		return valid;
+		this.validExpirationMonth = validExpirationMonth;
+		return validExpirationMonth;
 	}
 	
 	private boolean validExpirationYearWhenPremium(){
-		boolean valid = true;
+		boolean validExpirationYear = true;
 		
 		try{
 		if (isPremium){
 			
-			if (!(2016 <= Integer.parseInt(expirationMonth)))
-				valid = false;
+			if (!(16 <= Integer.parseInt(expirationYear) && Integer.parseInt(expirationYear) <=99))
+				validExpirationYear = false;
 		}
 		}catch(NumberFormatException e) {
-			valid = false;
+			validExpirationYear = false;
 		}
 		
-		this.validExpirationYear = valid;
-		return valid;
+		this.validExpirationYear = validExpirationYear;
+		return validExpirationYear;
 	}
 	
 	private boolean validSecurityNumberWhenPremium(){
-		boolean valid = true;
+		boolean validSecurityNumber = true;
 		
 		try{
 		if (isPremium){
 			if (!(99 < Integer.parseInt(securityNumber) && Integer.parseInt(securityNumber) < 1000))
-				valid = false;
+				validSecurityNumber = false;
 		}
 		}catch(NumberFormatException e) {
-			valid = false;
+			validSecurityNumber = false;
 		}
 		
-		this.validSecurityNumber = valid;
-		return valid;
+		this.validSecurityNumber = validSecurityNumber;
+		return validSecurityNumber;
 	}
 	
 	private boolean validCreditcardTypeWhenPremium(){
-		boolean valid = true;
+		boolean validCreditcardType = true;
 		
 		if (isPremium){
 			if (creditcardType == null)
-				valid = false;
+				validCreditcardType = false;
 		}
 		
-		this.validCreditcardType = valid;
-		return valid;
+		this.validCreditcardType = validCreditcardType;
+		return validCreditcardType;
 	}
 
 	public String getEmail() {
@@ -244,7 +267,7 @@ public class SignupForm {
 	
 	public void setIsPremium(boolean premium){
 		this.isPremium = premium;
-		validCreditCardWhenPremium();
+		validCreditcardDetails();
 	}
 	
 	public String getCreditCard(){
@@ -253,7 +276,7 @@ public class SignupForm {
 	
 	public void setCreditCard(String card){
 		this.creditCard = card;
-		validCreditCardWhenPremium();
+		validCreditcardDetails();
 	}
 	
 	public String getCreditcardName(){
@@ -262,7 +285,7 @@ public class SignupForm {
 	
 	public void setCreditcardName(String name){
 		this.creditcardName = name;
-		validCreditcardNameWhenPremium();
+		validCreditcardDetails();
 	}
 	
 	public String getExpirationMonth(){
@@ -271,7 +294,7 @@ public class SignupForm {
 	
 	public void setExpirationMonth(String month){
 		this.expirationMonth = month;
-		validExpirationMonthWhenPremium();
+		validCreditcardDetails();
 	}
 	
 	public String getExpirationYear(){
@@ -280,7 +303,7 @@ public class SignupForm {
 	
 	public void setExpirationYear(String year){
 		this.expirationYear = year;
-		validExpirationYearWhenPremium();
+		validCreditcardDetails();
 	}
 	
 	public String getSecurityNumber(){
@@ -289,7 +312,7 @@ public class SignupForm {
 	
 	public void setSecurityNumber(String number){
 		this.securityNumber = number;
-		validSecurityNumberWhenPremium();
+		validCreditcardDetails();
 	}
 	
 	public CreditcardType getCreditcardType(){
@@ -298,6 +321,6 @@ public class SignupForm {
 	
 	public void setCreditcardType(CreditcardType type){
 		this.creditcardType = type;
-		validCreditcardTypeWhenPremium();
+		validCreditcardDetails();
 	}
 }

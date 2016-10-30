@@ -112,7 +112,7 @@
 						<div id="form-creditcardType"
 							class="form-group ${status.error ? 'has-error' : '' }">
 							<label class="col-sm-2 control-label"
-								for="field-creditcardNumber">Type of credit card</label>
+								for="field-creditcardNumber">Type of card</label>
 							<div class="col-sm-6">
 								<form:select path="creditcardType" id="field-creditcardType"
 									class="form-control"> 
@@ -127,7 +127,7 @@
 						<div id="form-creditcardName"
 							class="form-group ${status.error ? 'has-error' : '' }">
 							<label class="col-sm-2 control-label"
-								for="field-creditcardName">Name as written on credit card</label>
+								for="field-creditcardName">Name on card</label>
 							<div class="col-sm-6">
 								<form:input path="creditcardName" id="field-creditcardName"
 									class="form-control" />
@@ -140,7 +140,7 @@
 						<div id="form-creditcard"
 							class="form-group ${status.error ? 'has-error' : '' }">
 							<label class="col-sm-2 control-label"
-								for="field-creditcardNumber">Credit card number</label>
+								for="field-creditcardNumber">Card number</label>
 							<div class="col-sm-6">
 								<form:input path="creditCard" id="field-creditcardNumber"
 									class="form-control" />
@@ -156,7 +156,7 @@
 								for="field-securityNumber">Security Number</label>
 							<div class="col-sm-6">
 								<form:input path="securityNumber" id="field-securityNumber"
-									class="form-control" />
+									class="form-control" placeholder="CVV" />
 								<form:errors path="validSecurityNumber" cssClass="text-danger" />
 							</div>
 						</div>
@@ -167,9 +167,9 @@
 							class="form-group ${status.error ? 'has-error' : '' }">
 							<label class="col-sm-2 control-label"
 								for="field-expirationMonth">Date of Expiration</label>
-							<div class="col-sm-6">
-								<form:input type="number" min="1" max="12" value="1" path="expirationMonth" id="field-expirationMonth"
-									class="form-control" />
+							<div class="col-sm-3">
+								<form:input path="expirationMonth" id="field-expirationMonth"
+									class="form-control" placeholder="MM" />
 								<form:errors path="validExpirationMonth" cssClass="text-danger" />
 							</div>
 						</div>
@@ -180,9 +180,9 @@
 							class="form-group ${status.error ? 'has-error' : '' }">
 							<label class="col-sm-2 control-label"
 								for="field-expirationYear"></label>
-							<div class="col-sm-6">
-								<form:input type="number" min="2016" max="2030" value="1" path="expirationYear" id="field-expirationYear"
-									class="form-control" />
+							<div class="col-sm-3">
+								<form:input path="expirationYear" id="field-expirationYear"
+									class="form-control" placeholder="YY" />
 								<form:errors path="validExpirationYear" cssClass="text-danger" />
 							</div>
 						</div>
@@ -207,7 +207,7 @@
 $("#premiumUser").change(function(){
 	var self = this;
 	
-	if ( self.checked){
+	if (!self.checked){
 		$("#field-creditcardNumber").val("");
 		$("#field-creditcardType").val("");
 		$("#field-creditcardName").val("");
