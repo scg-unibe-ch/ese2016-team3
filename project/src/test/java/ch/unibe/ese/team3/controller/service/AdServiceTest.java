@@ -2,6 +2,7 @@ package ch.unibe.ese.team3.controller.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.text.DateFormat;
@@ -171,6 +172,7 @@ public class AdServiceTest {
 		searchForm.setCity("3001 - Bern");
 		searchForm.setPrize(500);
 		searchForm.setRadius(5);
+		searchForm.setBalcony(true);
 		Type[] types = { Type.APARTMENT };
 		searchForm.setTypes(types);
 		Iterable<Ad> queryedAds = adService.queryResults(searchForm);
@@ -178,6 +180,33 @@ public class AdServiceTest {
 
 		assertEquals(adList.size(), 1);
 		assertEquals(adList.get(0).getId(), 1);
+	}
+	
+	@Test
+	public void testFilterBalcony() {
+		SearchForm searchForm = new SearchForm();
+		searchForm.setCity("3001 - Bern");
+		searchForm.setPrize(500);
+		searchForm.setRadius(5);
+		searchForm.setBalcony(true);
+		Type[] types = { Type.APARTMENT };
+		searchForm.setTypes(types);
+		
+		SearchForm searchForm2 = new SearchForm();
+		searchForm2.setCity("3001 - Bern");
+		searchForm2.setPrize(500);
+		searchForm2.setRadius(5);
+		searchForm2.setBalcony(false);
+		searchForm2.setTypes(types);
+				
+		Iterable<Ad> queryedAds = adService.queryResults(searchForm);
+		ArrayList<Ad> adList = (ArrayList) queryedAds;
+		
+		Iterable<Ad> queryedAds2 = adService.queryResults(searchForm2);
+		ArrayList<Ad> adList2 = (ArrayList) queryedAds2;
+
+		assertNotEquals(adList.get(0).getId(), adList2.get(0).getId());
+
 	}
 
 	@Test
