@@ -29,7 +29,7 @@ public class UpgradeForm {
 	@NotNull
 	private String expirationYear;
 	
-	@Pattern(regexp = "[a-zA-Z]+", message = "Not a valid name")
+	@Pattern(regexp = "[a-zA-Z ]+", message = "Not a valid name")
 	@NotNull
 	private String creditcardName;
 	
