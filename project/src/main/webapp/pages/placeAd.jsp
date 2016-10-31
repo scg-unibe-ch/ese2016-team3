@@ -109,7 +109,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<form:form method="post" modelAttribute="placeAdForm"
-					action="/placeAd" id="placeAdForm" autocomplete="off"
+					action="./placeAd" id="placeAdForm" autocomplete="off"
 					cssClass="form form-horizontal">
 					<h4>General information</h4>
 					
@@ -349,7 +349,10 @@
 									
 								</div>
 								<div class="checkbox">
+								<div class="col-sm-5">
+								
 									<label><form:checkbox id="field-parking" path="parking" value="1" />Parking</label>
+								</div>
 								</div>
 
 								<div class="checkbox">

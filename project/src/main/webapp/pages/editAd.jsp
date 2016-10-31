@@ -163,45 +163,6 @@
 
 		<table class="placeAdTable">
 			<tr>
-				<td>
-					<c:choose>
-						<c:when test="${ad.smokers}">
-							<form:checkbox id="field-smoker" path="smokers" checked="checked" /><label>Smoking
-							inside allowed</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-smoker" path="smokers" /><label>Smoking
-							inside allowed</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
-				
-				<td>
-					<c:choose>
-						<c:when test="${ad.animals}">
-							<form:checkbox id="field-animals" path="animals"  checked="checked" /><label>Animals
-						allowed</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-animals" path="animals" /><label>Animals
-						allowed</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<c:choose>
-						<c:when test="${ad.garden}">
-							<form:checkbox id="field-garden" path="garden" checked="checked" /><label>Garden
-							(co-use)</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-garden" path="garden" /><label>Garden
-							(co-use)</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
 				
 				<td>
 					<c:choose>
@@ -217,42 +178,6 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
-					<c:choose>
-						<c:when test="${ad.cellar}">
-							<form:checkbox id="field-cellar" path="cellar" checked="checked" /><label>Cellar
-						or Attic</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-cellar" path="cellar" /><label>Cellar
-						or Atticd</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
-				
-				<td>
-					<c:choose>
-						<c:when test="${ad.furnished}">
-							<form:checkbox id="field-furnished" path="furnished"  checked="checked" /><label>Furnished
-							</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-furnished" path="furnished" /><label>Furnished</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<c:choose>
-						<c:when test="${ad.cable}">
-							<form:checkbox id="field-cable" path="cable" checked="checked" /><label>Cable TV</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-cable" path="cable" /><label>Cable TV</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
 				
 				<td>
 					<c:choose>
@@ -267,30 +192,12 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
-					<c:choose>
-						<c:when test="${ad.internet}">
-							<form:checkbox id="field-internet" path="internet"  checked="checked" /><label>WiFi available
-							</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-internet" path="internet" /><label>WiFi available</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
 			</tr>
 
 		</table>
 		<br />
 		<form:textarea path="roomDescription" rows="10" cols="100" value="${ad.roomDescription}" />
 		<form:errors path="roomDescription" cssClass="validationErrorText" />
-	</fieldset>
-	<br />
-	
-	<fieldset>
-		<legend>Change preferences</legend>
-		<form:textarea path="preferences" rows="5" cols="100"
-			value="${ad.preferences}" ></form:textarea>
 	</fieldset>
 
 	

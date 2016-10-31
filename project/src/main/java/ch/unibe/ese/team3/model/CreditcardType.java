@@ -12,4 +12,8 @@ public enum CreditcardType {
 	public String getCreditcardTypeName(){
 		return this.creditcardTypeName;
 	}
+
+	public static CreditcardType[] valuesForDisplay() {
+		return new CreditcardType[] { VISA, MASTERCARD, AMEX };	
+	}
 }

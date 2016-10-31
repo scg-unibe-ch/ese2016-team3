@@ -96,7 +96,6 @@
 		</div>
 	</div>
 </div>
-</div>
 <c:import url="getMessageForm.jsp" />
 
 

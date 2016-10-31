@@ -95,6 +95,13 @@
 				<c:choose>
 					<c:when test="${principalID eq user.id}">
 						<a id="edit" class="btn btn-primary" href="./profile/editProfile">Edit Profile</a>
+						
+					</c:when>
+					<c:otherwise></c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${'BASIC' eq user.accountType}">
+						<a type="button" href="./upgrade" class="btn btn-primary">Get Premium</a>
 					</c:when>
 					<c:otherwise></c:otherwise>
 				</c:choose>
@@ -150,9 +157,6 @@
 		</c:choose>
 	</form>
 </div> **/ %>
-
-
-
 
 <div id="msgDiv" style="display:none;">
 	<form class="msgForm">

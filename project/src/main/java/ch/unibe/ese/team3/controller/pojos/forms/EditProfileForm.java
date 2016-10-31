@@ -5,7 +5,6 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import ch.unibe.ese.team3.model.AccountType;
 
 /** This form is used when a user wants to edit their profile. */
 public class EditProfileForm {
@@ -21,12 +20,6 @@ public class EditProfileForm {
 
 	@NotBlank(message = "Required")
 	private String lastName;
-	
-	@NotNull
-	boolean isPremium;
-	
-	@Pattern(regexp = "[0-9]{16}", message = "Credit card number must be 16 digits")
-	private String creditCard;
 	
 	private String aboutMe;
 
@@ -70,19 +63,4 @@ public class EditProfileForm {
 		this.username = username;
 	}
 	
-	public boolean getIsPremium(){
-		return isPremium;
-	}
-	
-	public void setIsPremium(boolean isPremium){
-		this.isPremium = isPremium;
-	}
-	
-	public String getCreditCard(){
-		return creditCard;
-	}
-	
-	public void setCreditCard(String card){
-		creditCard = card;
-	}
 }
