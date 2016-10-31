@@ -108,20 +108,86 @@
 						</div>
 					</div>
 
+					<spring:bind path="validCreditcardType">
+						<div id="form-creditcardType"
+							class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label"
+								for="field-creditcardNumber">Type of card</label>
+							<div class="col-sm-6">
+								<form:select path="creditcardType" id="field-creditcardType"
+									class="form-control"> 
+								<form:options items="${creditcardTypes}" itemLabel="creditcardTypeName"/>
+								</form:select>
+								<form:errors path="validCreditcardType" cssClass="text-danger" />
+							</div>
+						</div>
+					</spring:bind>
+					
+					<spring:bind path="validCreditcardName">
+						<div id="form-creditcardName"
+							class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label"
+								for="field-creditcardName">Name on card</label>
+							<div class="col-sm-6">
+								<form:input path="creditcardName" id="field-creditcardName"
+									class="form-control" />
+								<form:errors path="validCreditcardName" cssClass="text-danger" />
+							</div>
+						</div>
+					</spring:bind>
+					
 					<spring:bind path="validCreditCard">
 						<div id="form-creditcard"
 							class="form-group ${status.error ? 'has-error' : '' }">
 							<label class="col-sm-2 control-label"
-								for="field-creditcardNumber">Credit card number</label>
+								for="field-creditcardNumber">Card number</label>
 							<div class="col-sm-6">
 								<form:input path="creditCard" id="field-creditcardNumber"
 									class="form-control" />
 								<form:errors path="validCreditCard" cssClass="text-danger" />
 							</div>
-
-
 						</div>
 					</spring:bind>
+					
+					<spring:bind path="validSecurityNumber">
+						<div id="form-securityNumber"
+							class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label"
+								for="field-securityNumber">Security Number</label>
+							<div class="col-sm-6">
+								<form:input path="securityNumber" id="field-securityNumber"
+									class="form-control" placeholder="CVV" />
+								<form:errors path="validSecurityNumber" cssClass="text-danger" />
+							</div>
+						</div>
+					</spring:bind>
+					
+					<spring:bind path="validExpirationMonth">
+						<div id="form-expirationMonth"
+							class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label"
+								for="field-expirationMonth">Date of Expiration</label>
+							<div class="col-sm-3">
+								<form:input path="expirationMonth" id="field-expirationMonth"
+									class="form-control" placeholder="MM" />
+								<form:errors path="validExpirationMonth" cssClass="text-danger" />
+							</div>
+						</div>
+					</spring:bind>	
+				
+					<spring:bind path="validExpirationYear">
+						<div id="form-expirationYear"
+							class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-2 control-label"
+								for="field-expirationYear"></label>
+							<div class="col-sm-3">
+								<form:input path="expirationYear" id="field-expirationYear"
+									class="form-control" placeholder="YY" />
+								<form:errors path="validExpirationYear" cssClass="text-danger" />
+							</div>
+						</div>
+					</spring:bind>
+					
 				</div>
 			</div>
 			<div class="form-group pull-right">
@@ -141,11 +207,22 @@
 $("#premiumUser").change(function(){
 	var self = this;
 	
-	if ( self.checked){
+	if (!self.checked){
 		$("#field-creditcardNumber").val("");
+		$("#field-creditcardType").val("");
+		$("#field-creditcardName").val("");
+		$("#field-securityNumber").val("");
+		$("#field-expirationMonth").val("");
+		$("#field-expirationYear").val("");
+
 	}
 	
 	$("#form-creditcard").toggle(self.checked);
+	$("#form-creditcardType").toggle(self.checked);
+	$("#form-creditcardName").toggle(self.checked);
+	$("#form-securityNumber").toggle(self.checked);
+	$("#form-expirationMonth").toggle(self.checked);
+	$("#form-expirationYear").toggle(self.checked);
 	
 	
 }).change();
