@@ -14,9 +14,6 @@
 		$("#field-firstName").val("${currentUser.firstName}");
 		$("#field-lastName").val("${currentUser.lastName}");
 		$("#field-password").val("${currentUser.password}");
-		$("#field-creditcardNumber").val("0000000000000000");
-		var premiumCheck = ${currentUser.isPremium()};
-		document.getElementById("premiumUser").disabled=premiumCheck == 1 ? true : false;
 		});
 	
 		
@@ -117,39 +114,16 @@
 								<form:textarea class="form-control" rows="5" path="aboutMe"
 								id="field-aboutMe" cssClass="form-control" />
 								<form:errors path="aboutMe" cssClass="text-danger" />
-								</textarea>
 							</div>
 							
 						</div>
 					</spring:bind>
 
-					<div class="form-group">
-						<div class="col-sm-6 col-sm-offset-2">							
-							<label class="checkbox-inline">
-								<form:checkbox path="isPremium" value="on" id="premiumUser"/>
-								 Sign up as a Premium User for only 5$ per month</label>
-						</div>
-					</div>
-
-					<spring:bind path="creditCard">
-						<div id="form-creditcard"
-							class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="col-sm-2 control-label"
-								for="field-creditcardNumber">Credit card number</label>
-							<div class="col-sm-6">
-								<form:input path="creditCard" id="field-creditcardNumber"
-									class="form-control" />
-								<form:errors path="creditCard" cssClass="text-danger" />
-							</div>
-
-
-						</div>
-					</spring:bind>
 				</div>
 			</div>
 			<div class="form-group pull-right">
 				<div class="col-sm-12">
-					<a href="./" class="btn btn-default">Cancel</a>
+					<a href="/${pagemode}/" class="btn btn-default">Cancel</a>
 					<button type="submit" class="btn btn-primary" value="update">Update</button>
 				</div>
 			</div>

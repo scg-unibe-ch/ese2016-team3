@@ -7,134 +7,123 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
-<head>
-
-	<Title>Ithaca</Title>
-	<script src="/js/jquery.min.js"></script>
-	<script
-		src="/js/jquery-ui.min.js"></script>
-	<link rel="stylesheet"
-		href="/css/jquery-ui.css" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet"
-		href="/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/css/style.css">
-	<script
-		src="/js/bootstrap.min.js"></script>
-	<script src="/js/unreadMessages.js"></script>
+<html>
+	<head>
 	
-	<%--this is a file input plugin --%>
-	 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-	<link href="path/to/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	
-	<!-- the main fileinput plugin file -->
-	<script src="path/to/js/fileinput.min.js"></script>
-	
-	
-
-
-	
-	
-
-
-	<style>
-	/* ensure that autocomplete lists are not too long and have a scrollbar */
-	.ui-autocomplete {
-		max-height: 200px;
-		overflow-y: auto;
-		overflow-x: hidden;
-	}
-	</style>
-	
-	<script type="text/javascript">
-		$(document).ready(function(){
-			unreadMessages(function(unread){
-				$('#navUnread').html(unread);
+		<Title>Ithaca</Title>
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="/css/jquery-ui.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/css/style.css">
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/unreadMessages.js"></script>
+		
+		<%--this is a file input plugin --%>
+		<link href="/css/fileinput.min.css" media="all" rel="stylesheet"
+			type="text/css" />
+		
+		<!-- the main fileinput plugin file -->
+		<script src="/js/fileinput.min.js"></script>
+		
+		<style>
+			/* ensure that autocomplete lists are not too long and have a scrollbar */
+			.ui-autocomplete {
+				max-height: 200px;
+				overflow-y: auto;
+				overflow-x: hidden;
+			}
+		</style>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+				unreadMessages(function(unread){
+					$('#navUnread').html(unread);
+				});
 			});
-		});
-	</script>
-
-</head>
-
-<!-- check if user is logged in -->
-<security:authorize var="loggedIn" url="/profile" />
-
-<body>
-	<div class="container">
-		<h1>
-			<img id="logo" src="/img/logoNew.png"> Ithaca
-		</h1>
-		<ul class="nav nav-tabs" role="tablist">
-			<c:choose>
-				<c:when test="${pagemode == 'buy'}">
-					<li class="active"><a href="/buy/">Buy</a></li>
-					<li><a href="/rent/">Rent</a></li>
-				</c:when>
-				<c:when test="${pagemode == 'rent'}">
-					<li><a href="/buy/">Buy</a></li>
-					<li class="active"><a href="/rent/">Rent</a></li>
-				</c:when>
-			</c:choose>
-		</ul>
-		<nav class="navbar navbar-default" id="mainNav">
-			<div class="navbar-inner">
-				<div class="container-fluid">
-					<ul class="nav navbar-nav">
-						<li><a href="/${pagemode}/">Homepage</a></li>
-						<li><a href="/${pagemode}/searchAd">Find ad</a></li>
-						<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
-						<li><a href="#">My Auctions</a></li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li class="navbar-right dropdown">
-							<c:choose>
-								<c:when test="${loggedIn}">
-									<%@include file='/pages/getUserPicture.jsp' %>
-									<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
-										class="glyphicon glyphicon-user"></span>
-										<% 	out.print(String.format("%s %s", realUser.getFirstName(), realUser.getLastName())); %>
-										<span class="caret"></span>
-									</a>
-									<ul class="dropdown-menu">
-										<li><a href="/${pagemode}/user?id=<%out.print(realUser.getId());%>">
-												<span class="glyphicon glyphicon-cog"></span> Show profile
-										</a></li>
-										<li><a href="/${pagemode}/profile/myRooms"> <span
-												class="glyphicon glyphicon-home"></span> My Ads
-										</a></li>
-										<li><a href="/${pagemode}/profile/messages"> <span
-												class="glyphicon glyphicon glyphicon-envelope"></span>
-												Messages <span class="badge" id="navUnread"></span>
+		</script>
+	
+	</head>
+	
+	<!-- check if user is logged in -->
+	<security:authorize var="loggedIn" url="/profile" />
+	
+	<body>
+		<div class="container">
+			<h1>
+				<img id="logo" src="/img/logoNew.png"> Ithaca
+			</h1>
+			<ul class="nav nav-tabs" role="tablist">
+				<c:choose>
+					<c:when test="${pagemode == 'buy'}">
+						<li class="active"><a href="/buy/">Buy</a></li>
+						<li><a href="/rent/">Rent</a></li>
+					</c:when>
+					<c:when test="${pagemode == 'rent'}">
+						<li><a href="/buy/">Buy</a></li>
+						<li class="active"><a href="/rent/">Rent</a></li>
+					</c:when>
+				</c:choose>
+			</ul>
+			<nav class="navbar navbar-default" id="mainNav">
+				<div class="navbar-inner">
+					<div class="container-fluid">
+						<ul class="nav navbar-nav">
+							<li><a href="/${pagemode}/">Homepage</a></li>
+							<li><a href="/${pagemode}/searchAd">Find ad</a></li>
+							<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
+							<li><a href="#">My Auctions</a></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li class="navbar-right dropdown"><c:choose>
+									<c:when test="${loggedIn}">
+										<%@include file='/pages/getUserPicture.jsp'%>
+										<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+											<span class="glyphicon glyphicon-user"></span> <%
+	 	out.print(String.format("%s %s", realUser.getFirstName(), realUser.getLastName()));
+	 %>
+											<span class="caret"></span>
 										</a>
-										<li><a href="/${pagemode}/profile/alerts"> <span
-												class="glyphicon glyphicon-alert"></span> Alerts
-										</a></li>
-										<li><a href="/${pagemode}/profile/enquiries"> <span
-												class="glyphicon glyphicon-log-out"></span> Enquiries
-										</a></li>
-										<li><a href="/${pagemode}/profile/schedule"> <span
-												class="glyphicon glyphicon glyphicon-calendar"></span>
-												Schedule
-										</a></li>
-										<li><a href="/${pagemode}/logout"> <span
-												class="glyphicon glyphicon-log-out"></span> Logout
-										</a></li>
-									</ul>
-								</c:when>
-								<c:otherwise>
-									<li class="navbar-right"><a href="/${pagemode}/login">Login</a></li>
-								</c:otherwise>
-							</c:choose>
-						</li>
-					</ul>
+										<ul class="dropdown-menu">
+											<li><a
+												href="/${pagemode}/user?id=<%out.print(realUser.getId());%>">
+													<span class="glyphicon glyphicon-cog"></span> Show profile
+											</a></li>
+											<li><a href="/${pagemode}/profile/myRooms"> <span
+													class="glyphicon glyphicon-home"></span> My Ads
+											</a></li>
+											<li><a href="/${pagemode}/profile/messages"> <span
+													class="glyphicon glyphicon glyphicon-envelope"></span>
+													Messages <span class="badge" id="navUnread"></span>
+											</a>
+											<li><a href="/${pagemode}/profile/alerts"> <span
+													class="glyphicon glyphicon-alert"></span> Alerts
+											</a></li>
+											<li><a href="/${pagemode}/profile/enquiries"> <span
+													class="glyphicon glyphicon-log-out"></span> Enquiries
+											</a></li>
+											<li><a href="/${pagemode}/profile/schedule"> <span
+													class="glyphicon glyphicon glyphicon-calendar"></span>
+													Schedule
+											</a></li>
+											<li><a href="/${pagemode}/logout"> <span
+													class="glyphicon glyphicon-log-out"></span> Logout
+											</a></li>
+										</ul>
+									</c:when>
+									<c:otherwise>
+										<li class="navbar-right"><a href="/${pagemode}/login">Login</a></li>
+									</c:otherwise>
+								</c:choose></li>
+						</ul>
+					</div>
 				</div>
-			</div>
-		</nav>
-
-		<c:if test="${not empty confirmationMessage }">
-			<div class="confirmation-message">
-				<img src="/img/check-mark.png" />
-				<p>${confirmationMessage }</p>
-			</div>
-		</c:if>
+			</nav>
+	
+			<c:if test="${not empty confirmationMessage }">
+				<div class="confirmation-message">
+					<img src="/img/check-mark.png" />
+					<p>${confirmationMessage }</p>
+				</div>
+			</c:if>

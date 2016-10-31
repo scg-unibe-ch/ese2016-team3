@@ -1,12 +1,18 @@
 package ch.unibe.ese.team3.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * Describes an alert. An alert can be created by a user. If ads matching the
@@ -43,6 +49,10 @@ public class Alert {
 
 	@Column
 	private boolean bothRoomAndStudio;
+	
+	@Fetch(FetchMode.SELECT)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+	private List<AlertType> alertTypes;
 	
 	private Type type; 
 

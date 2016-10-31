@@ -24,11 +24,11 @@ public class UpgradeForm {
 	@NotNull
 	private String securityNumber;
 	
-	@Pattern(regexp = "[1-12]", message = "Month must be between 1 and 12")
+	@Pattern(regexp = "[1-9]|1[0-2]", message = "Month must be between 1 and 12")
 	@NotNull
 	private String expirationMonth;
 	
-	@Pattern(regexp = "[16-50]", message = "Your credit card has expired!")
+	@Pattern(regexp = "16|17|18|19|[2-5][0-9]", message = "Your credit card has expired!")
 	@NotNull
 	private String expirationYear;
 	
@@ -36,13 +36,6 @@ public class UpgradeForm {
 	@NotNull
 	private String creditcardName;
 	
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
 	
 	public String getCreditCard(){
 		return creditCard;
