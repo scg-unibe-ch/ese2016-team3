@@ -43,6 +43,7 @@
 																"Accepted <button class='undoButton' data-id='"+ id+ "'>Undo</button>");
 												attachUndoHandler();
 											});
+							
 							$(".declineButton")
 									.click(
 											function() {
@@ -83,9 +84,9 @@
 
 <h3>Enquiries</h3>
 <div class="row">
-	<div class="col-xs-12 col-xs-12">
+	<div class="col-sm-12 col-sm-12">
 
-		<table class="table-striped">
+		<table class="table">
 			<tr>
 				<th>Sender</th>
 				<th>Ad</th>
@@ -119,8 +120,10 @@
 								<p>Declined</p>
 							</c:when>
 							<c:otherwise>
-								<button class="acceptButton" data-id="${enquiry.id}">Accept</button>
-								<button class="declineButton" data-id="${enquiry.id}">Decline</button>
+								<button type="submit" class="acceptButton"
+									data-id="${enquiry.id}">Accept</button>
+								<button type="button" class="declineButton"
+									data-id="${enquiry.id}">Decline</button>
 							</c:otherwise>
 						</c:choose></td>
 				</tr>
@@ -129,35 +132,6 @@
 	</div>
 </div>
 
-<div class="row">
-  <div class="col-xs-1">.col-xs-1</div>
-  <div class="col-xs-1">.col-xs-1</div>
-  <div class="col-xs-1">.col-xs-1</div>
-  <div class="col-xs-1">.col-xs-1</div>
-  <div class="col-xs-1">.col-xs-1</div>
-  <div class="col-xs-1">.col-xs-1</div>
-  <div class="col-xs-1">.col-xs-1</div>
-  <div class="col-xs-1">.col-xs-1</div>
-  <div class="col-xs-1">.col-xs-1</div>
-  <div class="col-xs-1">.col-xs-1</div>
-  <div class="col-xs-1">.col-xs-1</div>
-  <div class="col-xs-1">.col-xs-1</div>
-</div>
-
-<div class="row">
-  <div class="col-xs-8">.col-xs-8</div>
-  <div class="col-xs-4">.col-xs-4</div>
-</div>
-<div class="row">
-  <div class="col-xs-4">.col-xs-4</div>
-  <div class="col-xs-4">.col-xs-4</div>
-  <div class="col-xs-4">.col-xs-4</div>
-</div>
-
-<div class="row">
-  <div class="col-xs-6">.col-xs-6</div>
-  <div class="col-xs-6">.col-xs-6</div>
-</div>
 
 
 
