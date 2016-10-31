@@ -275,6 +275,7 @@
 						<td></td>
 					</tr>
 				</table>
+				<p class="bottom15"><span class="glyphicon glyphicon-ok"></span> = Available, <span class="glyphicon glyphicon-remove"></span> = Not available</p>
 				<h4>Visiting times</h4>
 				<table class="table table-striped" id="visitList">
 					<c:forEach items="${visits }" var="visit">
