@@ -204,12 +204,12 @@ public class ProfileController {
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
 		if (!bindingResult.hasErrors()) {
-			upgradeService.upgradeFrom(upgradeForm);
-			model = new ModelAndView("upgradedProfile");
+			upgradeService.upgradeFrom(upgradeForm, user);
+			model = new ModelAndView("updatedProfile");
 			model.addObject("confirmationMessage", "Upgrade to Premium user complete!");
 			model.addObject("currentUser", user);
 		} else {
-			model = new ModelAndView("upgradedProfile");
+			model = new ModelAndView("updatedProfile");
 			model.addObject("upgradeForm", upgradeForm);
 			model.addObject("message", "Something went wrong, please contact the WebAdmin if the problem persists!");
 		}

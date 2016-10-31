@@ -8,8 +8,6 @@ import ch.unibe.ese.team3.model.CreditcardType;
 /** This form is used when a user wants to upgrade their profile. */
 public class UpgradeForm {
 	
-	private String username;
-
 	@Pattern(regexp = "[0-9]{16}", message = "Credit card number must be 16 digits")
 	@NotNull
 	private String creditCard;
@@ -21,11 +19,11 @@ public class UpgradeForm {
 	@NotNull
 	private String securityNumber;
 	
-	@Pattern(regexp = "[1-12]", message = "Month must be between 1 and 12")
+	@Pattern(regexp = "[1-9]|1[0-2]", message = "Month must be between 1 and 12")
 	@NotNull
 	private String expirationMonth;
 	
-	@Pattern(regexp = "[16-50]", message = "Your credit card has expired!")
+	@Pattern(regexp = "16|17|18|19|[2-5][0-9]", message = "Your credit card has expired!")
 	@NotNull
 	private String expirationYear;
 	
@@ -33,13 +31,6 @@ public class UpgradeForm {
 	@NotNull
 	private String creditcardName;
 	
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
 	
 	public String getCreditCard(){
 		return creditCard;
