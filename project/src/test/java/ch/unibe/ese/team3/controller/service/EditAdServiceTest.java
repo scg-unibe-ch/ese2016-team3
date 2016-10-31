@@ -53,14 +53,12 @@ public class EditAdServiceTest {
 		PlaceAdForm placeAdForm = new PlaceAdForm();
 		placeAdForm.setCity("3018 - Bern");
 		placeAdForm.setType(Type.APARTMENT);
-		placeAdForm.setPreferences("Test preferences");
 		placeAdForm.setRoomDescription("Test Room description");
 		placeAdForm.setPrize(600);
 		placeAdForm.setSquareFootage(50);
 		placeAdForm.setTitle("title");
 		placeAdForm.setStreet("Hauptstrasse 13");
 		placeAdForm.setMoveInDate("27-02-2015");
-		placeAdForm.setMoveOutDate("27-04-2015");
 	
 		placeAdForm.setBalcony(false);
 ;
@@ -114,7 +112,6 @@ public class EditAdServiceTest {
 		
 		
 		assertEquals("This is a wonderful flat", placeAdForm.getRoomDescription());
-		assertEquals("no preferences", placeAdForm.getPreferences());
 		
 	}
 	

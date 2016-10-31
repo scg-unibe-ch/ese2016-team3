@@ -460,12 +460,11 @@
 
 
 
-			<h4>Edit pictures</h4>
+			<h4>Change Pictures</h4>
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<fieldset>
-						<legend>Change pictures</legend>
-						<h3>Delete existing pictures</h3>
+						<label class="control-label" for="field-pictures">Delete existing pictures</label> 
 						<br />
 						<div>
 							<c:forEach items="${ad.pictures }" var="picture">
