@@ -21,7 +21,7 @@
 <div class="col-md-12 col-xs-12">
 		<h3>Upgrade to premium user</h3>
 	<form:form id="upgradeForm" class="form-horizontal" method="post" 
-	modelAttribute="upgradeForm" action="./">
+	modelAttribute="upgradeForm" action="./upgrade">
 		<div class="panel panel-default">
 		<div class="panel-body">
 		

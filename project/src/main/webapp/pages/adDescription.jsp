@@ -151,7 +151,7 @@
 							</button>
 						</c:when>
 						<c:otherwise>
-							<button class="btn btn-primary" type="button">Edit Ad</button>
+							<a class="btn btn-primary" href="./profile/editAd?id=${shownAd.id}">Edit Ad</a>
 						</c:otherwise>
 					</c:choose>
 				</c:when>

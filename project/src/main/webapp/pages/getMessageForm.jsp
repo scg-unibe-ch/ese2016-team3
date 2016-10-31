@@ -5,6 +5,73 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<script type="text/javascript">
+	validateField = function(valid, control) {
+		if(control.val() == ""){
+			control.parent().addClass('has-error');
+			return false;
+		}
+		else {
+			control.parent().removeClass('has-error');
+		}
+		return valid;
+	}
+	
+	validateReceiver = function(valid){
+		var receiverControl = $("#receiverEmail");
+		var text = receiverControl.val();
+
+		$.post("/profile/messages/validateEmail", {
+			email : text
+		}, function(data) {
+			if (data != text) {
+				receiverControl.parent().addClass('has-error');
+			}
+			else {
+				receiverControl.parent().removeClass('has-error');
+			}
+		});
+	}
+
+	$(document).ready(function(){
+		$("#messageSend").click(function (){
+			var valid = true;
+			
+			var subjectControl = $("#msgSubject");
+			var messageControl = $("#msgTextarea");
+			var receiverControl = $("#receiverEmail");
+			
+			valid = validateField(valid, subjectControl);
+			valid = validateField(valid, messageControl);
+			valid = validateField(valid, receiverControl);
+		
+			if (valid == true){
+				var subject = subjectControl.val();
+				var text = messageControl.val();
+				var recipientEmail = receiverControl.val();
+				$.post("/${pageMode.parameter}/profile/messages/sendMessage", {subject : subject, text: text, recipientEmail : recipientEmail}, function(){
+					subjectControl.val("");
+					messageControl.val("");
+					receiverControl.val("");
+					$('#messageModal').modal('hide')
+				});
+			}
+		});
+		
+		$("#receiverEmail").focusout(function() {
+			validateReceiver(true);
+		});
+	
+		$("#messageForm").submit(function(event) {
+			if ($("#receiverEmail").val() == "") {
+				event.preventDefault();
+			}
+		});
+		
+	});
+
+</script>
+
 
 <div class="modal fade" id="messageModal" tabindex="-1">
 	<div class="modal-dialog">
@@ -38,7 +105,9 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-				<button type="submit" class="btn btn-primary" id="messageSend"><span class="glyphicon glyphicon-send"></span> Send</button>
+				<button type="submit" class="btn btn-primary" id="messageSend">
+					<span class="glyphicon glyphicon-send"></span> Send
+				</button>
 			</div>
 		</div>
 	</div>
