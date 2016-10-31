@@ -93,7 +93,7 @@
 							<label class="col-sm-2 control-label" for="field-gender">Gender</label>
 							<div class="col-sm-6">
 								<form:select path="gender" class="form-control">
-									<form:options items="${genders}" itemLabel="genderName"/>
+									<form:options items="${genders}" itemLabel="genderName" />
 								</form:select>
 							</div>
 
@@ -101,10 +101,11 @@
 					</spring:bind>
 
 					<div class="form-group">
-						<div class="col-sm-6 col-sm-offset-2">							
-							<label class="checkbox-inline">
-								<form:checkbox path="isPremium" value="on" id="premiumUser"/>
-								 Sign up as a Premium User for only 5$ per month</label>
+						<div class="col-sm-6 col-sm-offset-2">
+							<label class="checkbox-inline"> <form:checkbox
+									path="isPremium" value="on" id="premiumUser" /> Sign up as a
+								Premium User for only 5$ per month
+							</label>
 						</div>
 					</div>
 
@@ -115,19 +116,21 @@
 								for="field-creditcardNumber">Type of card</label>
 							<div class="col-sm-6">
 								<form:select path="creditcardType" id="field-creditcardType"
-									class="form-control"> 
-								<form:options items="${creditcardTypes}" itemLabel="creditcardTypeName"/>
+									class="form-control">
+									<form:option value=""></form:option>
+									<form:options items="${creditcardTypes}"
+										itemLabel="creditcardTypeName" />
 								</form:select>
 								<form:errors path="validCreditcardType" cssClass="text-danger" />
 							</div>
 						</div>
 					</spring:bind>
-					
+
 					<spring:bind path="validCreditcardName">
 						<div id="form-creditcardName"
 							class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="col-sm-2 control-label"
-								for="field-creditcardName">Name on card</label>
+							<label class="col-sm-2 control-label" for="field-creditcardName">Name
+								on card</label>
 							<div class="col-sm-6">
 								<form:input path="creditcardName" id="field-creditcardName"
 									class="form-control" />
@@ -135,7 +138,7 @@
 							</div>
 						</div>
 					</spring:bind>
-					
+
 					<spring:bind path="validCreditCard">
 						<div id="form-creditcard"
 							class="form-group ${status.error ? 'has-error' : '' }">
@@ -148,12 +151,12 @@
 							</div>
 						</div>
 					</spring:bind>
-					
+
 					<spring:bind path="validSecurityNumber">
 						<div id="form-securityNumber"
 							class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="col-sm-2 control-label"
-								for="field-securityNumber">Security Number</label>
+							<label class="col-sm-2 control-label" for="field-securityNumber">Security
+								Number</label>
 							<div class="col-sm-6">
 								<form:input path="securityNumber" id="field-securityNumber"
 									class="form-control" placeholder="CVV" />
@@ -161,33 +164,38 @@
 							</div>
 						</div>
 					</spring:bind>
-					
+
 					<spring:bind path="validExpirationMonth">
 						<div id="form-expirationMonth"
 							class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="col-sm-2 control-label"
-								for="field-expirationMonth">Date of Expiration</label>
+							<label class="col-sm-2 control-label" for="field-expirationMonth">Date
+								of Expiration</label>
 							<div class="col-sm-3">
-								<form:input path="expirationMonth" id="field-expirationMonth"
-									class="form-control" placeholder="MM" />
+								<form:select path="expirationMonth" id="field-expirationMonth"
+									cssClass="form-control">
+									<option>Month</option>
+									<form:options items="${months}" />
+								</form:select>
 								<form:errors path="validExpirationMonth" cssClass="text-danger" />
 							</div>
 						</div>
-					</spring:bind>	
-				
+					</spring:bind>
+
 					<spring:bind path="validExpirationYear">
 						<div id="form-expirationYear"
 							class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="col-sm-2 control-label"
-								for="field-expirationYear"></label>
+							<label class="col-sm-2 control-label" for="field-expirationYear"></label>
 							<div class="col-sm-3">
-								<form:input path="expirationYear" id="field-expirationYear"
-									class="form-control" placeholder="YY" />
+								<form:select path="expirationYear" cssClass="form-control"
+									id="field-expirationYear">
+									<option>Year</option>
+									<form:options items="${years}" />
+								</form:select>
 								<form:errors path="validExpirationYear" cssClass="text-danger" />
 							</div>
 						</div>
 					</spring:bind>
-					
+
 				</div>
 			</div>
 			<div class="form-group pull-right">
