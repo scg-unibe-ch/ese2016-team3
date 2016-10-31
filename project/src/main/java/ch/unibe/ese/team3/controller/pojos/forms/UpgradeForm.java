@@ -9,6 +9,9 @@ import ch.unibe.ese.team3.model.CreditcardType;
 public class UpgradeForm {
 	
 	private String username;
+	
+	@NotNull
+	private boolean isPremium;
 
 	@Pattern(regexp = "[0-9]{16}", message = "Credit card number must be 16 digits")
 	@NotNull
@@ -87,6 +90,14 @@ public class UpgradeForm {
 	
 	public void setCreditcardName(String name){
 		creditcardName = name;
+	}
+	
+	public boolean getIsPremium(){
+		return isPremium;
+	}
+	
+	public void setIsPremium(boolean isPremium){
+		this.isPremium = isPremium;
 	}
 
 }

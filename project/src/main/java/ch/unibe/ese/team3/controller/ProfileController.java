@@ -184,7 +184,7 @@ public class ProfileController {
 	}
 	
 	/** Returns the upgrade page. */
-	@RequestMapping(value = "/upgrade", method = RequestMethod.GET)
+	@RequestMapping(value = "/profile/upgrade", method = RequestMethod.GET)
 	public ModelAndView upgradePage(Principal principal) {
 		ModelAndView model = new ModelAndView("upgrade");
 		String username = principal.getName();
@@ -197,7 +197,7 @@ public class ProfileController {
 	}
 
 	/** Validates the upgrade form and on success persists the new user. */
-	@RequestMapping(value = "/upgrade", method = RequestMethod.POST)
+	@RequestMapping(value = "/profile/upgrade", method = RequestMethod.POST)
 	public ModelAndView upgradeResultPage(@Valid UpgradeForm upgradeForm,
 			BindingResult bindingResult, Principal principal) {
 		ModelAndView model;
