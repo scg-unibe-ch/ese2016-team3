@@ -53,13 +53,69 @@
 	});
 </script>
 
-<pre>
-	<a href="/">Homepage</a>   &gt;   Profile</pre>
+<ol class="breadcrumb">
+	<li><a href="./">Homepage</a></li>
+	<li class="active">Profile</li>
+</ol>
 
-<div id="userDiv">
+<div class="row">
+	<div class="col-md-12 col-xs-12">
+	<form:form id="profile" class="form-horizontal">
+	<div class="panel panel-default">
+	<div class="panel-body">
+		<c:choose>
+		<c:when test="${user.accountType == 'PREMIUM'}">
+			<h3>This is a PREMIUM Account</h3>
+		</c:when>
+		<c:otherwise></c:otherwise>
+	</c:choose>
+	<c:choose>
+		<c:when test="${user.picture.filePath != null}">
+			<img src="${user.picture.filePath}">
+		</c:when>
+		<c:otherwise>
+			<img src="/img/avatar.png">
+		</c:otherwise>
+	</c:choose>	
+<p>
+	<h2>Username</h2>${user.email}<p>
+	<h2>Name</h2>${user.firstName}
+	${user.lastName}
+	<p>
+	<hr class="slim">
+	<h2>About me</h2>${user.aboutMe}
+	<hr class="slim">
+			</div>
+	</div>
+		<c:choose>
+			<c:when test="${principalID != null}" >
+				<div class="form-group pull-right">
+				<div class="col-sm-12">
+				<button id="newMsg" type="button" class="btn btn-primary">Message</button>
+				<c:choose>
+					<c:when test="${principalID eq user.id}">
+						<a id="edit" class="btn btn-primary" href="./profile/editProfile">Edit Profile</a>
+						<a type="button" href="./upgrade" class="btn btn-primary">Get Premium</a>
+						
+					</c:when>
+					<c:otherwise></c:otherwise>
+				</c:choose>
+				</div>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<p>Please log in to contact this person.</p>
+			</c:otherwise>
+		</c:choose>
+
+	</form:form>
+	</div>
+	</div>
+	
+<% /** <div id="userDiv">
 	<c:choose>
 		<c:when test="${user.accountType == 'PREMIUM'}">
-			<h2>This is a PREMIUM Account</h2>
+			<h3>This is a PREMIUM Account</h3>
 		</c:when>
 		<c:otherwise></c:otherwise>
 	</c:choose>
@@ -95,10 +151,7 @@
 			</c:otherwise>
 		</c:choose>
 	</form>
-</div>
-
-
-
+</div> **/ %>
 
 <div id="msgDiv" style="display:none;">
 	<form class="msgForm">

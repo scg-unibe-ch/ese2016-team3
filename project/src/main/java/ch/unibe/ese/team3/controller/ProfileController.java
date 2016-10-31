@@ -17,13 +17,16 @@ import org.springframework.web.servlet.ModelAndView;
 import ch.unibe.ese.team3.controller.pojos.forms.EditProfileForm;
 import ch.unibe.ese.team3.controller.pojos.forms.MessageForm;
 import ch.unibe.ese.team3.controller.pojos.forms.SignupForm;
+import ch.unibe.ese.team3.controller.pojos.forms.UpgradeForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.controller.service.SignupService;
+import ch.unibe.ese.team3.controller.service.UpgradeService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.controller.service.UserUpdateService;
 import ch.unibe.ese.team3.controller.service.VisitService;
 import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.Ad;
+import ch.unibe.ese.team3.model.CreditcardType;
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
@@ -48,6 +51,9 @@ public class ProfileController {
 
 	@Autowired
 	private AdService adService;
+	
+	@Autowired
+	private UpgradeService upgradeService;
 
 	/** Returns the login page. */
 	@RequestMapping(value = "/login")
@@ -176,4 +182,39 @@ public class ProfileController {
 		model.addObject("ad", ad);
 		return model;
 	}
+	
+	/** Returns the upgrade page. */
+	@RequestMapping(value = "/upgrade", method = RequestMethod.GET)
+	public ModelAndView upgradePage(Principal principal) {
+		ModelAndView model = new ModelAndView("upgrade");
+		String username = principal.getName();
+		User user = userService.findUserByUsername(username);
+		model.addObject("upgradeForm", new UpgradeForm());
+		model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
+		model.addObject("accountTypes", AccountType.values());
+		model.addObject("currentUser", user);
+		return model;
+	}
+
+	/** Validates the upgrade form and on success persists the new user. */
+	@RequestMapping(value = "/upgrade", method = RequestMethod.POST)
+	public ModelAndView upgradeResultPage(@Valid UpgradeForm upgradeForm,
+			BindingResult bindingResult, Principal principal) {
+		ModelAndView model;
+		String username = principal.getName();
+		User user = userService.findUserByUsername(username);
+		if (!bindingResult.hasErrors()) {
+			upgradeService.upgradeFrom(upgradeForm);
+			model = new ModelAndView("upgradedProfile");
+			model.addObject("confirmationMessage", "Upgrade to Premium user complete!");
+			model.addObject("currentUser", user);
+		} else {
+			model = new ModelAndView("upgradedProfile");
+			model.addObject("upgradeForm", upgradeForm);
+			model.addObject("message", "Something went wrong, please contact the WebAdmin if the problem persists!");
+		}
+		return model;
+	}
+
+
 }

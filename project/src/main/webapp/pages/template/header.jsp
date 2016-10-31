@@ -22,6 +22,20 @@
 	<script
 		src="/js/bootstrap.min.js"></script>
 	<script src="/js/unreadMessages.js"></script>
+	
+	<%--this is a file input plugin --%>
+	 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<link href="path/to/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	
+	<!-- the main fileinput plugin file -->
+	<script src="path/to/js/fileinput.min.js"></script>
+	
+	
+
+
+	
+	
 
 
 	<style>
