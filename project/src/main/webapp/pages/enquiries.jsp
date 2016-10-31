@@ -81,7 +81,87 @@
 					});
 </script>
 
-<h1>Enquiries</h1>
+<h3>Enquiries</h3>
+<div class="row">
+	<div class="col-xs-12 col-xs-12">
+
+		<table class="table-striped">
+			<tr>
+				<th>Sender</th>
+				<th>Ad</th>
+				<th>Date of the visit</th>
+				<th>Date sent</th>
+				<th>Actions</th>
+			</tr>
+			<c:forEach items="${enquiries}" var="enquiry">
+				<fmt:formatDate value="${enquiry.dateSent}"
+					var="singleFormattedDateSent" type="date"
+					pattern="HH:mm, dd.MM.yyyy" />
+				<fmt:formatDate value="${enquiry.visit.startTimestamp}"
+					var="startTime" type="date" pattern="HH:mm" />
+				<fmt:formatDate value="${enquiry.visit.endTimestamp}" var="endTime"
+					type="date" pattern="HH:mm" />
+				<fmt:formatDate value="${enquiry.visit.startTimestamp }" var="date"
+					type="date" pattern="dd.MM.yyyy" />
+
+				<tr>
+					<td><a href="/user?id=${enquiry.sender.id}">${enquiry.sender.email}</a></td>
+					<td><a href="/ad?id=${enquiry.visit.ad.id }">${enquiry.visit.ad.street },
+							${enquiry.visit.ad.zipcode } ${enquiry.visit.ad.city }</a></td>
+
+					<td>${date},&#32;${startTime}&#32;to&#32;${endTime }</td>
+					<td>${singleFormattedDateSent}</td>
+					<td><c:choose>
+							<c:when test="${enquiry.state == 'ACCEPTED'}">
+								<p>Accepted</p>
+							</c:when>
+							<c:when test="${enquiry.state == 'DECLINED' }">
+								<p>Declined</p>
+							</c:when>
+							<c:otherwise>
+								<button class="acceptButton" data-id="${enquiry.id}">Accept</button>
+								<button class="declineButton" data-id="${enquiry.id}">Decline</button>
+							</c:otherwise>
+						</c:choose></td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+  <div class="col-xs-1">.col-xs-1</div>
+  <div class="col-xs-1">.col-xs-1</div>
+  <div class="col-xs-1">.col-xs-1</div>
+  <div class="col-xs-1">.col-xs-1</div>
+  <div class="col-xs-1">.col-xs-1</div>
+  <div class="col-xs-1">.col-xs-1</div>
+  <div class="col-xs-1">.col-xs-1</div>
+  <div class="col-xs-1">.col-xs-1</div>
+  <div class="col-xs-1">.col-xs-1</div>
+  <div class="col-xs-1">.col-xs-1</div>
+  <div class="col-xs-1">.col-xs-1</div>
+  <div class="col-xs-1">.col-xs-1</div>
+</div>
+
+<div class="row">
+  <div class="col-xs-8">.col-xs-8</div>
+  <div class="col-xs-4">.col-xs-4</div>
+</div>
+<div class="row">
+  <div class="col-xs-4">.col-xs-4</div>
+  <div class="col-xs-4">.col-xs-4</div>
+  <div class="col-xs-4">.col-xs-4</div>
+</div>
+
+<div class="row">
+  <div class="col-xs-6">.col-xs-6</div>
+  <div class="col-xs-6">.col-xs-6</div>
+</div>
+
+
+
+<%-- 
 <hr />
 <div id="enquiryList">
 	<table class="styledTable">
@@ -98,9 +178,10 @@
 				pattern="HH:mm, dd.MM.yyyy" />
 			<fmt:formatDate value="${enquiry.visit.startTimestamp}"
 				var="startTime" type="date" pattern="HH:mm" />
-			<fmt:formatDate value="${enquiry.visit.endTimestamp}"
-				var="endTime" type="date" pattern="HH:mm" />
-			<fmt:formatDate value="${enquiry.visit.startTimestamp }" var="date" type="date" pattern= "dd.MM.yyyy" />
+			<fmt:formatDate value="${enquiry.visit.endTimestamp}" var="endTime"
+				type="date" pattern="HH:mm" />
+			<fmt:formatDate value="${enquiry.visit.startTimestamp }" var="date"
+				type="date" pattern="dd.MM.yyyy" />
 
 			<tr>
 				<td><a href="/user?id=${enquiry.sender.id}">${enquiry.sender.email}</a></td>
@@ -124,5 +205,5 @@
 		</c:forEach>
 	</table>
 </div>
-
+--%>
 <c:import url="template/footer.jsp" />
