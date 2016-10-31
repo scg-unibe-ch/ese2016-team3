@@ -12,7 +12,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class LoggingInterceptor extends HandlerInterceptorAdapter {
 
-	private static final Logger logger = Logger.getLogger("Compass logger");
+	private static final Logger logger = Logger.getLogger("Ithaca logger");
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,

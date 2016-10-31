@@ -114,7 +114,6 @@
 								<form:textarea class="form-control" rows="5" path="aboutMe"
 								id="field-aboutMe" cssClass="form-control" />
 								<form:errors path="aboutMe" cssClass="text-danger" />
-								</textarea>
 							</div>
 							
 						</div>
