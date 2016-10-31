@@ -11,40 +11,28 @@
 
 	<Title>Ithaca</Title>
 	<script src="/js/jquery.min.js"></script>
-	<script
-		src="/js/jquery-ui.min.js"></script>
-	<link rel="stylesheet"
-		href="/css/jquery-ui.css" />
+	<script src="/js/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="/css/jquery-ui.css" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet"
-		href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/style.css">
-	<script
-		src="/js/bootstrap.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/unreadMessages.js"></script>
 	
 	<%--this is a file input plugin --%>
-	 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-	<link href="path/to/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<link href="/css/fileinput.min.css" media="all" rel="stylesheet"
+		type="text/css" />
 	
 	<!-- the main fileinput plugin file -->
-	<script src="path/to/js/fileinput.min.js"></script>
+	<script src="/js/fileinput.min.js"></script>
 	
-	
-
-
-	
-	
-
-
 	<style>
-	/* ensure that autocomplete lists are not too long and have a scrollbar */
-	.ui-autocomplete {
-		max-height: 200px;
-		overflow-y: auto;
-		overflow-x: hidden;
-	}
+		/* ensure that autocomplete lists are not too long and have a scrollbar */
+		.ui-autocomplete {
+			max-height: 200px;
+			overflow-y: auto;
+			overflow-x: hidden;
+		}
 	</style>
 	
 	<script type="text/javascript">
@@ -87,17 +75,18 @@
 						<li><a href="#">My Auctions</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li class="navbar-right dropdown">
-							<c:choose>
+						<li class="navbar-right dropdown"><c:choose>
 								<c:when test="${loggedIn}">
-									<%@include file='/pages/getUserPicture.jsp' %>
-									<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
-										class="glyphicon glyphicon-user"></span>
-										<% 	out.print(String.format("%s %s", realUser.getFirstName(), realUser.getLastName())); %>
+									<%@include file='/pages/getUserPicture.jsp'%>
+									<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+										<span class="glyphicon glyphicon-user"></span> <%
+ 	out.print(String.format("%s %s", realUser.getFirstName(), realUser.getLastName()));
+ %>
 										<span class="caret"></span>
 									</a>
 									<ul class="dropdown-menu">
-										<li><a href="/${pagemode}/user?id=<%out.print(realUser.getId());%>">
+										<li><a
+											href="/${pagemode}/user?id=<%out.print(realUser.getId());%>">
 												<span class="glyphicon glyphicon-cog"></span> Show profile
 										</a></li>
 										<li><a href="/${pagemode}/profile/myRooms"> <span
@@ -125,8 +114,7 @@
 								<c:otherwise>
 									<li class="navbar-right"><a href="/${pagemode}/login">Login</a></li>
 								</c:otherwise>
-							</c:choose>
-						</li>
+							</c:choose></li>
 					</ul>
 				</div>
 			</div>
