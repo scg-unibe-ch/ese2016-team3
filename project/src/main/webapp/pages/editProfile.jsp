@@ -124,7 +124,7 @@
 			</div>
 			<div class="form-group pull-right">
 				<div class="col-sm-12">
-					<a href="./" class="btn btn-default">Cancel</a>
+					<a href="/${pagemode}/" class="btn btn-default">Cancel</a>
 					<button type="submit" class="btn btn-primary" value="update">Update</button>
 				</div>
 			</div>
