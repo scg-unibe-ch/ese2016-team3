@@ -27,8 +27,6 @@ public class PlaceAdForm {
 	
 	@NotBlank(message = "Required")
 	private String moveInDate;
-	
-	private String moveOutDate;
 
 	@Min(value = 1, message = "Has to be equal to 1 or more")
 	private int prize;
@@ -65,9 +63,7 @@ public class PlaceAdForm {
 	@NotBlank(message = "Required")
 	private String roomDescription;
 
-	private String preferences;
-	
-	
+
 	// auction specific attributes
 	
 	private String startDate;
@@ -148,14 +144,6 @@ public class PlaceAdForm {
 
 	public void setRoomDescription(String roomDescription) {
 		this.roomDescription = roomDescription;
-	}
-
-	public String getPreferences() {
-		return preferences;
-	}
-
-	public void setPreferences(String preferences) {
-		this.preferences = preferences;
 	}
 
 	public int getSquareFootage() {
@@ -245,14 +233,6 @@ public class PlaceAdForm {
 
 	public void setMoveInDate(String moveInDate) {
 		this.moveInDate = moveInDate;
-	}
-
-	public String getMoveOutDate() {
-		return moveOutDate;
-	}
-
-	public void setMoveOutDate(String moveOutDate) {
-		this.moveOutDate = moveOutDate;
 	}
 
 	public String getTitle() {

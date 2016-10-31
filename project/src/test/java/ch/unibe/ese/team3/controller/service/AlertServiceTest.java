@@ -137,7 +137,6 @@ public class AlertServiceTest {
 		oltenResidence.setSquareFootage(42);
 		// oltenResidence.setStudio(false);
 		oltenResidence.setRoomDescription("blah");
-		oltenResidence.setPreferences("blah");
 		oltenResidence.setUser(thomyF);
 		oltenResidence.setTitle("Olten Residence");
 		oltenResidence.setStreet("Florastr. 100");

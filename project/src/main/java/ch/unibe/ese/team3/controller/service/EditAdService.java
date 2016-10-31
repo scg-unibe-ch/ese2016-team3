@@ -78,17 +78,6 @@ public class EditAdService {
 				calendar.set(yearMoveIn, monthMoveIn - 1, dayMoveIn);
 				ad.setMoveInDate(calendar.getTime());
 			}
-
-			if (placeAdForm.getMoveOutDate().length() >= 1) {
-				int dayMoveOut = Integer.parseInt(placeAdForm.getMoveOutDate()
-						.substring(0, 2));
-				int monthMoveOut = Integer.parseInt(placeAdForm
-						.getMoveOutDate().substring(3, 5));
-				int yearMoveOut = Integer.parseInt(placeAdForm.getMoveOutDate()
-						.substring(6, 10));
-				calendar.set(yearMoveOut, monthMoveOut - 1, dayMoveOut);
-				ad.setMoveOutDate(calendar.getTime());
-			}
 		} catch (NumberFormatException e) {
 		}
 
@@ -110,7 +99,6 @@ public class EditAdService {
 		ad.setParking(placeAdForm.isParking());
 		ad.setDishwasher(placeAdForm.getDishwasher());
 		ad.setRoomDescription(placeAdForm.getRoomDescription());
-		ad.setPreferences(placeAdForm.getPreferences());
 		ad.setBalcony(placeAdForm.getBalcony());
 		ad.setGarage(placeAdForm.getGarage());
 
@@ -196,7 +184,6 @@ public class EditAdService {
 		PlaceAdForm adForm = new PlaceAdForm();
 
 		adForm.setRoomDescription(ad.getRoomDescription());
-		adForm.setPreferences(ad.getPreferences());
 		adForm.setType(ad.getType());
 		
 		return adForm;

@@ -108,7 +108,6 @@ public class EditAdServiceTest {
 		
 		Ad ad = new Ad();
 		ad.setRoomDescription("This is a wonderful flat");
-		ad.setPreferences("no preferences");
 		
 		PlaceAdForm placeAdForm = editadservice.fillForm(ad);
 		

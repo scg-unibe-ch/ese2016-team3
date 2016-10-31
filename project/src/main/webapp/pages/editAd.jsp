@@ -33,9 +33,6 @@
 						$("#field-moveInDate").datepicker({
 							dateFormat : 'dd-mm-yy'
 						});
-						$("#field-moveOutDate").datepicker({
-							dateFormat : 'dd-mm-yy'
-						});
 
 						$("#field-visitDay").datepicker({
 							dateFormat : 'dd-mm-yy'
@@ -159,18 +156,6 @@
 									<div class="col-sm-5">
 										<form:input type="text" id="field-moveInDate"
 											path="moveInDate" value="${ad.moveInDate}"
-											cssClass="form-control" />
-									</div>
-								</div>
-							</spring:bind>
-
-							<spring:bind path="moveOutDate">
-								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="moveOutDate">Move-out
-										date (optional)</label>
-									<div class="col-sm-5">
-										<form:input type="text" id="field-moveOutDate"
-											path="moveOutDate" value="${ad.moveOutDate}"
 											cssClass="form-control" />
 									</div>
 								</div>
