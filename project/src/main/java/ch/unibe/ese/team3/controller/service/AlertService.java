@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.controller.pojos.forms.AlertForm;
+import ch.unibe.ese.team3.dto.Location;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Alert;
-import ch.unibe.ese.team3.model.Location;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.User;
