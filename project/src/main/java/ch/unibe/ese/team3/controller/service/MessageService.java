@@ -6,7 +6,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Properties;
+import javax.mail.*;
+import javax.mail.internet.*;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.MessageDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
+
 
 /** Handles all persistence operations concerning messaging. */
 @Service
@@ -112,6 +115,31 @@ public class MessageService {
 		message.setState(MessageState.UNREAD);
 		
 		messageDao.save(message);
+	}
+	
+	public void sendEmail(User recipient, String subject, String text) {
+		Properties properties = System.getProperties();
+		
+		Session session = Session.getInstance(properties, new Authenticator() { 
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication("x", "y");
+		}
+		});
+		
+		try {
+			MimeMessage message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("x"));
+			message.addRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(recipient.getEmail(), false));
+			message.setSubject(subject);
+			message.setText(text);
+			
+			Transport.send(message);
+			System.out.println("Message sent successfully");
+		}catch (MessagingException e)
+		{
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
