@@ -260,7 +260,7 @@
 					<c:forEach var="ad" items="${results}">
 						<div data-price="${ad.prizePerMonth}"
 							data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}"
-							class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ad-wide-preview-outer resultAd">
+							class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ad-wide-preview-outer resultAd ${ad.isPremiumAd() ? 'premiumAd' : '' }">
 							<div class="col-md-12 ad-wide-preview-inner">
 								<div class="row">
 									<div class="col-sm-4 col-md-4">
