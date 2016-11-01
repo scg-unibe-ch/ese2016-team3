@@ -1,11 +1,14 @@
 package ch.unibe.ese.team3.controller.pojos.forms;
 
+import java.util.List;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import ch.unibe.ese.team3.model.AlertType;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 
@@ -13,10 +16,8 @@ import ch.unibe.ese.team3.model.User;
 public class AlertForm {
 	
 	
-	private Type type;
 	private User user;
-	
-
+	private List<AlertType> alertTypes;
 
 	@NotBlank(message = "Required")
 	@Pattern(regexp = "^[0-9]{4} - [-\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
@@ -63,19 +64,20 @@ public class AlertForm {
 		this.price = price;
 	}
 
-	public Type getType(){
-		return type;
-	}
-	public void setTypes(Type type){
-		this.type = type;
-	}
-
-	
 	public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+
+	public List<AlertType> getAlertTypes() {
+		return alertTypes;
+	}
+
+	public void setAlertTypes(List<AlertType> alertTypes) {
+		this.alertTypes = alertTypes;
 	}
 }

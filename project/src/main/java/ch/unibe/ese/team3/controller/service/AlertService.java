@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.unibe.ese.team3.controller.pojos.forms.AlertForm;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Alert;
+import ch.unibe.ese.team3.model.AlertType;
 import ch.unibe.ese.team3.model.Location;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
@@ -60,9 +61,8 @@ public class AlertService {
 
 		
 		
-		alert.setRadius(alertForm.getRadius());
-		//alert.setRoom(alertForm.getRoom());		
-		alert.setType(alertForm.getType());
+		alert.setRadius(alertForm.getRadius());		
+		alert.setAlertTypes(alertForm.getAlertTypes());
 
 		alert.setUser(user);
 		alertDao.save(alert);
@@ -135,9 +135,27 @@ public class AlertService {
 				+ "Your FlatFindr crew";
 	}
 
-	/** Checks if an ad is conforming to the criteria in an alert. */
+	/** Checks if an ad is conforming to the criteria in an alert. Return false if the type of Ad is within 
+	 * the types within Alert list
+	 */
+	
 	private boolean typeMismatchWith(Ad ad, Alert alert) {
-		throw new UnsupportedOperationException();
+		boolean mismatch = true;
+		List<AlertType> alertTypes = alert.getAlertTypes();
+		
+		// iterates over each alertType and compares the type to the ad's type
+		for (AlertType alertType : alertTypes) {
+				if (ad.getType().equals(alertType.getType()))
+					mismatch = false;
+		}
+		return mismatch;
+		
+		/* (OLD) boolean mismatch = false;
+		if (!alert.getBothRoomAndStudio()
+				&& ad.getStudio() != alert.getStudio())
+			mismatch = true;
+		return mismatch;
+		*/
 	}
 
 	/**

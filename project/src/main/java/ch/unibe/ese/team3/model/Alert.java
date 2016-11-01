@@ -41,21 +41,10 @@ public class Alert {
 	@Column(nullable = false)
 	private int radius;
 
-	@Column
-	private boolean studio;
-
-	@Column
-	private boolean room;
-
-	@Column
-	private boolean bothRoomAndStudio;
-	
 	@Fetch(FetchMode.SELECT)
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
 	private List<AlertType> alertTypes;
 	
-	private Type type; 
-
 	public long getId() {
 		return id;
 	}
@@ -103,39 +92,13 @@ public class Alert {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	
-	
-	// new 
-	public Type getType(){
-		return type;
-	}
-	public void setType(Type type){
-		this.type = type;
-	}
-	
-	/*
-	public boolean getStudio() {
-		return studio;
+
+	public List<AlertType> getAlertTypes() {
+		return alertTypes;
 	}
 
-	public void setStudio(boolean studio) {
-		this.studio = studio;
-	}
-	*/
-
-	public boolean getRoom() {
-		return room;
+	public void setAlertTypes(List<AlertType> alertTypes) {
+		this.alertTypes = alertTypes;
 	}
 
-	public void setRoom(boolean room) {
-		this.room = room;
-	}
-
-	public boolean getBothRoomAndStudio() {
-		return bothRoomAndStudio;
-	}
-
-	public void setBothRoomAndStudio(boolean bothRoomAndStudio) {
-		this.bothRoomAndStudio = bothRoomAndStudio;
-	}
 }

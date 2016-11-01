@@ -92,6 +92,9 @@
 		<h3>Edit ad</h3>
 		<form:form method="post" modelAttribute="placeAdForm" action="./editAd" 
 			id="placeAdForm" autocomplete="off" cssClass="form form-horizontal">
+			
+			<input type="hidden" name="adId" value="${ad.id}" />
+			
 			<div class="row">
 				<div class="col-md-12">
 
