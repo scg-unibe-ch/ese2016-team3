@@ -148,8 +148,8 @@ function typeOfAlert(alert) {
 
 					<div class="form-group pull-right">
 						<div class="col-sm-12">
-							<button type="reset" class="btn btn-primary">Cancel</button>
-							<button type="submit" class="btn btn-default"
+							<button type="reset" class="btn btn-default">Cancel</button>
+							<button type="submit" class="btn btn-primary"
 								onClick="validateType(this.form)">Subscribe</button>
 
 						</div>
