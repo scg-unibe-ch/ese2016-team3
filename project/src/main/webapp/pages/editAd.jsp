@@ -89,13 +89,12 @@
 
 <div class="row">
 	<div class="col-md-12 col-xs-12">
-
 		<h3>Edit ad</h3>
-		<div class="row">
-			<div class="col-md-12">
-				<form:form method="post" modelAttribute="placeAdForm"
-					action="./placeAd" id="placeAdForm" autocomplete="off"
-					cssClass="form form-horizontal">
+		<form:form method="post" modelAttribute="placeAdForm" action="./editAd" 
+			id="placeAdForm" autocomplete="off" cssClass="form form-horizontal">
+			<div class="row">
+				<div class="col-md-12">
+
 					<h4>Edit general information</h4>
 
 					<div class="panel panel-default">
@@ -142,7 +141,7 @@
 										/ zip code</label>
 									<div class="col-sm-5">
 										<form:input type="text" name="city" id="field-city"
-											path="city" value="${ad.city}" placeholder="City"
+											path="city" value="${ad.zipcode} - ${ad.city}" placeholder="City"
 											cssClass="form-control" />
 										<form:errors path="city" cssClass="validationErrorText" />
 									</div>
@@ -412,123 +411,109 @@
 						</div>
 
 					</div>
-			</div>
-
-			<h4>Edit visiting times (optional)</h4>
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<div class="form-group">
-						<label>Day</label> <input type="text" id="field-visitDay">
-						<label>Time</label> <select id="startHour">
-							<%
-								for (int i = 0; i < 24; i++) {
-										String hour = String.format("%02d", i);
-										out.print("<option value=\"" + hour + "\">" + hour + "</option>");
-									}
-							%>
-						</select> <select id="startMinutes">
-							<%
-								for (int i = 0; i < 60; i++) {
-										String minute = String.format("%02d", i);
-										out.print("<option value=\"" + minute + "\">" + minute + "</option>");
-									}
-							%>
-						</select> <span>to&thinsp; </span> <select id="endHour">
-							<%
-								for (int i = 0; i < 24; i++) {
-										String hour = String.format("%02d", i);
-										out.print("<option value=\"" + hour + "\">" + hour + "</option>");
-									}
-							%>
-						</select> <select id="endMinutes">
-							<%
-								for (int i = 0; i < 60; i++) {
-										String minute = String.format("%02d", i);
-										out.print("<option value=\"" + minute + "\">" + minute + "</option>");
-									}
-							%>
-						</select>
-
-
-						<button type="button" class="btn btn-default">+</button>
-						<div id="addedVisits"></div>
-
-					</div>
-
 				</div>
-			</div>
+
+				<h4>Edit visiting times (optional)</h4>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="form-group">
+							<label>Day</label> <input type="text" id="field-visitDay">
+							<label>Time</label> <select id="startHour">
+								<%
+									for (int i = 0; i < 24; i++) {
+											String hour = String.format("%02d", i);
+											out.print("<option value=\"" + hour + "\">" + hour + "</option>");
+										}
+								%>
+							</select> <select id="startMinutes">
+								<%
+									for (int i = 0; i < 60; i++) {
+											String minute = String.format("%02d", i);
+											out.print("<option value=\"" + minute + "\">" + minute + "</option>");
+										}
+								%>
+							</select> <span>to&thinsp; </span> <select id="endHour">
+								<%
+									for (int i = 0; i < 24; i++) {
+											String hour = String.format("%02d", i);
+											out.print("<option value=\"" + hour + "\">" + hour + "</option>");
+										}
+								%>
+							</select> <select id="endMinutes">
+								<%
+									for (int i = 0; i < 60; i++) {
+											String minute = String.format("%02d", i);
+											out.print("<option value=\"" + minute + "\">" + minute + "</option>");
+										}
+								%>
+							</select>
 
 
+							<button type="button" class="btn btn-default">+</button>
+							<div id="addedVisits"></div>
 
-			<h4>Change Pictures</h4>
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<fieldset>
-						<label class="control-label" for="field-pictures">Delete existing pictures</label> 
-						<br />
-						<div>
-							<c:forEach items="${ad.pictures }" var="picture">
-								<div class="pictureThumbnail">
-									<div>
-										<img src="${picture.filePath}" />
-									</div>
-									<button type="button" data-ad-id="${ad.id }"
-										data-picture-id="${picture.id }">Delete</button>
-								</div>
-							</c:forEach>
 						</div>
-						<p class="clearBoth"></p>
-						<br />
-						<br />
-						<hr />
-						<%-- 
-						<h3>Add new pictures</h3>
-						<br /> <label for="field-pictures">Pictures</label> <input
-							type="file" id="field-pictures" accept="image/*"
-							multiple="multiple" />
-						<table id="uploaded-pictures" class="styledTable">
-							<tr>
-								<th id="name-column">Uploaded picture</th>
-								<th>Size</th>
-								<th>Delete</th>
-							</tr>
-						</table>
-						<br>
-						--%>
-					</fieldset>
 
-
-					<label class="control-label" for="field-pictures">Add
-						pictures</label> <input type="file" id="field-pictures" class="file"
-						accept="image/*" multiple data-show-preview="false">
+					</div>
+				</div>
 
 
 
-					<div class="col-sm-6">
-						<table id="uploaded-pictures" class="table">
-							<thead>
-								<tr>
-									<th id="name-column">Uploaded picture</th>
-									<th>Size</th>
-									<th>Delete</th>
-									
-							
-								</tr>
-							</thead>
-						</table>
+				<h4>Change Pictures</h4>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<fieldset>
+							<label class="control-label" for="field-pictures">Delete
+								existing pictures</label> <br />
+							<div>
+								<c:forEach items="${ad.pictures }" var="picture">
+									<div class="pictureThumbnail">
+										<div>
+											<img src="${picture.filePath}" />
+										</div>
+										<button type="button" data-ad-id="${ad.id }"
+											data-picture-id="${picture.id }">Delete</button>
+									</div>
+								</c:forEach>
+							</div>
+							<p class="clearBoth"></p>
+							<br /> <br />
+							<hr />
+
+						</fieldset>
+
+
+						<label class="control-label" for="field-pictures">Add
+							pictures</label> <input type="file" id="field-pictures" class="file"
+							accept="image/*" multiple data-show-preview="false">
+
+
+
+						<div class="col-sm-6">
+							<table id="uploaded-pictures" class="table">
+								<thead>
+									<tr>
+										<th id="name-column">Uploaded picture</th>
+										<th>Size</th>
+										<th>Delete</th>
+
+
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="form-group pull-right">
+					<div class="col-sm-12">
+						<a href="/">
+							<button type="reset" class="btn btn-default">Cancel</button>
+						</a>
+						<button type="submit" class="btn btn-primary">Submit</button>
 					</div>
 				</div>
 			</div>
-			<div class="form-group pull-right">
-				<div class="col-sm-12">
-					<a href="/">
-						<button type="reset" class="btn btn-default">Cancel</button>
-					</a>
-					<button type="submit" class="btn btn-primary">Submit</button>
-				</div>
-			</div>
-			</form:form>
-		</div>
+		</form:form>
 	</div>
 </div>
 
@@ -537,13 +522,14 @@
 
 
 
-<%-- 
 
+
+<!-- OLD page -->
+<%-- 
 <!-- format the dates -->
 <fmt:formatDate value="${ad.moveInDate}" var="formattedMoveInDate"
 	type="date" pattern="dd-MM-yyyy" />
-<fmt:formatDate value="${ad.moveOutDate}" var="formattedMoveOutDate"
-	type="date" pattern="dd-MM-yyyy" />
+
 	
 <pre><a href="/">Homepage</a>   &gt;   <a href="/profile/myRooms">My Rooms</a>   &gt;   <a href="/ad?id=${ad.id}">Ad Description</a>   &gt;   Edit Ad</pre>
 
@@ -589,17 +575,13 @@
 
 			<tr>
 				<td><label for="moveInDate">Move-in date</label></td>
-				<td><label for="moveOutDate">Move-out date (optional)</label></td>
 			</tr>
 			<tr>
 				<td>
 					<form:input type="text" id="field-moveInDate"
 						path="moveInDate" value="${formattedMoveInDate }"/>
 				</td>
-				<td>
-					<form:input type="text" id="field-moveOutDate"
-						path="moveOutDate" value="${formattedMoveOutDate }"/>
-				</td>
+
 			</tr>
 
 			<tr>
@@ -769,3 +751,4 @@
 --%>
 
 <c:import url="template/footer.jsp" />
+

@@ -79,7 +79,7 @@ public class AdService {
 
 		} catch (NumberFormatException e) {
 		}
-
+/** This causes java.lang.NullPointerException when Ad is placed
 		// this is for auction
 		// java.util.Calendar uses a month range of 0-11 instead of the
 		// XMLGregorianCalendar which uses 1-12
@@ -101,6 +101,7 @@ public class AdService {
 			}
 		} catch (NumberFormatException e) {
 		}
+*/
 		// for auction
 		ad.setStartPrice(placeAdForm.getStartPrice());
 		ad.setBuyItNowPrice(placeAdForm.getBuyItNowPrice());
