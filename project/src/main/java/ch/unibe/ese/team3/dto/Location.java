@@ -1,4 +1,4 @@
-package ch.unibe.ese.team3.model;
+package ch.unibe.ese.team3.dto;
 
 /**
  * Represents a zip code and the data that belongs to it. Is not marked as

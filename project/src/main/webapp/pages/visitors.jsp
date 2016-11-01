@@ -40,6 +40,12 @@ function rate(id, rating) {
 }
 </script>
 
+<ol class="breadcrumb">
+	<li><a href="./">Homepage</a></li>
+	<li><a href="./profile/schedule">Schedule</a></li>
+	<li class="active">Visitors</li>
+</ol>
+
 <h2>Visitors for your property</h2>
 
 <p>Information about the property: <a href="/ad?id=${ad.id }">${ad.street }, ${ad.zipcode } ${ad.city }</a></p>
@@ -50,7 +56,7 @@ function rate(id, rating) {
 		<p>This property doesn't have any scheduled visitors at the moment.
 	</c:when>
 	<c:otherwise>
-		<table class="styledTable" id="visitors">
+				<table id="visitors" class="table table-striped">
 			<thead>
 			<tr>
 				<th>Name</th>
