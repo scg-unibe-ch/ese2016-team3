@@ -78,13 +78,6 @@ public class AdService {
 				ad.setMoveInDate(calendar.getTime());
 			}
 
-			if (placeAdForm.getMoveOutDate().length() >= 1) {
-				int dayMoveOut = Integer.parseInt(placeAdForm.getMoveOutDate().substring(0, 2));
-				int monthMoveOut = Integer.parseInt(placeAdForm.getMoveOutDate().substring(3, 5));
-				int yearMoveOut = Integer.parseInt(placeAdForm.getMoveOutDate().substring(6, 10));
-				calendar.set(yearMoveOut, monthMoveOut - 1, dayMoveOut);
-				ad.setMoveOutDate(calendar.getTime());
-			}
 		} catch (NumberFormatException e) {
 		}
 
@@ -126,7 +119,6 @@ public class AdService {
 		ad.setParking(placeAdForm.isParking());
 		ad.setDishwasher(placeAdForm.getDishwasher());
 		ad.setRoomDescription(placeAdForm.getRoomDescription());
-		ad.setPreferences(placeAdForm.getPreferences());
 		ad.setBalcony(placeAdForm.getBalcony());
 		ad.setGarage(placeAdForm.getGarage());
 
@@ -280,8 +272,6 @@ public class AdService {
 			// prepare date filtering - by far the most difficult filter
 			Date earliestInDate = null;
 			Date latestInDate = null;
-			Date earliestOutDate = null;
-			Date latestOutDate = null;
 
 			// parse move-in and move-out dates
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -293,18 +283,10 @@ public class AdService {
 				latestInDate = formatter.parse(searchForm.getLatestMoveInDate());
 			} catch (Exception e) {
 			}
-			try {
-				earliestOutDate = formatter.parse(searchForm.getEarliestMoveOutDate());
-			} catch (Exception e) {
-			}
-			try {
-				latestOutDate = formatter.parse(searchForm.getLatestMoveOutDate());
-			} catch (Exception e) {
-			}
+			
 
 			// filtering by dates
 			locatedResults = validateDate(locatedResults, true, earliestInDate, latestInDate);
-			locatedResults = validateDate(locatedResults, false, earliestOutDate, latestOutDate);
 
 			// filtering for the rest
 			// dishwasher
@@ -417,8 +399,8 @@ public class AdService {
 					Iterator<Ad> iterator = ads.iterator();
 					while (iterator.hasNext()) {
 						Ad ad = iterator.next();
-						if (ad.getDate(inOrOut).compareTo(earliestDate) < 0
-								|| ad.getDate(inOrOut).compareTo(latestDate) > 0) {
+						if (ad.getMoveInDate().compareTo(earliestDate) < 0
+								|| ad.getMoveInDate().compareTo(latestDate) > 0) {
 							iterator.remove();
 						}
 					}
@@ -428,7 +410,7 @@ public class AdService {
 					Iterator<Ad> iterator = ads.iterator();
 					while (iterator.hasNext()) {
 						Ad ad = iterator.next();
-						if (ad.getDate(inOrOut).compareTo(earliestDate) < 0)
+						if (ad.getMoveInDate().compareTo(earliestDate) < 0)
 							iterator.remove();
 					}
 				}
@@ -438,7 +420,7 @@ public class AdService {
 				Iterator<Ad> iterator = ads.iterator();
 				while (iterator.hasNext()) {
 					Ad ad = iterator.next();
-					if (ad.getDate(inOrOut).compareTo(latestDate) > 0)
+					if (ad.getMoveInDate().compareTo(latestDate) > 0)
 						iterator.remove();
 				}
 			} else {
