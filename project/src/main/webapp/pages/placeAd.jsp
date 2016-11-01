@@ -90,8 +90,6 @@
 					});
 </script>
 
-<%-- <pre>
-	<a href="/">Home</a>   &gt;   Place ad</pre>  new --%>
 
 <ol class="breadcrumb">
 	<li><a href="/${pagemode}/">Homepage</a></li>
@@ -236,9 +234,9 @@
 										center</label>
 									<div class="col-sm-5">
 										<form:input id="field-DistanceShopping" type="number" min="0"
-											path="DistanceShopping" placeholder="0" step="100"
+											path="distanceShopping" placeholder="0" step="100"
 											cssClass="form-control" />
-										<form:errors path="DistanceShopping"
+										<form:errors path="distanceShopping"
 											cssClass="validationErrorText" />
 									</div>
 								</div>
@@ -251,9 +249,9 @@
 										transport</label>
 									<div class="col-sm-5">
 										<form:input id="field-DistancePublicTransport" type="number"
-											min="0" path="DistancePublicTransport" placeholder="0"
+											min="0" path="distancePublicTransport" placeholder="0"
 											step="100" cssClass="form-control" />
-										<form:errors path="DistancePublicTransport"
+										<form:errors path="distancePublicTransport"
 											cssClass="validationErrorText" />
 									</div>
 								</div>
@@ -331,38 +329,50 @@
 							<div class="checkbox">
 
 								<label class="col-sm-3 control-label">Garage</label>
-								<div class="col-sm-5">
+								<div class="col-sm-5"> 
 									<form:checkbox id="field-garage" path="garage" value="1" />
 								</div>
 
 
 							</div>
 							<div class="checkbox">
-								<div class="col-sm-5">
+								
 
-									<label><form:checkbox id="field-parking" path="parking"
-											value="1" />Parking</label>
+									<label class="col-sm-3 control-label">Parking</label>
+									<div class="col-sm-5">
+									<form:checkbox id="field-parking" path="parking"
+											value="1" />
 								</div>
 							</div>
 
 							<div class="checkbox">
-								<label><form:checkbox id="field-balcony" path="balcony"
-										value="1" />Balcony or Patio</label>
+								<label class="col-sm-3 control-label" >Balcony or Patio</label>
+								<div class="col-sm-5">
+								<form:checkbox id="field-balcony" path="balcony"
+										value="1" />
+							</div>
 							</div>
 							<div class="checkbox">
-								<label><form:checkbox id="field-elevator"
-										path="elevator" value="1" />Elevator </label>
-
+								<label class="col-sm-3 control-label">Elevator </label>
+								<div class="col-sm-5">
+								<form:checkbox id="field-elevator"
+										path="elevator" value="1" />
+							</div>
 							</div>
 							<div class="checkbox">
-								<label><form:checkbox id="field-dishwasher"
-										path="dishwasher" value="1" />Dishwasher</label>
+								<label class="col-sm-3 control-label">Dishwasher</label>
+								<div class="col-sm-5">
+								<form:checkbox id="field-dishwasher"
+										path="dishwasher" value="1" />
+								</div>
 							</div>
+							<br />
+				
 							<div class="form-group">
 								<label class="col-sm-3 control-label" for="roomDescription">Room
 									Description:</label>
 								<div class="col-sm-5">
-									<form:textarea path="roomDescription" rows="5" cols="50"
+									<form:textarea path="roomDescription" rows="10" cols="70"
 										placeholder="Room Description" class="form-control" />
 									<form:errors path="roomDescription"
 										cssClass="validationErrorText" />
