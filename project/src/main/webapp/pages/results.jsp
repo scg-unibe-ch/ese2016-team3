@@ -82,12 +82,6 @@
 		$("#field-latestMoveInDate").datepicker({
 			dateFormat : 'dd-mm-yy'
 		});
-		$("#field-earliestMoveOutDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		$("#field-latestMoveOutDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
 	});
 </script>
 
@@ -166,22 +160,9 @@
 							path="earliestMoveInDate" cssClass="form-control" />
 					</div>
 					<div class="form-group">
-						<label for="earliestMoveOutDate">Earliest move-out date
-							(optional)</label>
-						<form:input type="text" id="field-earliestMoveOutDate"
-							path="earliestMoveOutDate" cssClass="form-control" />
-					</div>
-					<div class="form-group">
 						<label for="latestMoveInDate">Latest move-in date</label>
 						<form:input type="text" id="field-latestMoveInDate"
 							path="latestMoveInDate" cssClass="form-control" />
-					</div>
-
-					<div class="form-group">
-						<label for="latestMoveOutDate">Latest move-out date
-							(optional)</label>
-						<form:input type="text" id="field-latestMoveOutDate"
-							path="latestMoveOutDate" cssClass="form-control" />
 					</div>
 					<div class="checkbox">
 						<label><form:checkbox id="field-balcony" path="balcony"
