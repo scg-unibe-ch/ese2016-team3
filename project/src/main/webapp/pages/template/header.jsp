@@ -10,6 +10,7 @@
 <html>
 	<head>
 	
+
 		<Title>Ithaca</Title>
 		<script src="/js/jquery.min.js"></script>
 		<script src="/js/jquery-ui.min.js"></script>
@@ -48,6 +49,7 @@
 	
 	<!-- check if user is logged in -->
 	<security:authorize var="loggedIn" url="/profile" />
+
 	
 	<body>
 		<div class="container">

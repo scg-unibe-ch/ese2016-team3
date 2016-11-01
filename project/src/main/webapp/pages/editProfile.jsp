@@ -132,25 +132,5 @@
 </div>
 
 
-
-
-<script>
-$("#premiumUser").change(function(){
-	var self = this;
-	
-	if ( self.checked){
-		$("#field-creditcardNumber").val("");
-	}
-	else if ( !(self.checked) ){
-		$("#field-creditcardNumber").val("0000000000000000");
-	}
-	
-	$("#creditcardForm tr.creditcardInfo").toggle(self.checked);
-	
-	
-}).change();
-</script>
-
-
 <c:import url="template/footer.jsp" />
 

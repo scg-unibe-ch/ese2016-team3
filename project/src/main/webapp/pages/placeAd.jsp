@@ -7,11 +7,11 @@
 
 <c:import url="template/header.jsp" />
 
-<%-- <script src="/js/jquery.ui.widget.js"></script>
+<script src="/js/jquery.ui.widget.js"></script>
 <script src="/js/jquery.iframe-transport.js"></script>
-<script src="/js/jquery.fileupload.js"></script>--%>
+<script src="/js/jquery.fileupload.js"></script>
 
-<script src="/js/placeAd.js"></script>
+<script src="/js/pictureUpload.js"></script>
 
 <script>
 	$(document)
@@ -90,8 +90,6 @@
 					});
 </script>
 
-<%-- <pre>
-	<a href="/">Home</a>   &gt;   Place ad</pre>  new --%>
 
 <ol class="breadcrumb">
 	<li><a href="/${pagemode}/">Homepage</a></li>
@@ -109,10 +107,10 @@
 					action="./placeAd" id="placeAdForm" autocomplete="off"
 					cssClass="form form-horizontal">
 					<h4>General information</h4>
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body">
-						
+
 							<spring:bind path="title">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label" for="field-title">Ad
@@ -123,7 +121,7 @@
 									</div>
 								</div>
 							</spring:bind>
-							
+
 							<spring:bind path="type">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label" for="type-room">Type</label>
@@ -134,7 +132,7 @@
 									</div>
 								</div>
 							</spring:bind>
-							
+
 							<spring:bind path="street">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label" for="field-street">Street</label>
@@ -144,7 +142,7 @@
 									</div>
 								</div>
 							</spring:bind>
-							
+
 							<spring:bind path="city">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 
@@ -170,7 +168,7 @@
 							</spring:bind>
 						</div>
 					</div>
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<spring:bind path="squareFootage">
@@ -200,7 +198,7 @@
 									</div>
 								</div>
 							</spring:bind>
-							
+
 							<spring:bind path="floorLevel">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label" for="field-FloorLevel">Floor
@@ -213,7 +211,7 @@
 									</div>
 								</div>
 							</spring:bind>
-							
+
 							<spring:bind path="distanceSchool">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label"
@@ -228,7 +226,7 @@
 									</div>
 								</div>
 							</spring:bind>
-							
+
 							<spring:bind path="distanceShopping">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label"
@@ -236,14 +234,14 @@
 										center</label>
 									<div class="col-sm-5">
 										<form:input id="field-DistanceShopping" type="number" min="0"
-											path="DistanceShopping" placeholder="0" step="100"
+											path="distanceShopping" placeholder="0" step="100"
 											cssClass="form-control" />
-										<form:errors path="DistanceShopping"
+										<form:errors path="distanceShopping"
 											cssClass="validationErrorText" />
 									</div>
 								</div>
 							</spring:bind>
-							
+
 							<spring:bind path="distancePublicTransport">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label"
@@ -251,9 +249,9 @@
 										transport</label>
 									<div class="col-sm-5">
 										<form:input id="field-DistancePublicTransport" type="number"
-											min="0" path="DistancePublicTransport" placeholder="0"
+											min="0" path="distancePublicTransport" placeholder="0"
 											step="100" cssClass="form-control" />
-										<form:errors path="DistancePublicTransport"
+										<form:errors path="distancePublicTransport"
 											cssClass="validationErrorText" />
 									</div>
 								</div>
@@ -301,66 +299,86 @@
 
 					<div class="panel panel-default">
 						<div class="panel-body">
-							
-								<spring:bind path="numberOfBath">
-									<div class="form-group ${status.error ? 'has-error' : '' }">
-										<label class="col-sm-3 control-label" for="field-NumberOfBath">Number of baths</label>
-										<div class="col-sm-5">
+
+							<spring:bind path="numberOfBath">
+								<div class="form-group ${status.error ? 'has-error' : '' }">
+									<label class="col-sm-3 control-label" for="field-NumberOfBath">Number
+										of baths</label>
+									<div class="col-sm-5">
 										<form:input id="field-NumberOfBath" type="number" min="0"
 											path="numberOfBath" placeholder="Number of baths" step="1"
 											cssClass="form-control" />
 										<form:errors path="numberOfBath"
 											cssClass="validationErrorText" />
-											</div>
 									</div>
-								</spring:bind>
-								<spring:bind path="infrastructureType">
-									<div class="form-group ${status.error ? 'has-error' : '' }">
-										<label class="col-sm-3 control-label" for="infrastructureType-room">InfrastructureType</label>
-										<div class="col-sm-5">
-										<form:select id="infrastructureType" path="infrastructureType" cssClass="form-control">
+								</div>
+							</spring:bind>
+							<spring:bind path="infrastructureType">
+								<div class="form-group ${status.error ? 'has-error' : '' }">
+									<label class="col-sm-3 control-label"
+										for="infrastructureType-room">InfrastructureType</label>
+									<div class="col-sm-5">
+										<form:select id="infrastructureType" path="infrastructureType"
+											cssClass="form-control">
 											<form:options items="${infrastructureTypes}" itemLabel="name" />
 										</form:select>
-										</div>
 									</div>
-								</spring:bind>
+								</div>
+							</spring:bind>
 
-								<div class="checkbox">
-								
-									<label class="col-sm-3 control-label" >Garage</label>
-									<div class="col-sm-5">
+							<div class="checkbox">
+
+								<label class="col-sm-3 control-label">Garage</label>
+								<div class="col-sm-5"> 
 									<form:checkbox id="field-garage" path="garage" value="1" />
-									</div>
-									
-									
-								</div>
-								<div class="checkbox">
-								<div class="col-sm-5">
-								
-									<label><form:checkbox id="field-parking" path="parking" value="1" />Parking</label>
-								</div>
 								</div>
 
-								<div class="checkbox">
-									<label ><form:checkbox id="field-balcony" path="balcony" value="1" />Balcony or Patio</label>
-								</div>
-								<div  class="checkbox">
-									<label><form:checkbox id="field-elevator" path="elevator" value="1" />Elevator </label>
-									
-								</div>
-								<div class="checkbox">
-								<label><form:checkbox id="field-dishwasher" path="dishwasher" value="1" />Dishwasher</label>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-3 control-label" for="roomDescription">Room Description:</label>
+
+							</div>
+							<div class="checkbox">
+								
+
+									<label class="col-sm-3 control-label">Parking</label>
 									<div class="col-sm-5">
-									<form:textarea path="roomDescription" rows="5" cols="50"
+									<form:checkbox id="field-parking" path="parking"
+											value="1" />
+								</div>
+							</div>
+
+							<div class="checkbox">
+								<label class="col-sm-3 control-label" >Balcony or Patio</label>
+								<div class="col-sm-5">
+								<form:checkbox id="field-balcony" path="balcony"
+										value="1" />
+							</div>
+							</div>
+							<div class="checkbox">
+								<label class="col-sm-3 control-label">Elevator </label>
+								<div class="col-sm-5">
+								<form:checkbox id="field-elevator"
+										path="elevator" value="1" />
+							</div>
+							</div>
+							<div class="checkbox">
+								<label class="col-sm-3 control-label">Dishwasher</label>
+								<div class="col-sm-5">
+								<form:checkbox id="field-dishwasher"
+										path="dishwasher" value="1" />
+								</div>
+							</div>
+							<br />
+				
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="roomDescription">Room
+									Description:</label>
+								<div class="col-sm-5">
+									<form:textarea path="roomDescription" rows="10" cols="70"
 										placeholder="Room Description" class="form-control" />
 									<form:errors path="roomDescription"
 										cssClass="validationErrorText" />
-										</div>
 								</div>
-							
+							</div>
+
 						</div>
 					</div>
 
@@ -371,82 +389,71 @@
 					<h4>Visiting times (optional)</h4>
 					<div class="panel panel-default">
 						<div class="panel-body">
-						<div class="form-group">
-						<label>Day</label>
-						<input type="text" id="field-visitDay"> 
-						<label>Time</label>
-						<select	id="startHour">
-											<%
-												for (int i = 0; i < 24; i++) {
-														String hour = String.format("%02d", i);
-														out.print("<option value=\"" + hour + "\">" + hour + "</option>");
-													}
-											%>
-						</select> 
-						<select id="startMinutes">
-											<%
-												for (int i = 0; i < 60; i++) {
-														String minute = String.format("%02d", i);
-														out.print("<option value=\"" + minute + "\">" + minute + "</option>");
-													}
-											%>
-						</select> 
-						<span>to&thinsp; </span> 
-						<select id="endHour">
-											<%
-												for (int i = 0; i < 24; i++) {
-														String hour = String.format("%02d", i);
-														out.print("<option value=\"" + hour + "\">" + hour + "</option>");
-													}
-											%>
-						</select> 
-						<select id="endMinutes">
-											<%
-												for (int i = 0; i < 60; i++) {
-														String minute = String.format("%02d", i);
-														out.print("<option value=\"" + minute + "\">" + minute + "</option>");
-													}
-											%>
-						</select>
+							<div class="form-group">
+								<label>Day</label> <input type="text" id="field-visitDay">
+								<label>Time</label> <select id="startHour">
+									<%
+										for (int i = 0; i < 24; i++) {
+												String hour = String.format("%02d", i);
+												out.print("<option value=\"" + hour + "\">" + hour + "</option>");
+											}
+									%>
+								</select> <select id="startMinutes">
+									<%
+										for (int i = 0; i < 60; i++) {
+												String minute = String.format("%02d", i);
+												out.print("<option value=\"" + minute + "\">" + minute + "</option>");
+											}
+									%>
+								</select> <span>to&thinsp; </span> <select id="endHour">
+									<%
+										for (int i = 0; i < 24; i++) {
+												String hour = String.format("%02d", i);
+												out.print("<option value=\"" + hour + "\">" + hour + "</option>");
+											}
+									%>
+								</select> <select id="endMinutes">
+									<%
+										for (int i = 0; i < 60; i++) {
+												String minute = String.format("%02d", i);
+												out.print("<option value=\"" + minute + "\">" + minute + "</option>");
+											}
+									%>
+								</select>
 
 
-						<button type="button" class="btn btn-default">+</button>
-						<div id="addedVisits">
-						<%-- ?? --%>
+								<button type="button" class="btn btn-default"
+									id="addVisitButton">+</button>
+								<div id="addedVisits">
+									<%-- ?? --%>
+								</div>
+
+							</div>
+
 						</div>
-									
 					</div>
-						
-						</div>
-					</div>
-					
-					
-					
+
+
+
 					<h4>Pictures (optional)</h4>
 					<div class="panel panel-default">
 						<div class="panel-body">
-						
-						
-							<label class="control-label" for="field-pictures">Add pictures</label> 
-							
-							
-						<input type="file" id="field-pictures" class="file" accept="image/*" multiple data-show-preview="false">
-							
-							
-							
-							
-							
-							
+
+
+							<label class="control-label" for="field-pictures">Add
+								pictures</label> <input type="file" id="field-pictures" accept="image/*"
+								multiple="multiple" />
+
 							<div class="col-sm-6">
-							<table id="uploaded-pictures" class="table">
-							<thead>
-							<tr>
-							<th id="name-column"> Uploaded picture</th>
-							<th>Size</th>
-							<th>Delete</th>
-							</tr>
-							</thead>
-							</table>
+								<table id="uploaded-pictures" class="table">
+									<thead>
+										<tr>
+											<th id="name-column">Uploaded picture</th>
+											<th>Size</th>
+											<th>Delete</th>
+										</tr>
+									</thead>
+								</table>
 							</div>
 						</div>
 					</div>

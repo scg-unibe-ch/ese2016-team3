@@ -58,64 +58,73 @@
 	<li class="active">Profile</li>
 </ol>
 
-<div class="row">
-	<div class="col-md-12 col-xs-12">
+
+<div class="col-md-12 col-xs-12">
 	<form:form id="profile" class="form-horizontal">
 	<div class="panel panel-default">
-	<div class="panel-body">
-		<c:choose>
-		<c:when test="${user.accountType == 'PREMIUM'}">
-			<h3>This is a PREMIUM Account</h3>
-		</c:when>
-		<c:otherwise></c:otherwise>
-	</c:choose>
-	<c:choose>
-		<c:when test="${user.picture.filePath != null}">
-			<img src="${user.picture.filePath}">
-		</c:when>
-		<c:otherwise>
-			<img src="/img/avatar.png">
-		</c:otherwise>
-	</c:choose>	
-<p>
-	<h2>Username</h2>${user.email}<p>
-	<h2>Name</h2>${user.firstName}
-	${user.lastName}
-	<p>
-	<hr class="slim">
-	<h2>About me</h2>${user.aboutMe}
-	<hr class="slim">
-			</div>
-	</div>
-		<c:choose>
-			<c:when test="${principalID != null}" >
-				<div class="form-group pull-right">
-				<div class="col-sm-12">
-				<button id="newMsg" type="button" class="btn btn-primary">Message</button>
-				<c:choose>
-					<c:when test="${principalID eq user.id}">
-						<a id="edit" class="btn btn-primary" href="./profile/editProfile">Edit Profile</a>
+		<div class="panel-body">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<c:choose>
+							<c:when test="${user.picture.filePath != null}">
+								<img src="${user.picture.filePath}">
+							</c:when>
+							<c:otherwise>
+								<img src="/img/avatar.png">
+							</c:otherwise>
+						</c:choose>	
+					</div>
+					<div class="col-md-6">
+						<br />
+						<h3>Username</h3>${user.email}<p>
+						<h3>Name</h3>${user.firstName}
+						${user.lastName}
 						
-					</c:when>
-					<c:otherwise></c:otherwise>
-				</c:choose>
+						<c:choose>
+							<c:when test="${user.accountType == 'PREMIUM' && principalID eq user.id}">
+								<br /><br />
+								<h4><font color="gold">&#9733</font> This is a premium account <font color="gold">&#9733</font></h4>
+							</c:when>
+							<c:otherwise></c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+			</div>
+			<p>
+			<h3>About me</h3>${user.aboutMe}
+			<p>
 				<c:choose>
-					<c:when test="${'BASIC' eq user.accountType}">
-						<a type="button" href="./upgrade" class="btn btn-primary">Get Premium</a>
+					<c:when test="${principalID != null}" >
+						<div class="form-group pull-right">
+						<div class="col-sm-12">
+						<c:if test="${principalID != user.id}">
+							<button id="newMsg" type="button" class="btn btn-primary">Message</button>
+						</c:if>
+						<c:choose>
+							<c:when test="${principalID eq user.id}">
+								<a id="edit" class="btn btn-primary" href="./profile/editProfile">Edit Profile</a>
+							</c:when>
+							<c:otherwise></c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${'BASIC' eq user.accountType && principalID eq user.id}">
+								<a type="button" href="./upgrade" class="btn btn-primary">Get Premium</a>
+							</c:when>
+							<c:otherwise></c:otherwise>
+						</c:choose>
+						</div>
+						</div>
 					</c:when>
-					<c:otherwise></c:otherwise>
+					<c:otherwise>
+						<p><strong>Please log in to contact this person.</strong></p>
+					</c:otherwise>
 				</c:choose>
-				</div>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<p>Please log in to contact this person.</p>
-			</c:otherwise>
-		</c:choose>
-
-	</form:form>
+			</div>
+			</form:form>
+		</div>
 	</div>
-	</div>
+	
 	
 <% /** <div id="userDiv">
 	<c:choose>

@@ -1,5 +1,5 @@
 function showPictures() {
-	$.post('/profile/placeAd/getUploadedPictures', function(data) {
+	$.post('placeAd/getUploadedPictures', function(data) {
 		$("#uploaded-pictures tr:gt(0)").remove();
 		$.each(data, function(index, picture) {
 			appendPictureRow(picture.name, picture.size, picture.url);
