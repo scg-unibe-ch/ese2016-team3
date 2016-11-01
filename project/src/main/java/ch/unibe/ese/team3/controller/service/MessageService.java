@@ -118,17 +118,24 @@ public class MessageService {
 	}
 	
 	public void sendEmail(User recipient, String subject, String text) {
+		
 		Properties properties = System.getProperties();
+		properties.setProperty("mail.smtp.host", "smtp.live.com");
+		properties.setProperty("mail.smtp.user", "senderAddress");
+		properties.setProperty("mail.smtp.debug", "true");
+		properties.setProperty("mail.smtp.auth", "true");
+		properties.setProperty("mail.smtp.port", "465");
+		
 		
 		Session session = Session.getInstance(properties, new Authenticator() { 
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("x", "y");
+				return new PasswordAuthentication("senderAddress", "senderPassword");
 		}
 		});
 		
 		try {
 			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("x"));
+			message.setFrom(new InternetAddress("senderAddress"));
 			message.addRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(recipient.getEmail(), false));
 			message.setSubject(subject);
 			message.setText(text);

@@ -172,6 +172,8 @@ public class AdService {
 
 		return ad;
 	}
+	
+
 
 	/**
 	 * Gets the ad that has the given id.
