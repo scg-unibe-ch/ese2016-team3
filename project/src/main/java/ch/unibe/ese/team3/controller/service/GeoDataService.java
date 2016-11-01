@@ -10,9 +10,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ch.unibe.ese.team3.model.Location;
-
 import com.jolbox.bonecp.BoneCPDataSource;
+
+import ch.unibe.ese.team3.dto.Location;
 
 /**
  * Provides read access to the geo db. Performs the reading operations manually,

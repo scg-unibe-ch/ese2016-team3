@@ -19,9 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
+import ch.unibe.ese.team3.dto.Location;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.AdPicture;
-import ch.unibe.ese.team3.model.Location;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
 import ch.unibe.ese.team3.model.dao.AdDao;
