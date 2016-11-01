@@ -82,12 +82,6 @@
 		$("#field-latestMoveInDate").datepicker({
 			dateFormat : 'dd-mm-yy'
 		});
-		$("#field-earliestMoveOutDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		$("#field-latestMoveOutDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
 	});
 </script>
 
@@ -166,22 +160,9 @@
 							path="earliestMoveInDate" cssClass="form-control" />
 					</div>
 					<div class="form-group">
-						<label for="earliestMoveOutDate">Earliest move-out date
-							(optional)</label>
-						<form:input type="text" id="field-earliestMoveOutDate"
-							path="earliestMoveOutDate" cssClass="form-control" />
-					</div>
-					<div class="form-group">
 						<label for="latestMoveInDate">Latest move-in date</label>
 						<form:input type="text" id="field-latestMoveInDate"
 							path="latestMoveInDate" cssClass="form-control" />
-					</div>
-
-					<div class="form-group">
-						<label for="latestMoveOutDate">Latest move-out date
-							(optional)</label>
-						<form:input type="text" id="field-latestMoveOutDate"
-							path="latestMoveOutDate" cssClass="form-control" />
 					</div>
 					<div class="checkbox">
 						<label><form:checkbox id="field-balcony" path="balcony"
@@ -218,13 +199,70 @@
 							path="floorLevelMax" cssClass="form-control" />
 					</div>
 					
-					<div class="form-group">
+	<div class="row">
+	<div  class="col-sm-3">
+	<div class="form-group">
 						<label for="field-NumberOfBathMin">Number of Bath (min)</label>
-						<input type="number" class="form-control" id="field-NumberOfBathMin">
+						
+						<form:input type="number" step="1" id="field-NumberOfBathMin"
+							 path="numberOfBathMin" cssClass="form-control" />
+							
+					</div>
+	
+	
+	</div>
+	<div  class="col-sm-3">
+	<div class="form-group">
+						<label for="field-NumberOfBathMax">Number of Bath (max)</label>
+						
+						<form:input type="number" cssClass="form-control" path="numberOfBathMax" id="field-NumberOfBathMax"/>
+					
+					</div>
+	
+	</div>
+	
+	
+	</div>
+					
+					<div class="form-group form-inline">
+						<label for="field-NumberOfBathMin">Number of Bath between</label>
+						<form:input type="number" step="1" id="field-NumberOfBathMin"
+							 path="numberOfBathMin" cssClass="form-control input60" />
+						<label for="field-NumberOfBathMax">and</label>
+						<form:input type="number" cssClass="form-control input60" path="numberOfBathMax" id="field-NumberOfBathMax"/>
 					</div>
 					<div class="form-group">
-						<label for="field-NumberOfBathMax">Number of Bath (max)</label>
-						<input type="number" class="form-control" id="field-NumberOfBathMax">
+					</div>
+					
+					<div class="form-group">
+						<label for="field-NumberOfRoomsMin">Number of Rooms (min)</label>
+						<form:input type="number" cssClass="form-control" path="numberOfRoomsMin" id="field-NumberOfRoomsMin"/>
+					</div>
+					
+					<div class="form-group">
+						<label for="field-NumberOfRoomsMax">Number of Rooms (max)</label>
+						<form:input type="number" cssClass="form-control" path="numberOfRoomsMax" id="field-NumberOfRoomsMax"/>
+					</div>
+				
+				<div class="form-group">
+						<label for="field-BuildYearMin">Build year (min)</label>
+						<form:input type="number" cssClass="form-control" path="buildYearMin" id="field-BuildYearMin"/>
+					</div>
+				<div class="form-group">
+						<label for="field-BuildYearMax">Build year (max)</label>
+						<form:input type="number" cssClass="form-control" path="buildYearMax" id="field-BuildYearMax"/>
+					</div>
+				
+				
+				
+				
+					<div class="form-group">
+						<label for="field-RenovationYearMin">Renovation year (min)</label>
+						<form:input type="number" cssClass="form-control" path="renovationYearMin" id="field-RenovationYearMin"/>
+					</div>
+					<div class="form-group">
+						<label for="field-RenovationYearMax">Renovation year (max)</label>
+						<form:input type="number" cssClass="form-control" path="renovationYearMax" id="field-RenovationYearMax"/>
 					</div>
 					
 					

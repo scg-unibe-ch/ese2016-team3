@@ -77,7 +77,6 @@ public class EnquiryServiceTest {
 		oltenResidence.setSquareFootage(42);
 		//oltenResidence.setStudio(false);
 		oltenResidence.setRoomDescription("blah");
-		oltenResidence.setPreferences("blah");
 		oltenResidence.setUser(thomyG);
 		oltenResidence.setTitle("Olten Residence");
 		oltenResidence.setStreet("Florastr. 100");
@@ -131,7 +130,6 @@ public class EnquiryServiceTest {
 		oltenResidence.setSquareFootage(42);
 		//oltenResidence.setStudio(false);
 		oltenResidence.setRoomDescription("blah");
-		oltenResidence.setPreferences("blah");
 		oltenResidence.setUser(ueliMaurer);
 		oltenResidence.setTitle("Olten Residence");
 		oltenResidence.setStreet("Florastr. 100");

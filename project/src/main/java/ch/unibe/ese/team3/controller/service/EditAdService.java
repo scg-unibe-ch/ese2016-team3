@@ -78,31 +78,33 @@ public class EditAdService {
 				calendar.set(yearMoveIn, monthMoveIn - 1, dayMoveIn);
 				ad.setMoveInDate(calendar.getTime());
 			}
-
-			if (placeAdForm.getMoveOutDate().length() >= 1) {
-				int dayMoveOut = Integer.parseInt(placeAdForm.getMoveOutDate()
-						.substring(0, 2));
-				int monthMoveOut = Integer.parseInt(placeAdForm
-						.getMoveOutDate().substring(3, 5));
-				int yearMoveOut = Integer.parseInt(placeAdForm.getMoveOutDate()
-						.substring(6, 10));
-				calendar.set(yearMoveOut, monthMoveOut - 1, dayMoveOut);
-				ad.setMoveOutDate(calendar.getTime());
-			}
 		} catch (NumberFormatException e) {
 		}
 
+		// for auction
+		ad.setStartPrice(placeAdForm.getStartPrice());
+		ad.setBuyItNowPrice(placeAdForm.getBuyItNowPrice());
+		ad.setIncreaseBidPrice(placeAdForm.getIncreaseBidPrice());
+
 		ad.setPrizePerMonth(placeAdForm.getPrize());
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
-
-		ad.setRoomDescription(placeAdForm.getRoomDescription());
-		ad.setPreferences(placeAdForm.getPreferences());
-
+		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
+		ad.setDistanceShopping(placeAdForm.getDistanceShopping());
+		ad.setDistancePublicTransportl(placeAdForm.getDistancePublicTransport());
+		ad.setBuildYear(placeAdForm.getBuildYear());
+		ad.setRenovationYear(placeAdForm.getRenovationYear());
+		ad.setNumberOfRooms(placeAdForm.getNumberOfRooms());
+		ad.setNumberOfBath(placeAdForm.getNumberOfBath());
 		// ad description values
-
+		ad.setParking(placeAdForm.isParking());
+		ad.setDishwasher(placeAdForm.getDishwasher());
+		ad.setRoomDescription(placeAdForm.getRoomDescription());
 		ad.setBalcony(placeAdForm.getBalcony());
-		
 		ad.setGarage(placeAdForm.getGarage());
+
+		ad.setElevator(placeAdForm.isElevator());
+		ad.setInfrastructureType(placeAdForm.getInfrastructureType());
+		ad.setFloorLevel(placeAdForm.getFloorLevel());
 
 
 		/*
@@ -182,7 +184,6 @@ public class EditAdService {
 		PlaceAdForm adForm = new PlaceAdForm();
 
 		adForm.setRoomDescription(ad.getRoomDescription());
-		adForm.setPreferences(ad.getPreferences());
 		adForm.setType(ad.getType());
 		
 		return adForm;

@@ -142,14 +142,11 @@ public class ProfileController {
 		User user = userService.findUserByUsername(username);
 		if (!bindingResult.hasErrors()) {
 			userUpdateService.updateFrom(editProfileForm);
-			model = new ModelAndView("updatedProfile");
-			model.addObject("message", "Your Profile has been updated!");
-			model.addObject("currentUser", user);
-			return model;
+			return user(user.getId(), principal);
 		} else {
-			model = new ModelAndView("updatedProfile");
-			model.addObject("message",
-					"Something went wrong, please contact the WebAdmin if the problem persists!");
+			model = new ModelAndView("editProfile");
+			model.addObject("editProfileForm", editProfileForm);
+			model.addObject("currentUser", user);
 			return model;
 		}
 	}
@@ -232,13 +229,14 @@ public class ProfileController {
 		User user = userService.findUserByUsername(username);
 		if (!bindingResult.hasErrors()) {
 			upgradeService.upgradeFrom(upgradeForm, user);
-			model = new ModelAndView("updatedProfile");
-			model.addObject("confirmationMessage", "Upgrade to Premium user complete!");
-			model.addObject("currentUser", user);
+			user = userService.findUserByUsername(username);
+			return user(user.getId(), principal);
 		} else {
-			model = new ModelAndView("updatedProfile");
+			model = new ModelAndView("upgrade");
 			model.addObject("upgradeForm", upgradeForm);
-			model.addObject("message", "Something went wrong, please contact the WebAdmin if the problem persists!");
+			model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
+			model.addObject("accountTypes", AccountType.values());
+			model.addObject("currentUser", user);
 		}
 		return model;
 	}
