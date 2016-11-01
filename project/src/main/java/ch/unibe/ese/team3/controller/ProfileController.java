@@ -1,7 +1,9 @@
 package ch.unibe.ese.team3.controller;
 
 import java.security.Principal;
+import java.time.Year;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -69,7 +71,27 @@ public class ProfileController {
 		model.addObject("signupForm", new SignupForm());
 		model.addObject("genders", Gender.valuesForDisplay());
 		model.addObject("accountTypes", AccountType.values());
+		model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
+		model.addObject("years", GetYears());
+		model.addObject("months", GetMonths());
 		return model;
+	}
+
+	private List<Integer> GetMonths() {
+		ArrayList<Integer> months = new ArrayList<Integer>();
+		for (int i = 1; i <= 12; i++){
+			months.add(i);
+		}
+		return months;
+	}
+
+	private List<Integer> GetYears() {
+		ArrayList<Integer> years = new ArrayList<Integer>();
+		int year = Year.now().getValue();
+		for (int i = 0; i < 10; i++){
+			years.add(new Integer(year + i));
+		}
+		return years;
 	}
 
 	/** Validates the signup form and on success persists the new user. */
@@ -84,6 +106,11 @@ public class ProfileController {
 		} else {
 			model = new ModelAndView("signup");
 			model.addObject("signupForm", signupForm);
+			model.addObject("genders", Gender.valuesForDisplay());
+			model.addObject("accountTypes", AccountType.values());
+			model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
+			model.addObject("years", GetYears());
+			model.addObject("months", GetMonths());
 		}
 		return model;
 	}

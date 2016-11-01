@@ -1,3 +1,4 @@
-</div>
+		</div>
 
-</body> <!-- was opened in header-->
+	</body> <!-- was opened in header-->
+</html>
