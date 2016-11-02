@@ -36,6 +36,12 @@
 						$("#field-moveInDate").datepicker({
 							dateFormat : 'dd-mm-yy'
 						});
+						$("#field-startDate").datepicker({
+							dateFormat : 'dd-mm-yy'
+						});
+						$("#field-endDate").datepicker({
+							dateFormat : 'dd-mm-yy'
+						});
 
 						$("#field-visitDay").datepicker({
 							dateFormat : 'dd-mm-yy'
@@ -279,7 +285,7 @@
 							</spring:bind>
 
 
-							<spring:bind path="prize">
+				<%-- 			<spring:bind path="prize">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label" for="field-Prize">Prize
 										per month</label>
@@ -290,9 +296,93 @@
 										<form:errors path="prize" cssClass="validationErrorText" />
 									</div>
 								</div>
-							</spring:bind>
+							</spring:bind>   --%>
 						</div>
 					</div>
+					<h4>Prizing</h4>
+					<div class="panel panel-default">
+						<div class="panel-body">
+						
+						<spring:bind path="prize">
+								<div class="form-group ${status.error ? 'has-error' : '' }">
+									<label class="col-sm-3 control-label" for="field-Prize">Normal Buy Prize(without Auction) </label>
+									<div class="col-sm-5">
+										<form:input id="field-Prize" type="number" min="0"
+											path="prize" placeholder="Prize " step="50"
+											cssClass="form-control" />
+										<form:errors path="prize" cssClass="validationErrorText" />
+									</div>
+								</div>
+							</spring:bind>
+							
+							<spring:bind path="buyItNowPrice">
+								<div class="form-group ${status.error ? 'has-error' : '' }">
+									<label class="col-sm-3 control-label" for="field-BuyNowPrize">Immediate Buy Price for Auction </label>
+									<div class="col-sm-5">
+										<form:input id="field-BuyNowPrize" type="number" min="0"
+											path="buyItNowPrice" placeholder="Prize " step="50"
+											cssClass="form-control" />
+										<form:errors path="buyItNowPrice" cssClass="validationErrorText" />
+									</div>
+								</div>
+							</spring:bind>
+							
+							<spring:bind path="startDate">
+								<div class="form-group ${status.error ? 'has-error' : '' }">
+									<label class="col-sm-3 control-label" for="field-startDate">Startdate for Auction </label>
+										<div class="col-sm-5">
+										<form:input type="text" id="field-startDate"
+											path="startDate" cssClass="form-control" />
+										
+										</div>
+								</div>
+							</spring:bind>
+							
+							<spring:bind path="endDate">
+								<div class="form-group ${status.error ? 'has-error' : '' }">
+									<label class="col-sm-3 control-label" for="field-endDate">Enddate for Auction </label>
+										<div class="col-sm-5">
+										<form:input type="text" id="field-endDate"
+											path="endDate" cssClass="form-control" />
+										
+										</div>
+								</div>
+							</spring:bind>
+						
+						<spring:bind path="startPrice"> 
+							<div class="form-group ${status.error ? 'has-error' : '' }">
+									<label class="col-sm-3 control-label" for="field-startPrice">Startprice for Auction </label>
+										<div class="col-sm-5">
+										<form:input  id="field-startPrice"
+											path="startPrice" type="number" min="0" placeholder="Startprice " step="1"
+											cssClass="form-control" />
+											<form:errors path="startPrice" cssClass="validationErrorText" />
+										
+										</div>
+								</div>
+						
+						</spring:bind>
+						<spring:bind path="increaseBidPrice"> 
+							<div class="form-group ${status.error ? 'has-error' : '' }">
+									<label class="col-sm-3 control-label" for="field-increasePrice">Amount of increase of bid price </label>
+										<div class="col-sm-5">
+										<form:input  id="field-increasePrice"
+											path="increaseBidPrice" type="number" min="0" placeholder="Startprice " step="1"
+											cssClass="form-control" />
+											<form:errors path="increaseBidPrice" cssClass="validationErrorText" />
+										
+										</div>
+								</div>
+						
+						</spring:bind>
+						
+						
+						
+						</div>
+					</div>
+					
+					
+					
 
 					<h4>Description</h4>
 
