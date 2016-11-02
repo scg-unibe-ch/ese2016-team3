@@ -34,7 +34,7 @@ import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.enums.PageMode;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.BuyMode;
-import ch.unibe.ese.team3.model.PictureMeta;
+import ch.unibe.ese.team3.dto.PictureMeta;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 

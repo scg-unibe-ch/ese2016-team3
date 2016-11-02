@@ -2,13 +2,14 @@
 
 ## 26.10.2016
 
-### Traktanden
+### Traktanden
+
 Next customer meeting on Wendsday at **13:30** in his office, 2nd floor
 
 #### Premium Users and Normal Users
 - no active downgrade option
 - price: varibale
-- premium users can subscribe for a period of time( eg. for one month, six month, one year, etc.) one get different offers (eg. one month costs 50$, but 1 year only  400$)
+- premium users can subscribe for a period of time( eg. for one month, six month, one year, etc.) one get different offers (eg. one month costs 50 \$, but 1 year only  400 \$)
 
 
 #### Gui - bootstrap

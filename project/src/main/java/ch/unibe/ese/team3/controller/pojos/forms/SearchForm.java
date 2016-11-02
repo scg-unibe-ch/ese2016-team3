@@ -66,8 +66,6 @@ public class SearchForm {
 
 	private String earliestMoveInDate;
 	private String latestMoveInDate;
-	private String earliestMoveOutDate;
-	private String latestMoveOutDate;
 	
 	private boolean elevator;
 	private boolean parking;
@@ -297,22 +295,6 @@ public class SearchForm {
 
 	public void setLatestMoveInDate(String latestMoveInDate) {
 		this.latestMoveInDate = latestMoveInDate;
-	}
-
-	public String getEarliestMoveOutDate() {
-		return earliestMoveOutDate;
-	}
-
-	public void setEarliestMoveOutDate(String earliestMoveOutDate) {
-		this.earliestMoveOutDate = earliestMoveOutDate;
-	}
-
-	public String getLatestMoveOutDate() {
-		return latestMoveOutDate;
-	}
-
-	public void setLatestMoveOutDate(String latestMoveOutDate) {
-		this.latestMoveOutDate = latestMoveOutDate;
 	}
 
 	public boolean getStudioHelper() {

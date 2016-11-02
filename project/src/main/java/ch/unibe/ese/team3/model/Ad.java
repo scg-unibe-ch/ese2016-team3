@@ -36,10 +36,6 @@ public class Ad {
 	@Temporal(TemporalType.DATE)
 	private Date moveInDate;
 
-	@Temporal(TemporalType.DATE)
-	@Column(nullable = true)
-	private Date moveOutDate;
-
 	@Column(nullable = false)
 	private int prizePerMonth;
 
@@ -73,10 +69,6 @@ public class Ad {
 	@Lob
 	private String roomDescription;
 
-	@Column(nullable = false)
-	@Lob
-	private String preferences;
-	
 	//new
 	@Column(nullable = false)
 	private boolean elevator;
@@ -296,10 +288,6 @@ public class Ad {
 		this.moveInDate = moveInDate;
 	}
 
-	public void setMoveOutDate(Date moveOutDate) {
-		this.moveOutDate = moveOutDate;
-	}
-
 	public int getPrizePerMonth() {
 		return prizePerMonth;
 	}
@@ -336,11 +324,7 @@ public class Ad {
 	public int getDistancePublicTransport(){
 		return distancePublicTransport;
 	}
-	
-	public void setDistancePublicTransportl(int distancePublicTransport){
-		this.distancePublicTransport = distancePublicTransport;
-	}
-		
+			
 	public String getRoomDescription() {
 		return roomDescription;
 	}
@@ -349,24 +333,12 @@ public class Ad {
 		this.roomDescription = roomDescription;
 	}
 
-	public String getPreferences() {
-		return preferences;
-	}
-
-	public void setPreferences(String preferences) {
-		this.preferences = preferences;
-	}
-
 	public List<AdPicture> getPictures() {
 		return pictures;
 	}
 
 	public void setPictures(List<AdPicture> pictures) {
 		this.pictures = pictures;
-	}
-
-	public Date getMoveOutDate() {
-		return moveOutDate;
 	}
 
 	public User getUser() {
@@ -399,13 +371,6 @@ public class Ad {
 
 	public void setCity(String city) {
 		this.city = city;
-	}
-
-	public Date getDate(boolean moveIn) {
-		if (moveIn)
-			return moveInDate;
-		else
-			return moveOutDate;
 	}
 
 	public List<Visit> getVisits() {
@@ -446,5 +411,12 @@ public class Ad {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+	
+	public boolean isPremiumAd() {
+		if (this.user != null){
+			return this.user.isPremium();
+		}
+		return false;
 	}
 }
