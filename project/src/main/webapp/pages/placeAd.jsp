@@ -382,8 +382,6 @@
 						</div>
 					</div>
 					
-					
-	
 
 					<h4>Description</h4>
 
