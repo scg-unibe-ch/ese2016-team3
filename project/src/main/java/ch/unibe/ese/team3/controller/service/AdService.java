@@ -80,7 +80,7 @@ public class AdService {
 
 		} catch (NumberFormatException e) {
 		}
-
+/** This causes java.lang.NullPointerException when Ad is placed
 		// this is for auction
 		// java.util.Calendar uses a month range of 0-11 instead of the
 		// XMLGregorianCalendar which uses 1-12
@@ -102,6 +102,7 @@ public class AdService {
 			}
 		} catch (NumberFormatException e) {
 		}
+*/
 		// for auction
 		ad.setStartPrice(placeAdForm.getStartPrice());
 		ad.setBuyItNowPrice(placeAdForm.getBuyItNowPrice());
@@ -111,7 +112,7 @@ public class AdService {
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
 		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
 		ad.setDistanceShopping(placeAdForm.getDistanceShopping());
-		ad.setDistancePublicTransportl(placeAdForm.getDistancePublicTransport());
+		ad.setDistancePublicTransport(placeAdForm.getDistancePublicTransport());
 		ad.setBuildYear(placeAdForm.getBuildYear());
 		ad.setRenovationYear(placeAdForm.getRenovationYear());
 		ad.setNumberOfRooms(placeAdForm.getNumberOfRooms());
@@ -381,7 +382,10 @@ public class AdService {
 				if (ad.getDistancePublicTransport() < searchForm.getDistancePublicTransportMin()
 						|| ad.getDistancePublicTransport() > searchForm.getDistancePublicTransportMax())
 					iterator.remove();
-
+				
+				// filter for infrastructureType
+				if (!ad.getInfrastructureType().equals(searchForm.getInfrastructureType()))
+					iterator.remove();
 			}
 		}
 		

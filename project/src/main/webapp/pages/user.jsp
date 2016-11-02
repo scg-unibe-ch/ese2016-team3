@@ -99,7 +99,7 @@
 						<div class="form-group pull-right">
 						<div class="col-sm-12">
 						<c:if test="${principalID != user.id}">
-							<button id="newMsg" type="button" class="btn btn-primary">Message</button>
+							<button type="button" data-toggle="modal" data-target="#msgDiv" id="newMsg" type="button" class="btn btn-primary">Message</button>
 						</c:if>
 						<c:choose>
 							<c:when test="${principalID eq user.id}">
@@ -125,8 +125,39 @@
 			</form:form>
 		</div>
 	
+<div class="modal fade" id="msgDiv" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Send Message</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-group">
+						<label for="msgSubject">Subject</label> <input
+							class="form-control" type="text" id="msgSubject"
+							placeholder="Subject">
+					</div>
+					<div class="form-group">
+						<label for="msgTextarea">Message</label>
+						<textarea id="msgTextarea" class="form-control"
+							placeholder="Message"></textarea>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-primary" id="messageSend">Send</button>
+			</div>
+		</div>
+	</div>
+</div>
 
-<div id="msgDiv" style="display:none;">
+<% /** <div id="msgDiv" style="display:none;">
 	<form class="msgForm">
 		<h2>Message this user</h2>
 		<br> <br> <label>Subject: <span>*</span></label> <input
@@ -137,5 +168,5 @@
 		<button type="button" id="messageSend">Send</button>
 		<button type="button" id="messageCancel">Cancel</button>
 	</form>
-</div>
+</div> **/ %>
 <c:import url="template/footer.jsp" />
