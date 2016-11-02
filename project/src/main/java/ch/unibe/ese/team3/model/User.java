@@ -17,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /** Describes a user on the platform. */
@@ -85,6 +88,11 @@ public class User {
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Ad> bookmarkedAds;
+	
+	//new
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+	private List<Bid> bids;
 
 	public long getId() {
 		return id;
@@ -245,6 +253,14 @@ public class User {
 	
 	public void setBookmarkedAds(List<Ad> bookmarkedAds) {
 		this.bookmarkedAds = bookmarkedAds;
+	}
+
+	public List<Bid> getBids() {
+		return bids;
+	}
+
+	public void setBids(List<Bid> bids) {
+		this.bids = bids;
 	}
 
 	@Override

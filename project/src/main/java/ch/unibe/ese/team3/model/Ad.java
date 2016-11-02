@@ -94,6 +94,14 @@ public class Ad {
 	@Fetch(FetchMode.SELECT)
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<AdPicture> pictures;
+	
+	
+	//new
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+	private List<Bid> bids;
+
+	
 
 	@ManyToOne(optional = false)
 	private User user;
@@ -121,6 +129,7 @@ public class Ad {
 	
 	@Column(nullable = true)
 	private int buyItNowPrice;
+	
 	
 	
 	public Date getStartDate() {
@@ -377,6 +386,12 @@ public class Ad {
 
 	public void setDishwasher(boolean dishwasher) {
 		this.dishwasher = dishwasher;
+	}
+	public List<Bid> getBids() {
+		return bids;
+	}
+	public void setBids(List<Bid> bids) {
+		this.bids = bids;
 	}
 
 	
