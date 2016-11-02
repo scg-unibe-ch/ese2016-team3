@@ -45,6 +45,7 @@ public class Alert {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
 	private List<AlertType> alertTypes;
 	
+	
 	public long getId() {
 		return id;
 	}

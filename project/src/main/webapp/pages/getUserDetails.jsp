@@ -1,7 +1,7 @@
 <%@page import="ch.unibe.ese.team3.model.Picture"%>
 <%@page import="ch.unibe.ese.team3.model.User"%>
 <%@page import="java.util.Iterator"%>
-<%@page import="ch.unibe.ese.team3.model.Location"%>
+<%@page import="ch.unibe.ese.team3.dto.Location"%>
 <%@page import="java.util.List"%>
 <%@page import="ch.unibe.ese.team3.controller.service.UserService"%>
 

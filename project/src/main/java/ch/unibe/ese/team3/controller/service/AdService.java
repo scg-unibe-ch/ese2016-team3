@@ -19,12 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
+import ch.unibe.ese.team3.dto.Location;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.AdPicture;
-import ch.unibe.ese.team3.model.Location;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
 import ch.unibe.ese.team3.model.dao.AdDao;
+import ch.unibe.ese.team3.util.PremiumAdComparator;
 
 /** Handles all persistence operations concerning ad placement and retrieval. */
 @Service
@@ -225,7 +226,7 @@ public class AdService {
 	public Iterable<Ad> queryResults(SearchForm searchForm) {
 		Iterable<Ad> results = null;
 
-		if (searchForm.getTypes().length > 0) {
+		if (searchForm.getTypes() != null && searchForm.getTypes().length > 0) {
 			results = adDao.findByPrizePerMonthLessThanAndTypeIn(searchForm.getPrize() + 1, searchForm.getTypes());
 		}
 		else {
@@ -387,9 +388,12 @@ public class AdService {
 					iterator.remove();
 			}
 		}
+		
+		locatedResults.sort(new PremiumAdComparator());
+		
 		return locatedResults;
 	}
-
+	
 	private List<Ad> validateDate(List<Ad> ads, boolean inOrOut, Date earliestDate, Date latestDate) {
 		if (ads.size() > 0) {
 			// Move-in dates

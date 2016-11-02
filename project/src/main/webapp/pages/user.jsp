@@ -99,7 +99,7 @@
 						<div class="form-group pull-right">
 						<div class="col-sm-12">
 						<c:if test="${principalID != user.id}">
-							<button id="newMsg" type="button" class="btn btn-primary">Message</button>
+							<button type="button" data-toggle="modal" data-target="#msgDiv" id="newMsg" type="button" class="btn btn-primary">Message</button>
 						</c:if>
 						<c:choose>
 							<c:when test="${principalID eq user.id}">
@@ -121,53 +121,43 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
+			</div>
 			</form:form>
 		</div>
+	
+<div class="modal fade" id="msgDiv" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Send Message</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-group">
+						<label for="msgSubject">Subject</label> <input
+							class="form-control" type="text" id="msgSubject"
+							placeholder="Subject">
+					</div>
+					<div class="form-group">
+						<label for="msgTextarea">Message</label>
+						<textarea id="msgTextarea" class="form-control"
+							placeholder="Message"></textarea>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-primary" id="messageSend">Send</button>
+			</div>
+		</div>
 	</div>
-	
-	
-<% /** <div id="userDiv">
-	<c:choose>
-		<c:when test="${user.accountType == 'PREMIUM'}">
-			<h3>This is a PREMIUM Account</h3>
-		</c:when>
-		<c:otherwise></c:otherwise>
-	</c:choose>
-	<c:choose>
-		<c:when test="${user.picture.filePath != null}">
-			<img src="${user.picture.filePath}">
-		</c:when>
-		<c:otherwise>
-			<img src="/img/avatar.png">
-		</c:otherwise>
-	</c:choose>
-	<p>
-	<h2>Username</h2>${user.email}<p>
-	<h2>Name</h2>${user.firstName}
-	${user.lastName}
-	<p>
-	<hr class="slim">
-	<h2>About me</h2>${user.aboutMe}
-	<hr class="slim">
-	<form>
-		<c:choose>
-			<c:when test="${principalID != null}">
-				<button id="newMsg" type="button">Message</button>
-				<c:choose>
-					<c:when test="${principalID eq user.id}">
-						<a class="button" href="/profile/editProfile">Edit Profile</a>
-					</c:when>
-					<c:otherwise></c:otherwise>
-				</c:choose>
-			</c:when>
-			<c:otherwise>
-				<p>Please log in to contact this person.</p>
-			</c:otherwise>
-		</c:choose>
-	</form>
-</div> **/ %>
+</div>
 
-<div id="msgDiv" style="display:none;">
+<% /** <div id="msgDiv" style="display:none;">
 	<form class="msgForm">
 		<h2>Message this user</h2>
 		<br> <br> <label>Subject: <span>*</span></label> <input
@@ -178,5 +168,5 @@
 		<button type="button" id="messageSend">Send</button>
 		<button type="button" id="messageCancel">Cancel</button>
 	</form>
-</div>
+</div> **/ %>
 <c:import url="template/footer.jsp" />

@@ -17,3 +17,6 @@ bin/
 log/
 target/
 temp/
+
+#Project
+project/src/main/webapp/img/ads/

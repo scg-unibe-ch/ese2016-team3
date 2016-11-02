@@ -402,4 +402,11 @@ public class Ad {
 			return false;
 		return true;
 	}
+	
+	public boolean isPremiumAd() {
+		if (this.user != null){
+			return this.user.isPremium();
+		}
+		return false;
+	}
 }
