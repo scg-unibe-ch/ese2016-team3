@@ -287,7 +287,7 @@
 										per month</label>
 									<div class="col-sm-5">
 										<form:input id="field-Prize" type="number" min="0"
-											path="prize" placeholder="Prize per month" step="50"
+											path="prize" placeholder="Prize per month" step="1"
 											value="${ad.prizePerMonth}" cssClass="form-control" />
 										<form:errors path="prize" cssClass="validationErrorText" />
 									</div>

@@ -123,9 +123,9 @@
 								<p>Declined</p>
 							</c:when>
 							<c:otherwise>
-								<button type="submit" class="acceptButton"
+								<button type="button" class="acceptButton btn btn-success"
 									data-id="${enquiry.id}">Accept</button>
-								<button type="button" class="declineButton"
+								<button type="button" class="declineButton btn btn-danger"
 									data-id="${enquiry.id}">Decline</button>
 							</c:otherwise>
 						</c:choose></td>

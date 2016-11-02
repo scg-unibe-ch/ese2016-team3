@@ -31,7 +31,29 @@
 		});
 
 		$("#messageSend").click(function() {
-			if ($("#msgSubject").val() != "" && $("#msgTextarea").val() != "") {
+			var valid = true;
+			
+			var subjectControl = $("#msgSubject");
+			var messageControl = $("#msgTextarea");
+			
+			if(subjectControl.val() == ""){
+				valid = false;
+				subjectControl.parent().addClass('has-error');
+			}
+			else {
+				subjectControl.parent().removeClass('has-error');
+			}
+				
+			
+			if(messageControl.val() == ""){
+				valid = false;
+				messageControl.parent().addClass('has-error');
+			}
+			else {
+				messageControl.parent().removeClass('has-error');
+			}
+			
+			if (valid == true) {
 				var subject = $("#msgSubject").val();
 				var text = $("#msgTextarea").val();
 				var recipientEmail = "${user.username}";
@@ -40,13 +62,9 @@
 					text : text,
 					recipientEmail : recipientEmail
 				}, function() {
-					$("#msgDiv").css("display", "none");
-					$("#msgDiv").css("opacity", "0");
 					$("#msgSubject").val("");
 					$("#msgTextarea").val("");
-					$("#content").children().animate({
-						opacity : 1
-					}, 300);
+					$('#msgDiv').modal('hide')
 				})
 			}
 		});

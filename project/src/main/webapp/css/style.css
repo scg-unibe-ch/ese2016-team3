@@ -62,3 +62,7 @@ tr.message-row {
 .input60 {
 	width: 60px !important;
 }
+
+.betweenLabel {
+	margin: 0px 7px;
+}
