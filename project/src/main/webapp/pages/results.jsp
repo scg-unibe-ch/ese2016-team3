@@ -189,8 +189,7 @@
 
 					<spring:bind path="infrastructureType">
 						<div class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="col-sm-3 control-label"
-								for="infrastructureType-room">InfrastructureType</label>
+							<label class="control-label" for="infrastructureType-room">InfrastructureType</label>
 							<form:select id="infrastructureType" path="infrastructureType"
 								cssClass="form-control">
 								<form:options items="${infrastructureType}" itemLabel="name" />
@@ -198,19 +197,36 @@
 						</div>
 					</spring:bind>
 
-					<div class="form-group form-inline">
-						<label for="field-floorLevelMin">Floor level between</label>
-						<form:input type="number" step="1" id="field-floorLevelMin"
-							path="floorLevelMin" cssClass="form-control input60" />
-						<label for="field-floorLevelMax"> and </label>
-						<form:input type="number" step="1" id="field-floorLevelMax"
-							path="floorLevelMax" cssClass="form-control input60" />
+					<div class="form-group row">
+						<label for="field-floorLevelMin" class="col-md-6">Floor
+							level between</label>
+						<div class="col-md-6 form-inline">
+							<form:input type="number" step="1" id="field-floorLevelMin"
+								path="floorLevelMin" cssClass="form-control input60" />
+							<label for="field-floorLevelMax" class="betweenLabel"> - </label>
+							<form:input type="number" step="1" id="field-floorLevelMax"
+								path="floorLevelMax" cssClass="form-control input60 pull-right" />
+						</div>
+					</div>
+
+
+					<div class="form-group">
+
+						<div class="col-sm-6 control-label">
+							<label for="field-NumberOfBathMin">Nr. of Bath between</label>
+						</div>
+						<div class="col-sm-6 control-label form-inline">
+							<form:input type="number" step="1" id="field-NumberOfBathMin"
+								path="numberOfBathMin" cssClass="form-control input60" />
+							<label for="field-NumberOfBathMax"> - </label>
+							<form:input type="number" cssClass="form-control input60"
+								path="numberOfBathMax" id="field-NumberOfBathMax" />
+						</div>
 
 					</div>
 
 
-					<div class="form-group"></div>
-
+					<hr />
 
 
 					<div class="form-group form-inline">
