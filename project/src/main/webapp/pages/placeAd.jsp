@@ -372,6 +372,7 @@
 											<form:errors path="increaseBidPrice" cssClass="validationErrorText" />
 										
 										</div>
+										
 								</div>
 						
 						</spring:bind>
