@@ -111,7 +111,7 @@ public class AdService {
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
 		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
 		ad.setDistanceShopping(placeAdForm.getDistanceShopping());
-		ad.setDistancePublicTransportl(placeAdForm.getDistancePublicTransport());
+		ad.setDistancePublicTransport(placeAdForm.getDistancePublicTransport());
 		ad.setBuildYear(placeAdForm.getBuildYear());
 		ad.setRenovationYear(placeAdForm.getRenovationYear());
 		ad.setNumberOfRooms(placeAdForm.getNumberOfRooms());
@@ -381,7 +381,10 @@ public class AdService {
 				if (ad.getDistancePublicTransport() < searchForm.getDistancePublicTransportMin()
 						|| ad.getDistancePublicTransport() > searchForm.getDistancePublicTransportMax())
 					iterator.remove();
-
+				
+				// filter for infrastructureType
+				if (!ad.getInfrastructureType().equals(searchForm.getInfrastructureType()))
+					iterator.remove();
 			}
 		}
 		return locatedResults;

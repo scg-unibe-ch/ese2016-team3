@@ -314,11 +314,7 @@ public class Ad {
 	public int getDistancePublicTransport(){
 		return distancePublicTransport;
 	}
-	
-	public void setDistancePublicTransportl(int distancePublicTransport){
-		this.distancePublicTransport = distancePublicTransport;
-	}
-		
+			
 	public String getRoomDescription() {
 		return roomDescription;
 	}

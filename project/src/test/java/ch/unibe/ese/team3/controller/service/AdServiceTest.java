@@ -249,8 +249,8 @@ public class AdServiceTest {
 		searchForm.setGarage(true); // criteria garage and balcony have no
 									// influence at the query!!
 		searchForm.setTypes(types);
-	//	searchForm.setNumberOfRooms(1000);
-	//	searchForm.setNumberOfBath(10);
+		searchForm.setNumberOfBathMax(100);
+		searchForm.setNumberOfRoomsMax(100);
 		Iterable<Ad> queryedAds = adService.queryResults(searchForm);
 		ArrayList<Ad> adList = (ArrayList) queryedAds;
 

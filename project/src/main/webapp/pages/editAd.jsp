@@ -7,6 +7,11 @@
 
 <c:import url="template/header.jsp" />
 
+<ol class="breadcrumb">
+	<li><a href="/${pagemode}/">Homepage</a></li>
+	<li class="active">EditAd</li>
+</ol>
+
 <script src="/js/jquery.ui.widget.js"></script>
 <script src="/js/jquery.iframe-transport.js"></script>
 <script src="/js/jquery.fileupload.js"></script>

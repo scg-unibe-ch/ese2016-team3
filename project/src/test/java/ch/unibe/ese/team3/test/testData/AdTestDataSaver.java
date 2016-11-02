@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.AdPicture;
+import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.AdDao;
@@ -55,12 +56,6 @@ public class AdTestDataSaver {
 		Date moveInDate7 = formatter.parse("15.03.2015");
 		Date moveInDate8 = formatter.parse("16.02.2015");
 		
-		Date moveOutDate1 = formatter.parse("31.03.2015");
-		Date moveOutDate2 = formatter.parse("30.04.2015");
-		Date moveOutDate3 = formatter.parse("31.03.2016");
-		Date moveOutDate4 = formatter.parse("01.07.2015");
-		Date moveOutDate5 = formatter.parse("30.09.2016");
-		
 		String roomDescription1 = "The room is a part of 3.5 rooms apartment completely renovated"
 				+ "in 2010 at Kramgasse, Bern. The apartment is about 50 m2 on 1st floor."
 				+ "Apt is equipped modern kitchen, hall and balcony. Near to shops and public"
@@ -85,8 +80,21 @@ public class AdTestDataSaver {
 		adBern.setTitle("Roommate wanted in Bern");
 		adBern.setStreet("Kramgasse 22");
 		adBern.setCity("Bern");
+		
 		adBern.setBalcony(true);
 		adBern.setGarage(true);
+		adBern.setDishwasher(true);
+		adBern.setElevator(false);
+		adBern.setGarage(false);
+		adBern.setBuildYear(1930);
+		adBern.setRenovationYear(2000);
+		adBern.setDistancePublicTransport(1000);
+		adBern.setDistanceSchool(1000);
+		adBern.setDistanceShopping(100);
+		adBern.setFloorLevel(2);
+		adBern.setNumberOfRooms(2);
+		
+		adBern.setInfrastructureType(InfrastructureType.CABLE);
 		List<AdPicture> pictures = new ArrayList<>();
 		pictures.add(createPicture(adBern, "/img/test/ad1_1.jpg"));
 		pictures.add(createPicture(adBern, "/img/test/ad1_2.jpg"));
@@ -122,9 +130,21 @@ public class AdTestDataSaver {
 		adBern2.setTitle("Cheap studio in Bern!");
 		adBern2.setStreet("Längassstr. 40");
 		adBern2.setCity("Bern");
-		adBern2.setBalcony(false);
-		adBern2.setGarage(false);
+		adBern2.setInfrastructureType(InfrastructureType.FOC);
 
+		adBern2.setBalcony(false);
+		adBern2.setGarage(true);
+		adBern2.setDishwasher(true);
+		adBern2.setElevator(true);
+		adBern2.setGarage(false);
+		adBern2.setBuildYear(1950);
+		adBern2.setRenovationYear(1980);
+		adBern2.setDistancePublicTransport(10000);
+		adBern2.setDistanceSchool(500);
+		adBern2.setDistanceShopping(100);
+		adBern2.setFloorLevel(6);
+		adBern2.setNumberOfRooms(4);
+		
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adBern2, "/img/test/ad2_1.jpg"));
 		pictures.add(createPicture(adBern2, "/img/test/ad2_2.jpg"));
@@ -158,8 +178,21 @@ public class AdTestDataSaver {
 		adBasel.setTitle("Nice, bright studio in the center of Basel");
 		adBasel.setStreet("Bruderholzstrasse 32");
 		adBasel.setCity("Basel");
+		
 		adBasel.setBalcony(false);
 		adBasel.setGarage(false);
+		adBasel.setDishwasher(true);
+		adBasel.setElevator(true);
+		adBasel.setGarage(true);
+		adBasel.setBuildYear(1950);
+		adBasel.setRenovationYear(1980);
+		adBasel.setDistancePublicTransport(100);
+		adBasel.setDistanceSchool(500);
+		adBasel.setDistanceShopping(100);
+		adBasel.setFloorLevel(3);
+		adBasel.setNumberOfRooms(2);
+		adBasel.setInfrastructureType(InfrastructureType.SATELLITE);
+		
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adBasel, "/img/test/ad3_1.jpg"));
 		pictures.add(createPicture(adBasel, "/img/test/ad3_2.jpg"));
@@ -190,8 +223,20 @@ public class AdTestDataSaver {
 		adOlten.setTitle("Roommate wanted in Olten City");
 		adOlten.setStreet("Zehnderweg 5");
 		adOlten.setCity("Olten");
-		adOlten.setBalcony(true);
+		
+		adOlten.setBalcony(false);
 		adOlten.setGarage(false);
+		adOlten.setDishwasher(true);
+		adOlten.setElevator(true);
+		adOlten.setGarage(true);
+		adOlten.setBuildYear(1900);
+		adOlten.setRenovationYear(1950);
+		adOlten.setDistancePublicTransport(100);
+		adOlten.setDistanceSchool(5000);
+		adOlten.setDistanceShopping(4000);
+		adOlten.setFloorLevel(3);
+		adOlten.setNumberOfRooms(3);
+		adOlten.setInfrastructureType(InfrastructureType.CABLE);
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adOlten, "/img/test/ad4_1.png"));
 		pictures.add(createPicture(adOlten, "/img/test/ad4_2.png"));
@@ -211,8 +256,8 @@ public class AdTestDataSaver {
 		adNeuchâtel.setType(Type.VILLA);
 		adNeuchâtel.setMoveInDate(moveInDate5);
 		adNeuchâtel.setCreationDate(creationDate5);
-		adNeuchâtel.setPrizePerMonth(410);
-		adNeuchâtel.setSquareFootage(40);
+		adNeuchâtel.setPrizePerMonth(6000);
+		adNeuchâtel.setSquareFootage(100);
 		//adNeuchâtel.setStudio(true);
 		adNeuchâtel.setRoomDescription(studioDescription5);
 		adNeuchâtel.setNumberOfBath(2);
@@ -220,8 +265,21 @@ public class AdTestDataSaver {
 		adNeuchâtel.setTitle("Studio extrèmement bon marché à Neuchâtel");
 		adNeuchâtel.setStreet("Rue de l'Hôpital 11");
 		adNeuchâtel.setCity("Neuchâtel");
-		adNeuchâtel.setBalcony(false);
+		
+		adNeuchâtel.setBalcony(true);
 		adNeuchâtel.setGarage(false);
+		adNeuchâtel.setDishwasher(true);
+		adNeuchâtel.setElevator(false);
+		adNeuchâtel.setGarage(false);
+		adNeuchâtel.setBuildYear(1900);
+		adNeuchâtel.setRenovationYear(2000);
+		adNeuchâtel.setDistancePublicTransport(100);
+		adNeuchâtel.setDistanceSchool(5000);
+		adNeuchâtel.setDistanceShopping(4000);
+		adNeuchâtel.setFloorLevel(3);
+		adNeuchâtel.setNumberOfRooms(7);
+		adNeuchâtel.setInfrastructureType(InfrastructureType.CABLE);
+		
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adNeuchâtel, "/img/test/ad5_1.jpg"));
 		pictures.add(createPicture(adNeuchâtel, "/img/test/ad5_2.jpg"));
@@ -248,8 +306,21 @@ public class AdTestDataSaver {
 		adBiel.setTitle("Direkt am Quai: hübsches Studio");
 		adBiel.setStreet("Oberer Quai 12");
 		adBiel.setCity("Biel/Bienne");
-		adBiel.setBalcony(false);
+
+		adBiel.setBalcony(true);
 		adBiel.setGarage(false);
+		adBiel.setDishwasher(true);
+		adBiel.setElevator(false);
+		adBiel.setGarage(false);
+		adBiel.setBuildYear(1900);
+		adBiel.setRenovationYear(2000);
+		adBiel.setDistancePublicTransport(100);
+		adBiel.setDistanceSchool(5000);
+		adBiel.setDistanceShopping(4000);
+		adBiel.setFloorLevel(3);
+		adBiel.setNumberOfRooms(7);
+		
+		adBiel.setInfrastructureType(InfrastructureType.SATELLITE);
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adBiel, "/img/test/ad6_1.png"));
 		pictures.add(createPicture(adBiel, "/img/test/ad6_2.png"));
@@ -274,7 +345,7 @@ public class AdTestDataSaver {
 		adZurich.setType(Type.HOUSE);
 		adZurich.setMoveInDate(moveInDate7);
 		adZurich.setCreationDate(creationDate7);
-		adZurich.setPrizePerMonth(480);
+		adZurich.setPrizePerMonth(4000);
 		adZurich.setSquareFootage(32);
 		//adZurich.setStudio(false);
 		adZurich.setRoomDescription(roomDescription7);
@@ -282,9 +353,21 @@ public class AdTestDataSaver {
 		adZurich.setTitle("Roommate wanted in Zürich");
 		adZurich.setStreet("Hauptstrasse 61");
 		adZurich.setCity("Zürich");
-		adZurich.setBalcony(true);
 		adZurich.setNumberOfBath(2);
-		adZurich.setGarage(true);
+		
+		adZurich.setBalcony(true);
+		adZurich.setGarage(false);
+		adZurich.setDishwasher(true);
+		adZurich.setElevator(true);
+		adZurich.setGarage(false);
+		adZurich.setBuildYear(1944);
+		adZurich.setRenovationYear(2000);
+		adZurich.setDistancePublicTransport(3000);
+		adZurich.setDistanceSchool(4000);
+		adZurich.setDistanceShopping(100);
+		adZurich.setFloorLevel(3);
+		adZurich.setNumberOfRooms(5);
+		adZurich.setInfrastructureType(InfrastructureType.CABLE);
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adZurich, "/img/test/ad1_3.jpg"));
 		pictures.add(createPicture(adZurich, "/img/test/ad1_2.jpg"));
@@ -312,17 +395,29 @@ public class AdTestDataSaver {
 		adLuzern.setType(Type.APARTMENT);
 		adLuzern.setMoveInDate(moveInDate8);
 		adLuzern.setCreationDate(creationDate2);
-		adLuzern.setPrizePerMonth(700);
+		adLuzern.setPrizePerMonth(2500);
 		adLuzern.setSquareFootage(60);
-		//adLuzern.setStudio(true);
+		
 		adLuzern.setRoomDescription(studioDescription8);
 		adLuzern.setUser(oprah);
 		adLuzern.setNumberOfBath(1);
 		adLuzern.setTitle("Elegant Studio in Lucerne");
 		adLuzern.setStreet("Schwanenplatz 61");
 		adLuzern.setCity("Luzern");
-		adLuzern.setBalcony(false);
+		adLuzern.setBalcony(true);
 		adLuzern.setGarage(false);
+		adLuzern.setDishwasher(true);
+		adLuzern.setElevator(true);
+		adLuzern.setGarage(false);
+		adLuzern.setBuildYear(1960);
+		adLuzern.setRenovationYear(1991);
+		adLuzern.setDistancePublicTransport(500);
+		adLuzern.setDistanceSchool(10000);
+		adLuzern.setDistanceShopping(100);
+		adLuzern.setFloorLevel(6);
+		adLuzern.setNumberOfRooms(3);
+		adLuzern.setInfrastructureType(InfrastructureType.CABLE);
+
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adLuzern, "/img/test/ad2_3.jpg"));
 		pictures.add(createPicture(adLuzern, "/img/test/ad2_2.jpg"));
@@ -347,7 +442,7 @@ public class AdTestDataSaver {
 		adAarau.setType(Type.APARTMENT);
 		adAarau.setMoveInDate(moveInDate3);
 		adAarau.setCreationDate(creationDate8);
-		adAarau.setPrizePerMonth(800);
+		adAarau.setPrizePerMonth(1500);
 		adAarau.setSquareFootage(26);
 		//adAarau.setStudio(true);
 		adAarau.setRoomDescription(studioDescription9);
@@ -355,9 +450,21 @@ public class AdTestDataSaver {
 		adAarau.setTitle("Beautiful studio in Aarau");
 		adAarau.setStreet("Bruderholzstrasse 32");
 		adAarau.setCity("Aarau");
-		adAarau.setBalcony(true);
 		adAarau.setNumberOfBath(1);
-		adAarau.setGarage(false);
+
+		adAarau.setBalcony(true);
+		adAarau.setGarage(true);
+		adAarau.setDishwasher(true);
+		adAarau.setElevator(true);
+		adAarau.setGarage(true);
+		adAarau.setBuildYear(1960);
+		adAarau.setRenovationYear(1970);
+		adAarau.setDistancePublicTransport(100);
+		adAarau.setDistanceSchool(5000);
+		adAarau.setDistanceShopping(7000);
+		adAarau.setFloorLevel(1);
+		adAarau.setNumberOfRooms(3);
+		adAarau.setInfrastructureType(InfrastructureType.CABLE);
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adAarau, "/img/test/ad3_3.jpg"));
 		pictures.add(createPicture(adAarau, "/img/test/ad3_2.jpg"));
@@ -390,8 +497,19 @@ public class AdTestDataSaver {
 		adDavos.setTitle("Free room in Davos City");
 		adDavos.setStreet("Kathrinerweg 5");
 		adDavos.setCity("Davos");
-		adDavos.setBalcony(true);
+		adDavos.setBalcony(false);
 		adDavos.setGarage(false);
+		adDavos.setDishwasher(false);
+		adDavos.setElevator(false);
+		adDavos.setGarage(true);
+		adDavos.setBuildYear(1960);
+		adDavos.setRenovationYear(1970);
+		adDavos.setDistancePublicTransport(2000);
+		adDavos.setDistanceSchool(500);
+		adDavos.setDistanceShopping(700);
+		adDavos.setFloorLevel(1);
+		adDavos.setNumberOfRooms(3);
+		adDavos.setInfrastructureType(InfrastructureType.FOC);
 		adDavos.setNumberOfBath(1);
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adDavos, "/img/test/ad4_3.png"));
@@ -412,7 +530,7 @@ public class AdTestDataSaver {
 		adLausanne.setType(Type.APARTMENT);
 		adLausanne.setMoveInDate(moveInDate5);
 		adLausanne.setCreationDate(creationDate5);
-		adLausanne.setPrizePerMonth(360);
+		adLausanne.setPrizePerMonth(1800);
 		adLausanne.setSquareFootage(8);
 		//adLausanne.setStudio(false);
 		adLausanne.setRoomDescription(studioDescription11);
@@ -420,9 +538,22 @@ public class AdTestDataSaver {
 		adLausanne.setTitle("Studio extrèmement bon marché à Lausanne");
 		adLausanne.setStreet("Rue de l'Eglise 26");
 		adLausanne.setCity("Lausanne");
-		adLausanne.setBalcony(false);
 		adLausanne.setNumberOfBath(1);
+
+		adLausanne.setBalcony(false);
 		adLausanne.setGarage(false);
+		adLausanne.setDishwasher(true);
+		adLausanne.setElevator(false);
+		adLausanne.setGarage(true);
+		adLausanne.setBuildYear(1960);
+		adLausanne.setRenovationYear(1980);
+		adLausanne.setDistancePublicTransport(3000);
+		adLausanne.setDistanceSchool(100);
+		adLausanne.setDistanceShopping(900);
+		adLausanne.setFloorLevel(1);
+		adLausanne.setNumberOfRooms(3);
+		adLausanne.setInfrastructureType(InfrastructureType.CABLE);
+
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adLausanne, "/img/test/ad5_3.jpg"));
 		pictures.add(createPicture(adLausanne, "/img/test/ad5_2.jpg"));
@@ -440,7 +571,7 @@ public class AdTestDataSaver {
 		adLocarno.setType(Type.VILLA);
 		adLocarno.setMoveInDate(moveInDate6);
 		adLocarno.setCreationDate(creationDate6);
-		adLocarno.setPrizePerMonth(960);
+		adLocarno.setPrizePerMonth(4500);
 		adLocarno.setSquareFootage(42);
 		//adLocarno.setStudio(false);
 		adLocarno.setRoomDescription(studioDescription12);
@@ -448,9 +579,22 @@ public class AdTestDataSaver {
 		adLocarno.setTitle("Malibu-style Beachhouse");
 		adLocarno.setStreet("Kirchweg 12");
 		adLocarno.setCity("Locarno");
-		adLocarno.setBalcony(false);
 		adLocarno.setNumberOfBath(1);
+		
+		adLocarno.setBalcony(true);
 		adLocarno.setGarage(false);
+		adLocarno.setDishwasher(true);
+		adLocarno.setElevator(false);
+		adLocarno.setGarage(true);
+		adLocarno.setBuildYear(1800);
+		adLocarno.setRenovationYear(1980);
+		adLocarno.setDistancePublicTransport(3000);
+		adLocarno.setDistanceSchool(10000);
+		adLocarno.setDistanceShopping(9000);
+		adLocarno.setFloorLevel(4);
+		adLocarno.setNumberOfRooms(6);
+		adLocarno.setInfrastructureType(InfrastructureType.CABLE);
+
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adLocarno, "/img/test/ad6_3.png"));
 		pictures.add(createPicture(adLocarno, "/img/test/ad6_2.png"));

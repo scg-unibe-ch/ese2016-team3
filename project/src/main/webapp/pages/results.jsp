@@ -187,6 +187,17 @@
 								path="dishwasher" value="1" />Dishwasher</label>
 					</div>
 
+					<spring:bind path="infrastructureType">
+						<div class="form-group ${status.error ? 'has-error' : '' }">
+							<label class="col-sm-3 control-label"
+								for="infrastructureType-room">InfrastructureType</label>
+							<form:select id="infrastructureType" path="infrastructureType"
+								cssClass="form-control">
+								<form:options items="${infrastructureType}" itemLabel="name" />
+							</form:select>
+						</div>
+					</spring:bind>
+
 					<div class="form-group form-inline">
 						<label for="field-floorLevelMin">Floor level between</label>
 						<form:input type="number" step="1" id="field-floorLevelMin"
@@ -194,13 +205,12 @@
 						<label for="field-floorLevelMax"> and </label>
 						<form:input type="number" step="1" id="field-floorLevelMax"
 							path="floorLevelMax" cssClass="form-control input60" />
-							
+
 					</div>
 
-					<div class="form-group">
-					</div>
+					<div class="form-group"></div>
 
-					
+
 
 					<div class="form-group form-inline">
 						<label for="field-NumberOfBathMin">Nr. of Bath between</label>
@@ -219,11 +229,10 @@
 						<label for="field-NumberOfRoomsMax">and</label>
 						<form:input type="number" cssClass="form-control input60"
 							path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
-							<%-- muss man <form_error/> auch noch hinzufügen? --%>
+						<%-- muss man <form_error/> auch noch hinzufügen? --%>
 					</div>
 
-					<div class="form-group">
-					</div>
+					<div class="form-group"></div>
 
 					<div class="form-group form-inline">
 						<label for="field-BuildYearMin">Build year between</label>
@@ -233,64 +242,69 @@
 						<form:input type="number" cssClass="form-control input60"
 							path="buildYearMax" id="field-BuildYearMax" />
 					</div>
-					<div class="form-group">
-					</div>
+					<div class="form-group"></div>
 
 
 
 
 					<div class="form-group form-inline">
-						<label for="field-RenovationYearMin">Renovation year between</label>
+						<label for="field-RenovationYearMin">Renovation year
+							between</label>
 						<form:input type="number" cssClass="form-control input60"
 							path="renovationYearMin" id="field-RenovationYearMin" />
 						<label for="field-RenovationYearMax">and</label>
 						<form:input type="number" cssClass="form-control input60"
 							path="renovationYearMax" id="field-RenovationYearMax" />
 					</div>
-					
-					
+
+
 					<div class="form-group form-inline">
-					<label	for="field-DistanceSchoolMin">Distance to school from</label>
-									
+						<label for="field-DistanceSchoolMin">Distance to school
+							from</label>
+
 						<form:input id="field-DistanceSchoolMin" type="number" min="0"
-								path="distanceSchoolMin" placeholder="0" step="100"
-								cssClass="form-control input60" />
-										<label	for="field-DistanceSchoolMax">to</label>
-									
+							path="distanceSchoolMin" placeholder="0" step="100"
+							cssClass="form-control input60" />
+						<label for="field-DistanceSchoolMax">to</label>
+
 						<form:input id="field-DistanceSchoolMax" type="number" min="0"
-								path="distanceSchoolMax" placeholder="0" step="100"
-								cssClass="form-control input60" />
+							path="distanceSchoolMax" placeholder="0" step="100"
+							cssClass="form-control input60" />
 					</div>
 
 
 
 
-<div class="form-group form-inline">
+					<div class="form-group form-inline">
 
-<label for="field-DistanceShoppingMin">Distance to shopping from</label>
-<form:input id="field-DistanceShoppingMin" type="number" min="0"
-					path="distanceShoppingMin" placeholder="0" step="100"	cssClass="form-control input60" />
-											
-<label for="field-DistanceShoppingMax">to</label>
-<form:input id="field-DistanceShoppingMax" type="number" min="0"
-					path="distanceShoppingMax" placeholder="0" step="100"	cssClass="form-control input60" />
-</div>
+						<label for="field-DistanceShoppingMin">Distance to
+							shopping from</label>
+						<form:input id="field-DistanceShoppingMin" type="number" min="0"
+							path="distanceShoppingMin" placeholder="0" step="100"
+							cssClass="form-control input60" />
 
-<div class="form-group form-inline">
-<label for="field-DistancePublicTransportMin">Distance to public transport from</label>
-									
-										<form:input id="field-DistancePublicTransportMin" type="number"
-											min="0" path="distancePublicTransportMin" placeholder="0"
-											step="100" cssClass="form-control input60" />
+						<label for="field-DistanceShoppingMax">to</label>
+						<form:input id="field-DistanceShoppingMax" type="number" min="0"
+							path="distanceShoppingMax" placeholder="0" step="100"
+							cssClass="form-control input60" />
+					</div>
 
-<label for="field-DistancePublicTransportMax">to</label>
-									
-										<form:input id="field-DistancePublicTransportMax" type="number"
-											min="0" path="distancePublicTransportMax" placeholder="0"
-											step="100" cssClass="form-control input60" />
+					<div class="form-group form-inline">
+						<label for="field-DistancePublicTransportMin">Distance to
+							public transport from</label>
+
+						<form:input id="field-DistancePublicTransportMin" type="number"
+							min="0" path="distancePublicTransportMin" placeholder="0"
+							step="100" cssClass="form-control input60" />
+
+						<label for="field-DistancePublicTransportMax">to</label>
+
+						<form:input id="field-DistancePublicTransportMax" type="number"
+							min="0" path="distancePublicTransportMax" placeholder="0"
+							step="100" cssClass="form-control input60" />
 
 
-</div>
+					</div>
 
 
 
