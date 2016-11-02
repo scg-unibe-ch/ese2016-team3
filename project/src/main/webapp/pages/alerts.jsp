@@ -91,13 +91,12 @@
 					class="form-horizontal">
 					<div class="panel panel-default">
 						<div class="panel-body">
-
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Type</label>
 								<div class="col-sm-6">
 									<c:forEach var="type" items="${alertTypes}">
 										<label class="checkbox-inline"> <form:checkbox
-												path="alertTypes" value="${type}" /> ${type.name}
+												path="alertTypes" value="${type.type}" /> ${type.name}
 										</label>
 									</c:forEach>
 								</div>
@@ -201,7 +200,7 @@
 													<td>${alert.city}</td>
 													<td>${alert.radius}km</td>
 													<td>${alert.price}Chf</td>
-													<td><button type="button" class="deleteButton"
+													<td><button type="button" class="btn btn-danger"
 															data-id="${alert.id}" onClick="deleteAlert(this)">Delete</button></td>
 												</tr>
 											</c:forEach>
