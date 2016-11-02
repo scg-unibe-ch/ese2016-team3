@@ -10,3 +10,4 @@
 
 - Validation in Form-class, is this okey (architectural rule fails...)
 - Logging: What should be logged after controller action?
+- Premium user visible for other users?
