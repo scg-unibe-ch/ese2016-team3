@@ -380,6 +380,35 @@
 											var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 										<p>Move-in date: ${formattedMoveInDate }</p>
 									</div>
+									
+									<div class="col-sm-3 col-md-3">
+									<p>
+									<strong>Auction</strong>
+									</p>
+									<p>
+									Running until: 
+									
+									</p>
+									<p>
+									Current price: 
+									
+									</p>
+									<div class="form-group">
+										<label class="sr-only" for="bid">Amount</label><%-- for="bid" stimmt wahrscheinlich nicht --%>
+										<div class="input-group">
+											<div class="input-group-addon">CHF</div>
+										<input type="number" class="form-controll" placeholder="Amount" name="bid"><%--es fehlt: id = und value= --%>
+										
+									<span class="input-group-btn">
+									<button type="button" class="btn btn-success">Bid</button>
+									</span>
+									
+									</div>
+									</div>
+									
+									
+									</div>
+									
 								</div>
 							</div>
 							<div class="clearfix"></div>
