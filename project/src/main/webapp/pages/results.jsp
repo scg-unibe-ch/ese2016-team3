@@ -385,12 +385,15 @@
 									<p>
 									<strong>Auction</strong>
 									</p>
-									<p>
-									Running until: 
 									
-									</p>
+									<fmt:formatDate value="${ad.startDate}"
+											var="formattedStartDate" type="date" pattern="dd.MM.yyyy" />
+										<p> Running until :${formattedStartDate}</p>
+									
 									<p>
 									Current price: 
+									<strong>${ad.startPrice} CHF</strong>
+									
 									
 									</p>
 									<div class="form-group">

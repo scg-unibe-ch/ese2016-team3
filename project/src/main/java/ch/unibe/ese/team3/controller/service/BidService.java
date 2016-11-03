@@ -22,14 +22,20 @@ public class BidService {
 	 * @param user
 	 * @param amount
 	 */
-	private void saveBid(Ad ad, User user, int amount){
+	public void bid(Ad ad, User user, int amount){
 		
 		Bid bid = new Bid();
 		bid.setAd(ad);
 		bid.setAmount(amount);
 		bid.setBidder(user);
 		bid.setTimeStamp(new Date());
-		bidDao.save(bid);		
+		bidDao.save(bid);
+		incrementBidPrice(ad);
+		
+	}
+	
+	private void incrementBidPrice(Ad ad){
+		ad.setStartPrice(ad.getIncreaseBidPrice());
 		
 	}
 }
