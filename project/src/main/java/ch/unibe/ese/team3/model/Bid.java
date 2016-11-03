@@ -6,6 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Bid {
@@ -23,7 +27,9 @@ public class Bid {
 	
 	private int amount;
 	
-	private Date date;
+	@JsonFormat(pattern = "HH:mm, dd.MM.yyyy")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date timeStamp;
 	
 	
 	public long getId() {
@@ -58,12 +64,12 @@ public class Bid {
 		this.amount = amount;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getTimeStamp() {
+		return timeStamp;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setTimeStamp(Date timeStamp) {
+		this.timeStamp = timeStamp;
 	}
 	
 
