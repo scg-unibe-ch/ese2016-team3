@@ -130,6 +130,22 @@ public class Ad {
 	@Column(nullable = true)
 	private int buyItNowPrice;
 	
+	private int currentAuctionPrice;
+	
+	private int bidPriceForUser;
+	
+	public int getbidPriceForUser(){
+		return this.bidPriceForUser;
+	}
+	public void setbidPriceForUser(int newBidPrice){
+		this.bidPriceForUser=newBidPrice;
+	}
+	public int getcurrentAuctionPrice(){
+		return this.currentAuctionPrice;
+	}
+	public void setcurrentAuctionPrice(int Price){
+		this.currentAuctionPrice=Price;
+	}
 	
 	
 	public Date getStartDate() {

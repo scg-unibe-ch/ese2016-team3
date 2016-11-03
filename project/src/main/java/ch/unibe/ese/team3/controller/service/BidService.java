@@ -30,12 +30,13 @@ public class BidService {
 		bid.setBidder(user);
 		bid.setTimeStamp(new Date());
 		bidDao.save(bid);
-		incrementBidPrice(ad);
+		incrementBidPriceForUser(ad);
 		
 	}
 	
-	private void incrementBidPrice(Ad ad){
-		ad.setStartPrice(ad.getIncreaseBidPrice());
+	private void incrementBidPriceForUser(Ad ad){
+		
+		ad.setbidPriceForUser(ad.getcurrentAuctionPrice()+ad.getIncreaseBidPrice());
 		
 	}
 }

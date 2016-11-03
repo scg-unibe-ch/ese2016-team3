@@ -36,9 +36,7 @@
 						$("#field-moveInDate").datepicker({
 							dateFormat : 'dd-mm-yy'
 						});
-						$("#field-startDate").datepicker({
-							dateFormat : 'dd-mm-yy'
-						});
+						
 						$("#field-endDate").datepicker({
 							dateFormat : 'dd-mm-yy'
 						});
@@ -331,7 +329,7 @@
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label" for="field-startDate">Startdate for Auction </label>
 										<div class="col-sm-5">
-										<form:input type="text" id="field-startDate"
+										<form:input type="datetime-local" value="2016-08-19T13:45:00"  id="field-startDate"
 											path="startDate" cssClass="form-control" />
 										
 										</div>

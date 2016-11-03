@@ -86,18 +86,18 @@ public class AdService {
 		// XMLGregorianCalendar which uses 1-12
 		try {
 			if (placeAdForm.getStartDate().length() >= 1) {
-				int dayMoveIn = Integer.parseInt(placeAdForm.getStartDate().substring(0, 2));
-				int monthMoveIn = Integer.parseInt(placeAdForm.getStartDate().substring(3, 5));
-				int yearMoveIn = Integer.parseInt(placeAdForm.getStartDate().substring(6, 10));
-				calendar.set(yearMoveIn, monthMoveIn - 1, dayMoveIn);
+				int dayStart = Integer.parseInt(placeAdForm.getStartDate().substring(0, 2));
+				int monthStart = Integer.parseInt(placeAdForm.getStartDate().substring(3, 5));
+				int yearStart = Integer.parseInt(placeAdForm.getStartDate().substring(6, 10));
+				calendar.set(yearStart, monthStart - 1, dayStart);
 				ad.setStartDate(calendar.getTime());
 			}
 
 			if (placeAdForm.getEndDate().length() >= 1) {
-				int dayMoveOut = Integer.parseInt(placeAdForm.getEndDate().substring(0, 2));
-				int monthMoveOut = Integer.parseInt(placeAdForm.getEndDate().substring(3, 5));
-				int yearMoveOut = Integer.parseInt(placeAdForm.getEndDate().substring(6, 10));
-				calendar.set(yearMoveOut, monthMoveOut - 1, dayMoveOut);
+				int dayEnd = Integer.parseInt(placeAdForm.getEndDate().substring(0, 2));
+				int monthEnd = Integer.parseInt(placeAdForm.getEndDate().substring(3, 5));
+				int yearEnd = Integer.parseInt(placeAdForm.getEndDate().substring(6, 10));
+				calendar.set(yearEnd, monthEnd - 1, dayEnd);
 				ad.setEndDate(calendar.getTime());
 			}
 		} catch (NumberFormatException e) {
@@ -107,6 +107,9 @@ public class AdService {
 		ad.setStartPrice(placeAdForm.getStartPrice());
 		ad.setBuyItNowPrice(placeAdForm.getBuyItNowPrice());
 		ad.setIncreaseBidPrice(placeAdForm.getIncreaseBidPrice());
+		ad.setbidPriceForUser(placeAdForm.getStartPrice() + placeAdForm.getIncreaseBidPrice());
+		ad.setcurrentAuctionPrice(placeAdForm.getStartPrice());
+		
 
 		ad.setPrizePerMonth(placeAdForm.getPrize());
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
