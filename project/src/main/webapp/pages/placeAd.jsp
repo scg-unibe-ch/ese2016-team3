@@ -413,46 +413,51 @@
 								</div>
 							</spring:bind>
 
-							<div class="checkbox">
-
-								<label class="col-sm-3 control-label">Garage</label>
-								<div class="col-sm-5"> 
-									<form:checkbox id="field-garage" path="garage" value="1" />
-								</div>
+							
 
 
-							</div>
-							<div class="checkbox">
+							<div class="form-group">
 								
-
-									<label class="col-sm-3 control-label">Parking</label>
-									<div class="col-sm-5">
-									<form:checkbox id="field-parking" path="parking"
-											value="1" />
+								<label class="col-sm-3 control-label">Attributes</label>
+								<div class="col-sm-offset-3 col-sm-10">
+								<div class="checkbox">
+								<label> <form:checkbox id="field-garage" path="garage" value="1"/> Garage</label>
 								</div>
-							</div>
-
-							<div class="checkbox">
-								<label class="col-sm-3 control-label" >Balcony or Patio</label>
-								<div class="col-sm-5">
-								<form:checkbox id="field-balcony" path="balcony"
-										value="1" />
-							</div>
-							</div>
-							<div class="checkbox">
-								<label class="col-sm-3 control-label">Elevator </label>
-								<div class="col-sm-5">
-								<form:checkbox id="field-elevator"
-										path="elevator" value="1" />
-							</div>
-							</div>
-							<div class="checkbox">
-								<label class="col-sm-3 control-label">Dishwasher</label>
-								<div class="col-sm-5">
-								<form:checkbox id="field-dishwasher"
-										path="dishwasher" value="1" />
 								</div>
-							</div>
+								</div>
+								
+								<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-10">
+								<div class="checkbox">
+								<label> <form:checkbox id="field-parking" path="parking" value="1"/> Parking</label>
+								</div>
+								</div>
+								</div>
+
+								<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-10">
+								<div class="checkbox">
+								<label> <form:checkbox id="field-balcony" path="balcony" value="1"/> Balcony or Patio</label>
+								</div>
+								</div>
+								</div>
+							
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-10">
+								<div class="checkbox">
+								<label> <form:checkbox id="field-elevator" path="elevator" value="1"/> Elevator</label>
+								</div>
+								</div>
+								</div>
+
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-10">
+								<div class="checkbox">
+								<label> <form:checkbox id="field-dishwasher" path="dishwasher" value="1"/> Dishwasher</label>
+								</div>
+								</div>
+								</div>
+							
 							<br />
 				
 							<div class="form-group">
