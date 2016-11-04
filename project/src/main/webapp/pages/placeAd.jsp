@@ -313,6 +313,19 @@
 								</div>
 							</spring:bind>
 							
+							
+							
+							<div class="form-group">
+								
+								<label class="col-sm-3 control-label">Auction</label>
+								<div class="col-sm-offset-3 col-sm-10">
+								<div class="checkbox">
+								<label> <form:checkbox id="field-auction" path="auction" value="1"/> Yes</label>
+								</div>
+								</div>
+								</div>
+							
+							
 							<spring:bind path="buyItNowPrice">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label" for="field-BuyNowPrize">Immediate Buy Price for Auction </label>
@@ -418,7 +431,7 @@
 
 							<div class="form-group">
 								
-								<label class="col-sm-3 control-label">Attributes</label>
+								<label class="col-sm-3 control-label">Additional Information</label>
 								<div class="col-sm-offset-3 col-sm-10">
 								<div class="checkbox">
 								<label> <form:checkbox id="field-garage" path="garage" value="1"/> Garage</label>

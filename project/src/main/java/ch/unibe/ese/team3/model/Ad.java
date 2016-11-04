@@ -134,6 +134,16 @@ public class Ad {
 	
 	private int bidPriceForUser;
 	
+	@Column(nullable = false)
+	private boolean auction;
+	
+	
+	public boolean isAuction() {
+		return auction;
+	}
+	public void setAuction(boolean auction) {
+		this.auction = auction;
+	}
 	public int getbidPriceForUser(){
 		return this.bidPriceForUser;
 	}

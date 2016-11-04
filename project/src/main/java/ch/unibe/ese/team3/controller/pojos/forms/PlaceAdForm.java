@@ -71,6 +71,7 @@ public class PlaceAdForm {
 	private int startPrice;
 	private int increaseBidPrice;
 	private int buyItNowPrice;
+	private boolean auction;
 	
 	
 	// optional for input
@@ -110,6 +111,14 @@ public class PlaceAdForm {
 
 	public void setBuyItNowPrice(int buyItNowPrice) {
 		this.buyItNowPrice = buyItNowPrice;
+	}
+
+	public boolean getAuction() {
+		return auction;
+	}
+
+	public void setAuction(boolean auction) {
+		this.auction = auction;
 	}
 
 	public boolean getDishwasher() {
