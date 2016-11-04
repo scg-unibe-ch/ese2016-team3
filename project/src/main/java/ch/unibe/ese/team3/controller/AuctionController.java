@@ -3,6 +3,7 @@ package ch.unibe.ese.team3.controller;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -18,6 +19,7 @@ import ch.unibe.ese.team3.model.User;
  * handels all actions (like bid, etc) concerning auction
  *
  */
+@Controller
 public class AuctionController {
 	
 	
@@ -29,7 +31,7 @@ public class AuctionController {
 	private AdService adService;
 
 	
-	@RequestMapping(value = "/results", method = RequestMethod.POST)
+	@RequestMapping(value = "/resultsAuction", method = RequestMethod.POST)
 	public void bid(Principal principal, int amount , long id){
 		
 		User bidder = userService.findUserByUsername(principal.getName());

@@ -3,12 +3,14 @@ package ch.unibe.ese.team3.controller.service;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Bid;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.BidDao;
 
+@Service
 public class BidService {
 
 	

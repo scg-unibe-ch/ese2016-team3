@@ -96,10 +96,10 @@ public class Ad {
 	private List<AdPicture> pictures;
 	
 	
-	//new
-	@Fetch(FetchMode.SELECT)
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
-	private List<Bid> bids;
+//	//new
+//	@Fetch(FetchMode.SELECT)
+//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+//	private List<Bid> bids;
 
 	
 
@@ -403,12 +403,12 @@ public class Ad {
 	public void setDishwasher(boolean dishwasher) {
 		this.dishwasher = dishwasher;
 	}
-	public List<Bid> getBids() {
+/*	public List<Bid> getBids() {
 		return bids;
 	}
 	public void setBids(List<Bid> bids) {
 		this.bids = bids;
-	}
+	}*/
 
 	
 	@Override
