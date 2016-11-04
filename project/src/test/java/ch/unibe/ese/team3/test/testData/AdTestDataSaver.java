@@ -101,6 +101,7 @@ public class AdTestDataSaver {
 		adBern.setDistanceShopping(100);
 		adBern.setFloorLevel(2);
 		adBern.setNumberOfRooms(2);
+		adBern.setAuction(false);
 		
 		adBern.setInfrastructureType(InfrastructureType.CABLE);
 		List<AdPicture> pictures = new ArrayList<>();
@@ -153,6 +154,8 @@ public class AdTestDataSaver {
 		adBern2.setFloorLevel(6);
 		adBern2.setNumberOfRooms(4);
 		
+		adBern2.setAuction(false);
+		
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adBern2, "/img/test/ad2_1.jpg"));
 		pictures.add(createPicture(adBern2, "/img/test/ad2_2.jpg"));
@@ -201,6 +204,8 @@ public class AdTestDataSaver {
 		adBasel.setNumberOfRooms(2);
 		adBasel.setInfrastructureType(InfrastructureType.SATELLITE);
 		
+		adBasel.setAuction(false);
+		
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adBasel, "/img/test/ad3_1.jpg"));
 		pictures.add(createPicture(adBasel, "/img/test/ad3_2.jpg"));
@@ -245,6 +250,9 @@ public class AdTestDataSaver {
 		adOlten.setFloorLevel(3);
 		adOlten.setNumberOfRooms(3);
 		adOlten.setInfrastructureType(InfrastructureType.CABLE);
+		
+		adOlten.setAuction(false);
+		
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adOlten, "/img/test/ad4_1.png"));
 		pictures.add(createPicture(adOlten, "/img/test/ad4_2.png"));
@@ -288,6 +296,8 @@ public class AdTestDataSaver {
 		adNeuchâtel.setNumberOfRooms(7);
 		adNeuchâtel.setInfrastructureType(InfrastructureType.CABLE);
 		
+		adNeuchâtel.setAuction(false);
+		
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adNeuchâtel, "/img/test/ad5_1.jpg"));
 		pictures.add(createPicture(adNeuchâtel, "/img/test/ad5_2.jpg"));
@@ -327,6 +337,8 @@ public class AdTestDataSaver {
 		adBiel.setDistanceShopping(4000);
 		adBiel.setFloorLevel(3);
 		adBiel.setNumberOfRooms(7);
+		
+		adBiel.setAuction(false);
 		
 		adBiel.setInfrastructureType(InfrastructureType.SATELLITE);
 		pictures = new ArrayList<>();
@@ -376,6 +388,9 @@ public class AdTestDataSaver {
 		adZurich.setFloorLevel(3);
 		adZurich.setNumberOfRooms(5);
 		adZurich.setInfrastructureType(InfrastructureType.CABLE);
+		
+		adZurich.setAuction(false);
+		
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adZurich, "/img/test/ad1_3.jpg"));
 		pictures.add(createPicture(adZurich, "/img/test/ad1_2.jpg"));
@@ -425,6 +440,8 @@ public class AdTestDataSaver {
 		adLuzern.setFloorLevel(6);
 		adLuzern.setNumberOfRooms(3);
 		adLuzern.setInfrastructureType(InfrastructureType.CABLE);
+		
+		adLuzern.setAuction(false);
 
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adLuzern, "/img/test/ad2_3.jpg"));
@@ -473,6 +490,9 @@ public class AdTestDataSaver {
 		adAarau.setFloorLevel(1);
 		adAarau.setNumberOfRooms(3);
 		adAarau.setInfrastructureType(InfrastructureType.CABLE);
+		
+		adAarau.setAuction(false);
+		
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adAarau, "/img/test/ad3_3.jpg"));
 		pictures.add(createPicture(adAarau, "/img/test/ad3_2.jpg"));
@@ -519,6 +539,9 @@ public class AdTestDataSaver {
 		adDavos.setNumberOfRooms(3);
 		adDavos.setInfrastructureType(InfrastructureType.FOC);
 		adDavos.setNumberOfBath(1);
+		
+		adDavos.setAuction(false);
+		
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adDavos, "/img/test/ad4_3.png"));
 		pictures.add(createPicture(adDavos, "/img/test/ad4_2.png"));
@@ -561,6 +584,8 @@ public class AdTestDataSaver {
 		adLausanne.setFloorLevel(1);
 		adLausanne.setNumberOfRooms(3);
 		adLausanne.setInfrastructureType(InfrastructureType.CABLE);
+		
+		adLausanne.setAuction(false);
 
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adLausanne, "/img/test/ad5_3.jpg"));
@@ -603,6 +628,8 @@ public class AdTestDataSaver {
 		adLocarno.setNumberOfRooms(6);
 		adLocarno.setInfrastructureType(InfrastructureType.CABLE);
 
+		adLocarno.setAuction(false);
+		
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adLocarno, "/img/test/ad6_3.png"));
 		pictures.add(createPicture(adLocarno, "/img/test/ad6_2.png"));

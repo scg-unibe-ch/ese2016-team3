@@ -137,12 +137,22 @@ public class Ad {
 	@Column(nullable = false)
 	private boolean auction;
 	
+	// not available if EndDate of auction is passed or 
+	//if someone bought the house before the auction ended
+	private boolean available = true;	
+	
 	
 	public boolean isAuction() {
 		return auction;
 	}
 	public void setAuction(boolean auction) {
 		this.auction = auction;
+	}
+	public boolean isAvailable() {
+		return available;
+	}
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 	public int getbidPriceForUser(){
 		return this.bidPriceForUser;
