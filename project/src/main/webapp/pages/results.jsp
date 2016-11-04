@@ -393,7 +393,7 @@
 
 									<div class="col-sm-3 col-md-3">
 										<form:form method="post" modelAttribute="placeAdForm"
-											action="./results" id="bidForm" autocomplete="off">
+											action="./results" id="bidForm" autocomplete="off"> <%-- id = ?? , action =" /results" oder /resultsAction?? --%>
 
 											<p>
 												<strong>Auction</strong>

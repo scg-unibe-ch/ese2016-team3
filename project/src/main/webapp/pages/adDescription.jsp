@@ -381,6 +381,64 @@
 						</div>
 					</div>
 				</div>
+
+
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-sm-4">
+								<h4>Auction</h4>
+								<fmt:formatDate value="${ad.startDate}"
+												var="formattedStartDate" type="date" pattern="dd.MM.yyyy" />
+											<p>Running until :${formattedStartDate}</p>
+
+											<p>
+												Current price: <strong>${ad.currentAuctionPrice} CHF</strong>
+											</p>
+							</div>
+							
+							 <div class="col-sm-8">
+							 <%-- <form:form ?? --%>
+							<div class="form-group">
+												<label class="sr-only" for="bid">Amount</label>
+												<%-- for="bid" stimmt wahrscheinlich nicht --%>
+												<div class="input-group">
+													<div class="input-group-addon">CHF</div>
+													<%--<input type="number" class="form-controll" placeholder="Amount" name="bid"> es fehlt: id = und value= --%>
+													<input class="form-control" id="disabledInput" type="text"
+														placeholder=${ad.bidPriceForUser } disabled> <span
+														class="input-group-btn">
+														<button type="button" class="btn btn-success">Bid</button>
+													</span>
+
+												</div>
+											</div>
+							
+							
+							
+											<div class="form-group">
+												<label class="sr-only" for="exampleInputAmount">Buy
+													now Price in CHF</label>
+												<%-- for stimmt wahrscheinlich nicht --%>
+												<div class="input-group">
+													<div class="input-group-addon">CHF</div>
+													<input class="form-control" id="disabledInput" type="text"
+														placeholder=${ad.buyItNowPrice } disabled> <span
+														class="input-group-btn">
+														<button type="button" class="btn btn-success">Buy
+														</button>
+													</span>
+												</div>
+											</div>
+										</div>
+							
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				
 			</div>
 		</div>
 
