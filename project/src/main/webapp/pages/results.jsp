@@ -389,6 +389,7 @@
 										<p>Move-in date: ${formattedMoveInDate }</p>
 									</div>
 
+<c:if test="${ ad.auction}">
 
 
 									<div class="col-sm-3 col-md-3">
@@ -443,7 +444,7 @@
 											</div>
 										</form:form>
 									</div>
-
+</c:if>
 								</div>
 							</div>
 							<div class="clearfix"></div>

@@ -381,9 +381,23 @@
 						</div>
 					</div>
 				</div>
+<%--<c:choose>
+									<c:when test="${loggedIn}">
+										<c:if test="${loggedInUserEmail != shownAd.user.username}">
+											<button class="btn btn-primary" type="button"
+												data-id="${visit.id}" onclick="sendEnquiry(${visit.id});">Send
+												enquiry to advertiser</button>
+										</c:if>
+									</c:when>
+									<c:otherwise>
+										<a href="./login"><button class="btn btn-default"
+												type="button" data-id="${visit.id}">Login to send
+												enquiries</button></a>
+									</c:otherwise>
+								</c:choose> --%>
 
-
-				<div class="panel panel-default">
+<c:if test="${shownAd.auction}">
+<div class="panel panel-default">
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-sm-4">
@@ -434,7 +448,11 @@
 						</div>
 					</div>
 				</div>
+				
 
+</c:if>
+
+				
 
 
 
