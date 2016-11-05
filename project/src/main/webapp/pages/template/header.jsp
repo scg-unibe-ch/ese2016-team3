@@ -21,13 +21,6 @@
 		<script src="/js/bootstrap.min.js"></script>
 		<script src="/js/unreadMessages.js"></script>
 		
-		<%--this is a file input plugin --%>
-		<link href="/css/fileinput.min.css" media="all" rel="stylesheet"
-			type="text/css" />
-		
-		<!-- the main fileinput plugin file -->
-		<script src="/js/fileinput.min.js"></script>
-		
 		<style>
 			/* ensure that autocomplete lists are not too long and have a scrollbar */
 			.ui-autocomplete {

@@ -28,6 +28,7 @@ import ch.unibe.ese.team3.controller.service.EditAdService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.dto.PictureMeta;
 import ch.unibe.ese.team3.model.Ad;
+import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 
@@ -68,12 +69,13 @@ public class EditAdController {
 	public ModelAndView editAdPage(@RequestParam long id, Principal principal) {
 		ModelAndView model = new ModelAndView("editAd");
 		Ad ad = adService.getAdById(id);
-		model.addObject("ad", ad);
-
-		PlaceAdForm form = editAdService.fillForm(ad);
-
+		PlaceAdForm form = editAdService.fillForm(ad);	
+		
+		model.addObject("adId", ad.getId());
+		model.addObject("existingPictures", ad.getPictures());
 		model.addObject("placeAdForm", form);
 		model.addObject("types", Type.values());
+		model.addObject("infrastructureTypes", InfrastructureType.values());
 
 		String realPath = servletContext.getRealPath(IMAGE_DIRECTORY);
 		if (pictureUploader == null) {
@@ -91,6 +93,7 @@ public class EditAdController {
 			BindingResult result, Principal principal,
 			RedirectAttributes redirectAttributes, @RequestParam long adId) {
 		ModelAndView model = new ModelAndView("editAd");
+		
 		if (!result.hasErrors()) {
 			String username = principal.getName();
 			User user = userService.findUserByUsername(username);
@@ -111,6 +114,14 @@ public class EditAdController {
 			model = new ModelAndView("redirect:/ad?id=" + ad.getId());
 			redirectAttributes.addFlashAttribute("confirmationMessage",
 					"Ad edited successfully. You can take a look at it below.");
+		}
+		else {
+			Ad ad = adService.getAdById(adId);
+			model.addObject("adId", ad.getId());
+			model.addObject("existingPictures", ad.getPictures());
+			model.addObject("placeAdForm", placeAdForm);
+			model.addObject("types", Type.values());
+			model.addObject("infrastructureTypes", InfrastructureType.values());
 		}
 
 		return model;

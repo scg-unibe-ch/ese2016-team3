@@ -330,7 +330,6 @@
 									<div class="col-sm-5">
 										<form:input type="text" id="field-startDate" path="startDate"
 											cssClass="form-control" />
-
 									</div>
 								</div>
 							</spring:bind>
@@ -342,7 +341,6 @@
 									<div class="col-sm-5">
 										<form:input type="text" id="field-endDate" path="endDate"
 											cssClass="form-control" />
-
 									</div>
 								</div>
 							</spring:bind>
@@ -356,11 +354,10 @@
 											type="number" min="0" placeholder="Startprice " step="1"
 											cssClass="form-control" />
 										<form:errors path="startPrice" cssClass="text-danger" />
-
 									</div>
 								</div>
-
 							</spring:bind>
+							
 							<spring:bind path="increaseBidPrice">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label" for="field-increasePrice">Amount
@@ -370,24 +367,13 @@
 											type="number" min="0" placeholder="Startprice " step="1"
 											cssClass="form-control" />
 										<form:errors path="increaseBidPrice" cssClass="text-danger" />
-
 									</div>
-
 								</div>
-
 							</spring:bind>
-
-
-
 						</div>
 					</div>
 
-
-
-
 					<h4>Description</h4>
-
-
 					<div class="panel panel-default">
 						<div class="panel-body">
 
@@ -469,10 +455,6 @@
 						</div>
 					</div>
 
-
-
-
-
 					<h4>Visiting times (optional)</h4>
 					<div class="panel panel-default">
 						<div class="panel-body">
@@ -516,7 +498,9 @@
 
 
 									<button type="button" class="btn btn-primary"
-										id="addVisitButton"><span class="glyphicon glyphicon-plus"></span></button>
+										id="addVisitButton">
+										<span class="glyphicon glyphicon-plus"></span>
+									</button>
 								</div>
 							</div>
 							<div class="row">
