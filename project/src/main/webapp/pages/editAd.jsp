@@ -308,7 +308,7 @@
 									<label class="col-sm-3 control-label" for="field-NumberOfBath">Number
 										of baths</label>
 									<div class="col-sm-5">
-										<form:input id="field-NumberOfBath" type="number" min="0"
+										<form:input id="field-NumberOfBath" type="number" min="0" 
 											path="numberOfBath" placeholder="Number of baths" step="1"
 											cssClass="form-control" />
 										<form:errors path="numberOfBath"

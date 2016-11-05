@@ -62,8 +62,6 @@ public class AlertService {
 
 		alert.setPrice(alertForm.getPrice());
 
-		
-		
 		alert.setRadius(alertForm.getRadius());		
 		alert.setAlertTypes(alertForm.getAlertTypes());
 
@@ -147,6 +145,7 @@ public class AlertService {
 		List<AlertType> alertTypes = alert.getAlertTypes();
 		
 		// iterates over each alertType and compares the type to the ad's type
+		// if Ad type equals a type in alert, mismatch is false
 		for (AlertType alertType : alertTypes) {
 				if (ad.getType().equals(alertType.getType()))
 					mismatch = false;

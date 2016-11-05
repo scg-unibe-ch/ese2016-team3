@@ -113,6 +113,7 @@ public class Ad {
 	private int floorLevel;
 	
 	// auction specific attributes
+	
 	@Column(nullable = true)
 	@Temporal(TemporalType.DATE)
 	private Date startDate;

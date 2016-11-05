@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+
 public class AlertType {
 	
 	@Id
@@ -31,6 +32,4 @@ public class AlertType {
 	public void setType(Type type) {
 		this.type = type;
 	}
-
-	
 }

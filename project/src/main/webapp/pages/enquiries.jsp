@@ -32,7 +32,8 @@
 								});
 
 						function attachHandlers() {
-							$(".acceptButton")
+							$(".
+")
 									.click(
 											function() {
 												var cell = $(this).parent();

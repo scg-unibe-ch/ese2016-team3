@@ -94,6 +94,14 @@ public class AdTestDataSaver {
 		adBern.setFloorLevel(2);
 		adBern.setNumberOfRooms(2);
 		
+		// set auction specific attributes
+		adBern.setAuction(true);
+		adBern.setStartDate(formatter.parse("03.11.2016")); // to houers !! 
+		adBern.setEndDate(formatter.parse("03.12.2016"));
+		adBern.setStartPrice(70000);
+		adBern.setIncreaseBidPrice(1000);
+		adBern.setBuyItNowPrice(100000);
+		
 		adBern.setInfrastructureType(InfrastructureType.CABLE);
 		List<AdPicture> pictures = new ArrayList<>();
 		pictures.add(createPicture(adBern, "/img/test/ad1_1.jpg"));

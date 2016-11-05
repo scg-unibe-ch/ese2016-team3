@@ -6,6 +6,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.EntityManager;
@@ -22,9 +24,11 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import ch.unibe.ese.team3.model.dao.UserDao;
 import ch.unibe.ese.team3.model.dao.MessageDao;
+import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.User;
+import ch.unibe.ese.team3.model.UserRole;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -123,6 +127,20 @@ public class MessageServiceTest {
 		messageDao.delete(message2);
 	}
 	
+	@Test
+	public void getInboxForUserEmptyInput() {
+		User userEmptyInbox = createUser("userEmptyInbox@f.ch", "password", "userEmptyInbox", "F", Gender.MALE);
+		userDao.save(userEmptyInbox);
+		
+		Iterable<Message> messages = messageService.getInboxForUser(userEmptyInbox);
+		
+		int countInbox = 0;
+		for (Message message: messages) {
+			countInbox++;
+		}
+		assertEquals(countInbox, 0);
+	}
+	
 	/*@Test 
 	public void saveFromMessageFormTest(){
 		
@@ -132,5 +150,25 @@ public class MessageServiceTest {
 		messageForm.setText("I really really wanna");
 		messageService.saveFrom(messageForm);
 	}*/
+	
+	
+	// Lean user creating method
+	User createUser(String email, String password, String firstName, String lastName, Gender gender) {
+		User user = new User();
+		user.setUsername(email);
+		user.setPassword(password);
+		user.setEmail(email);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setEnabled(true);
+		user.setGender(gender);
+		Set<UserRole> userRoles = new HashSet<>();
+		UserRole role = new UserRole();
+		role.setRole("ROLE_USER");
+		role.setUser(user);
+		userRoles.add(role);
+		user.setUserRoles(userRoles);
+		return user;
+	}
 	
 }
