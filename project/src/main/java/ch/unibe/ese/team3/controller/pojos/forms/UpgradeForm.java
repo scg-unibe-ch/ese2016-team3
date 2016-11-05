@@ -12,6 +12,11 @@ public class UpgradeForm {
 	
 	@NotNull
 	private boolean isPremium;
+	
+	@NotNull
+	private int duration;
+	
+	
 
 	@Pattern(regexp = "[0-9]{16}", message = "Credit card number must be 16 digits")
 	@NotNull
@@ -91,6 +96,14 @@ public class UpgradeForm {
 	
 	public void setIsPremium(boolean isPremium){
 		this.isPremium = isPremium;
+	}
+	
+	public void setDuration(int duration){
+		this.duration = duration;
+	}
+	
+	public int getDuration(){
+		return duration;
 	}
 
 }

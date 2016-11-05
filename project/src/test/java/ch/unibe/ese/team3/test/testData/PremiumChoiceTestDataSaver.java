@@ -18,16 +18,17 @@ public class PremiumChoiceTestDataSaver {
 
 	@Transactional
 	public void saveTestData() throws Exception {
-		PremiumChoice month = createPremiumChoice(31, 29.0);
-		premiumChoiceDao.save(month);
 		
-		PremiumChoice week = createPremiumChoice(7, 7.0);
+		PremiumChoice week = createPremiumChoice(7, 7.00);
 		premiumChoiceDao.save(week);
 		
-		PremiumChoice halfYear = createPremiumChoice(182, 99.9);
-		premiumChoiceDao.save(halfYear);
+		PremiumChoice month = createPremiumChoice(30, 29.90);
+		premiumChoiceDao.save(month);
 		
-		PremiumChoice year = createPremiumChoice(365, 149.9);
+		PremiumChoice hundred = createPremiumChoice(100, 69.90);
+		premiumChoiceDao.save(hundred);
+		
+		PremiumChoice year = createPremiumChoice(365, 149.90);
 		premiumChoiceDao.save(year);
 	}
 
