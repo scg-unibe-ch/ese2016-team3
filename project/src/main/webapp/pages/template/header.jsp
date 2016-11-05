@@ -123,8 +123,8 @@
 			</nav>
 	
 			<c:if test="${not empty confirmationMessage }">
-				<div class="confirmation-message">
-					<img src="/img/check-mark.png" />
+				<div class="alert alert-success">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 					<p>${confirmationMessage }</p>
 				</div>
 			</c:if>

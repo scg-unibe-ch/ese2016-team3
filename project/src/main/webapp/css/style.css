@@ -66,3 +66,7 @@ tr.message-row {
 .betweenLabel {
 	margin: 0px 7px;
 }
+
+.table > tbody > tr > td {
+	vertical-align: middle !important;
+}

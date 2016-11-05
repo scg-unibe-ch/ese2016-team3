@@ -148,7 +148,7 @@ public class PlaceAdController {
 			// reset the picture uploader
 			this.pictureUploader = null;
 
-			model = new ModelAndView("redirect:/ad?id=" + ad.getId());
+			model = new ModelAndView("redirect:../ad?id=" + ad.getId());
 			redirectAttributes.addFlashAttribute("confirmationMessage",
 					"Ad placed successfully. You can take a look at it below.");
 		} else {
