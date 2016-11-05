@@ -32,7 +32,7 @@ function prepareRows() {
 				$('#message-preview-sender').html(data.sender.email);
 				$('#message-preview-receiver').html(data.recipient.email);
 				$('#message-preview-date').html(data.dateSent);
-				$('#message-preview-content').html(data.text);
+				$('#message-preview-content').html(data.text.replace(/(\r\n?|\n)/g, '<br/>'));
 			}, 'json');
 			unreadMessages(function(unread) {
 				$('#navUnread').html(unread);

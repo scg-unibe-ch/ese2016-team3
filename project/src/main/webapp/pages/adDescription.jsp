@@ -196,7 +196,7 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<h4>Description</h4>
-								<p>${shownAd.roomDescription}</p>
+								<p>${shownAd.getRoomDescriptionWithLineBreaks()}</p>
 							</div>
 						</div>
 					</div>

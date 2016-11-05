@@ -341,6 +341,10 @@ public class Ad {
 	public String getRoomDescription() {
 		return roomDescription;
 	}
+	
+	public String getRoomDescriptionWithLineBreaks(){
+		return roomDescription.replaceAll("\\r\\n?|\\n", "<br/>");
+	}
 
 	public void setRoomDescription(String roomDescription) {
 		this.roomDescription = roomDescription;
