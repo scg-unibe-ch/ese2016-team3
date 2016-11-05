@@ -243,24 +243,66 @@ public class AlertServiceTest {
 		
 		// inbox of alertMessageReceiver is empty
 		Iterable<Message> messagesBeforeAlert = messageDao.findByRecipient(alertMessageReceiver);
-		int countMessagesBeforeAlert = 0;
-		
-		for (Message message: messagesBeforeAlert) {
-			countMessagesBeforeAlert++;
-		}
-		assertEquals(countMessagesBeforeAlert, 0);
+
+		assertEquals(countIterable(messagesBeforeAlert), 0);
 		
 		// trigger alert
 		alertService.triggerAlerts(oltenResidence);
 		
 		// assert alertMessageReceiver receives a message when alert triggers
 		Iterable<Message> messagesAfterAlert = messageDao.findByRecipient(alertMessageReceiver);
-		int countMessagesAfterAlert = 0;
+		assertEquals(countIterable(messagesAfterAlert), 1);
+	}
+	
+	@Test
+	public void noTriggerWhenPriceTooHigh() {
+		// create list of AlertTypes
+		AlertType typeLoft = new AlertType();
+		typeLoft.setType(Type.LOFT);
+		List<AlertType> alertTypes = new ArrayList<>();
+		alertTypes.add(typeLoft);
 		
-		for (Message message: messagesAfterAlert) {
-			countMessagesAfterAlert++;
-		}
-		assertEquals(countMessagesAfterAlert, 1);
+		// create user
+		User userNoTrigger = createUser("userNoTrigger@f.ch", "password", "userNoTrigger", "F", Gender.MALE);
+		userDao.save(userNoTrigger);
+		
+		// create Alert
+		Alert alert = new Alert();
+		alert.setUser(userNoTrigger);
+		alert.setAlertTypes(alertTypes);
+		alert.setCity("Bern");
+		alert.setZipcode(3000);
+		alert.setPrice(1500);
+		alert.setRadius(100);
+		alertDao.save(alert);
+		
+		// create Ad
+		Date date = new Date();
+		Ad tooExpansiveAd = new Ad();
+		tooExpansiveAd.setZipcode(3000);
+		tooExpansiveAd.setMoveInDate(date);
+		tooExpansiveAd.setCreationDate(date);
+		tooExpansiveAd.setPrizePerMonth(1700);
+		tooExpansiveAd.setSquareFootage(42);
+		tooExpansiveAd.setType(Type.LOFT);
+		tooExpansiveAd.setRoomDescription("blah");
+		tooExpansiveAd.setUser(userNoTrigger);
+		tooExpansiveAd.setTitle("tooExpansiveAd");
+		tooExpansiveAd.setStreet("Florastr. 100");
+		tooExpansiveAd.setCity("Bern");
+		
+		//  no mismatches
+		assertFalse(alertService.radiusMismatch(tooExpansiveAd, alert));
+		assertFalse(alertService.typeMismatch(tooExpansiveAd, alert));
+		
+		// trigger alerts and make sure the user gets no message
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(userNoTrigger);
+		assertEquals(countIterable(messagesBefore), 0);
+		
+		alertService.triggerAlerts(tooExpansiveAd);
+		
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(userNoTrigger);
+		assertEquals(countIterable(messagesAfter), 0);
 	}
 	
 	// Lean user creating method
@@ -280,5 +322,13 @@ public class AlertServiceTest {
 		userRoles.add(role);
 		user.setUserRoles(userRoles);
 		return user;
+	}
+	// method to count all iterables
+	<T> int countIterable(Iterable<T> iterable) {
+		int countMessages = 0;
+		for (T element : iterable ) {
+			countMessages++;
+		}
+		return countMessages;
 	}
 }
