@@ -9,7 +9,6 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
 
 import ch.unibe.ese.team3.model.AlertType;
-import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 
 /** This form is used when a user wants to create a new alert. */
