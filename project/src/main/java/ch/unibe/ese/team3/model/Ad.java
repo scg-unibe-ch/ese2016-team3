@@ -8,6 +8,8 @@ import javax.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import ch.unibe.ese.team3.enums.Distance;
+
 /** Describes an advertisement that users can place and search for. */
 @Entity
 public class Ad {
@@ -339,12 +341,24 @@ public class Ad {
 		this.distanceSchool = distanceToSchool;
 	}
 	
+	public Distance getDistanceSchoolAsEnum(){
+		return Distance.fromInt(distanceSchool);
+	}
+	
 	public int getDistanceShopping(){
 		return distanceShopping;
 	}
 	
+	public Distance getDistanceShoppingAsEnum(){
+		return Distance.fromInt(distanceShopping);
+	}
+	
 	public void setDistanceShopping(int distanceShopping){
 		this.distanceShopping = distanceShopping;
+	}
+	
+	public Distance getDistancePublicTransportAsEnum(){
+		return Distance.fromInt(distancePublicTransport);
 	}
 	
 	public int getDistancePublicTransport(){
@@ -353,6 +367,10 @@ public class Ad {
 			
 	public String getRoomDescription() {
 		return roomDescription;
+	}
+	
+	public String getRoomDescriptionWithLineBreaks(){
+		return roomDescription.replaceAll("\\r\\n?|\\n", "<br/>");
 	}
 
 	public void setRoomDescription(String roomDescription) {

@@ -96,4 +96,8 @@ public class Message {
 	public void setRecipient(User recipient) {
 		this.recipient = recipient;
 	}
+	
+	public String getTextWithLineBreaks(){
+		return this.text.replaceAll("\\r\\n?|\\n", "<br/>");
+	}
 }
