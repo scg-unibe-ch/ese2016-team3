@@ -342,17 +342,17 @@
 				<p>No results found!
 			</c:when>
 			<c:otherwise>
-				<div class="row bottom15">
-					<div class="col-xs-12">
-						<div class="btn-group">
-							<button type="button" class="btn btn-default">All</button>
-							<button type="button" class="btn btn-default">Buy
-								directly</button>
-							<button type="button" class="btn btn-default">Buy by
-								auction</button>
-						</div>
-					</div>
-				</div>
+<!-- 				<div class="row bottom15"> -->
+<!-- 					<div class="col-xs-12"> -->
+<!-- 						<div class="btn-group"> -->
+<!-- 							<button type="button" class="btn btn-default">All</button> -->
+<!-- 							<button type="button" class="btn btn-default">Buy -->
+<!-- 								directly</button> -->
+<!-- 							<button type="button" class="btn btn-default">Buy by -->
+<!-- 								auction</button> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 				<div class="row" id="resultsDiv">
 					<c:forEach var="ad" items="${results}">
 						<div data-price="${ad.prizePerMonth}"

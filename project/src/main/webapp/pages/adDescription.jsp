@@ -225,6 +225,11 @@
 						<th>Number of bath rooms</th>
 						<td>${shownAd.numberOfBath}</td>
 					</tr>
+					
+					<tr>
+						<th>Internet/TV infrastructure</th>
+						<td>${shownAd.infrastructureType.name}</td>
+					</tr>
 
 					<tr>
 						<th>Distance to school</th>

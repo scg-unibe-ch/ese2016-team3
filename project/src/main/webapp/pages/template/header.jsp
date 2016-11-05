@@ -75,7 +75,6 @@
 							<li><a href="/${pagemode}/">Homepage</a></li>
 							<li><a href="/${pagemode}/searchAd">Find ad</a></li>
 							<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
-							<li><a href="#">My Auctions</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="navbar-right dropdown"><c:choose>
