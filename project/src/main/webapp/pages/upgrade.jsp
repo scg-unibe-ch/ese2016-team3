@@ -96,8 +96,11 @@
 							<label class="col-sm-2 control-label"
 								for="field-expirationMonth">Date of Expiration</label>
 							<div class="col-sm-3">
-								<form:input path="expirationMonth" id="field-expirationMonth"
-									class="form-control" placeholder="MM" />
+								<form:select path="expirationMonth" id="field-expirationMonth"
+									cssClass="form-control">
+									<option>Month</option>
+									<form:options items="${months}" />
+								</form:select>
 								<form:errors path="expirationMonth" cssClass="text-danger" />
 							</div>
 						</div>
@@ -109,8 +112,11 @@
 							<label class="col-sm-2 control-label"
 								for="field-expirationYear"></label>
 							<div class="col-sm-3">
-								<form:input path="expirationYear" id="field-expirationYear"
-									class="form-control" placeholder="YY" />
+								<form:select path="expirationYear" cssClass="form-control"
+									id="field-expirationYear">
+									<option>Year</option>
+									<form:options items="${years}" />
+								</form:select>
 								<form:errors path="expirationYear" cssClass="text-danger" />
 							</div>
 						</div>

@@ -28,7 +28,7 @@ public class UpgradeForm {
 	@NotNull
 	private String expirationMonth;
 	
-	@Pattern(regexp = "16|17|18|19|[2-5][0-9]", message = "Your credit card has expired!")
+	@Pattern(regexp = "2016|2017|2018|2019|202[0-5]", message = "Your credit card has expired!")
 	@NotNull
 	private String expirationYear;
 	
