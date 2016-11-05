@@ -21,13 +21,6 @@
 		<script src="/js/bootstrap.min.js"></script>
 		<script src="/js/unreadMessages.js"></script>
 		
-		<%--this is a file input plugin --%>
-		<link href="/css/fileinput.min.css" media="all" rel="stylesheet"
-			type="text/css" />
-		
-		<!-- the main fileinput plugin file -->
-		<script src="/js/fileinput.min.js"></script>
-		
 		<style>
 			/* ensure that autocomplete lists are not too long and have a scrollbar */
 			.ui-autocomplete {
@@ -75,7 +68,6 @@
 							<li><a href="/${pagemode}/">Homepage</a></li>
 							<li><a href="/${pagemode}/searchAd">Find ad</a></li>
 							<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
-							<li><a href="#">My Auctions</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="navbar-right dropdown"><c:choose>
@@ -124,8 +116,8 @@
 			</nav>
 	
 			<c:if test="${not empty confirmationMessage }">
-				<div class="confirmation-message">
-					<img src="/img/check-mark.png" />
+				<div class="alert alert-success">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 					<p>${confirmationMessage }</p>
 				</div>
 			</c:if>

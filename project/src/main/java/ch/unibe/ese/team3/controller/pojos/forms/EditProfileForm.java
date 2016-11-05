@@ -1,8 +1,5 @@
 package ch.unibe.ese.team3.controller.pojos.forms;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-
 import org.hibernate.validator.constraints.NotBlank;
 
 

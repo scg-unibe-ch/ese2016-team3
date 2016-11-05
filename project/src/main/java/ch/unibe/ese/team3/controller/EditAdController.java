@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,10 @@ import ch.unibe.ese.team3.controller.service.AlertService;
 import ch.unibe.ese.team3.controller.service.EditAdService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.dto.PictureMeta;
+import ch.unibe.ese.team3.exceptions.ForbiddenException;
+import ch.unibe.ese.team3.exceptions.ResourceNotFoundException;
 import ch.unibe.ese.team3.model.Ad;
+import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 
@@ -65,15 +69,25 @@ public class EditAdController {
 	 * Serves the page that allows the user to edit the ad with the given id.
 	 */
 	@RequestMapping(value = "/profile/editAd", method = RequestMethod.GET)
-	public ModelAndView editAdPage(@RequestParam long id, Principal principal) {
+	public ModelAndView editAdPage(@RequestParam long id, Principal principal, HttpServletResponse response) {
 		ModelAndView model = new ModelAndView("editAd");
 		Ad ad = adService.getAdById(id);
-		model.addObject("ad", ad);
-
-		PlaceAdForm form = editAdService.fillForm(ad);
-
+		
+		if (ad == null){
+			throw new ResourceNotFoundException();
+		}
+		
+		if (!userCanEditAd(principal, ad) ){
+			throw new ForbiddenException();
+		}
+		
+		PlaceAdForm form = editAdService.fillForm(ad);	
+		
+		model.addObject("adId", ad.getId());
+		model.addObject("existingPictures", ad.getPictures());
 		model.addObject("placeAdForm", form);
 		model.addObject("types", Type.values());
+		model.addObject("infrastructureTypes", InfrastructureType.values());
 
 		String realPath = servletContext.getRealPath(IMAGE_DIRECTORY);
 		if (pictureUploader == null) {
@@ -81,6 +95,10 @@ public class EditAdController {
 		}
 
 		return model;
+	}
+
+	private boolean userCanEditAd(Principal principal, Ad ad) {
+		return ad.getUser().getEmail().equals(principal.getName());
 	}
 
 	/**
@@ -91,9 +109,19 @@ public class EditAdController {
 			BindingResult result, Principal principal,
 			RedirectAttributes redirectAttributes, @RequestParam long adId) {
 		ModelAndView model = new ModelAndView("editAd");
+		
 		if (!result.hasErrors()) {
 			String username = principal.getName();
 			User user = userService.findUserByUsername(username);
+			Ad existingAd = adService.getAdById(adId);
+			
+			if (existingAd == null){
+				throw new ResourceNotFoundException();
+			}
+			
+			if (!userCanEditAd(principal, existingAd)){
+				throw new ForbiddenException();
+			}			
 
 			String realPath = servletContext.getRealPath(IMAGE_DIRECTORY);
 			if (pictureUploader == null) {
@@ -111,6 +139,14 @@ public class EditAdController {
 			model = new ModelAndView("redirect:/ad?id=" + ad.getId());
 			redirectAttributes.addFlashAttribute("confirmationMessage",
 					"Ad edited successfully. You can take a look at it below.");
+		}
+		else {
+			Ad ad = adService.getAdById(adId);
+			model.addObject("adId", ad.getId());
+			model.addObject("existingPictures", ad.getPictures());
+			model.addObject("placeAdForm", placeAdForm);
+			model.addObject("types", Type.values());
+			model.addObject("infrastructureTypes", InfrastructureType.values());
 		}
 
 		return model;

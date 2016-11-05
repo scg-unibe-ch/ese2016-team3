@@ -225,6 +225,11 @@
 						<th>Number of bath rooms</th>
 						<td>${shownAd.numberOfBath}</td>
 					</tr>
+					
+					<tr>
+						<th>Internet/TV infrastructure</th>
+						<td>${shownAd.infrastructureType.name}</td>
+					</tr>
 
 					<tr>
 						<th>Distance to school</th>
@@ -304,39 +309,41 @@
 				</table>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-				<div id="carousel-example-generic" class="carousel slide bottom15"
-					data-ride="carousel">
-					<!-- Indicators -->
-					<ol class="carousel-indicators">
-						<c:forEach var="picture" items="${shownAd.pictures}"
-							varStatus="loop">
-							<li data-target="#carousel-example-generic"
-								data-slide-to="${loop.index}"
-								class=" ${loop.index == 0 ? 'active' : ''}"></li>
-						</c:forEach>
-					</ol>
-
-					<!-- Wrapper for slides -->
-					<div class="carousel-inner" role="listbox">
-						<c:forEach items="${shownAd.pictures}" var="picture"
-							varStatus="loop">
-							<div class="item ${loop.index == 0 ? 'active' : '' }">
-								<img src="${picture.filePath}">
-							</div>
-						</c:forEach>
+				<c:if test="${ not empty shownAd.pictures }">
+					<div id="carousel-example-generic" class="carousel slide bottom15"
+						data-ride="carousel">
+						<!-- Indicators -->
+						<ol class="carousel-indicators">
+							<c:forEach var="picture" items="${shownAd.pictures}"
+								varStatus="loop">
+								<li data-target="#carousel-example-generic"
+									data-slide-to="${loop.index}"
+									class=" ${loop.index == 0 ? 'active' : ''}"></li>
+							</c:forEach>
+						</ol>
+	
+						<!-- Wrapper for slides -->
+						<div class="carousel-inner" role="listbox">
+							<c:forEach items="${shownAd.pictures}" var="picture"
+								varStatus="loop">
+								<div class="item ${loop.index == 0 ? 'active' : '' }">
+									<img src="${picture.filePath}">
+								</div>
+							</c:forEach>
+						</div>
+	
+						<!-- Controls -->
+						<a class="left carousel-control" href="#carousel-example-generic"
+							role="button" data-slide="prev"> <span
+							class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a> <a class="right carousel-control" href="#carousel-example-generic"
+							role="button" data-slide="next"> <span
+							class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
 					</div>
-
-					<!-- Controls -->
-					<a class="left carousel-control" href="#carousel-example-generic"
-						role="button" data-slide="prev"> <span
-						class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-						<span class="sr-only">Previous</span>
-					</a> <a class="right carousel-control" href="#carousel-example-generic"
-						role="button" data-slide="next"> <span
-						class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-						<span class="sr-only">Next</span>
-					</a>
-				</div>
+				</c:if>
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<div class="row">
