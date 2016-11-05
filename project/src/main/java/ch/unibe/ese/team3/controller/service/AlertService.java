@@ -11,9 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.controller.pojos.forms.AlertForm;
+import ch.unibe.ese.team3.dto.Location;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Alert;
-import ch.unibe.ese.team3.model.Location;
+
+import ch.unibe.ese.team3.model.AlertType;
+import ch.unibe.ese.team3.dto.Location;
+
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.User;
@@ -57,10 +61,12 @@ public class AlertService {
 		alert.setCity(alertForm.getCity().substring(7));
 
 		alert.setPrice(alertForm.getPrice());
-		alert.setRadius(alertForm.getRadius());
-		alert.setRoom(alertForm.getRoom());
-		alert.setStudio(alertForm.getStudio());
-		alert.setBothRoomAndStudio(alertForm.getBothRoomAndStudio());
+
+		
+		
+		alert.setRadius(alertForm.getRadius());		
+		alert.setAlertTypes(alertForm.getAlertTypes());
+
 		alert.setUser(user);
 		alertDao.save(alert);
 	}
@@ -93,8 +99,7 @@ public class AlertService {
 		Iterator<Alert> alertIterator = alerts.iterator();
 		while (alertIterator.hasNext()) {
 			Alert alert = alertIterator.next();
-			if (typeMismatchWith(ad, alert) || radiusMismatchWith(ad, alert)
-					|| ad.getUser().equals(alert.getUser()))
+			if (typeMismatchWith(ad, alert) || radiusMismatchWith(ad, alert) || ad.getUser().equals(alert.getUser()))
 				alertIterator.remove();
 		}
 
@@ -128,23 +133,32 @@ public class AlertService {
 	 */
 	private String getAlertText(Ad ad) {
 		return "Dear user,<br>good news. A new ad matching one of your alerts has been "
-				+ "entered into our system. You can visit it here:<br><br>"
-				+ "<a class=\"link\" href=/ad?id="
-				+ ad.getId()
-				+ ">"
-				+ ad.getTitle()
-				+ "</a><br><br>"
-				+ "Good luck and enjoy,<br>"
+				+ "entered into our system. You can visit it here:<br><br>" + "<a class=\"link\" href=/ad?id="
+				+ ad.getId() + ">" + ad.getTitle() + "</a><br><br>" + "Good luck and enjoy,<br>"
 				+ "Your FlatFindr crew";
 	}
 
-	/** Checks if an ad is conforming to the criteria in an alert. */
+	/** Checks if an ad is conforming to the criteria in an alert. Return false if the type of Ad is within 
+	 * the types within Alert list
+	 */
+	
 	private boolean typeMismatchWith(Ad ad, Alert alert) {
-		boolean mismatch = false;
+		boolean mismatch = true;
+		List<AlertType> alertTypes = alert.getAlertTypes();
+		
+		// iterates over each alertType and compares the type to the ad's type
+		for (AlertType alertType : alertTypes) {
+				if (ad.getType().equals(alertType.getType()))
+					mismatch = false;
+		}
+		return mismatch;
+		
+		/* (OLD) boolean mismatch = false;
 		if (!alert.getBothRoomAndStudio()
 				&& ad.getStudio() != alert.getStudio())
 			mismatch = true;
 		return mismatch;
+		*/
 	}
 
 	/**
@@ -160,10 +174,8 @@ public class AlertService {
 	 */
 	private boolean radiusMismatchWith(Ad ad, Alert alert) {
 		final int earthRadiusKm = 6380;
-		Location adLocation = geoDataService.getLocationsByCity(ad.getCity())
-				.get(0);
-		Location alertLocation = geoDataService.getLocationsByCity(
-				alert.getCity()).get(0);
+		Location adLocation = geoDataService.getLocationsByCity(ad.getCity()).get(0);
+		Location alertLocation = geoDataService.getLocationsByCity(alert.getCity()).get(0);
 
 		double radSinLat = Math.sin(Math.toRadians(adLocation.getLatitude()));
 		double radCosLat = Math.cos(Math.toRadians(adLocation.getLatitude()));
@@ -171,18 +183,16 @@ public class AlertService {
 		double radLongitude = Math.toRadians(alertLocation.getLongitude());
 		double radLatitude = Math.toRadians(alertLocation.getLatitude());
 		double distance = Math.acos(radSinLat * Math.sin(radLatitude)
-				+ radCosLat * Math.cos(radLatitude)
-				* Math.cos(radLong - radLongitude))
-				* earthRadiusKm;
+				+ radCosLat * Math.cos(radLatitude) * Math.cos(radLong - radLongitude)) * earthRadiusKm;
 		return (distance > alert.getRadius());
 	}
-	
-	//for testing
+
+	// for testing
 	public boolean radiusMismatch(Ad ad, Alert alert) {
 		return radiusMismatchWith(ad, alert);
 	}
-	
-	//for testing
+
+	// for testing
 	public boolean typeMismatch(Ad ad, Alert alert) {
 		return typeMismatchWith(ad, alert);
 	}

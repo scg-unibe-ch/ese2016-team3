@@ -36,10 +36,6 @@ public class Ad {
 	@Temporal(TemporalType.DATE)
 	private Date moveInDate;
 
-	@Temporal(TemporalType.DATE)
-	@Column(nullable = true)
-	private Date moveOutDate;
-
 	@Column(nullable = false)
 	private int prizePerMonth;
 
@@ -69,77 +65,123 @@ public class Ad {
 	@Column(nullable = false)
 	private int distancePublicTransport;
 
-	
 	@Column(nullable = false)
 	@Lob
 	private String roomDescription;
 
-	@Column(nullable = false)
-	@Lob
-	private String preferences;
-	
 	//new
 	@Column(nullable = false)
 	private boolean elevator;
 	
+	@Enumerated(EnumType.STRING)
+	private InfrastructureType infrastructureType;
+	
 	@Column(nullable = false)
 	private boolean parking;
-
-
-	@Column(nullable = false)
-	private boolean smokers;
-
-	@Column(nullable = false)
-	private boolean animals;
-
-	@Column(nullable = false)
-	private boolean garden;
 
 	@Column(nullable = false)
 	private boolean balcony;
 
 	@Column(nullable = false)
-	private boolean cellar;
-
-	@Column(nullable = false)
-	private boolean furnished;
-
-	@Column(nullable = false)
-	private boolean cable;
-
-	@Column(nullable = false)
 	private boolean garage;
-
-	@Column(nullable = false)
-	private boolean internet;
 	
 	@Column(nullable = false)
 	private boolean dishwasher;
-
-	public boolean getDishwasher() {
-		return dishwasher;
-	}
-
-	public void setDishwasher(boolean dishwasher) {
-		this.dishwasher = dishwasher;
-	}
-
-	// true if studio, false if room	// will be removed
-	@Column(nullable = false)
-	private boolean studio;
-
+	
 	@Enumerated(EnumType.STRING)
 	private Type type;
 
 	@Fetch(FetchMode.SELECT)
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<AdPicture> pictures;
+	
+	
+	//new
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+	private List<Bid> bids;
+
+	
 
 	@ManyToOne(optional = false)
 	private User user;
 
 	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Visit> visits;
+	
+	@Column(nullable = false)
+	private int floorLevel;
+	
+	// auction specific attributes
+	@Column(nullable = true)
+	@Temporal(TemporalType.DATE)
+	private Date startDate;
+	
+	@Column(nullable = true)
+	@Temporal(TemporalType.DATE)
+	private Date endDate;
+	
+	@Column(nullable = true)
+	private int startPrice;
+
+	@Column(nullable = true)
+	private int increaseBidPrice;
+	
+	@Column(nullable = true)
+	private int buyItNowPrice;
+	
+	
+	
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	public int getStartPrice() {
+		return startPrice;
+	}
+	public void setStartPrice(int startPrice) {
+		this.startPrice = startPrice;
+	}
+	public int getIncreaseBidPrice() {
+		return increaseBidPrice;
+	}
+	public void setIncreaseBidPrice(int increaseBidPrice) {
+		this.increaseBidPrice = increaseBidPrice;
+	}
+	public int getBuyItNowPrice() {
+		return buyItNowPrice;
+	}
+	public void setBuyItNowPrice(int buyItNowPrice) {
+		this.buyItNowPrice = buyItNowPrice;
+	}
+	public void setFloorLevel(int floorLevel) {
+		this.floorLevel = floorLevel;
+	}
+	public int getFloorLevel() {
+		return this.floorLevel;
+	}
+
+	public InfrastructureType getInfrastructureType() {
+		return this.infrastructureType;
+	}
+
+	public void setInfrastructureType(InfrastructureType infrastructureType) {
+		this.infrastructureType = infrastructureType;
+	}
+
+	public void setDistancePublicTransport(int distancePublicTransport) {
+		this.distancePublicTransport = distancePublicTransport;
+	}
+
+
 
 	public int getNumberOfRooms() {
 		return numberOfRooms;
@@ -188,14 +230,6 @@ public class Ad {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
-
-	public boolean getStudio() {	//remove
-		return studio;
-	}
-
-	public void setStudio(boolean studio) {	//remove
-		this.studio = studio;
-	}
 	
 	public Type getType(){
 		return type;
@@ -211,29 +245,7 @@ public class Ad {
 	public void setElevator(boolean withElevator){
 		this.elevator = withElevator;
 	}
-	public boolean getSmokers() {
-		return smokers;
-	}
-
-	public void setSmokers(boolean allowsSmokers) {
-		this.smokers = allowsSmokers;
-	}
-
-	public boolean getAnimals() {
-		return animals;
-	}
-
-	public void setAnimals(boolean allowsAnimals) {
-		this.animals = allowsAnimals;
-	}
-
-	public boolean getGarden() {
-		return garden;
-	}
-
-	public void setGarden(boolean hasGarden) {
-		this.garden = hasGarden;
-	}
+	
 
 	public boolean getBalcony() {
 		return balcony;
@@ -243,44 +255,12 @@ public class Ad {
 		this.balcony = hasBalcony;
 	}
 
-	public boolean getCellar() {
-		return cellar;
-	}
-
-	public void setCellar(boolean hasCellar) {
-		this.cellar = hasCellar;
-	}
-
-	public boolean getFurnished() {
-		return furnished;
-	}
-
-	public void setFurnished(boolean furnished) {
-		this.furnished = furnished;
-	}
-
-	public boolean getCable() {
-		return cable;
-	}
-
-	public void setCable(boolean hasCable) {
-		this.cable = hasCable;
-	}
-
 	public boolean getGarage() {
 		return garage;
 	}
 
 	public void setGarage(boolean garage) {
 		this.garage = garage;
-	}
-
-	public boolean getInternet() {
-		return internet;
-	}
-
-	public void setInternet(boolean internet) {
-		this.internet = internet;
 	}
 
 	public long getId() {
@@ -305,10 +285,6 @@ public class Ad {
 
 	public void setMoveInDate(Date moveInDate) {
 		this.moveInDate = moveInDate;
-	}
-
-	public void setMoveOutDate(Date moveOutDate) {
-		this.moveOutDate = moveOutDate;
 	}
 
 	public int getPrizePerMonth() {
@@ -347,11 +323,7 @@ public class Ad {
 	public int getDistancePublicTransport(){
 		return distancePublicTransport;
 	}
-	
-	public void setDistancePublicTransportl(int distancePublicTransport){
-		this.distancePublicTransport = distancePublicTransport;
-	}
-		
+			
 	public String getRoomDescription() {
 		return roomDescription;
 	}
@@ -360,24 +332,12 @@ public class Ad {
 		this.roomDescription = roomDescription;
 	}
 
-	public String getPreferences() {
-		return preferences;
-	}
-
-	public void setPreferences(String preferences) {
-		this.preferences = preferences;
-	}
-
 	public List<AdPicture> getPictures() {
 		return pictures;
 	}
 
 	public void setPictures(List<AdPicture> pictures) {
 		this.pictures = pictures;
-	}
-
-	public Date getMoveOutDate() {
-		return moveOutDate;
 	}
 
 	public User getUser() {
@@ -412,13 +372,6 @@ public class Ad {
 		this.city = city;
 	}
 
-	public Date getDate(boolean moveIn) {
-		if (moveIn)
-			return moveInDate;
-		else
-			return moveOutDate;
-	}
-
 	public List<Visit> getVisits() {
 		return visits;
 	}
@@ -426,8 +379,22 @@ public class Ad {
 	public void setVisits(List<Visit> visits) {
 		this.visits = visits;
 	}
+	
+	public boolean getDishwasher() {
+		return dishwasher;
+	}
 
-	//neue hashCode weil mehr attribute zum vergleichen zb boolean elevator???
+	public void setDishwasher(boolean dishwasher) {
+		this.dishwasher = dishwasher;
+	}
+	public List<Bid> getBids() {
+		return bids;
+	}
+	public void setBids(List<Bid> bids) {
+		this.bids = bids;
+	}
+
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -449,5 +416,12 @@ public class Ad {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+	
+	public boolean isPremiumAd() {
+		if (this.user != null){
+			return this.user.isPremium();
+		}
+		return false;
 	}
 }

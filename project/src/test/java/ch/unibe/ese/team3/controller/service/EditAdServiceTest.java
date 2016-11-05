@@ -53,25 +53,17 @@ public class EditAdServiceTest {
 		PlaceAdForm placeAdForm = new PlaceAdForm();
 		placeAdForm.setCity("3018 - Bern");
 		placeAdForm.setType(Type.APARTMENT);
-		placeAdForm.setPreferences("Test preferences");
 		placeAdForm.setRoomDescription("Test Room description");
 		placeAdForm.setPrize(600);
 		placeAdForm.setSquareFootage(50);
 		placeAdForm.setTitle("title");
 		placeAdForm.setStreet("Hauptstrasse 13");
-		placeAdForm.setStudio(true);
 		placeAdForm.setMoveInDate("27-02-2015");
-		placeAdForm.setMoveOutDate("27-04-2015");
-		
-		placeAdForm.setSmokers(true);
-		placeAdForm.setAnimals(false);
-		placeAdForm.setGarden(true);
+	
 		placeAdForm.setBalcony(false);
-		placeAdForm.setCellar(true);
-		placeAdForm.setFurnished(false);
-		placeAdForm.setCable(false);
+;
 		placeAdForm.setGarage(true);
-		placeAdForm.setInternet(false);
+
 
 		ArrayList<String> filePaths = new ArrayList<>();
 		filePaths.add("/img/test/ad1_1.jpg");
@@ -85,13 +77,13 @@ public class EditAdServiceTest {
 		long adId = ad.getId();
 		
 		// veränderung von placeAdForm
-		placeAdForm.setAnimals(true);
-		placeAdForm.setSmokers(false);
+		placeAdForm.setBalcony(true);
+		placeAdForm.setGarage(false);
 		
 		ad = editadservice.saveFrom(placeAdForm, filePaths, hans, adId);
 	
-		assertTrue(ad.getAnimals());
-		assertFalse(ad.getSmokers());
+		assertTrue(ad.getBalcony());
+		assertFalse(ad.getGarage());
 		
 		
 	}
@@ -114,14 +106,12 @@ public class EditAdServiceTest {
 		
 		Ad ad = new Ad();
 		ad.setRoomDescription("This is a wonderful flat");
-		ad.setPreferences("no preferences");
 		
 		PlaceAdForm placeAdForm = editadservice.fillForm(ad);
 		
 		
 		
 		assertEquals("This is a wonderful flat", placeAdForm.getRoomDescription());
-		assertEquals("no preferences", placeAdForm.getPreferences());
 		
 	}
 	
@@ -141,7 +131,7 @@ public class EditAdServiceTest {
 		role.setUser(user);
 		userRoles.add(role);
 		user.setUserRoles(userRoles);
-		return user;
+		return user;   
 	}
 	
 

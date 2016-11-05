@@ -31,7 +31,8 @@
 	</bean>
 	
 	<mvc:interceptors>
-    	<bean class="ch.unibe.ese.team3.logging.LoggingInterceptor" />
+    	<bean class="ch.unibe.ese.team3.interceptors.LoggingInterceptor" />
+    	<bean class="ch.unibe.ese.team3.interceptors.UriInterceptor" />
 	</mvc:interceptors>
 
 

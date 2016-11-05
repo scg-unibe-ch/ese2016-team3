@@ -17,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /** Describes a user on the platform. */
@@ -52,8 +55,23 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private AccountType accountType;
 	
+	@Enumerated(EnumType.STRING)
+	private CreditcardType creditcardType;
+	
 	@Column(nullable = true)
 	private String creditCard;
+	
+	@Column(nullable = true)
+	private String securityNumber;
+	
+	@Column(nullable = true)
+	private String expirationMonth;
+	
+	@Column(nullable = true)
+	private String expirationYear;
+	
+	@Column(nullable = true)
+	private String creditcardName;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -70,6 +88,11 @@ public class User {
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Ad> bookmarkedAds;
+	
+	//new
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+	private List<Bid> bids;
 
 	public long getId() {
 		return id;
@@ -127,6 +150,14 @@ public class User {
 		accountType = type;
 	}
 	
+	public CreditcardType getCreditcardType(){
+		return creditcardType;
+	}
+	
+	public void setCreditcardType(CreditcardType type){
+		creditcardType = type;
+	}
+	
 	public boolean isPremium(){
 		if(accountType == AccountType.PREMIUM){
 			return true;
@@ -142,6 +173,38 @@ public class User {
 	
 	public void setCreditCard(String card){
 		creditCard = card;
+	}
+	
+	public String getSecurityNumber(){
+		return securityNumber;
+	}
+	
+	public void setSecurityNumber(String number){
+		securityNumber = number;
+	}
+	
+	public String getExpirationMonth(){
+		return expirationMonth;
+	}
+	
+	public void setExpirationMonth(String month){
+		expirationMonth = month;
+	}
+	
+	public String getExpirationYear(){
+		return expirationYear;
+	}
+	
+	public void setExpirationYear(String year){
+		expirationYear = year;
+	}
+	
+	public String getCreditcardName(){
+		return creditcardName;
+	}
+	
+	public void setCreditcardName(String name){
+		creditcardName = name;
 	}
 
 	public Set<UserRole> getUserRoles() {
@@ -190,6 +253,14 @@ public class User {
 	
 	public void setBookmarkedAds(List<Ad> bookmarkedAds) {
 		this.bookmarkedAds = bookmarkedAds;
+	}
+
+	public List<Bid> getBids() {
+		return bids;
+	}
+
+	public void setBids(List<Bid> bids) {
+		this.bids = bids;
 	}
 
 	@Override

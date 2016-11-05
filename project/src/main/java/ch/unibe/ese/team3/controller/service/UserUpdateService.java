@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.controller.pojos.forms.EditProfileForm;
 import ch.unibe.ese.team3.model.User;
-import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
 /** Handles updating a user's profile. */
@@ -36,16 +35,6 @@ public class UserUpdateService {
 		currentUser.setPassword(editProfileForm.getPassword());
 		currentUser.setAboutMe(editProfileForm.getAboutMe());
 		
-		if (editProfileForm.getIsPremium() == true){
-			currentUser.setAccountType(AccountType.PREMIUM);
-			currentUser.setCreditCard(editProfileForm.getCreditCard());
-		}
-		else{
-			currentUser.setAccountType(AccountType.BASIC);
-			currentUser.setCreditCard("0000000000000000");
-		}
-		
-
 		userDao.save(currentUser);
 	}
 

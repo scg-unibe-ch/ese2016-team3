@@ -6,7 +6,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:import url="template/header.jsp" />
-<pre><a href="/">Home</a>   &gt;   Messages</pre>
+
+<ol class="breadcrumb">
+	<li><a href="../Home">Homepage</a></li>
+	<li>Messages</li>
+</ol>
 
 <!-- format the dates -->
 <fmt:formatDate value="${messages[0].dateSent}" var="formattedDateSent"
@@ -16,54 +20,82 @@
 <script src="/js/messages.js"></script>
 
 <script>
-	$(document).ready(unreadMessages("messages"));
+	$(document).ready(function(){
+		unreadMessages(function(unread){
+			$('#unreadMessages').html(unread);
+		});
+		
+	});
 </script>
 
-<h1>Messages</h1>
-<hr />
-<div id="folders">
-	<h2 id="inbox">Inbox</h2>
-	<h2 id="newMessage">New</h2>
-	<h2 id="sent">Sent</h2>
-</div>
-<div id="messageList">
-	<table class="styledTable">
-		<tr>
-			<th id="subjectColumn">Subject</th>
-			<th>Sender</th>
-			<th>Recipient</th>
-			<th>Date sent</th>
-		</tr>
-		<c:forEach items="${messages }" var="message">
-			<fmt:formatDate value="${message.dateSent}"
-				var="singleFormattedDateSent" type="date"
-				pattern="HH:mm, dd.MM.yyyy" />
+<div class="row">
+	<div class="col-md-12 col-xs-12">
 
-			<tr data-id="${message.id}" class="${message.state}">
-				<td>${message.subject }</td>
-				<td>${message.sender.email}</td>
-				<td>${message.recipient.email }</td>
-				<td>${singleFormattedDateSent}</td>
-			</tr>
-		</c:forEach>
-	</table>
-	<hr />
-	<div id="messageDetail">
-		<h2>${messages[0].subject }</h2>
-		<h3>
-			<b>To: </b>${messages[0].recipient.email }
-		</h3>
-		<h3>
-			<b>From: </b> ${messages[0].sender.email }
-		</h3>
-		<h3>
-			<b>Date sent:</b> ${formattedDateSent}
-		</h3>
-		<br />
-		<p>${messages[0].text }</p>
+		<h3>Messages</h3>
+	</div>
+	<div class="col-md-12 bottom15">
+		<div class="btn-group">
+			<button class="btn btn-default active" id="inbox">
+				Inbox <span class="badge" id="unreadMessages"></span>
+			</button>
+			<button class="btn btn-default" id="sent">Sent</button>
+		</div>
+		<div class="pull-right">
+			<button class="btn btn-primary" data-toggle="modal"
+				data-target="#messageModal">
+				<span class="glyphicon glyphicon-envelope"></span> New message
+			</button>
+		</div>
+	</div>
+	<div class="col-md-12" id="messageList">
+		<div class="table-responsive">
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th id="subjectColumn">Subject</th>
+						<th>Sender</th>
+						<th>Recipient</th>
+						<th>Date sent</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${messages}" var="message" varStatus="loop">
+						<fmt:formatDate value="${message.dateSent}"
+							var="singleFormattedDateSent" type="date"
+							pattern="HH:mm, dd.MM.yyyy" />
+
+						<tr data-id="${message.id}"
+							class="message-row ${loop.index == 0 ? 'info' : ''} ${message.state == 'UNREAD' ? 'message-unread' : ''}">
+							<td><a>${message.subject}</a></td>
+							<td>${message.sender.email}</td>
+							<td>${message.recipient.email }</td>
+							<td>${singleFormattedDateSent}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="panel panel-default" id="messageDetail">
+			<div class="panel-heading">
+				<h4 id="message-preview-subject">${messages[0].subject }</h4>
+			</div>
+			<div class="panel-body">
+				<p>
+					<strong>To: </strong><span id="message-preview-receiver">${messages[0].recipient.email }</span>
+				</p>
+				<p>
+					<strong>From: </strong><span id="message-preview-sender">${messages[0].sender.email }</span>
+				</p>
+				<p>
+					<strong>Date sent: </strong><span id="message-preview-date">${formattedDateSent}</span>
+				</p>
+				<br />
+				<p id="message-preview-content">${messages[0].text }</p>
+			</div>
+		</div>
 	</div>
 </div>
-
 <c:import url="getMessageForm.jsp" />
 
 

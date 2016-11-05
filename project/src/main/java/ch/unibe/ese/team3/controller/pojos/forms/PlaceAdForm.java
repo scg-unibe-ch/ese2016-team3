@@ -1,11 +1,16 @@
 package ch.unibe.ese.team3.controller.pojos.forms;
 
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
 
+import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
 
 /** This form is used when a user wants to place a new ad. */
@@ -22,8 +27,6 @@ public class PlaceAdForm {
 	
 	@NotBlank(message = "Required")
 	private String moveInDate;
-	
-	private String moveOutDate;
 
 	@Min(value = 1, message = "Has to be equal to 1 or more")
 	private int prize;
@@ -43,64 +46,72 @@ public class PlaceAdForm {
     @Min(value=1, message ="Has to be equal to 1 or more")
    	private int numberOfBath;
 	
-	public int getNumberOfBath() {
-		return numberOfBath;
-	}
-
-	public void setNumberOfBath(int numberOfBath) {
-		this.numberOfBath = numberOfBath;
-	}
-
 	//new
 	@Min(value = 1, message ="Has to be equal to 1 or more")
 	private int distanceSchool;
-	//new
 	@Min(value = 1, message ="Has to be equal to 1 or more")
 	private int distanceShopping;
-	//new
 	@Min(value = 1, message ="Has to be equal to 1 or more")
 	private int distancePublicTransport;
+	@Min(value = 0, message ="Has to be equal to 0 or more")
+	private int floorLevel;
 	
-	
+	// new
+	private InfrastructureType infrastructureType;
+	private Type type;
+
 	@NotBlank(message = "Required")
 	private String roomDescription;
 
-	private String preferences;
+
+	// auction specific attributes
 	
-	//@NotBlank(message = "Required")
-	//private int floorlevel;			//only for appartment
+	private String startDate;
+	private String endDate;
+	private int startPrice;
+	private int increaseBidPrice;
+	private int buyItNowPrice;
 	
-	
-	
-	//@NotBlank(message = "Required")
-	//private String artInternetanschluss;
 	
 	// optional for input
-	private String roomFriends;
-	
-	//müssen wir wegnehmen
-	//und neu Type typ = studio, house, flat,etc...
-	//true if studio, false if room
-	private boolean studio;
-	
-	
-	private Type type;
-	
-	//private boolean 
-	//private boolean dishwasher;		//only for renting
 	private boolean parking;
 	private boolean elevator;
-	private boolean smokers;
-	private boolean animals; //weg
-	private boolean garden; //weg
 	private boolean balcony;
-	private boolean cellar;	//weg
-	private boolean furnished;
-	private boolean cable;
 	private boolean garage;
-	private boolean internet; // würde ersetzt werden
 	private boolean dishwasher;
 	
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public int getIncreaseBidPrice() {
+		return increaseBidPrice;
+	}
+
+	public void setIncreaseBidPrice(int increaseBidPrice) {
+		this.increaseBidPrice = increaseBidPrice;
+	}
+
+	public int getBuyItNowPrice() {
+		return buyItNowPrice;
+	}
+
+	public void setBuyItNowPrice(int buyItNowPrice) {
+		this.buyItNowPrice = buyItNowPrice;
+	}
+
 	public boolean getDishwasher() {
 		return dishwasher;
 	}
@@ -135,14 +146,6 @@ public class PlaceAdForm {
 		this.roomDescription = roomDescription;
 	}
 
-	public String getPreferences() {
-		return preferences;
-	}
-
-	public void setPreferences(String preferences) {
-		this.preferences = preferences;
-	}
-
 	public int getSquareFootage() {
 		return squareFootage;
 	}
@@ -167,10 +170,6 @@ public class PlaceAdForm {
 	public void setNumberOfRooms(int numberOfRooms) {
 		this.numberOfRooms = numberOfRooms;
 	}
-
-	
-
-	
 
 	//new
 	public int getDistanceSchool(){
@@ -202,28 +201,14 @@ public class PlaceAdForm {
 	public void setElevator(boolean elevator){		//new
 		this.elevator = elevator;
 	}
-	public boolean isSmokers() {
-		return smokers;
-	}
-
-	public void setSmokers(boolean smoker) {
-		this.smokers = smoker;
-	}
-
-	public boolean isAnimals() {
-		return animals;
-	}
-
-	public void setAnimals(boolean animals) {
-		this.animals = animals;
-	}
 	
-	public boolean getGarden() {
-		return garden;
+	// new
+	public int getNumberOfBath() {
+		return numberOfBath;
 	}
 
-	public void setGarden(boolean garden) {
-		this.garden = garden;
+	public void setNumberOfBath(int numberOfBath) {
+		this.numberOfBath = numberOfBath;
 	}
 
 	public boolean getBalcony() {
@@ -234,30 +219,6 @@ public class PlaceAdForm {
 		this.balcony = balcony;
 	}
 	
-	public boolean getCellar() {
-		return cellar;
-	}
-
-	public void setCellar(boolean cellar) {
-		this.cellar = cellar;
-	}
-	
-	public boolean isFurnished() {
-		return furnished;
-	}
-
-	public void setFurnished(boolean furnished) {
-		this.furnished = furnished;
-	}
-
-	public boolean getCable() {
-		return cable;
-	}
-
-	public void setCable(boolean cable) {
-		this.cable = cable;
-	}
-	
 	public boolean getGarage() {
 		return garage;
 	}
@@ -266,28 +227,12 @@ public class PlaceAdForm {
 		this.garage = garage;
 	}
 
-	public boolean getInternet() {
-		return internet;
-	}
-
-	public void setInternet(boolean internet) {
-		this.internet = internet;
-	}
-
 	public String getMoveInDate() {
 		return moveInDate;
 	}
 
 	public void setMoveInDate(String moveInDate) {
 		this.moveInDate = moveInDate;
-	}
-
-	public String getMoveOutDate() {
-		return moveOutDate;
-	}
-
-	public void setMoveOutDate(String moveOutDate) {
-		this.moveOutDate = moveOutDate;
 	}
 
 	public String getTitle() {
@@ -306,24 +251,6 @@ public class PlaceAdForm {
 		this.street = street;
 	}
 
-	public String getRoomFriends() {
-		return roomFriends;
-	}
-
-	public void setRoomFriends(String roomFriends) {
-		this.roomFriends = roomFriends;
-	}
-	
-	
-	//will be removed
-	public boolean getStudio() {
-		return studio;
-	}
-	
-	public void setStudio(boolean studio) {
-		this.studio = studio;
-	}
-	
 	public Type getType(){
 		return type;
 	}
@@ -345,5 +272,26 @@ public class PlaceAdForm {
 
 	public void setParking(boolean parking) {
 		this.parking = parking;
+	}
+	
+	public InfrastructureType getInfrastructureType() {
+		return infrastructureType;
+	}
+	public void setInfrastructureType(InfrastructureType infrastructureType) {
+		this.infrastructureType = infrastructureType;
+	}
+	public void setFloorLevel(int floorLevel) {
+		this.floorLevel = floorLevel;
+	}
+	public int getFloorLevel() {
+		return this.floorLevel;
+	}
+
+	public int getStartPrice() {
+		return startPrice;
+	}
+
+	public void setStartPrice(int startPrice) {
+		this.startPrice = startPrice;
 	}
 }

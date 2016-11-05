@@ -1,10 +1,18 @@
 package ch.unibe.ese.team3.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * Describes an alert. An alert can be created by a user. If ads matching the
@@ -33,15 +41,11 @@ public class Alert {
 	@Column(nullable = false)
 	private int radius;
 
-	@Column
-	private boolean studio;
-
-	@Column
-	private boolean room;
-
-	@Column
-	private boolean bothRoomAndStudio;
-
+	@Fetch(FetchMode.SELECT)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+	private List<AlertType> alertTypes;
+	
+	
 	public long getId() {
 		return id;
 	}
@@ -90,27 +94,12 @@ public class Alert {
 		this.price = price;
 	}
 
-	public boolean getStudio() {
-		return studio;
+	public List<AlertType> getAlertTypes() {
+		return alertTypes;
 	}
 
-	public void setStudio(boolean studio) {
-		this.studio = studio;
+	public void setAlertTypes(List<AlertType> alertTypes) {
+		this.alertTypes = alertTypes;
 	}
 
-	public boolean getRoom() {
-		return room;
-	}
-
-	public void setRoom(boolean room) {
-		this.room = room;
-	}
-
-	public boolean getBothRoomAndStudio() {
-		return bothRoomAndStudio;
-	}
-
-	public void setBothRoomAndStudio(boolean bothRoomAndStudio) {
-		this.bothRoomAndStudio = bothRoomAndStudio;
-	}
 }

@@ -6,6 +6,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
 
 /** This form is used for searching for an ad. */
@@ -65,52 +66,186 @@ public class SearchForm {
 
 	private String earliestMoveInDate;
 	private String latestMoveInDate;
-	private String earliestMoveOutDate;
-	private String latestMoveOutDate;
 	
-	private int numberOfRooms;
-	private int numberOfBath;
-
 	private boolean elevator;
 	private boolean parking;
-	private boolean smokers;
-	private boolean animals;
-	private boolean garden;
 	private boolean balcony;
-	private boolean cellar;
-	private boolean furnished;
-	private boolean cable;
 	private boolean garage;
-	private boolean internet;
 	private boolean dishwasher;
 
 	private boolean roomHelper;
+	
+	// new
+
+	private InfrastructureType infrastructureType;
+	private InfrastructureType[] infrastructureTypes;
+	private int squareFootageMin;
+	private int squareFootageMax;
+	private int buildYearMin;
+	private int buildYearMax;
+	private int renovationYearMin;
+	private int renovationYearMax;
+	private int numberOfRoomsMin;
+	private int numberOfRoomsMax;
+   	private int numberOfBathMin;
+   	private int numberOfBathMax;
+	
+	
+	//new
+	private int distanceSchoolMin;
+	private int distanceSchoolMax;
+	private int distanceShoppingMin;
+	private int distanceShoppingMax;
+	private int distancePublicTransportMin;
+	private int distancePublicTransportMax;
+	private int floorLevelMin;
+	private int floorLevelMax;
 
 	// the ugly stuff
-	private boolean studioHelper;
+	private boolean studioHelper; // to remove?
 
-	public boolean getSmokers() {
-		return smokers;
+	public int getSquareFootageMin() {
+		return squareFootageMin;
 	}
 
-	public void setSmokers(boolean smokers) {
-		this.smokers = smokers;
+	public void setSquareFootageMin(int squareFootageMin) {
+		this.squareFootageMin = squareFootageMin;
 	}
 
-	public boolean getAnimals() {
-		return animals;
+	public int getSquareFootageMax() {
+		return squareFootageMax;
 	}
 
-	public void setAnimals(boolean animals) {
-		this.animals = animals;
+	public void setSquareFootageMax(int squareFootageMax) {
+		this.squareFootageMax = squareFootageMax;
 	}
 
-	public boolean getGarden() {
-		return garden;
+	public int getBuildYearMin() {
+		return buildYearMin;
 	}
 
-	public void setGarden(boolean garden) {
-		this.garden = garden;
+	public void setBuildYearMin(int buildYearMin) {
+		this.buildYearMin = buildYearMin;
+	}
+
+	public int getBuildYearMax() {
+		return buildYearMax;
+	}
+
+	public void setBuildYearMax(int buildYearMax) {
+		this.buildYearMax = buildYearMax;
+	}
+
+	public int getRenovationYearMin() {
+		return renovationYearMin;
+	}
+
+	public void setRenovationYearMin(int renovationYearMin) {
+		this.renovationYearMin = renovationYearMin;
+	}
+
+	public int getRenovationYearMax() {
+		return renovationYearMax;
+	}
+
+	public void setRenovationYearMax(int renovationYearMax) {
+		this.renovationYearMax = renovationYearMax;
+	}
+
+	public int getNumberOfRoomsMin() {
+		return numberOfRoomsMin;
+	}
+
+	public void setNumberOfRoomsMin(int numberOfRoomsMin) {
+		this.numberOfRoomsMin = numberOfRoomsMin;
+	}
+
+	public int getNumberOfRoomsMax() {
+		return numberOfRoomsMax;
+	}
+
+	public void setNumberOfRoomsMax(int numberOfRoomsMax) {
+		this.numberOfRoomsMax = numberOfRoomsMax;
+	}
+
+	public int getNumberOfBathMin() {
+		return numberOfBathMin;
+	}
+
+	public void setNumberOfBathMin(int numberOfBathMin) {
+		this.numberOfBathMin = numberOfBathMin;
+	}
+
+	public int getNumberOfBathMax() {
+		return numberOfBathMax;
+	}
+
+	public void setNumberOfBathMax(int numberOfBathMax) {
+		this.numberOfBathMax = numberOfBathMax;
+	}
+
+	public int getDistanceSchoolMin() {
+		return distanceSchoolMin;
+	}
+
+	public void setDistanceSchoolMin(int distanceSchoolMin) {
+		this.distanceSchoolMin = distanceSchoolMin;
+	}
+
+	public int getDistanceSchoolMax() {
+		return distanceSchoolMax;
+	}
+
+	public void setDistanceSchoolMax(int distanceSchoolMax) {
+		this.distanceSchoolMax = distanceSchoolMax;
+	}
+
+	public int getDistanceShoppingMin() {
+		return distanceShoppingMin;
+	}
+
+	public void setDistanceShoppingMin(int distanceShoppingMin) {
+		this.distanceShoppingMin = distanceShoppingMin;
+	}
+
+	public int getDistanceShoppingMax() {
+		return distanceShoppingMax;
+	}
+
+	public void setDistanceShoppingMax(int distanceShoppingMax) {
+		this.distanceShoppingMax = distanceShoppingMax;
+	}
+
+	public int getDistancePublicTransportMin() {
+		return distancePublicTransportMin;
+	}
+
+	public void setDistancePublicTransportMin(int distancePublicTransportMin) {
+		this.distancePublicTransportMin = distancePublicTransportMin;
+	}
+
+	public int getDistancePublicTransportMax() {
+		return distancePublicTransportMax;
+	}
+
+	public void setDistancePublicTransportMax(int distancePublicTransportMax) {
+		this.distancePublicTransportMax = distancePublicTransportMax;
+	}
+
+	public int getFloorLevelMin() {
+		return floorLevelMin;
+	}
+
+	public void setFloorLevelMin(int floorLevelMin) {
+		this.floorLevelMin = floorLevelMin;
+	}
+
+	public int getFloorLevelMax() {
+		return floorLevelMax;
+	}
+
+	public void setFloorLevelMax(int floorLevelMax) {
+		this.floorLevelMax = floorLevelMax;
 	}
 
 	public boolean getBalcony() {
@@ -120,31 +255,7 @@ public class SearchForm {
 	public void setBalcony(boolean balcony) {
 		this.balcony = balcony;
 	}
-
-	public boolean getCellar() {
-		return cellar;
-	}
-
-	public void setCellar(boolean cellar) {
-		this.cellar = cellar;
-	}
-
-	public boolean getFurnished() {
-		return furnished;
-	}
-
-	public void setFurnished(boolean furnished) {
-		this.furnished = furnished;
-	}
-
-	public boolean getCable() {
-		return cable;
-	}
-
-	public void setCable(boolean cable) {
-		this.cable = cable;
-	}
-
+	
 	public boolean getGarage() {
 		return garage;
 	}
@@ -153,13 +264,6 @@ public class SearchForm {
 		this.garage = garage;
 	}
 
-	public boolean getInternet() {
-		return internet;
-	}
-
-	public void setInternet(boolean internet) {
-		this.internet = internet;
-	}
 	public boolean getElevator() {
 		return elevator;
 	}
@@ -176,21 +280,6 @@ public class SearchForm {
 		this.parking = parking;
 	}
 
-	public int getNumberOfRooms() {
-		return numberOfRooms;
-	}
-
-	public void setNumberOfRooms(int numberOfRooms) {
-		this.numberOfRooms = numberOfRooms;
-	}
-
-	public int getNumberOfBath() {
-		return numberOfBath;
-	}
-
-	public void setNumberOfBath(int numberOfBath) {
-		this.numberOfBath = numberOfBath;
-	}
 
 	public String getEarliestMoveInDate() {
 		return earliestMoveInDate;
@@ -206,22 +295,6 @@ public class SearchForm {
 
 	public void setLatestMoveInDate(String latestMoveInDate) {
 		this.latestMoveInDate = latestMoveInDate;
-	}
-
-	public String getEarliestMoveOutDate() {
-		return earliestMoveOutDate;
-	}
-
-	public void setEarliestMoveOutDate(String earliestMoveOutDate) {
-		this.earliestMoveOutDate = earliestMoveOutDate;
-	}
-
-	public String getLatestMoveOutDate() {
-		return latestMoveOutDate;
-	}
-
-	public void setLatestMoveOutDate(String latestMoveOutDate) {
-		this.latestMoveOutDate = latestMoveOutDate;
 	}
 
 	public boolean getStudioHelper() {
@@ -255,4 +328,20 @@ public class SearchForm {
 	public void setDishwasher(boolean dishwasher) {
 		this.dishwasher = dishwasher;
 	}
+	public InfrastructureType getInfrastructureType() {
+		return infrastructureType;
+	}
+
+	public void setInfrastructureType(InfrastructureType infrastructureType) {
+		this.infrastructureType = infrastructureType;
+	}
+
+	public InfrastructureType[] getInfrastructureTypes() {
+		return infrastructureTypes;
+	}
+
+	public void setInfrastructureTypes(InfrastructureType[] infrastructureTypes) {
+		this.infrastructureTypes = infrastructureTypes;
+	}
+
 }

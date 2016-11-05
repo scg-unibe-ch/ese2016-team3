@@ -1,22 +1,23 @@
 package ch.unibe.ese.team3.controller.pojos.forms;
 
-import javax.validation.constraints.AssertFalse;
+import java.util.List;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import ch.unibe.ese.team3.model.AlertType;
+import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 
 /** This form is used when a user wants to create a new alert. */
 public class AlertForm {
 	
-	private User user;
 	
-	// muss weg -> Type type = (studio, house, villa, flat,...)
-	private boolean studio;
-	private boolean room;
+	private User user;
+	private List<AlertType> alertTypes;
 
 	@NotBlank(message = "Required")
 	@Pattern(regexp = "^[0-9]{4} - [-\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
@@ -31,11 +32,6 @@ public class AlertForm {
 	private Integer price;
 	
 	private int zipCode;
-
-	@AssertFalse(message = "Please select either or both types")
-	private boolean noRoomNoStudio;
-
-	private boolean bothRoomAndStudio;
 
 	public String getCity() {
 		return city;
@@ -68,43 +64,20 @@ public class AlertForm {
 		this.price = price;
 	}
 
-	public boolean getStudio() {
-		return studio;
-	}
-
-	public void setStudio(boolean studio) {
-		this.studio = studio;
-	}
-
-	public boolean getRoom() {
-		return room;
-	}
-
-	public void setRoom(boolean room) {
-		this.room = room;
-	}
-
-	public boolean getNoRoomNoStudio() {
-		return noRoomNoStudio;
-	}
-
-	public void setNoRoomNoStudio(boolean noRoomNoStudio) {
-		this.noRoomNoStudio = noRoomNoStudio;
-	}
-
-	public boolean getBothRoomAndStudio() {
-		return bothRoomAndStudio;
-	}
-
-	public void setBothRoomAndStudio(boolean bothRoomAndStudio) {
-		this.bothRoomAndStudio = bothRoomAndStudio;
-	}
-	
 	public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+
+	public List<AlertType> getAlertTypes() {
+		return alertTypes;
+	}
+
+	public void setAlertTypes(List<AlertType> alertTypes) {
+		this.alertTypes = alertTypes;
 	}
 }

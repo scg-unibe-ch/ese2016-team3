@@ -57,7 +57,7 @@ public class EditAdService {
 
 		ad.setStreet(placeAdForm.getStreet());
 
-		ad.setStudio(placeAdForm.getStudio());
+		//ad.setStudio(placeAdForm.getStudio());
 
 		// take the zipcode - first four digits
 		String zip = placeAdForm.getCity().substring(0, 4);
@@ -78,36 +78,34 @@ public class EditAdService {
 				calendar.set(yearMoveIn, monthMoveIn - 1, dayMoveIn);
 				ad.setMoveInDate(calendar.getTime());
 			}
-
-			if (placeAdForm.getMoveOutDate().length() >= 1) {
-				int dayMoveOut = Integer.parseInt(placeAdForm.getMoveOutDate()
-						.substring(0, 2));
-				int monthMoveOut = Integer.parseInt(placeAdForm
-						.getMoveOutDate().substring(3, 5));
-				int yearMoveOut = Integer.parseInt(placeAdForm.getMoveOutDate()
-						.substring(6, 10));
-				calendar.set(yearMoveOut, monthMoveOut - 1, dayMoveOut);
-				ad.setMoveOutDate(calendar.getTime());
-			}
 		} catch (NumberFormatException e) {
 		}
 
+		// for auction
+		ad.setStartPrice(placeAdForm.getStartPrice());
+		ad.setBuyItNowPrice(placeAdForm.getBuyItNowPrice());
+		ad.setIncreaseBidPrice(placeAdForm.getIncreaseBidPrice());
+
 		ad.setPrizePerMonth(placeAdForm.getPrize());
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
-
-		ad.setRoomDescription(placeAdForm.getRoomDescription());
-		ad.setPreferences(placeAdForm.getPreferences());
-
+		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
+		ad.setDistanceShopping(placeAdForm.getDistanceShopping());
+		ad.setDistancePublicTransport(placeAdForm.getDistancePublicTransport());
+		ad.setBuildYear(placeAdForm.getBuildYear());
+		ad.setRenovationYear(placeAdForm.getRenovationYear());
+		ad.setNumberOfRooms(placeAdForm.getNumberOfRooms());
+		ad.setNumberOfBath(placeAdForm.getNumberOfBath());
 		// ad description values
-		ad.setSmokers(placeAdForm.isSmokers());
-		ad.setAnimals(placeAdForm.isAnimals());
-		ad.setGarden(placeAdForm.getGarden());
+		ad.setParking(placeAdForm.isParking());
+		ad.setDishwasher(placeAdForm.getDishwasher());
+		ad.setRoomDescription(placeAdForm.getRoomDescription());
 		ad.setBalcony(placeAdForm.getBalcony());
-		ad.setCellar(placeAdForm.getCellar());
-		ad.setFurnished(placeAdForm.isFurnished());
-		ad.setCable(placeAdForm.getCable());
 		ad.setGarage(placeAdForm.getGarage());
-		ad.setInternet(placeAdForm.getInternet());
+
+		ad.setElevator(placeAdForm.isElevator());
+		ad.setInfrastructureType(placeAdForm.getInfrastructureType());
+		ad.setFloorLevel(placeAdForm.getFloorLevel());
+
 
 		/*
 		 * Save the paths to the picture files, the pictures are assumed to be
@@ -186,7 +184,6 @@ public class EditAdService {
 		PlaceAdForm adForm = new PlaceAdForm();
 
 		adForm.setRoomDescription(ad.getRoomDescription());
-		adForm.setPreferences(ad.getPreferences());
 		adForm.setType(ad.getType());
 		
 		return adForm;
