@@ -219,9 +219,12 @@
 									<label class="col-sm-3 control-label"
 										for="field-DistanceSchool">Distance to school</label>
 									<div class="col-sm-5">
-										<form:input id="field-DistanceSchool" type="number" min="0"
-											path="distanceSchool" placeholder="0" step="100"
-											cssClass="form-control" />
+										<form:select id="field-DistanceSchool" path="distanceSchool"
+											cssClass="form-control">
+											<option value="0"></option>
+											<form:options items="${distances}" itemLabel="name"
+												itemValue="distance" />
+										</form:select>
 										<form:errors path="distanceSchool" cssClass="text-danger" />
 
 									</div>
@@ -234,9 +237,12 @@
 										for="field-DistanceShopping">Distance to shopping
 										center</label>
 									<div class="col-sm-5">
-										<form:input id="field-DistanceShopping" type="number" min="0"
-											path="distanceShopping" placeholder="0" step="100"
-											cssClass="form-control" />
+										<form:select id="field-DistanceShopping"
+											path="distanceShopping" cssClass="form-control">
+											<option value="0"></option>
+											<form:options items="${distances}" itemLabel="name"
+												itemValue="distance" />
+										</form:select>
 										<form:errors path="distanceShopping" cssClass="text-danger" />
 									</div>
 								</div>
@@ -248,9 +254,12 @@
 										for="field-DistancePublicTransport">Distance to public
 										transport</label>
 									<div class="col-sm-5">
-										<form:input id="field-DistancePublicTransport" type="number"
-											min="0" path="distancePublicTransport" placeholder="0"
-											step="100" cssClass="form-control" />
+										<form:select id="field-DistancePublicTransport"
+											path="distancePublicTransport" cssClass="form-control">
+											<option value="0"></option>
+											<form:options items="${distances}" itemLabel="name"
+												itemValue="distance" />
+										</form:select>
 										<form:errors path="distancePublicTransport"
 											cssClass="text-danger" />
 									</div>
@@ -264,6 +273,7 @@
 									<div class="col-sm-5">
 										<form:input id="field-BuildYear" path="buildYear" min="0"
 											cssClass="form-control" />
+										<form:errors path="buildYear" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -274,6 +284,7 @@
 									<div class="col-sm-5">
 										<form:input id="field-RenovationYear" path="renovationYear"
 											min="0" cssClass="form-control" />
+										<form:errors path="renovationYear" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -357,7 +368,7 @@
 									</div>
 								</div>
 							</spring:bind>
-							
+
 							<spring:bind path="increaseBidPrice">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label" for="field-increasePrice">Amount

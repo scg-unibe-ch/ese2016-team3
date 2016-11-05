@@ -139,7 +139,7 @@ public class AdTestDataSaver {
 		adBern2.setGarage(false);
 		adBern2.setBuildYear(1950);
 		adBern2.setRenovationYear(1980);
-		adBern2.setDistancePublicTransport(10000);
+		adBern2.setDistancePublicTransport(1000);
 		adBern2.setDistanceSchool(500);
 		adBern2.setDistanceShopping(100);
 		adBern2.setFloorLevel(6);
@@ -232,8 +232,8 @@ public class AdTestDataSaver {
 		adOlten.setBuildYear(1900);
 		adOlten.setRenovationYear(1950);
 		adOlten.setDistancePublicTransport(100);
-		adOlten.setDistanceSchool(5000);
-		adOlten.setDistanceShopping(4000);
+		adOlten.setDistanceSchool(500);
+		adOlten.setDistanceShopping(400);
 		adOlten.setFloorLevel(3);
 		adOlten.setNumberOfRooms(3);
 		adOlten.setInfrastructureType(InfrastructureType.CABLE);
@@ -274,8 +274,8 @@ public class AdTestDataSaver {
 		adNeuchâtel.setBuildYear(1900);
 		adNeuchâtel.setRenovationYear(2000);
 		adNeuchâtel.setDistancePublicTransport(100);
-		adNeuchâtel.setDistanceSchool(5000);
-		adNeuchâtel.setDistanceShopping(4000);
+		adNeuchâtel.setDistanceSchool(500);
+		adNeuchâtel.setDistanceShopping(300);
 		adNeuchâtel.setFloorLevel(3);
 		adNeuchâtel.setNumberOfRooms(7);
 		adNeuchâtel.setInfrastructureType(InfrastructureType.CABLE);
@@ -315,8 +315,8 @@ public class AdTestDataSaver {
 		adBiel.setBuildYear(1900);
 		adBiel.setRenovationYear(2000);
 		adBiel.setDistancePublicTransport(100);
-		adBiel.setDistanceSchool(5000);
-		adBiel.setDistanceShopping(4000);
+		adBiel.setDistanceSchool(500);
+		adBiel.setDistanceShopping(400);
 		adBiel.setFloorLevel(3);
 		adBiel.setNumberOfRooms(7);
 		
@@ -362,8 +362,8 @@ public class AdTestDataSaver {
 		adZurich.setGarage(false);
 		adZurich.setBuildYear(1944);
 		adZurich.setRenovationYear(2000);
-		adZurich.setDistancePublicTransport(3000);
-		adZurich.setDistanceSchool(4000);
+		adZurich.setDistancePublicTransport(300);
+		adZurich.setDistanceSchool(400);
 		adZurich.setDistanceShopping(100);
 		adZurich.setFloorLevel(3);
 		adZurich.setNumberOfRooms(5);
@@ -412,7 +412,7 @@ public class AdTestDataSaver {
 		adLuzern.setBuildYear(1960);
 		adLuzern.setRenovationYear(1991);
 		adLuzern.setDistancePublicTransport(500);
-		adLuzern.setDistanceSchool(10000);
+		adLuzern.setDistanceSchool(1000);
 		adLuzern.setDistanceShopping(100);
 		adLuzern.setFloorLevel(6);
 		adLuzern.setNumberOfRooms(3);
@@ -460,8 +460,8 @@ public class AdTestDataSaver {
 		adAarau.setBuildYear(1960);
 		adAarau.setRenovationYear(1970);
 		adAarau.setDistancePublicTransport(100);
-		adAarau.setDistanceSchool(5000);
-		adAarau.setDistanceShopping(7000);
+		adAarau.setDistanceSchool(500);
+		adAarau.setDistanceShopping(700);
 		adAarau.setFloorLevel(1);
 		adAarau.setNumberOfRooms(3);
 		adAarau.setInfrastructureType(InfrastructureType.CABLE);
@@ -547,7 +547,7 @@ public class AdTestDataSaver {
 		adLausanne.setGarage(true);
 		adLausanne.setBuildYear(1960);
 		adLausanne.setRenovationYear(1980);
-		adLausanne.setDistancePublicTransport(3000);
+		adLausanne.setDistancePublicTransport(300);
 		adLausanne.setDistanceSchool(100);
 		adLausanne.setDistanceShopping(900);
 		adLausanne.setFloorLevel(1);
@@ -588,9 +588,9 @@ public class AdTestDataSaver {
 		adLocarno.setGarage(true);
 		adLocarno.setBuildYear(1800);
 		adLocarno.setRenovationYear(1980);
-		adLocarno.setDistancePublicTransport(3000);
-		adLocarno.setDistanceSchool(10000);
-		adLocarno.setDistanceShopping(9000);
+		adLocarno.setDistancePublicTransport(300);
+		adLocarno.setDistanceSchool(1000);
+		adLocarno.setDistanceShopping(900);
 		adLocarno.setFloorLevel(4);
 		adLocarno.setNumberOfRooms(6);
 		adLocarno.setInfrastructureType(InfrastructureType.CABLE);

@@ -28,6 +28,7 @@ import ch.unibe.ese.team3.controller.service.AlertService;
 import ch.unibe.ese.team3.controller.service.EditAdService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.dto.PictureMeta;
+import ch.unibe.ese.team3.enums.Distance;
 import ch.unibe.ese.team3.exceptions.ForbiddenException;
 import ch.unibe.ese.team3.exceptions.ResourceNotFoundException;
 import ch.unibe.ese.team3.model.Ad;
@@ -87,6 +88,7 @@ public class EditAdController {
 		model.addObject("existingPictures", ad.getPictures());
 		model.addObject("placeAdForm", form);
 		model.addObject("types", Type.values());
+		model.addObject("distances", Distance.values());
 		model.addObject("infrastructureTypes", InfrastructureType.values());
 
 		String realPath = servletContext.getRealPath(IMAGE_DIRECTORY);
@@ -136,7 +138,7 @@ public class EditAdController {
 			// reset the picture uploader
 			this.pictureUploader = null;
 
-			model = new ModelAndView("redirect:/ad?id=" + ad.getId());
+			model = new ModelAndView("redirect:../ad?id=" + ad.getId());
 			redirectAttributes.addFlashAttribute("confirmationMessage",
 					"Ad edited successfully. You can take a look at it below.");
 		}
@@ -144,6 +146,7 @@ public class EditAdController {
 			Ad ad = adService.getAdById(adId);
 			model.addObject("adId", ad.getId());
 			model.addObject("existingPictures", ad.getPictures());
+			model.addObject("distances", Distance.values());
 			model.addObject("placeAdForm", placeAdForm);
 			model.addObject("types", Type.values());
 			model.addObject("infrastructureTypes", InfrastructureType.values());

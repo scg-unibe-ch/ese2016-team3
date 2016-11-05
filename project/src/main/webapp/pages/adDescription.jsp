@@ -233,15 +233,15 @@
 
 					<tr>
 						<th>Distance to school</th>
-						<td>${shownAd.distanceSchool}&#32;m</td>
+						<td>${shownAd.getDistanceSchoolAsEnum().name}</td>
 					</tr>
 					<tr>
 						<th>Distance to shopping center</th>
-						<td>${shownAd.distanceShopping}&#32;m</td>
+						<td>${shownAd.getDistanceShoppingAsEnum().name}</td>
 					</tr>
 					<tr>
 						<th>Distance to public transport</th>
-						<td>${shownAd.distancePublicTransport}&#32;m</td>
+						<td>${shownAd.getDistancePublicTransportAsEnum().name}</td>
 					</tr>
 
 					<tr>
