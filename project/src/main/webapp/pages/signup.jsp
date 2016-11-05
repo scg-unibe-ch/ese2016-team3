@@ -104,7 +104,7 @@
 						<div class="col-sm-6 col-sm-offset-2">
 							<label class="checkbox-inline"> <form:checkbox
 									path="isPremium" value="on" id="premiumUser" /> Sign up as a
-								Premium User for only 5$ per month
+								Premium User
 							</label>
 						</div>
 					</div>

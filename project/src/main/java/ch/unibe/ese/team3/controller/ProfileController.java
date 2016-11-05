@@ -217,6 +217,8 @@ public class ProfileController {
 		model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
 		model.addObject("accountTypes", AccountType.values());
 		model.addObject("currentUser", user);
+		model.addObject("years", GetYears());
+		model.addObject("months", GetMonths());
 		return model;
 	}
 
@@ -237,6 +239,8 @@ public class ProfileController {
 			model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
 			model.addObject("accountTypes", AccountType.values());
 			model.addObject("currentUser", user);
+			model.addObject("years", GetYears());
+			model.addObject("months", GetMonths());
 		}
 		return model;
 	}
