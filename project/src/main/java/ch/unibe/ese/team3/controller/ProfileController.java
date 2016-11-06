@@ -79,6 +79,10 @@ public class ProfileController {
 		model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
 		model.addObject("years", GetYears());
 		model.addObject("months", GetMonths());
+		
+		Iterable<PremiumChoice> allChoices = premiumChoiceService.findAll();
+		model.addObject("premiumChoices", allChoices);
+		model.addObject("durations", premiumChoiceService.getDurations());
 		return model;
 	}
 
@@ -116,6 +120,10 @@ public class ProfileController {
 			model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
 			model.addObject("years", GetYears());
 			model.addObject("months", GetMonths());
+			
+			Iterable<PremiumChoice> allChoices = premiumChoiceService.findAll();
+			model.addObject("premiumChoices", allChoices);
+			model.addObject("durations", premiumChoiceService.getDurations());
 		}
 		return model;
 	}

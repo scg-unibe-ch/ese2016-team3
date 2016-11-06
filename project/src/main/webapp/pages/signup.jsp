@@ -108,6 +108,41 @@
 							</label>
 						</div>
 					</div>
+					
+					
+					<div id="premiumPackages">
+						<hr>
+						<p><strong>The following premium packages are available:</strong></p>
+						<br />
+						<c:forEach var="choice" items="${premiumChoices}">
+							<div class="row bottom15">
+								<div class="col-md-2">
+									<strong>Duration:</strong> ${choice.duration} days
+								</div>
+								<div class="col-md-6">
+									<strong>Price:</strong> ${choice.price} CHF
+								</div>
+							</div>
+						</c:forEach>
+						<br />
+				
+						<spring:bind path="duration">
+							<div id="form-duration"
+								class="form-group ${status.error ? 'has-error' : '' }">
+								<label class="col-sm-2 control-label"
+									for="field-duration">Duration in days</label>
+								<div class="col-sm-3">
+									<form:select path="duration" id="field-duration"
+										class="form-control"> 
+									<form:options items="${durations}"/>
+									</form:select>
+									<form:errors path="duration" cssClass="text-danger" />
+								</div>
+							</div>
+						</spring:bind>
+						
+						<hr>
+					</div>
 
 					<spring:bind path="validCreditcardType">
 						<div id="form-creditcardType"
@@ -231,6 +266,7 @@ $("#premiumUser").change(function(){
 	$("#form-securityNumber").toggle(self.checked);
 	$("#form-expirationMonth").toggle(self.checked);
 	$("#form-expirationYear").toggle(self.checked);
+	$("#premiumPackages").toggle(self.checked);
 	
 	
 }).change();

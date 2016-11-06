@@ -74,7 +74,7 @@ public class User {
 	private String creditcardName;
 	
 	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	private PremiumChoice premiumChoice;
 
 	@JsonIgnore

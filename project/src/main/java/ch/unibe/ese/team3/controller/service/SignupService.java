@@ -12,6 +12,7 @@ import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.UserDao;
+import ch.unibe.ese.team3.model.PremiumChoice;
 
 /** Handles the persisting of new users */
 @Service
@@ -21,6 +22,9 @@ public class SignupService {
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private PremiumChoiceService premiumChoiceService;
 
 	/** Handles persisting a new user to the database. */
 	@Transactional
@@ -37,6 +41,16 @@ public class SignupService {
 		if(signupForm.getIsPremium() == true){
 			user.setAccountType(AccountType.PREMIUM);
 			user.setCreditCard(signupForm.getCreditCard());
+			
+			user.setCreditcardType(signupForm.getCreditcardType());
+			user.setSecurityNumber(signupForm.getSecurityNumber());
+			user.setExpirationMonth(signupForm.getExpirationMonth());
+			user.setExpirationYear(signupForm.getExpirationYear());
+			user.setCreditcardName(signupForm.getCreditcardName());
+			
+			int duration = signupForm.getDuration();
+			PremiumChoice premiumChoice = premiumChoiceService.findPremiumChoiceByDuration(duration);
+			user.setPremiumChoice(premiumChoice);
 		}
 		else {
 			user.setAccountType(AccountType.BASIC);
