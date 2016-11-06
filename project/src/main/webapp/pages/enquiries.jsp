@@ -43,7 +43,7 @@
 																+ id);
 												$(cell)
 														.html(
-																"Accepted <button class='undoButton' data-id='"+ id+ "'>Undo</button>");
+																"Accepted <button class='undoButton btn btn-danger' data-id='"+ id+ "'>Undo</button>");
 												attachUndoHandler();
 											});
 							
@@ -58,7 +58,7 @@
 																+ id);
 												$(cell)
 														.html(
-																"Declined <button class='undoButton' data-id='"+ id+ "'>Undo</button>");
+																"Declined <button class='undoButton btn btn-danger' data-id='"+ id+ "'>Undo</button>");
 												attachUndoHandler();
 											});
 						}
@@ -75,7 +75,7 @@
 																+ id);
 												$(cell)
 														.html(
-																"<button class='acceptButton' data-id='"+ id + "'>Accept</button><button class='declineButton' data-id='" + id + "'>Decline</button>");
+																"<button class='acceptButton btn btn-success' data-id='"+ id + "'>Accept</button><button class='declineButton btn btn-danger' data-id='" + id + "'>Decline</button>");
 												attachHandlers();
 											});
 						}
@@ -110,7 +110,7 @@
 
 				<tr>
 					<td><a href="/user?id=${enquiry.sender.id}">${enquiry.sender.email}</a></td>
-					<td><a href="/ad?id=${enquiry.visit.ad.id }">${enquiry.visit.ad.street },
+					<td><a href="/${enquiry.visit.ad.buyMode.name}/ad?id=${enquiry.visit.ad.id }">${enquiry.visit.ad.street },
 							${enquiry.visit.ad.zipcode } ${enquiry.visit.ad.city }</a></td>
 
 					<td>${date},&#32;${startTime}&#32;to&#32;${endTime }</td>

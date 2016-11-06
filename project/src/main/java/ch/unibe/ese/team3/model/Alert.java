@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -45,7 +47,18 @@ public class Alert {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
 	private List<AlertType> alertTypes;
 	
+	@Enumerated(EnumType.STRING)
+	private BuyMode buyMode;
 	
+	
+	public BuyMode getBuyMode() {
+		return buyMode;
+	}
+
+	public void setBuyMode(BuyMode buyMode) {
+		this.buyMode = buyMode;
+	}
+
 	public long getId() {
 		return id;
 	}

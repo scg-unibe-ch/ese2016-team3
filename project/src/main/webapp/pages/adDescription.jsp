@@ -196,7 +196,7 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<h4>Description</h4>
-								<p>${shownAd.roomDescription}</p>
+								<p>${shownAd.getRoomDescriptionWithLineBreaks()}</p>
 							</div>
 						</div>
 					</div>
@@ -225,18 +225,23 @@
 						<th>Number of bath rooms</th>
 						<td>${shownAd.numberOfBath}</td>
 					</tr>
+					
+					<tr>
+						<th>Internet/TV infrastructure</th>
+						<td>${shownAd.infrastructureType.name}</td>
+					</tr>
 
 					<tr>
 						<th>Distance to school</th>
-						<td>${shownAd.distanceSchool}&#32;m</td>
+						<td>${shownAd.getDistanceSchoolAsEnum().name}</td>
 					</tr>
 					<tr>
 						<th>Distance to shopping center</th>
-						<td>${shownAd.distanceShopping}&#32;m</td>
+						<td>${shownAd.getDistanceShoppingAsEnum().name}</td>
 					</tr>
 					<tr>
 						<th>Distance to public transport</th>
-						<td>${shownAd.distancePublicTransport}&#32;m</td>
+						<td>${shownAd.getDistancePublicTransportAsEnum().name}</td>
 					</tr>
 
 					<tr>
@@ -277,6 +282,7 @@
 						<td></td>
 					</tr>
 				</table>
+				<p class="bottom15"><span class="glyphicon glyphicon-ok"></span> = Available, <span class="glyphicon glyphicon-remove"></span> = Not available</p>
 				<h4>Visiting times</h4>
 				<table class="table table-striped" id="visitList">
 					<c:forEach items="${visits }" var="visit">
@@ -304,39 +310,41 @@
 				</table>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-				<div id="carousel-example-generic" class="carousel slide bottom15"
-					data-ride="carousel">
-					<!-- Indicators -->
-					<ol class="carousel-indicators">
-						<c:forEach var="picture" items="${shownAd.pictures}"
-							varStatus="loop">
-							<li data-target="#carousel-example-generic"
-								data-slide-to="${loop.index}"
-								class=" ${loop.index == 0 ? 'active' : ''}"></li>
-						</c:forEach>
-					</ol>
-
-					<!-- Wrapper for slides -->
-					<div class="carousel-inner" role="listbox">
-						<c:forEach items="${shownAd.pictures}" var="picture"
-							varStatus="loop">
-							<div class="item ${loop.index == 0 ? 'active' : '' }">
-								<img src="${picture.filePath}">
-							</div>
-						</c:forEach>
+				<c:if test="${ not empty shownAd.pictures }">
+					<div id="carousel-example-generic" class="carousel slide bottom15"
+						data-ride="carousel">
+						<!-- Indicators -->
+						<ol class="carousel-indicators">
+							<c:forEach var="picture" items="${shownAd.pictures}"
+								varStatus="loop">
+								<li data-target="#carousel-example-generic"
+									data-slide-to="${loop.index}"
+									class=" ${loop.index == 0 ? 'active' : ''}"></li>
+							</c:forEach>
+						</ol>
+	
+						<!-- Wrapper for slides -->
+						<div class="carousel-inner" role="listbox">
+							<c:forEach items="${shownAd.pictures}" var="picture"
+								varStatus="loop">
+								<div class="item ${loop.index == 0 ? 'active' : '' }">
+									<img src="${picture.filePath}">
+								</div>
+							</c:forEach>
+						</div>
+	
+						<!-- Controls -->
+						<a class="left carousel-control" href="#carousel-example-generic"
+							role="button" data-slide="prev"> <span
+							class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a> <a class="right carousel-control" href="#carousel-example-generic"
+							role="button" data-slide="next"> <span
+							class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
 					</div>
-
-					<!-- Controls -->
-					<a class="left carousel-control" href="#carousel-example-generic"
-						role="button" data-slide="prev"> <span
-						class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-						<span class="sr-only">Previous</span>
-					</a> <a class="right carousel-control" href="#carousel-example-generic"
-						role="button" data-slide="next"> <span
-						class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-						<span class="sr-only">Next</span>
-					</a>
-				</div>
+				</c:if>
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<div class="row">
@@ -381,6 +389,64 @@
 						</div>
 					</div>
 				</div>
+
+
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-sm-4">
+								<h4>Auction</h4>
+								<fmt:formatDate value="${ad.startDate}"
+												var="formattedStartDate" type="date" pattern="dd.MM.yyyy" />
+											<p>Running until :${formattedStartDate}</p>
+
+											<p>
+												Current price: <strong>${ad.currentAuctionPrice} CHF</strong>
+											</p>
+							</div>
+							
+							 <div class="col-sm-8">
+							 <%-- <form:form ?? --%>
+							<div class="form-group">
+												<label class="sr-only" for="bid">Amount</label>
+												<%-- for="bid" stimmt wahrscheinlich nicht --%>
+												<div class="input-group">
+													<div class="input-group-addon">CHF</div>
+													<%--<input type="number" class="form-controll" placeholder="Amount" name="bid"> es fehlt: id = und value= --%>
+													<input class="form-control" id="disabledInput" type="text"
+														placeholder=${ad.bidPriceForUser } disabled> <span
+														class="input-group-btn">
+														<button type="button" class="btn btn-success">Bid</button>
+													</span>
+
+												</div>
+											</div>
+							
+							
+							
+											<div class="form-group">
+												<label class="sr-only" for="exampleInputAmount">Buy
+													now Price in CHF</label>
+												<%-- for stimmt wahrscheinlich nicht --%>
+												<div class="input-group">
+													<div class="input-group-addon">CHF</div>
+													<input class="form-control" id="disabledInput" type="text"
+														placeholder=${ad.buyItNowPrice } disabled> <span
+														class="input-group-btn">
+														<button type="button" class="btn btn-success">Buy
+														</button>
+													</span>
+												</div>
+											</div>
+										</div>
+							
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				
 			</div>
 		</div>
 

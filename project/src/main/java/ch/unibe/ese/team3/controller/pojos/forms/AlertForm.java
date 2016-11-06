@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import ch.unibe.ese.team3.model.AlertType;
+import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 
@@ -17,7 +17,7 @@ public class AlertForm {
 	
 	
 	private User user;
-	private List<AlertType> alertTypes;
+	private List<Type> types;
 
 	@NotBlank(message = "Required")
 	@Pattern(regexp = "^[0-9]{4} - [-\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
@@ -32,6 +32,17 @@ public class AlertForm {
 	private Integer price;
 	
 	private int zipCode;
+	
+	@NotNull(message = "Required")
+	private BuyMode buyMode;
+
+	public BuyMode getBuyMode() {
+		return buyMode;
+	}
+
+	public void setBuyMode(BuyMode buyMode) {
+		this.buyMode = buyMode;
+	}
 
 	public String getCity() {
 		return city;
@@ -73,11 +84,11 @@ public class AlertForm {
 	}
 	
 
-	public List<AlertType> getAlertTypes() {
-		return alertTypes;
+	public List<Type> getTypes() {
+		return types;
 	}
 
-	public void setAlertTypes(List<AlertType> alertTypes) {
-		this.alertTypes = alertTypes;
+	public void setTypes(List<Type> types) {
+		this.types = types;
 	}
 }

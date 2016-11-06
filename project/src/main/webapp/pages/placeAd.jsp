@@ -24,21 +24,15 @@
 						// if there is id == x then make "Bookmark Me" to "bookmarked"
 
 						$("#field-city").autocomplete({
-							minLength : 2
-						});
-						$("#field-city").autocomplete({
-							source : <c:import url="getzipcodes.jsp" />
-						});
-						$("#field-city").autocomplete("option", {
+							minLength : 2,
+							source : <c:import url="getzipcodes.jsp" />,
 							enabled : true,
 							autoFocus : true
 						});
 						$("#field-moveInDate").datepicker({
 							dateFormat : 'dd-mm-yy'
 						});
-						$("#field-startDate").datepicker({
-							dateFormat : 'dd-mm-yy'
-						});
+
 						$("#field-endDate").datepicker({
 							dateFormat : 'dd-mm-yy'
 						});
@@ -106,7 +100,7 @@
 <div class="row">
 	<div class="col-md-12 col-xs-12">
 
-		<h3>Place an ad</h3>
+		<h3>Place an ad for ${ pagemode eq 'buy' ? 'buying' : 'renting' }</h3>
 		<div class="row">
 			<div class="col-md-12">
 				<form:form method="post" modelAttribute="placeAdForm"
@@ -124,6 +118,7 @@
 									<div class="col-sm-5">
 										<form:input type="text" id="field-title" path="title"
 											cssClass="form-control" placeholder="Title" />
+										<form:errors path="title" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -157,7 +152,7 @@
 									<div class="col-sm-5">
 										<form:input type="text" name="city" id="field-city"
 											path="city" placeholder="City" cssClass="form-control" />
-										<form:errors path="city" cssClass="validationErrorText" />
+										<form:errors path="city" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -169,6 +164,7 @@
 									<div class="col-sm-5">
 										<form:input type="text" id="field-moveInDate"
 											path="moveInDate" cssClass="form-control" />
+										<form:errors path="moveInDate" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -185,8 +181,7 @@
 										<form:input id="field-SquareFootage" type="number" min="0"
 											path="squareFootage" placeholder="Square footage" step="5"
 											cssClass="form-control" />
-										<form:errors path="squareFootage"
-											cssClass="validationErrorText" />
+										<form:errors path="squareFootage" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -199,8 +194,7 @@
 										<form:input id="field-NumberOfRooms" type="number" min="0"
 											path="numberOfRooms" placeholder="numberOfRooms" step="1"
 											cssClass="form-control" />
-										<form:errors path="numberOfRooms"
-											cssClass="validationErrorText" />
+										<form:errors path="numberOfRooms" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -213,7 +207,7 @@
 										<form:input id="field-Floor" type="number" min="0"
 											path="floorLevel" placeholder="0" step="1"
 											cssClass="form-control" />
-										<form:errors path="floorLevel" cssClass="validationErrorText" />
+										<form:errors path="floorLevel" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -223,11 +217,13 @@
 									<label class="col-sm-3 control-label"
 										for="field-DistanceSchool">Distance to school</label>
 									<div class="col-sm-5">
-										<form:input id="field-DistanceSchool" type="number" min="0"
-											path="distanceSchool" placeholder="0" step="100"
-											cssClass="form-control" />
-										<form:errors path="distanceSchool"
-											cssClass="validationErrorText" />
+										<form:select id="field-DistanceSchool" path="distanceSchool"
+											cssClass="form-control">
+											<option value="0"></option>
+											<form:options items="${distances}" itemLabel="name"
+												itemValue="distance" />
+										</form:select>
+										<form:errors path="distanceSchool" cssClass="text-danger" />
 
 									</div>
 								</div>
@@ -239,11 +235,13 @@
 										for="field-DistanceShopping">Distance to shopping
 										center</label>
 									<div class="col-sm-5">
-										<form:input id="field-DistanceShopping" type="number" min="0"
-											path="distanceShopping" placeholder="0" step="100"
-											cssClass="form-control" />
-										<form:errors path="distanceShopping"
-											cssClass="validationErrorText" />
+										<form:select id="field-DistanceShopping"
+											path="distanceShopping" cssClass="form-control">
+											<option value="0"></option>
+											<form:options items="${distances}" itemLabel="name"
+												itemValue="distance" />
+										</form:select>
+										<form:errors path="distanceShopping" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -254,11 +252,14 @@
 										for="field-DistancePublicTransport">Distance to public
 										transport</label>
 									<div class="col-sm-5">
-										<form:input id="field-DistancePublicTransport" type="number"
-											min="0" path="distancePublicTransport" placeholder="0"
-											step="100" cssClass="form-control" />
+										<form:select id="field-DistancePublicTransport"
+											path="distancePublicTransport" cssClass="form-control">
+											<option value="0"></option>
+											<form:options items="${distances}" itemLabel="name"
+												itemValue="distance" />
+										</form:select>
 										<form:errors path="distancePublicTransport"
-											cssClass="validationErrorText" />
+											cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -270,6 +271,7 @@
 									<div class="col-sm-5">
 										<form:input id="field-BuildYear" path="buildYear" min="0"
 											cssClass="form-control" />
+										<form:errors path="buildYear" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -280,12 +282,13 @@
 									<div class="col-sm-5">
 										<form:input id="field-RenovationYear" path="renovationYear"
 											min="0" cssClass="form-control" />
+										<form:errors path="renovationYear" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
 
 
-				<%-- 			<spring:bind path="prize">
+							<%-- 			<spring:bind path="prize">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label" for="field-Prize">Prize
 										per month</label>
@@ -293,7 +296,7 @@
 										<form:input id="field-Prize" type="number" min="0"
 											path="prize" placeholder="Prize per month" step="50"
 											cssClass="form-control" />
-										<form:errors path="prize" cssClass="validationErrorText" />
+										<form:errors path="prize" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>   --%>
@@ -302,92 +305,97 @@
 					<h4>Prizing</h4>
 					<div class="panel panel-default">
 						<div class="panel-body">
-						
-						<spring:bind path="prize">
+
+							<spring:bind path="prize">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="field-Prize">Normal Buy Prize(without Auction) </label>
+									<label class="col-sm-3 control-label" for="field-Prize">Normal
+										Price (without Auction) </label>
 									<div class="col-sm-5">
 										<form:input id="field-Prize" type="number" min="0"
 											path="prize" placeholder="Prize " step="50"
 											cssClass="form-control" />
-										<form:errors path="prize" cssClass="validationErrorText" />
+										<form:errors path="prize" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
-							
+
+							<div class="form-group">
+
+								<label class="col-sm-3 control-label">Auction</label>
+								<div class="col-sm-offset-3 col-sm-10">
+									<div class="checkbox">
+										<label> <form:checkbox id="field-auction"
+												path="auction" value="1" /> Yes
+										</label>
+									</div>
+								</div>
+							</div>
+
 							<spring:bind path="buyItNowPrice">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="field-BuyNowPrize">Immediate Buy Price for Auction </label>
+									<label class="col-sm-3 control-label" for="field-BuyNowPrize">Immediate
+										Buy Price for Auction </label>
 									<div class="col-sm-5">
 										<form:input id="field-BuyNowPrize" type="number" min="0"
 											path="buyItNowPrice" placeholder="Prize " step="50"
 											cssClass="form-control" />
-										<form:errors path="buyItNowPrice" cssClass="validationErrorText" />
+										<form:errors path="buyItNowPrice" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
-							
+
 							<spring:bind path="startDate">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="field-startDate">Startdate for Auction </label>
-										<div class="col-sm-5">
-										<form:input type="text" id="field-startDate"
-											path="startDate" cssClass="form-control" />
-										
-										</div>
+									<label class="col-sm-3 control-label" for="field-startDate">Startdate
+										for Auction </label>
+									<div class="col-sm-5">
+										<form:input type="datetime-local" value="2016-08-19T13:45:00"
+											id="field-startDate" path="startDate" cssClass="form-control" />
+
+									</div>
+
 								</div>
 							</spring:bind>
-							
+
 							<spring:bind path="endDate">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="field-endDate">Enddate for Auction </label>
-										<div class="col-sm-5">
-										<form:input type="text" id="field-endDate"
-											path="endDate" cssClass="form-control" />
-										
-										</div>
+									<label class="col-sm-3 control-label" for="field-endDate">Enddate
+										for Auction </label>
+									<div class="col-sm-5">
+										<form:input type="text" id="field-endDate" path="endDate"
+											cssClass="form-control" />
+									</div>
 								</div>
 							</spring:bind>
-						
-						<spring:bind path="startPrice"> 
-							<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="field-startPrice">Startprice for Auction </label>
-										<div class="col-sm-5">
-										<form:input  id="field-startPrice"
-											path="startPrice" type="number" min="0" placeholder="Startprice " step="1"
+
+							<spring:bind path="startPrice">
+								<div class="form-group ${status.error ? 'has-error' : '' }">
+									<label class="col-sm-3 control-label" for="field-startPrice">Startprice
+										for Auction </label>
+									<div class="col-sm-5">
+										<form:input id="field-startPrice" path="startPrice"
+											type="number" min="0" placeholder="Startprice " step="1"
 											cssClass="form-control" />
-											<form:errors path="startPrice" cssClass="validationErrorText" />
-										
-										</div>
+										<form:errors path="startPrice" cssClass="text-danger" />
+									</div>
 								</div>
-						
-						</spring:bind>
-						<spring:bind path="increaseBidPrice"> 
-							<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="field-increasePrice">Amount of increase of bid price </label>
-										<div class="col-sm-5">
-										<form:input  id="field-increasePrice"
-											path="increaseBidPrice" type="number" min="0" placeholder="Startprice " step="1"
+							</spring:bind>
+
+							<spring:bind path="increaseBidPrice">
+								<div class="form-group ${status.error ? 'has-error' : '' }">
+									<label class="col-sm-3 control-label" for="field-increasePrice">Amount
+										of increase of bid price </label>
+									<div class="col-sm-5">
+										<form:input id="field-increasePrice" path="increaseBidPrice"
+											type="number" min="0" placeholder="Startprice " step="1"
 											cssClass="form-control" />
-											<form:errors path="increaseBidPrice" cssClass="validationErrorText" />
-										
-										</div>
-										
+										<form:errors path="increaseBidPrice" cssClass="text-danger" />
+									</div>
 								</div>
-						
-						</spring:bind>
-						
-						
-						
+							</spring:bind>
 						</div>
 					</div>
-					
-					
-					
-
 					<h4>Description</h4>
-
-
 					<div class="panel panel-default">
 						<div class="panel-body">
 
@@ -399,8 +407,7 @@
 										<form:input id="field-NumberOfBath" type="number" min="0"
 											path="numberOfBath" placeholder="Number of baths" step="1"
 											cssClass="form-control" />
-										<form:errors path="numberOfBath"
-											cssClass="validationErrorText" />
+										<form:errors path="numberOfBath" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -416,135 +423,139 @@
 									</div>
 								</div>
 							</spring:bind>
-
+							
 							<div class="checkbox">
 
 								<label class="col-sm-3 control-label">Garage</label>
-								<div class="col-sm-5"> 
+								<div class="col-sm-5">
 									<form:checkbox id="field-garage" path="garage" value="1" />
 								</div>
 
 
 							</div>
 							<div class="checkbox">
-								
+								<label class="col-sm-3 control-label">Parking</label>
+								<div class="col-sm-5">
+									<form:checkbox id="field-parking" path="parking" value="1" />
 
-									<label class="col-sm-3 control-label">Parking</label>
-									<div class="col-sm-5">
-									<form:checkbox id="field-parking" path="parking"
-											value="1" />
 								</div>
 							</div>
 
 							<div class="checkbox">
-								<label class="col-sm-3 control-label" >Balcony or Patio</label>
+								<label class="col-sm-3 control-label">Balcony or Patio</label>
 								<div class="col-sm-5">
-								<form:checkbox id="field-balcony" path="balcony"
-										value="1" />
-							</div>
+									<form:checkbox id="field-balcony" path="balcony" value="1" />
+								</div>
 							</div>
 							<div class="checkbox">
 								<label class="col-sm-3 control-label">Elevator </label>
 								<div class="col-sm-5">
-								<form:checkbox id="field-elevator"
-										path="elevator" value="1" />
-							</div>
+									<form:checkbox id="field-elevator" path="elevator" value="1" />
+								</div>
 							</div>
 							<div class="checkbox">
 								<label class="col-sm-3 control-label">Dishwasher</label>
 								<div class="col-sm-5">
-								<form:checkbox id="field-dishwasher"
-										path="dishwasher" value="1" />
+									<form:checkbox id="field-dishwasher" path="dishwasher"
+										value="1" />
 								</div>
 							</div>
-							<br />
-				
-							<div class="form-group">
+						</div>
+
+						<br />
+
+						<spring:bind path="roomDescription">
+							<div class="form-group ${status.error ? 'has-error' : '' }">
 								<label class="col-sm-3 control-label" for="roomDescription">Room
 									Description:</label>
 								<div class="col-sm-5">
 									<form:textarea path="roomDescription" rows="10" cols="70"
 										placeholder="Room Description" class="form-control" />
-									<form:errors path="roomDescription"
-										cssClass="validationErrorText" />
+									<form:errors path="roomDescription" cssClass="text-danger" />
 								</div>
 							</div>
-
-						</div>
+						</spring:bind>
 					</div>
-
-
-
-
-
 					<h4>Visiting times (optional)</h4>
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<div class="form-group">
-								<label>Day</label> <input type="text" id="field-visitDay">
-								<label>Time</label> <select id="startHour">
-									<%
-										for (int i = 0; i < 24; i++) {
-												String hour = String.format("%02d", i);
-												out.print("<option value=\"" + hour + "\">" + hour + "</option>");
-											}
-									%>
-								</select> <select id="startMinutes">
-									<%
-										for (int i = 0; i < 60; i++) {
-												String minute = String.format("%02d", i);
-												out.print("<option value=\"" + minute + "\">" + minute + "</option>");
-											}
-									%>
-								</select> <span>to&thinsp; </span> <select id="endHour">
-									<%
-										for (int i = 0; i < 24; i++) {
-												String hour = String.format("%02d", i);
-												out.print("<option value=\"" + hour + "\">" + hour + "</option>");
-											}
-									%>
-								</select> <select id="endMinutes">
-									<%
-										for (int i = 0; i < 60; i++) {
-												String minute = String.format("%02d", i);
-												out.print("<option value=\"" + minute + "\">" + minute + "</option>");
-											}
-									%>
-								</select>
+							<div class="row form-inline bottom15">
+								<div class="col-sm-3">
+									<label>Day</label> <input type="text" id="field-visitDay"
+										class="form-control">
+								</div>
+								<div class="col-sm-9">
+									<label>Time</label> <select id="startHour" class="form-control">
+
+										<%
+											for (int i = 0; i < 24; i++) {
+													String hour = String.format("%02d", i);
+													out.print("<option value=\"" + hour + "\">" + hour + "</option>");
+												}
+										%>
+									</select> <select id="startMinutes" class="form-control">
+										<%
+											for (int i = 0; i < 60; i++) {
+													String minute = String.format("%02d", i);
+													out.print("<option value=\"" + minute + "\">" + minute + "</option>");
+												}
+										%>
+									</select> <span>to&thinsp; </span> <select id="endHour"
+										class="form-control">
+										<%
+											for (int i = 0; i < 24; i++) {
+													String hour = String.format("%02d", i);
+													out.print("<option value=\"" + hour + "\">" + hour + "</option>");
+												}
+										%>
+									</select> <select id="endMinutes" class="form-control">
+										<%
+											for (int i = 0; i < 60; i++) {
+													String minute = String.format("%02d", i);
+													out.print("<option value=\"" + minute + "\">" + minute + "</option>");
+												}
+										%>
+									</select>
 
 
-								<button type="button" class="btn btn-default"
-									id="addVisitButton">+</button>
-								<div id="addedVisits">
+									<button type="button" class="btn btn-primary"
+										id="addVisitButton">
+										<span class="glyphicon glyphicon-plus"></span>
+									</button>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12" id="addedVisits">
 									<%-- ?? --%>
 								</div>
-
 							</div>
-
 						</div>
 					</div>
-
-
-
 					<h4>Pictures (optional)</h4>
 					<div class="panel panel-default">
 						<div class="panel-body">
-
-
-							<label class="control-label" for="field-pictures">Add
-								pictures</label> <input type="file" id="field-pictures" accept="image/*"
-								multiple="multiple" />
-
-							<div class="col-sm-6">
-								<table id="uploaded-pictures" class="table">
-									<thead>
-										<tr>
-											<th id="name-column">Uploaded picture</th>
-											<th>Size</th>
-											<th>Delete</th>
-										</tr>
-									</thead>
-								</table>
+							<div class="row form-horizontal bottom15">
+								<div class="col-sm-3">
+									<label class="control-label" for="field-pictures">Add
+										pictures</label>
+								</div>
+								<div class="col-sm-3">
+									<input type="file" id="field-pictures" accept="image/*"
+										multiple="multiple">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<table id="uploaded-pictures" class="table">
+										<thead>
+											<tr>
+												<th id="name-column">Uploaded picture</th>
+												<th>Size</th>
+												<th>Delete</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -561,5 +572,6 @@
 		</div>
 	</div>
 </div>
+
 
 <c:import url="template/footer.jsp" />

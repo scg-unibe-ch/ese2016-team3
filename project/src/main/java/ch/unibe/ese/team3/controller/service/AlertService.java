@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.lang.Math;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +13,11 @@ import ch.unibe.ese.team3.controller.pojos.forms.AlertForm;
 import ch.unibe.ese.team3.dto.Location;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Alert;
-
 import ch.unibe.ese.team3.model.AlertType;
-import ch.unibe.ese.team3.dto.Location;
-
+import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
+import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.AlertDao;
 import ch.unibe.ese.team3.model.dao.MessageDao;
@@ -59,13 +57,20 @@ public class AlertService {
 		String zip = alertForm.getCity().substring(0, 4);
 		alert.setZipcode(Integer.parseInt(zip));
 		alert.setCity(alertForm.getCity().substring(7));
-
+		alert.setBuyMode(alertForm.getBuyMode());
 		alert.setPrice(alertForm.getPrice());
 
+		alert.setRadius(alertForm.getRadius());
 		
+		List<AlertType> alertTypes = new ArrayList<AlertType>();
+		for (Type type : alertForm.getTypes()){
+			AlertType alertType = new AlertType();
+			alertType.setType(type);
+			alertType.setAlert(alert);
+			alertTypes.add(alertType);
+		}
 		
-		alert.setRadius(alertForm.getRadius());		
-		alert.setAlertTypes(alertForm.getAlertTypes());
+		alert.setAlertTypes(alertTypes);
 
 		alert.setUser(user);
 		alertDao.save(alert);
@@ -92,7 +97,8 @@ public class AlertService {
 	@Transactional
 	public void triggerAlerts(Ad ad) {
 		int adPrice = ad.getPrizePerMonth();
-		Iterable<Alert> alerts = alertDao.findByPriceGreaterThan(adPrice - 1);
+		BuyMode buyMode = ad.getBuyMode();
+		Iterable<Alert> alerts = alertDao.findByPriceGreaterThanAndBuyMode(adPrice - 1, buyMode);
 
 		// loop through all ads with matching city and price range, throw out
 		// mismatches
@@ -147,6 +153,7 @@ public class AlertService {
 		List<AlertType> alertTypes = alert.getAlertTypes();
 		
 		// iterates over each alertType and compares the type to the ad's type
+		// if Ad type equals a type in alert, mismatch is false
 		for (AlertType alertType : alertTypes) {
 				if (ad.getType().equals(alertType.getType()))
 					mismatch = false;

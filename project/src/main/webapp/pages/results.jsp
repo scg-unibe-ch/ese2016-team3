@@ -192,7 +192,8 @@
 							<label class="control-label" for="infrastructureType-room">InfrastructureType</label>
 							<form:select id="infrastructureType" path="infrastructureType"
 								cssClass="form-control">
-								<form:options items="${infrastructureType}" itemLabel="name" />
+								<option value=""></option>
+								<form:options items="${infrastructureTypes}" itemLabel="name" />
 							</form:select>
 						</div>
 					</spring:bind>
@@ -203,124 +204,132 @@
 						<div class="col-md-6 form-inline">
 							<form:input type="number" step="1" id="field-floorLevelMin"
 								path="floorLevelMin" cssClass="form-control input60" />
-							<label for="field-floorLevelMax" class="betweenLabel"> - </label>
+							<label for="field-floorLevelMax" class="betweenLabel"> -
+							</label>
 							<form:input type="number" step="1" id="field-floorLevelMax"
-								path="floorLevelMax" cssClass="form-control input60 pull-right" />
+								path="floorLevelMax" cssClass="form-control input60" />
 						</div>
 					</div>
 
 
-					<div class="form-group">
+					<div class="form-group row ">
+						<label for="field-NumberOfBathMin" class="col-md-6">Nr. of
+							Bath between</label>
 
-						<div class="col-sm-6 control-label">
-							<label for="field-NumberOfBathMin">Nr. of Bath between</label>
-						</div>
-						<div class="col-sm-6 control-label form-inline">
+						<div class="col-md-6 form-inline">
 							<form:input type="number" step="1" id="field-NumberOfBathMin"
-								path="numberOfBathMin" cssClass="form-control input60" />
-							<label for="field-NumberOfBathMax"> - </label>
-							<form:input type="number" cssClass="form-control input60"
+								path="numberOfBathMin" cssClass="form-control input60 " />
+							<label for="field-NumberOfBathMax" class="betweenLabel">
+								- </label>
+							<form:input type="number"
+								cssClass="form-control input60"
 								path="numberOfBathMax" id="field-NumberOfBathMax" />
 						</div>
 
 					</div>
 
 
-					<hr />
 
+					<div class="form-group row">
 
-					<div class="form-group form-inline">
-						<label for="field-NumberOfBathMin">Nr. of Bath between</label>
-						<form:input type="number" step="1" id="field-NumberOfBathMin"
-							path="numberOfBathMin" cssClass="form-control input60" />
-						<label for="field-NumberOfBathMax"> and </label>
-						<form:input type="number" cssClass="form-control input60"
-							path="numberOfBathMax" id="field-NumberOfBathMax" />
-					</div>
-					<div class="form-group"></div>
-
-					<div class="form-group form-inline">
-						<label for="field-NumberOfRoomsMin">Nr. of Rooms between</label>
-						<form:input type="number" cssClass="form-control input60"
-							path="numberOfRoomsMin" id="field-NumberOfRoomsMin" />
-						<label for="field-NumberOfRoomsMax">and</label>
-						<form:input type="number" cssClass="form-control input60"
-							path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
-						<%-- muss man <form_error/> auch noch hinzufügen? --%>
-					</div>
-
-					<div class="form-group"></div>
-
-					<div class="form-group form-inline">
-						<label for="field-BuildYearMin">Build year between</label>
-						<form:input type="number" cssClass="form-control input60"
-							path="buildYearMin" id="field-BuildYearMin" />
-						<label for="field-BuildYearMax">and</label>
-						<form:input type="number" cssClass="form-control input60"
-							path="buildYearMax" id="field-BuildYearMax" />
-					</div>
-					<div class="form-group"></div>
-
-
-
-
-					<div class="form-group form-inline">
-						<label for="field-RenovationYearMin">Renovation year
-							between</label>
-						<form:input type="number" cssClass="form-control input60"
-							path="renovationYearMin" id="field-RenovationYearMin" />
-						<label for="field-RenovationYearMax">and</label>
-						<form:input type="number" cssClass="form-control input60"
-							path="renovationYearMax" id="field-RenovationYearMax" />
-					</div>
-
-
-					<div class="form-group form-inline">
-						<label for="field-DistanceSchoolMin">Distance to school
-							from</label>
-
-						<form:input id="field-DistanceSchoolMin" type="number" min="0"
-							path="distanceSchoolMin" placeholder="0" step="100"
-							cssClass="form-control input60" />
-						<label for="field-DistanceSchoolMax">to</label>
-
-						<form:input id="field-DistanceSchoolMax" type="number" min="0"
-							path="distanceSchoolMax" placeholder="0" step="100"
-							cssClass="form-control input60" />
+						<label class="col-md-6" for="field-NumberOfRoomsMin">Nr.
+							of Rooms between</label>
+						<div class="col-md-6 form-inline">
+							<form:input type="number" cssClass="form-control input60"
+								path="numberOfRoomsMin" id="field-NumberOfRoomsMin" />
+							<label for="field-NumberOfRoomsMax" class="betweenLabel">
+								- </label>
+							<form:input type="number"
+								cssClass="form-control input60"
+								path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
+							<%-- muss man <form_error/> auch noch hinzufügen? --%>
+						</div>
 					</div>
 
 
 
+					<div class="form-group row">
+						<label class="col-md-6" for="field-BuildYearMin">Build
+							year between</label>
+						<div class="col-md-6 form-inline">
+							<form:input type="number" cssClass="form-control input60"
+								path="buildYearMin" id="field-BuildYearMin" />
+							<label for="field-BuildYearMax" class="betweenLabel"> - </label>
+							<form:input type="number"
+								cssClass="form-control input60" path="buildYearMax"
+								id="field-BuildYearMax" />
+						</div>
 
-					<div class="form-group form-inline">
-
-						<label for="field-DistanceShoppingMin">Distance to
-							shopping from</label>
-						<form:input id="field-DistanceShoppingMin" type="number" min="0"
-							path="distanceShoppingMin" placeholder="0" step="100"
-							cssClass="form-control input60" />
-
-						<label for="field-DistanceShoppingMax">to</label>
-						<form:input id="field-DistanceShoppingMax" type="number" min="0"
-							path="distanceShoppingMax" placeholder="0" step="100"
-							cssClass="form-control input60" />
 					</div>
 
-					<div class="form-group form-inline">
-						<label for="field-DistancePublicTransportMin">Distance to
-							public transport from</label>
 
-						<form:input id="field-DistancePublicTransportMin" type="number"
-							min="0" path="distancePublicTransportMin" placeholder="0"
-							step="100" cssClass="form-control input60" />
+					<div class="form-group row">
+						<label class="col-md-6" for="field-RenovationYearMin">Renovation
+							year between</label>
+						<div class="col-md-6 form-inline">
+							<form:input type="number" cssClass="form-control input60"
+								path="renovationYearMin" id="field-RenovationYearMin" />
+							<label for="field-RenovationYearMax" class="betweenLabel">
+								- </label>
+							<form:input type="number"
+								cssClass="form-control input60"
+								path="renovationYearMax" id="field-RenovationYearMax" />
+						</div>
+					</div>
 
-						<label for="field-DistancePublicTransportMax">to</label>
 
-						<form:input id="field-DistancePublicTransportMax" type="number"
-							min="0" path="distancePublicTransportMax" placeholder="0"
-							step="100" cssClass="form-control input60" />
+					<div class="form-group row">
+						<label class="col-md-6" for="field-DistanceSchoolMin">Distance
+							to school from</label>
+						<div class="col-md-6 form-inline">
+							<form:input id="field-DistanceSchoolMin" type="number" min="0"
+								path="distanceSchoolMin" placeholder="0" step="100"
+								cssClass="form-control input60" />
+							<label for="field-DistanceSchoolMax" class="betweenLabel">
+								- </label>
+
+							<form:input id="field-DistanceSchoolMax" type="number" min="0"
+								path="distanceSchoolMax" placeholder="0" step="100"
+								cssClass="form-control input60" />
+						</div>
+					</div>
 
 
+
+
+					<div class="form-group row">
+
+						<label class="col-md-6" for="field-DistanceShoppingMin">Distance
+							to shopping from</label>
+						<div class="col-md-6 form-inline">
+							<form:input id="field-DistanceShoppingMin" type="number" min="0"
+								path="distanceShoppingMin" placeholder="0" step="100"
+								cssClass="form-control input60" />
+
+							<label for="field-DistanceShoppingMax" class="betweenLabel">
+								- </label>
+							<form:input id="field-DistanceShoppingMax" type="number" min="0"
+								path="distanceShoppingMax" placeholder="0" step="100"
+								cssClass="form-control input60" />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-md-6" for="field-DistancePublicTransportMin">Distance
+							to public transport from</label>
+						<div class="col-md-6 form-inline">
+							<form:input id="field-DistancePublicTransportMin" type="number"
+								min="0" path="distancePublicTransportMin" placeholder="0"
+								step="100" cssClass="form-control input60" />
+
+							<label for="field-DistancePublicTransportMax"
+								class="betweenLabel"> - </label>
+
+							<form:input id="field-DistancePublicTransportMax" type="number"
+								min="0" path="distancePublicTransportMax" placeholder="0"
+								step="100" cssClass="form-control input60" />
+
+						</div>
 					</div>
 
 
@@ -342,17 +351,17 @@
 				<p>No results found!
 			</c:when>
 			<c:otherwise>
-				<div class="row bottom15">
-					<div class="col-xs-12">
-						<div class="btn-group">
-							<button type="button" class="btn btn-default">All</button>
-							<button type="button" class="btn btn-default">Buy
-								directly</button>
-							<button type="button" class="btn btn-default">Buy by
-								auction</button>
-						</div>
-					</div>
-				</div>
+<!-- 				<div class="row bottom15"> -->
+<!-- 					<div class="col-xs-12"> -->
+<!-- 						<div class="btn-group"> -->
+<!-- 							<button type="button" class="btn btn-default">All</button> -->
+<!-- 							<button type="button" class="btn btn-default">Buy -->
+<!-- 								directly</button> -->
+<!-- 							<button type="button" class="btn btn-default">Buy by -->
+<!-- 								auction</button> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 				<div class="row" id="resultsDiv">
 					<c:forEach var="ad" items="${results}">
 						<div data-price="${ad.prizePerMonth}"
@@ -365,7 +374,7 @@
 											class="img-responsive" src="${ad.pictures[0].filePath}" />
 										</a>
 									</div>
-									<div class="col-sm-5 col-md-5">
+									<div class="col-sm-4 col-md-4">
 										<p>
 											<strong> <a class="link"
 												href="<c:url value='./ad?id=${ad.id}' />">${ad.title}</a>
@@ -380,6 +389,62 @@
 											var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 										<p>Move-in date: ${formattedMoveInDate }</p>
 									</div>
+
+
+
+									<div class="col-sm-4 col-md-4 auction-Column">
+										<form:form method="post" modelAttribute="placeAdForm"
+											action="./results" id="bidForm" autocomplete="off"> <%-- id = ?? , action =" /results" oder /resultsAction?? --%>
+
+											<p>
+												<strong>Auction</strong>
+											</p>
+
+											<fmt:formatDate value="${ad.startDate}"
+												var="formattedStartDate" type="date" pattern="dd.MM.yyyy" />
+											<p>Running until :${formattedStartDate}</p>
+
+											<p>
+												Current price: <strong>${ad.currentAuctionPrice}
+													CHF</strong>
+
+
+											</p>
+											<div class="form-group">
+												<label class="sr-only" for="bid">Amount</label>
+												<%-- for="bid" stimmt wahrscheinlich nicht --%>
+												<div class="input-group">
+													<div class="input-group-addon">CHF</div>
+													<%--<input type="number" class="form-controll" placeholder="Amount" name="bid"> es fehlt: id = und value= --%>
+													<input class="form-control" id="disabledInput" type="text"
+														placeholder=${ad.bidPriceForUser } disabled> <span
+														class="input-group-btn">
+														<button type="button" class="btn btn-success">Bid</button>
+													</span>
+
+												</div>
+											</div>
+										</form:form>
+
+										<form:form method="post" modelAttribute="placeAdForm"
+											action="./results" id="buyForm" autocomplete="off">
+											<div class="form-group">
+												<label class="sr-only" for="exampleInputAmount">Buy
+													now Price in CHF</label>
+												<%-- for stimmt wahrscheinlich nicht --%>
+												<div class="input-group">
+													<div class="input-group-addon">CHF</div>
+													<input class="form-control" id="disabledInput" type="text"
+														placeholder=${ad.buyItNowPrice } disabled> <span
+														class="input-group-btn">
+														<button type="button" class="btn btn-success">Buy
+														</button>
+													</span>
+												</div>
+											</div>
+										</form:form>
+									</div>
+
 								</div>
 							</div>
 							<div class="clearfix"></div>

@@ -1,11 +1,6 @@
 package ch.unibe.ese.team3.controller.pojos.forms;
-
-import java.util.Date;
+ 
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
@@ -22,7 +17,7 @@ public class PlaceAdForm {
 	@NotBlank(message = "Required")
 	private String street;
 	
-	@Pattern(regexp = "^[0-9]{4} - [-\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
+	@Pattern(regexp = "^[0-9]{4} - [\\S]*", message = "Please pick a city from the list")
 	private String city;
 	
 	@NotBlank(message = "Required")
@@ -37,7 +32,7 @@ public class PlaceAdForm {
 	@Min(value=1700, message ="Has to be equal to 1700 or more")
 	private int buildYear;
 
-	@Min(value=1900, message ="Has to be equal to 1900 or more")
+	@Min(value=0, message ="Has to be equal to 1900 or more")
 	private int renovationYear;
 	
     @Min(value=1, message ="Has to be equal to 1 or more")
@@ -47,11 +42,11 @@ public class PlaceAdForm {
    	private int numberOfBath;
 	
 	//new
-	@Min(value = 1, message ="Has to be equal to 1 or more")
+	@Min(value = 1, message ="Required")
 	private int distanceSchool;
-	@Min(value = 1, message ="Has to be equal to 1 or more")
+	@Min(value = 1, message ="Required")
 	private int distanceShopping;
-	@Min(value = 1, message ="Has to be equal to 1 or more")
+	@Min(value = 1, message ="Required")
 	private int distancePublicTransport;
 	@Min(value = 0, message ="Has to be equal to 0 or more")
 	private int floorLevel;
@@ -71,6 +66,7 @@ public class PlaceAdForm {
 	private int startPrice;
 	private int increaseBidPrice;
 	private int buyItNowPrice;
+	private boolean auction;
 	
 	
 	// optional for input
@@ -110,6 +106,14 @@ public class PlaceAdForm {
 
 	public void setBuyItNowPrice(int buyItNowPrice) {
 		this.buyItNowPrice = buyItNowPrice;
+	}
+
+	public boolean getAuction() {
+		return auction;
+	}
+
+	public void setAuction(boolean auction) {
+		this.auction = auction;
 	}
 
 	public boolean getDishwasher() {

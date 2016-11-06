@@ -6,7 +6,7 @@ $(document).ready(function(){
 		
 		$.post("/profile/editAd/deletePictureFromAd", {adId:adId, pictureId:pictureId}, function(){
 			var button = $(".pictureThumbnail button[data-ad-id='" + adId + "'][data-picture-id='" + pictureId + "']");			
-			var div = $(button).parent();
+			var div = $(button).parent().parent().parent();
 			$(div).children().animate({opacity: 0}, 300, function(){
 				$(div).remove();
 			});

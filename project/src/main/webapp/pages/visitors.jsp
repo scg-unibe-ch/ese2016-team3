@@ -42,13 +42,13 @@ function rate(id, rating) {
 
 <ol class="breadcrumb">
 	<li><a href="./">Homepage</a></li>
-	<li><a href="./profile/schedule">Schedule</a></li>
+	<li><a href="./schedule">Schedule</a></li>
 	<li class="active">Visitors</li>
 </ol>
 
 <h2>Visitors for your property</h2>
 
-<p>Information about the property: <a href="/ad?id=${ad.id }">${ad.street }, ${ad.zipcode } ${ad.city }</a></p>
+<p>Information about the property: <a href="/${ad.buyMode.name}/ad?id=${ad.id }">${ad.street }, ${ad.zipcode } ${ad.city }</a></p>
 
 <div id="visitorsDiv">			
 <c:choose>
@@ -69,7 +69,7 @@ function rate(id, rating) {
 			<tr>
 				<td>${visitor.firstName} ${visitor.lastName }</td>
 				<td>${visitor.username}</td>
-				<td><a href="/user?id=${visitor.id}"><button>Visit</button></a></td>
+				<td><a class="btn btn-default" href="../user?id=${visitor.id}">Visit</a></td>
 				<td>
 				<div class="rating" id="${visitor.id}">
 					<script>ratingFor(${visitor.id})</script>
