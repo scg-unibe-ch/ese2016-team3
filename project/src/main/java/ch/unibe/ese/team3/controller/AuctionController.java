@@ -1,6 +1,7 @@
 package ch.unibe.ese.team3.controller;
 
 import java.security.Principal;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
@@ -19,7 +20,6 @@ import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.User;
 
-
 /**
  * 
  * handels all actions (like bid, etc) concerning auction
@@ -27,8 +27,7 @@ import ch.unibe.ese.team3.model.User;
  */
 @Controller
 public class AuctionController {
-	
-	
+
 	@Autowired
 	private BidService bidService;
 	@Autowired
@@ -37,49 +36,46 @@ public class AuctionController {
 	private AdService adService;
 	@Autowired
 	private AuctionService auctionService;
-	
-	private TaskScheduler scheduler = new ConcurrentTaskScheduler();
 
-	
+	@Autowired
+	private TaskScheduler scheduler;
+
 	@RequestMapping(value = "/profile/bidAuction", method = RequestMethod.POST)
-	public void bid(Principal principal, int amount , @RequestParam long id, RedirectAttributes redirectAttributes){
+	public void bid(Principal principal, int amount, @RequestParam long id, RedirectAttributes redirectAttributes) {
+
+		User bidder = userService.findUserByUsername(principal.getName());
+		Ad ad = adService.getAdById(id);
+
+		if (auctionService.checkIfAuctionisStillRunning(ad)) {
+			bidService.bid(ad, bidder, amount);
+		}
+		// else: write message, that auction is no longer available
 		
-//		User bidder = userService.findUserByUsername(principal.getName());
-//		Ad ad = adService.getAdById(id);
-//		
-//		bidService.bid(ad, bidder, amount);
-		
-		
-//		ModelAndView model = new ModelAndView("adDescription");
-//		redirectAttributes.addFlashAttribute("confirmationMessage",
-//				"Your bid was registered successfully.");
-//		
-//		model = new ModelAndView("searchAd");
-//		
-//		return model;
-		
+		// return ModelAndView?
+		// redirect user to back to adDescription page
+			// ModelAndView model = new ModelAndView("adDescription");
+
 	}
-	
+
 	@RequestMapping(value = "/profile/buyAuction", method = RequestMethod.POST)
-	public void buy(Principal principal, int amount , @RequestParam long id){
+	public void buy(Principal principal, int amount, @RequestParam long id) {
 		// to implement
 	}
 	
-	// TaskScheduler and @Schedule annotation || ScheduledExecutorService
-	
 	/*
-	//@PostConstruct
-	private void executeJob() {
-	    scheduler.scheduleAtFixedRate(new Runnable() {
-	        @Override
-	        public void run() {
-	            // your business here
-	        }
-	    }, INTERVAL);
+	 * Define scheduled execution of method checkAuctionsStillRunning
+	 * 	according to: http://stackoverflow.com/questions/8584876/spring-mvc-3-time-scheduled-task-starting-at-a-specific-time
+	 */
+	public void init() {
+		scheduler.scheduleAtFixedRate(new Runnable() {
+			public void run() {
+				checkAuctionsStillRunning();
+			}
+		}, new Date(), 1000 * 60 * 60 * 2);
 	}
-	*/
-	
-	
-	
+
+	public void checkAuctionsStillRunning() {
+		// method, which should be scheduled
+	}
 
 }

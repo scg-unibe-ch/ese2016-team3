@@ -25,6 +25,7 @@ public class BidService {
 	 * @param amount
 	 */
 	public void bid(Ad ad, User user, int amount){
+		// TO ADD if a new bid has been made from another user in the meantime, don't create Bid
 		
 		Bid bid = new Bid();
 		bid.setAd(ad);
@@ -33,8 +34,14 @@ public class BidService {
 		bid.setTimeStamp(new Date());
 		bidDao.save(bid);
 		incrementBidPriceForUser(ad);
-		
 	}
+	
+	public void buy(Ad ad, User user){
+		ad.setAvailable(false);
+
+	}
+	
+	
 	
 	private void incrementBidPriceForUser(Ad ad){
 		
