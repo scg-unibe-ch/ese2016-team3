@@ -41,6 +41,9 @@ public class AlertService {
 
 	@Autowired
 	private GeoDataService geoDataService;
+	
+	@Autowired
+	private MessageService messageService;
 
 	/**
 	 * Persists a new alert with the data from the alert form to the database.
@@ -130,6 +133,7 @@ public class AlertService {
 			message.setState(MessageState.UNREAD);
 			message.setDateSent(now);
 			messageDao.save(message);
+			messageService.sendEmail(user, "It's a match!", getAlertText(ad));
 		}
 	}
 

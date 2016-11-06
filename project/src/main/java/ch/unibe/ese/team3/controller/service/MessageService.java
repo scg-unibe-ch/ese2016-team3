@@ -133,22 +133,23 @@ public class MessageService {
 	public void sendEmail(User recipient, String subject, String text) {
 		
 		Properties properties = System.getProperties();
-		properties.setProperty("mail.smtp.host", "smtp.live.com");
-		properties.setProperty("mail.smtp.user", "senderAddress");
+		properties.setProperty("mail.smtp.host", "smtp.gmail.com");
+		properties.setProperty("mail.smtp.user", "ithacaserver@gmail.com");
 		properties.setProperty("mail.smtp.debug", "true");
 		properties.setProperty("mail.smtp.auth", "true");
-		properties.setProperty("mail.smtp.port", "465");
-		
+		properties.setProperty("mail.smtp.port", "587");
+		properties.setProperty("mail.smtp.starttls.enable", "true");
+
 		
 		Session session = Session.getInstance(properties, new Authenticator() { 
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("senderAddress", "senderPassword");
+				return new PasswordAuthentication("ithacaserver@gmail.com", "flatfindr");
 		}
 		});
 		
 		try {
 			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("senderAddress"));
+			message.setFrom(new InternetAddress("ithacaserver@gmail.com"));
 			message.addRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(recipient.getEmail(), false));
 			message.setSubject(subject);
 			message.setText(text);
@@ -162,7 +163,8 @@ public class MessageService {
 		
 	}
 	
-	@Scheduled(cron = "0 0 17 1/1 * *")
+	//@Scheduled(cron = "0 0 17 1/1 * *") // everyday at 5 pm
+	@Scheduled(cron = "0,30 * * * * *") // every 30 seconds
 	public void alertMessageForBasicUser() {
 		
 		String subject = "Your daily alerts";
@@ -194,6 +196,7 @@ public class MessageService {
 								+ " have a look at our highlights on the front page.";
 				}
 				sendMessage(userDao.findByUsername("System"), user, subject, text);
+				sendEmail(user, subject, text);
 			}
 		}
 	}
