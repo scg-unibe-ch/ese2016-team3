@@ -183,8 +183,8 @@ public class MessageService {
 		Date yesterday = new Date();
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(now);
-		calendar.add(Calendar.DATE, -1);
-		yesterday.setTime(calendar.getTime().getTime());
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		yesterday = calendar.getTime();
 		
 		Iterable<User> users = userDao.findAll();
 		
