@@ -17,6 +17,7 @@ import ch.unibe.ese.team3.controller.pojos.forms.AlertForm;
 import ch.unibe.ese.team3.controller.service.AlertService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.model.Alert;
+import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 
 /**
@@ -71,6 +72,7 @@ public class AlertController {
 		model.addObject("user", user);
 		model.addObject("alertForm", alertForm);
 		model.addObject("alerts", alerts);
+		model.addObject("types", Type.values());
 		return model;
 	}
 }

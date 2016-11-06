@@ -16,6 +16,7 @@ import ch.unibe.ese.team3.model.Alert;
 import ch.unibe.ese.team3.model.AlertType;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
+import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.AlertDao;
 import ch.unibe.ese.team3.model.dao.MessageDao;
@@ -58,8 +59,17 @@ public class AlertService {
 
 		alert.setPrice(alertForm.getPrice());
 
-		alert.setRadius(alertForm.getRadius());		
-		alert.setAlertTypes(alertForm.getAlertTypes());
+		alert.setRadius(alertForm.getRadius());
+		
+		List<AlertType> alertTypes = new ArrayList<AlertType>();
+		for (Type type : alertForm.getTypes()){
+			AlertType alertType = new AlertType();
+			alertType.setType(type);
+			alertType.setAlert(alert);
+			alertTypes.add(alertType);
+		}
+		
+		alert.setAlertTypes(alertTypes);
 
 		alert.setUser(user);
 		alertDao.save(alert);
