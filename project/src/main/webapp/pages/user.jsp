@@ -103,6 +103,7 @@
 							<c:when test="${user.accountType == 'PREMIUM' && principalID eq user.id}">
 								<br /><br />
 								<h4><font color="gold">&#9733</font> This is a premium account <font color="gold">&#9733</font></h4>
+								Option valid for ${user.premiumChoice.duration} days
 							</c:when>
 							<c:otherwise></c:otherwise>
 						</c:choose>

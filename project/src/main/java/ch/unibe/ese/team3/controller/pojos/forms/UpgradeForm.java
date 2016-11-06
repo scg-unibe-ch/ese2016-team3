@@ -12,6 +12,11 @@ public class UpgradeForm {
 	
 	@NotNull
 	private boolean isPremium;
+	
+	@NotNull
+	private int duration;
+	
+	
 
 	@Pattern(regexp = "[0-9]{16}", message = "Credit card number must be 16 digits")
 	@NotNull
@@ -28,7 +33,7 @@ public class UpgradeForm {
 	@NotNull
 	private String expirationMonth;
 	
-	@Pattern(regexp = "16|17|18|19|[2-5][0-9]", message = "Your credit card has expired!")
+	@Pattern(regexp = "2016|2017|2018|2019|202[0-5]", message = "Your credit card has expired!")
 	@NotNull
 	private String expirationYear;
 	
@@ -91,6 +96,14 @@ public class UpgradeForm {
 	
 	public void setIsPremium(boolean isPremium){
 		this.isPremium = isPremium;
+	}
+	
+	public void setDuration(int duration){
+		this.duration = duration;
+	}
+	
+	public int getDuration(){
+		return duration;
 	}
 
 }

@@ -26,12 +26,14 @@ import ch.unibe.ese.team3.controller.service.UpgradeService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.controller.service.UserUpdateService;
 import ch.unibe.ese.team3.controller.service.VisitService;
+import ch.unibe.ese.team3.controller.service.PremiumChoiceService;
 import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.CreditcardType;
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
+import ch.unibe.ese.team3.model.PremiumChoice;
 
 /**
  * Handles all requests concerning user accounts and profiles.
@@ -56,6 +58,9 @@ public class ProfileController {
 	
 	@Autowired
 	private UpgradeService upgradeService;
+	
+	@Autowired
+	private PremiumChoiceService premiumChoiceService;
 
 	/** Returns the login page. */
 	@RequestMapping(value = "/login")
@@ -74,6 +79,10 @@ public class ProfileController {
 		model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
 		model.addObject("years", GetYears());
 		model.addObject("months", GetMonths());
+		
+		Iterable<PremiumChoice> allChoices = premiumChoiceService.findAll();
+		model.addObject("premiumChoices", allChoices);
+		model.addObject("durations", premiumChoiceService.getDurations());
 		return model;
 	}
 
@@ -111,6 +120,10 @@ public class ProfileController {
 			model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
 			model.addObject("years", GetYears());
 			model.addObject("months", GetMonths());
+			
+			Iterable<PremiumChoice> allChoices = premiumChoiceService.findAll();
+			model.addObject("premiumChoices", allChoices);
+			model.addObject("durations", premiumChoiceService.getDurations());
 		}
 		return model;
 	}
@@ -213,10 +226,15 @@ public class ProfileController {
 		ModelAndView model = new ModelAndView("upgrade");
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
+		Iterable<PremiumChoice> allChoices = premiumChoiceService.findAll();
 		model.addObject("upgradeForm", new UpgradeForm());
 		model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
 		model.addObject("accountTypes", AccountType.values());
 		model.addObject("currentUser", user);
+		model.addObject("years", GetYears());
+		model.addObject("months", GetMonths());
+		model.addObject("premiumChoices", allChoices);
+		model.addObject("durations", premiumChoiceService.getDurations());
 		return model;
 	}
 
@@ -228,18 +246,23 @@ public class ProfileController {
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
 		if (!bindingResult.hasErrors()) {
-			upgradeService.upgradeFrom(upgradeForm, user);
+			PremiumChoice premiumChoice = premiumChoiceService.findPremiumChoiceByDuration(upgradeForm.getDuration());
+			upgradeService.upgradeFrom(upgradeForm, user, premiumChoice);
 			user = userService.findUserByUsername(username);
 			return user(user.getId(), principal);
 		} else {
+			Iterable<PremiumChoice> allChoices = premiumChoiceService.findAll();
 			model = new ModelAndView("upgrade");
 			model.addObject("upgradeForm", upgradeForm);
 			model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
 			model.addObject("accountTypes", AccountType.values());
 			model.addObject("currentUser", user);
+			model.addObject("years", GetYears());
+			model.addObject("months", GetMonths());
+			model.addObject("premiumChoices", allChoices);
+			model.addObject("durations", premiumChoiceService.getDurations());
 		}
 		return model;
 	}
-
 
 }
