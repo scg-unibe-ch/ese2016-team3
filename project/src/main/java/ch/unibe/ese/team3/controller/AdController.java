@@ -21,6 +21,7 @@ import ch.unibe.ese.team3.controller.service.BookmarkService;
 import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.controller.service.VisitService;
+import ch.unibe.ese.team3.enums.BookmarkStatus;
 import ch.unibe.ese.team3.exceptions.ResourceNotFoundException;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.User;
@@ -106,34 +107,34 @@ public class AdController {
 			@RequestParam("bookmarked") boolean bookmarked, Principal principal) {
 		// should never happen since no bookmark button when not logged in
 		if (principal == null) {
-			return 0;
+			return BookmarkStatus.NotLoggedIn.getStatusCode();
 		}
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
 		if (user == null) {
 			// that should not happen...
-			return 1;
+			return BookmarkStatus.NoUserFound.getStatusCode();
 		}
 		List<Ad> bookmarkedAdsIterable = user.getBookmarkedAds();
 		if (screening) {
 			for (Ad ownAdIterable : adService.getAdsByUser(user)) {
 				if (ownAdIterable.getId() == id) {
-					return 4;
+					return BookmarkStatus.OwnAd.getStatusCode();
 				}
 			}
 			for (Ad adIterable : bookmarkedAdsIterable) {
 				if (adIterable.getId() == id) {
-					return 3;
+					return BookmarkStatus.Bookmarked.getStatusCode();
 				}
 			}
-			return 2;
+			return BookmarkStatus.NotBookmarked.getStatusCode();
 		}
 
 		Ad ad = adService.getAdById(id);
 
 		return bookmarkService.getBookmarkStatus(ad, bookmarked, user);
 	}
-
+	
 	/**
 	 * Fetches information about bookmarked rooms and own ads and attaches this
 	 * information to the myRooms page in order to be displayed.
