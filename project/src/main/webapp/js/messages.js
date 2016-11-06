@@ -25,6 +25,7 @@ function prepareRows() {
 		var me = $(this);
 		me.addClass('info');
 		var id = $(this).attr("data-id");
+		if (id == undefined){ return; }
 		$.get("/profile/readMessage?id=" + id, function(data) {
 			$.get("/profile/messages/getMessage?id=" + id, function(data) {
 				$('#messageDetail').show();
