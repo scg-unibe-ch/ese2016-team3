@@ -27,11 +27,11 @@
 						<form:form method="post" modelAttribute="searchForm"
 							action="/${pagemode}/results" id="searchForm"
 							cssClass="form-horizontal">
-							<div class="col-md-3 bottom15">
+							<div class="col-md-3">
 								<form:input type="text" name="city" id="cityInput" path="city"
 									placeholder="City (e.g. Bern)" cssClass="form-control" />
 							</div>
-							<div class="col-md-2 bottom15">
+							<div class="col-md-3">
 								<div class="input-group">
 									<form:input type="number" name="radius" id="radiusInput"
 										path="radius" placeholder="Radius (max)"
@@ -39,17 +39,15 @@
 									<span class="input-group-addon">km</span>
 								</div>
 							</div>
-							<div class="col-md-2 bottom15">
+							<div class="col-md-3">
 								<div class="input-group">
 									<span class="input-group-addon">Fr.</span>
 									<form:input type="number" name="prize" id="prizeInput"
 										path="prize" placeholder="Price (max)" cssClass="form-control" />
 								</div>
 							</div>
-							<div class="col-md-5 bottom15">
-								<div class="pull-right">
-									<button type="submit" class="btn btn-primary">Search</button>
-								</div>
+							<div class="col-md-3">
+								<button type="submit" class="btn btn-primary pull-right">Search</button>
 							</div>
 						</form:form>
 					</div>

@@ -1,17 +1,17 @@
 ul.nav-tabs {
-  padding-left: 210px;
+	padding-left: 210px;
 }
 
 #mainNav .navbar-inner {
 	border-bottom: 1px solid lightgray;
 }
 
- nav.navbar-default {
+nav.navbar-default {
 	background-color: white;
 	border: none;
 }
 
-#mainNav nav.navbar-default > ul > li.active {
+#mainNav nav.navbar-default>ul>li.active {
 	background-color: none;
 	font-weight: bold;
 }
@@ -20,7 +20,7 @@ ul.nav-tabs {
 	margin-right: 0;
 }
 
-#mainNav .navbar-default .navbar-nav > .active > a {
+#mainNav .navbar-default .navbar-nav>.active>a {
 	background-color: white;
 }
 
@@ -44,6 +44,7 @@ h1 {
 
 .ad-small-preview-inner, .ad-wide-preview-inner {
 	border: 1px solid lightgray;
+	border-radius: 4px;
 	padding: 15px;
 }
 
@@ -67,6 +68,31 @@ tr.message-row {
 	margin: 0px 7px;
 }
 
-.table > tbody > tr > td {
+.table>tbody>tr>td {
 	vertical-align: middle !important;
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+	.auction-Column {
+		border-left: 1px solid lightgray;
+	}
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+	.auction-Column {
+		border-left: 1px solid lightgray;
+	}
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+	.auction-Column {
+		border-left: 1px solid lightgray;
+	}
 }

@@ -206,7 +206,7 @@
 							<label for="field-floorLevelMax" class="betweenLabel"> -
 							</label>
 							<form:input type="number" step="1" id="field-floorLevelMax"
-								path="floorLevelMax" cssClass="form-control input60 pull-right" />
+								path="floorLevelMax" cssClass="form-control input60" />
 						</div>
 					</div>
 
@@ -221,7 +221,7 @@
 							<label for="field-NumberOfBathMax" class="betweenLabel">
 								- </label>
 							<form:input type="number"
-								cssClass="form-control input60 pull-right"
+								cssClass="form-control input60"
 								path="numberOfBathMax" id="field-NumberOfBathMax" />
 						</div>
 
@@ -239,7 +239,7 @@
 							<label for="field-NumberOfRoomsMax" class="betweenLabel">
 								- </label>
 							<form:input type="number"
-								cssClass="form-control input60 pull-right"
+								cssClass="form-control input60"
 								path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
 							<%-- muss man <form_error/> auch noch hinzufügen? --%>
 						</div>
@@ -255,7 +255,7 @@
 								path="buildYearMin" id="field-BuildYearMin" />
 							<label for="field-BuildYearMax" class="betweenLabel"> - </label>
 							<form:input type="number"
-								cssClass="form-control input60 pull-right" path="buildYearMax"
+								cssClass="form-control input60" path="buildYearMax"
 								id="field-BuildYearMax" />
 						</div>
 
@@ -271,7 +271,7 @@
 							<label for="field-RenovationYearMax" class="betweenLabel">
 								- </label>
 							<form:input type="number"
-								cssClass="form-control input60 pull-right"
+								cssClass="form-control input60"
 								path="renovationYearMax" id="field-RenovationYearMax" />
 						</div>
 					</div>
@@ -289,7 +289,7 @@
 
 							<form:input id="field-DistanceSchoolMax" type="number" min="0"
 								path="distanceSchoolMax" placeholder="0" step="100"
-								cssClass="form-control input60 pull-right" />
+								cssClass="form-control input60" />
 						</div>
 					</div>
 
@@ -309,7 +309,7 @@
 								- </label>
 							<form:input id="field-DistanceShoppingMax" type="number" min="0"
 								path="distanceShoppingMax" placeholder="0" step="100"
-								cssClass="form-control input60 pull-right" />
+								cssClass="form-control input60" />
 						</div>
 					</div>
 
@@ -326,7 +326,7 @@
 
 							<form:input id="field-DistancePublicTransportMax" type="number"
 								min="0" path="distancePublicTransportMax" placeholder="0"
-								step="100" cssClass="form-control input60 pull-right" />
+								step="100" cssClass="form-control input60" />
 
 						</div>
 					</div>
@@ -373,7 +373,7 @@
 											class="img-responsive" src="${ad.pictures[0].filePath}" />
 										</a>
 									</div>
-									<div class="col-sm-5 col-md-5">
+									<div class="col-sm-4 col-md-4">
 										<p>
 											<strong> <a class="link"
 												href="<c:url value='./ad?id=${ad.id}' />">${ad.title}</a>
@@ -391,7 +391,7 @@
 
 
 
-									<div class="col-sm-3 col-md-3">
+									<div class="col-sm-4 col-md-4 auction-Column">
 										<form:form method="post" modelAttribute="placeAdForm"
 											action="./results" id="bidForm" autocomplete="off"> <%-- id = ?? , action =" /results" oder /resultsAction?? --%>
 
