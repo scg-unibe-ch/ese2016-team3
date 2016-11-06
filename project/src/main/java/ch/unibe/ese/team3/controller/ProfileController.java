@@ -8,6 +8,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import ch.unibe.ese.team3.controller.pojos.forms.MessageForm;
 import ch.unibe.ese.team3.controller.pojos.forms.SignupForm;
 import ch.unibe.ese.team3.controller.pojos.forms.UpgradeForm;
 import ch.unibe.ese.team3.controller.service.AdService;
+import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.controller.service.SignupService;
 import ch.unibe.ese.team3.controller.service.UpgradeService;
 import ch.unibe.ese.team3.controller.service.UserService;
@@ -37,6 +39,7 @@ import ch.unibe.ese.team3.model.Visit;
  * Handles all requests concerning user accounts and profiles.
  */
 @Controller
+@EnableScheduling
 public class ProfileController {
 
 	@Autowired
@@ -56,6 +59,9 @@ public class ProfileController {
 	
 	@Autowired
 	private UpgradeService upgradeService;
+	
+	@Autowired
+	private MessageService messageService;
 
 	/** Returns the login page. */
 	@RequestMapping(value = "/login")
@@ -112,6 +118,7 @@ public class ProfileController {
 			model.addObject("years", GetYears());
 			model.addObject("months", GetMonths());
 		}
+		
 		return model;
 	}
 

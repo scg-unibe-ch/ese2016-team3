@@ -102,7 +102,7 @@ public class AlertService {
 		List<User> users = new ArrayList<User>();
 		for (Alert alert : alerts) {
 			User user = alert.getUser();
-			if (!users.contains(user)) {
+			if (!users.contains(user) && user.isPremium()) {
 				users.add(user);
 			}
 		}

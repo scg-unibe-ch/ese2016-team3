@@ -12,13 +12,17 @@ import javax.mail.internet.*;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import ch.unibe.ese.team3.controller.pojos.forms.MessageForm;
+import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.User;
+import ch.unibe.ese.team3.model.dao.AdDao;
+import ch.unibe.ese.team3.model.dao.AlertDao;
 import ch.unibe.ese.team3.model.dao.MessageDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
@@ -32,6 +36,12 @@ public class MessageService {
 
 	@Autowired
 	private MessageDao messageDao;
+	
+	@Autowired 
+	private AdDao adDao;
+	
+	@Autowired
+	private AlertDao alertDao;
 
 	/** Gets all messages in the inbox of the given user, sorted newest to oldest */
 	@Transactional
@@ -151,6 +161,43 @@ public class MessageService {
 		}
 		
 	}
+	
+	@Scheduled(cron = "0 0 17 1/1 * *")
+	public void alertMessageForBasicUser() {
+		
+		String subject = "Your daily alerts";
+		String text = "All ads that match your alerts: \n";
+		
+		Date now = new Date();
+		Date yesterday = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(now);
+		calendar.add(Calendar.DATE, -1);
+		yesterday.setTime(calendar.getTime().getTime());
+		
+		Iterable<User> users = userDao.findAll();
+		
+		for (User user: users) {
+			if (!user.isPremium()){
+				for (Ad ad: adDao.findAll()) {
+					if(ad.getCreationDate().after(yesterday)) {
+						//if(alertDao.findByUser(user))
+						text += "</a><br><br> <a class=\"link\" href=/ad?id="
+								+ ad.getId() + ">" + ad.getTitle() + "</a><br><br>"
+								+ ad.getRoomDescription() + "\n";
+					}
+					
+		
+				}			
+				if (text.equals("All ads that match your alerts: \n")) {
+						text = "There are no new Ads that match your alerts, but"
+								+ " have a look at our highlights on the front page.";
+				}
+				sendMessage(userDao.findByUsername("System"), user, subject, text);
+			}
+		}
+	}
+	
 
 	/**
 	 * Sets the MessageState of a given Message to "READ".
