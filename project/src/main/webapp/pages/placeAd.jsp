@@ -100,7 +100,7 @@
 <div class="row">
 	<div class="col-md-12 col-xs-12">
 
-		<h3>Place an ad</h3>
+		<h3>Place an ad for ${ pagemode eq 'buy' ? 'buying' : 'renting' }</h3>
 		<div class="row">
 			<div class="col-md-12">
 				<form:form method="post" modelAttribute="placeAdForm"
@@ -309,7 +309,7 @@
 							<spring:bind path="prize">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label" for="field-Prize">Normal
-										Buy Prize(without Auction) </label>
+										Price (without Auction) </label>
 									<div class="col-sm-5">
 										<form:input id="field-Prize" type="number" min="0"
 											path="prize" placeholder="Prize " step="50"

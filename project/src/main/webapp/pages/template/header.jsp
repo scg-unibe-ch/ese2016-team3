@@ -56,6 +56,10 @@
 						<li><a href="/buy/">Buy</a></li>
 						<li class="active"><a href="/rent/">Rent</a></li>
 					</c:when>
+					<c:otherwise>
+						<li><a href="/buy/">Buy</a></li>
+						<li><a href="/rent/">Rent</a></li>
+					</c:otherwise>
 				</c:choose>
 			</ul>
 			<nav class="navbar navbar-default" id="mainNav">

@@ -37,12 +37,12 @@
 								data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
 								<div class="row">
 									<div class="col-sm-4 col-md-4">
-										<a href="<c:url value='/ad?id=${ad.id}' />"><img
+										<a href="<c:url value='/${ad.buyMode.name}/ad?id=${ad.id}' />"><img
 											class="img-responsive" src="${ad.pictures[0].filePath}" /></a>
 									</div>
 									<div class="col-sm-5 col-md-5">
 										<h4>
-											<a href="<c:url value='/ad?id=${ad.id}' />">${ad.title }</a>
+											<a href="<c:url value='/${ad.buyMode.name}/ad?id=${ad.id}' />">${ad.title }</a>
 										</h4>
 										<p>${ad.street},${ad.zipcode}${ad.city}</p>
 										<br />
@@ -82,12 +82,12 @@
 								data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
 								<div class="row">
 									<div class="col-sm-4 col-md-4">
-										<a href="<c:url value='/ad?id=${ad.id}' />"><img
+										<a href="<c:url value='/${ad.buyMode.name}/ad?id=${ad.id}' />"><img
 											class="img-responsive" src="${ad.pictures[0].filePath}" /></a>
 									</div>
 									<div class="col-sm-5 col-md-5">
 										<h4>
-											<a href="<c:url value='/ad?id=${ad.id}' />">${ad.title }</a>
+											<a href="<c:url value='/${ad.buyMode.name}/ad?id=${ad.id}' />">${ad.title }</a>
 										</h4>
 										<p>${ad.street},${ad.zipcode}${ad.city}</p>
 										<br />

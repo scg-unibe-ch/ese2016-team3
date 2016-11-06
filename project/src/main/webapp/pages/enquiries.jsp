@@ -110,7 +110,7 @@
 
 				<tr>
 					<td><a href="/user?id=${enquiry.sender.id}">${enquiry.sender.email}</a></td>
-					<td><a href="/ad?id=${enquiry.visit.ad.id }">${enquiry.visit.ad.street },
+					<td><a href="/${enquiry.visit.ad.buyMode.name}/ad?id=${enquiry.visit.ad.id }">${enquiry.visit.ad.street },
 							${enquiry.visit.ad.zipcode } ${enquiry.visit.ad.city }</a></td>
 
 					<td>${date},&#32;${startTime}&#32;to&#32;${endTime }</td>
