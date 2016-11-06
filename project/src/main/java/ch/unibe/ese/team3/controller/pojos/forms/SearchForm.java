@@ -12,8 +12,6 @@ import ch.unibe.ese.team3.model.Type;
 /** This form is used for searching for an ad. */
 public class SearchForm {
 
-	private boolean filtered;
-
 	@NotBlank(message = "Required")
 	@Pattern(regexp = "^[0-9]{4} - [-\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
 	private String city;
@@ -52,18 +50,6 @@ public class SearchForm {
 		this.prize = prize;
 	}
 
-	// //////////////////
-	// Filtered results//
-	// //////////////////
-
-	public boolean getFiltered() {
-		return filtered;
-	}
-
-	public void setFiltered(boolean filtered) {
-		this.filtered = filtered;
-	}
-
 	private String earliestMoveInDate;
 	private String latestMoveInDate;
 	
@@ -78,7 +64,6 @@ public class SearchForm {
 	// new
 
 	private InfrastructureType infrastructureType;
-	private InfrastructureType[] infrastructureTypes;
 	private int squareFootageMin;
 	private int squareFootageMax;
 	private int buildYearMin;
@@ -334,14 +319,6 @@ public class SearchForm {
 
 	public void setInfrastructureType(InfrastructureType infrastructureType) {
 		this.infrastructureType = infrastructureType;
-	}
-
-	public InfrastructureType[] getInfrastructureTypes() {
-		return infrastructureTypes;
-	}
-
-	public void setInfrastructureTypes(InfrastructureType[] infrastructureTypes) {
-		this.infrastructureTypes = infrastructureTypes;
 	}
 
 }

@@ -9,33 +9,33 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<Title>Ithaca</Title>
-	<script src="/js/jquery.min.js"></script>
-	<script src="/js/jquery-ui.min.js"></script>
-	<link rel="stylesheet" href="/css/jquery-ui.css" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/css/style.css">
-	<script src="/js/bootstrap.min.js"></script>
-	<script src="/js/unreadMessages.js"></script>
-	<script src="/js/jquery.fileupload.js"></script>
-	
-	<style>
-	/* ensure that autocomplete lists are not too long and have a scrollbar */
-	.ui-autocomplete {
-		max-height: 200px;
-		overflow-y: auto;
-		overflow-x: hidden;
-	}
-	</style>
-	
-	<script type="text/javascript">
-				$(document).ready(function(){
-					unreadMessages(function(unread){
-						$('#navUnread').html(unread);
-					});
+		<Title>Ithaca</Title>
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="/css/jquery-ui.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/css/style.css">
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/unreadMessages.js"></script>
+		<script src="/js/jquery.fileupload.js"></script>
+		
+		<style>
+			/* ensure that autocomplete lists are not too long and have a scrollbar */
+			.ui-autocomplete {
+				max-height: 200px;
+				overflow-y: auto;
+				overflow-x: hidden;
+			}
+		</style>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+				unreadMessages(function(unread){
+					$('#navUnread').html(unread);
 				});
-			</script>
+			});
+		</script>
 	</head>
 	
 	<!-- check if user is logged in -->
@@ -66,7 +66,6 @@
 							<li><a href="/${pagemode}/searchAd">Find ad</a></li>
 							<c:if test="${loggedIn}">
 								<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
-								<li><a href="#">My Auctions</a></li>
 							</c:if>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
@@ -115,8 +114,8 @@
 			</nav>
 	
 			<c:if test="${not empty confirmationMessage }">
-				<div class="confirmation-message">
-					<img src="/img/check-mark.png" />
+				<div class="alert alert-success">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 					<p>${confirmationMessage }</p>
 				</div>
 			</c:if>

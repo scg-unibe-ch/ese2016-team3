@@ -13,7 +13,7 @@ function appendPictureRow(name, size, url) {
 			.append(
 					'<tr><td>' + name + '</td><td>' + size
 							+ '</td><td data-delete-url="' + url
-							+ '">Delete</td></tr>');
+							+ '"><button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button></td></tr>');
 }
 
 $(function() {

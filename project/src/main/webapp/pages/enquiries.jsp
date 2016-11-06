@@ -43,7 +43,7 @@
 																+ id);
 												$(cell)
 														.html(
-																"Accepted <button class='undoButton' data-id='"+ id+ "'>Undo</button>");
+																"Accepted <button class='undoButton btn btn-danger' data-id='"+ id+ "'>Undo</button>");
 												attachUndoHandler();
 											});
 							
@@ -58,7 +58,7 @@
 																+ id);
 												$(cell)
 														.html(
-																"Declined <button class='undoButton' data-id='"+ id+ "'>Undo</button>");
+																"Declined <button class='undoButton btn btn-danger' data-id='"+ id+ "'>Undo</button>");
 												attachUndoHandler();
 											});
 						}
@@ -75,7 +75,7 @@
 																+ id);
 												$(cell)
 														.html(
-																"<button class='acceptButton' data-id='"+ id + "'>Accept</button><button class='declineButton' data-id='" + id + "'>Decline</button>");
+																"<button class='acceptButton btn btn-success' data-id='"+ id + "'>Accept</button><button class='declineButton btn btn-danger' data-id='" + id + "'>Decline</button>");
 												attachHandlers();
 											});
 						}

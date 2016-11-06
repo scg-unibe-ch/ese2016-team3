@@ -31,10 +31,11 @@ import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.controller.service.AlertService;
 import ch.unibe.ese.team3.controller.service.UserService;
-import ch.unibe.ese.team3.enums.PageMode;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.dto.PictureMeta;
+import ch.unibe.ese.team3.enums.Distance;
+import ch.unibe.ese.team3.enums.PageMode;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 
@@ -81,6 +82,7 @@ public class PlaceAdController {
 	public ModelAndView placeAd() throws IOException {
 		ModelAndView model = new ModelAndView("placeAd");
 		model.addObject("types", Type.values());
+		model.addObject("distances", Distance.values());
 
 		String realPath = servletContext.getRealPath(IMAGE_DIRECTORY);
 		if (pictureUploader == null) {
@@ -151,11 +153,13 @@ public class PlaceAdController {
 			// reset the picture uploader
 			this.pictureUploader = null;
 
-			model = new ModelAndView("redirect:/ad?id=" + ad.getId());
+			model = new ModelAndView("redirect:../ad?id=" + ad.getId());
 			redirectAttributes.addFlashAttribute("confirmationMessage",
 					"Ad placed successfully. You can take a look at it below.");
 		} else {
 			model = new ModelAndView("placeAd");
+			model.addObject("types", Type.values());
+			model.addObject("distances", Distance.values());
 		}
 		return model;
 	}

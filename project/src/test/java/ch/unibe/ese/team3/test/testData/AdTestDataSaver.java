@@ -33,8 +33,6 @@ public class AdTestDataSaver {
 		User ese = userDao.findByUsername("ese@unibe.ch");
 		User oprah = userDao.findByUsername("oprah@winfrey.com");
 		User jane = userDao.findByUsername("jane@doe.com");
-		User hans = userDao.findByUsername("hans@unibe.ch");
-		User mathilda = userDao.findByUsername("mathilda@unibe.ch");
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 		
@@ -57,15 +55,11 @@ public class AdTestDataSaver {
 		Date moveInDate8 = formatter.parse("16.02.2015");
 		
 		String roomDescription1 = "The room is a part of 3.5 rooms apartment completely renovated"
-				+ "in 2010 at Kramgasse, Bern. The apartment is about 50 m2 on 1st floor."
-				+ "Apt is equipped modern kitchen, hall and balcony. Near to shops and public"
-				+ "transportation. Monthly rent is 500 CHF including charges. Internet + TV + landline"
-				+ "charges are separate. If you are interested, feel free to drop me a message"
-				+ "to have an appointment for a visit or can write me for any further information";
-		String preferences1 = "Uncomplicated, open minded and easy going person (m / w),"
-				+ "non-smoker, can speak English, which of course fits in the WG, and who likes dogs."
-				+ "Cleanliness is must. Apart from personal life, sometimes glass of wine,"
-				+ "eat and cook together and go out in the evenings.";
+				+ " in 2010 at Kramgasse, Bern. The apartment is about 50 m2 on 1st floor."
+				+ " Apt is equipped modern kitchen, hall and balcony. Near to shops and public"
+				+ " transportation. Monthly rent is 500 CHF including charges. Internet + TV + landline"
+				+ " charges are separate. If you are interested, feel free to drop me a message"
+				+ " to have an appointment for a visit or can write me for any further information";
 
 		Ad adBern = new Ad();
 		adBern.setZipcode(3011);
@@ -95,6 +89,14 @@ public class AdTestDataSaver {
 		adBern.setFloorLevel(2);
 		adBern.setNumberOfRooms(2);
 		
+		// set auction specific attributes
+		adBern.setAuction(true);
+		adBern.setStartDate(formatter.parse("03.11.2016")); // to houers !! 
+		adBern.setEndDate(formatter.parse("03.12.2016"));
+		adBern.setStartPrice(70000);
+		adBern.setIncreaseBidPrice(1000);
+		adBern.setBuyItNowPrice(100000);
+		
 		adBern.setInfrastructureType(InfrastructureType.CABLE);
 		List<AdPicture> pictures = new ArrayList<>();
 		pictures.add(createPicture(adBern, "/img/test/ad1_1.jpg"));
@@ -104,18 +106,15 @@ public class AdTestDataSaver {
 		adDao.save(adBern);
 
 		String studioDescription2 = "It is small studio close to the"
-				+ "university and the bahnhof. The lovely neighbourhood"
-				+ "Langgasse makes it an easy place to feel comfortable."
-				+ "The studio is close to a Migross, Denner and the Coop."
-				+ "The studio is 60m2. It has it own Badroom and kitchen."
-				+ "Nothing is shared. The studio is fully furnished. The"
-				+ "studio is also provided with a balcony. So if you want to"
-				+ "have a privat space this could totally be good place for you."
-				+ "Be aware it is only till the end of March. The price is from"
-				+ "550- 700 CHF, But there is always room to talk about it.";
-		String roomPreferences2 = "I would like to have an easy going person who"
-				+ "is trustworthy and can take care of the flat. No animals please."
-				+ "Non smoker preferred.";
+				+ " university and the bahnhof. The lovely neighbourhood"
+				+ " Langgasse makes it an easy place to feel comfortable."
+				+ " The studio is close to a Migross, Denner and the Coop."
+				+ " The studio is 60m2. It has it own Badroom and kitchen."
+				+ " Nothing is shared. The studio is fully furnished. The"
+				+ " studio is also provided with a balcony. So if you want to"
+				+ " have a privat space this could totally be good place for you."
+				+ " Be aware it is only till the end of March. The price is from"
+				+ " 550- 700 CHF, But there is always room to talk about it.";
 		
 		Ad adBern2 = new Ad();
 		adBern2.setZipcode(3012);
@@ -141,7 +140,7 @@ public class AdTestDataSaver {
 		adBern2.setGarage(false);
 		adBern2.setBuildYear(1950);
 		adBern2.setRenovationYear(1980);
-		adBern2.setDistancePublicTransport(10000);
+		adBern2.setDistancePublicTransport(1000);
 		adBern2.setDistanceSchool(500);
 		adBern2.setDistanceShopping(100);
 		adBern2.setFloorLevel(6);
@@ -155,16 +154,15 @@ public class AdTestDataSaver {
 		adDao.save(adBern2);
 
 		String studioDescription3 = " In the center of Gundeli (5 Min. away from the"
-				+ "station, close to Tellplatz) there is a lovely house, covered with"
-				+ "savage wine stocks, without any neighbours but with a garden. The"
-				+ "house has two storey, on the first floor your new room is waiting"
-				+ "for you. The house is totally equipped with everything a household "
+				+ " station, close to Tellplatz) there is a lovely house, covered with"
+				+ " savage wine stocks, without any neighbours but with a garden. The"
+				+ " house has two storey, on the first floor your new room is waiting"
+				+ " for you. The house is totally equipped with everything a household"
 				+ ": washing machine, kitchen, batroom, W-Lan...if you don´t have any"
-				+ "furniture, don´t worry, I am sure, we will find something around"
-				+ "the house. The price for the room and all included is 480 CHF /month. "
+				+ " furniture, don´t worry, I am sure, we will find something around"
+				+ " the house. The price for the room and all included is 480 CHF /month. "
 				+ " (29, Graphic designer) and Linda (31, curator) are looking for a"
-				+ "new female flatmate from December on.";
-		String roomPreferences3 = "smoking female flatmate";
+				+ " new female flatmate from December on.";
 		
 		Ad adBasel = new Ad();
 		adBasel.setZipcode(4051);
@@ -204,13 +202,12 @@ public class AdTestDataSaver {
 		adDao.save(adBasel);
 		
 		String studioDescription4 = "Flatshare of 3 persons. Flat with 5 rooms"
-				+ "on the second floor. The bedroom is about 60 square meters"
-				+ "with access to a nice balcony. In addition to the room, the"
-				+ "flat has: a living room, a kitchen, a bathroom, a seperate WC,"
-				+ "a storage in the basement, a balcony, a laundry room in the basement."
-				+ "The bedroom is big and bright and has a nice parquet floor."
-				+ "Possibility to keep some furnitures like the bed.";
-		String roomPreferences4 = "an easy going flatmate man or woman between 20 and 30";
+				+ " on the second floor. The bedroom is about 60 square meters"
+				+ " with access to a nice balcony. In addition to the room, the"
+				+ " flat has: a living room, a kitchen, a bathroom, a seperate WC,"
+				+ " a storage in the basement, a balcony, a laundry room in the basement."
+				+ " The bedroom is big and bright and has a nice parquet floor."
+				+ " Possibility to keep some furnitures like the bed.";
 		
 		Ad adOlten = new Ad();
 		adOlten.setZipcode(4600);
@@ -236,8 +233,8 @@ public class AdTestDataSaver {
 		adOlten.setBuildYear(1900);
 		adOlten.setRenovationYear(1950);
 		adOlten.setDistancePublicTransport(100);
-		adOlten.setDistanceSchool(5000);
-		adOlten.setDistanceShopping(4000);
+		adOlten.setDistanceSchool(500);
+		adOlten.setDistanceShopping(400);
 		adOlten.setFloorLevel(3);
 		adOlten.setNumberOfRooms(3);
 		adOlten.setInfrastructureType(InfrastructureType.CABLE);
@@ -249,11 +246,10 @@ public class AdTestDataSaver {
 		adDao.save(adOlten);
 
 		String studioDescription5 = "Studio meublé au 3ème étage, comprenant"
-				+ "une kitchenette entièrement équipée (frigo, plaques,"
-				+ "four et hotte), une pièce à vivre donnant sur un balcon,"
-				+ "une salle de bains avec wc. Cave, buanderie et site satellite"
-				+ "à disposition.";
-		String roomPreferences5 = "tout le monde est bienvenu";
+				+ " une kitchenette entièrement équipée (frigo, plaques,"
+				+ " four et hotte), une pièce à vivre donnant sur un balcon,"
+				+ " une salle de bains avec wc. Cave, buanderie et site satellite"
+				+ " à disposition.";
 		
 		Ad adNeuchâtel = new Ad();
 		adNeuchâtel.setZipcode(2000);
@@ -279,8 +275,8 @@ public class AdTestDataSaver {
 		adNeuchâtel.setBuildYear(1900);
 		adNeuchâtel.setRenovationYear(2000);
 		adNeuchâtel.setDistancePublicTransport(100);
-		adNeuchâtel.setDistanceSchool(5000);
-		adNeuchâtel.setDistanceShopping(4000);
+		adNeuchâtel.setDistanceSchool(500);
+		adNeuchâtel.setDistanceShopping(300);
 		adNeuchâtel.setFloorLevel(3);
 		adNeuchâtel.setNumberOfRooms(7);
 		adNeuchâtel.setInfrastructureType(InfrastructureType.CABLE);
@@ -293,9 +289,8 @@ public class AdTestDataSaver {
 		adDao.save(adNeuchâtel);
 
 		String studioDescription6 = "A place just for yourself in a very nice part of Biel."
-				+ "A studio for 1-2 persons with a big balcony, bathroom, kitchen and furniture already there."
-				+ "It's quiet and nice, very close to the old city of Biel.";
-		String roomPreferences6 = "A nice and easy going person. Minimum rent is two months";
+				+ " A studio for 1-2 persons with a big balcony, bathroom, kitchen and furniture already there."
+				+ " It's quiet and nice, very close to the old city of Biel.";
 		
 		Ad adBiel = new Ad();
 		adBiel.setZipcode(2503);
@@ -309,7 +304,7 @@ public class AdTestDataSaver {
 		//adBiel.setStudio(true);
 		adBiel.setRoomDescription(studioDescription6);
 		adBiel.setUser(ese);
-		adBiel.setTitle("Direkt am Quai: hübsches Studio");
+		adBiel.setTitle("Nice studio");
 		adBiel.setStreet("Oberer Quai 12");
 		adBiel.setCity("Biel/Bienne");
 
@@ -321,8 +316,8 @@ public class AdTestDataSaver {
 		adBiel.setBuildYear(1900);
 		adBiel.setRenovationYear(2000);
 		adBiel.setDistancePublicTransport(100);
-		adBiel.setDistanceSchool(5000);
-		adBiel.setDistanceShopping(4000);
+		adBiel.setDistanceSchool(500);
+		adBiel.setDistanceShopping(400);
 		adBiel.setFloorLevel(3);
 		adBiel.setNumberOfRooms(7);
 		
@@ -336,15 +331,11 @@ public class AdTestDataSaver {
 		
 		
 		String roomDescription7 = "The room is a part of 3.5 rooms apartment completely renovated"
-				+ "in 2010 at Kramgasse, Bern. The apartment is about 50 m2 on 1st floor."
-				+ "Apt is equipped modern kitchen, hall and balcony. Near to shops and public"
-				+ "transportation. Monthly rent is 500 CHF including charges. Internet + TV + landline"
-				+ "charges are separate. If you are interested, feel free to drop me a message"
-				+ "to have an appointment for a visit or can write me for any further information";
-		String preferences7 = "Uncomplicated, open minded and easy going person (m / w),"
-				+ "non-smoker, can speak English, which of course fits in the WG, and who likes dogs."
-				+ "Cleanliness is must. Apart from personal life, sometimes glass of wine,"
-				+ "eat and cook together and go out in the evenings.";
+				+ " in 2010 at Kramgasse, Bern. The apartment is about 50 m2 on 1st floor."
+				+ " Apt is equipped modern kitchen, hall and balcony. Near to shops and public"
+				+ " transportation. Monthly rent is 500 CHF including charges. Internet + TV + landline"
+				+ " charges are separate. If you are interested, feel free to drop me a message"
+				+ " to have an appointment for a visit or can write me for any further information";
 
 		Ad adZurich = new Ad();
 		adZurich.setZipcode(8000);
@@ -369,8 +360,8 @@ public class AdTestDataSaver {
 		adZurich.setGarage(false);
 		adZurich.setBuildYear(1944);
 		adZurich.setRenovationYear(2000);
-		adZurich.setDistancePublicTransport(3000);
-		adZurich.setDistanceSchool(4000);
+		adZurich.setDistancePublicTransport(300);
+		adZurich.setDistanceSchool(400);
 		adZurich.setDistanceShopping(100);
 		adZurich.setFloorLevel(3);
 		adZurich.setNumberOfRooms(5);
@@ -384,18 +375,15 @@ public class AdTestDataSaver {
 	
 		
 		String studioDescription8 = "It is small studio close to the"
-				+ "university and the bahnhof. The lovely neighbourhood"
-				+ "Langgasse makes it an easy place to feel comfortable."
-				+ "The studio is close to a Migross, Denner and the Coop."
-				+ "The studio is 60m2. It has it own Badroom and kitchen."
-				+ "Nothing is shared. The studio is fully furnished. The"
-				+ "studio is also provided with a balcony. So if you want to"
-				+ "have a privat space this could totally be good place for you."
-				+ "Be aware it is only till the end of March. The price is from"
-				+ "550- 700 CHF, But there is always room to talk about it.";
-		String roomPreferences8 = "I would like to have an easy going person who"
-				+ "is trustworthy and can take care of the flat. No animals please."
-				+ "Non smoker preferred.";
+				+ " university and the bahnhof. The lovely neighbourhood"
+				+ " Langgasse makes it an easy place to feel comfortable."
+				+ " The studio is close to a Migross, Denner and the Coop."
+				+ " The studio is 60m2. It has it own Badroom and kitchen."
+				+ " Nothing is shared. The studio is fully furnished. The"
+				+ " studio is also provided with a balcony. So if you want to"
+				+ " have a privat space this could totally be good place for you."
+				+ " Be aware it is only till the end of March. The price is from"
+				+ " 550- 700 CHF, But there is always room to talk about it.";
 		
 		Ad adLuzern = new Ad();
 		adLuzern.setZipcode(6000);
@@ -420,7 +408,7 @@ public class AdTestDataSaver {
 		adLuzern.setBuildYear(1960);
 		adLuzern.setRenovationYear(1991);
 		adLuzern.setDistancePublicTransport(500);
-		adLuzern.setDistanceSchool(10000);
+		adLuzern.setDistanceSchool(1000);
 		adLuzern.setDistanceShopping(100);
 		adLuzern.setFloorLevel(6);
 		adLuzern.setNumberOfRooms(3);
@@ -433,17 +421,16 @@ public class AdTestDataSaver {
 		adLuzern.setPictures(pictures);
 		adDao.save(adLuzern);
 
-		String studioDescription9 = " In the center of Gundeli (5 Min. away from the"
-				+ "station, close to Tellplatz) there is a lovely house, covered with"
-				+ "savage wine stocks, without any neighbours but with a garden. The"
-				+ "house has two storey, on the first floor your new room is waiting"
-				+ "for you. The house is totally equipped with everything a household "
-				+ ": washing machine, kitchen, batroom, W-Lan...if you don´t have any"
-				+ "furniture, don´t worry, I am sure, we will find something around"
-				+ "the house. The price for the room and all included is 480 CHF /month. "
+		String studioDescription9 = "In the center of Gundeli (5 Min. away from the"
+				+ " station, close to Tellplatz) there is a lovely house, covered with"
+				+ " savage wine stocks, without any neighbours but with a garden. The"
+				+ " house has two storey, on the first floor your new room is waiting"
+				+ " for you. The house is totally equipped with everything a household:"
+				+ " washing machine, kitchen, batroom, W-Lan...if you don´t have any"
+				+ " furniture, don´t worry, I am sure, we will find something around"
+				+ " the house. The price for the room and all included is 480 CHF /month. "
 				+ " (29, Graphic designer) and Linda (31, curator) are looking for a"
-				+ "new female flatmate from December on.";
-		String roomPreferences9 = "smoking female flatmate";
+				+ " new female flatmate from December on.";
 		
 		Ad adAarau = new Ad();
 		adAarau.setZipcode(5000);
@@ -469,8 +456,8 @@ public class AdTestDataSaver {
 		adAarau.setBuildYear(1960);
 		adAarau.setRenovationYear(1970);
 		adAarau.setDistancePublicTransport(100);
-		adAarau.setDistanceSchool(5000);
-		adAarau.setDistanceShopping(7000);
+		adAarau.setDistanceSchool(500);
+		adAarau.setDistanceShopping(700);
 		adAarau.setFloorLevel(1);
 		adAarau.setNumberOfRooms(3);
 		adAarau.setInfrastructureType(InfrastructureType.CABLE);
@@ -485,13 +472,12 @@ public class AdTestDataSaver {
 		adDao.save(adAarau);
 		
 		String studioDescription10 = "Flatshare of 3 persons. Flat with 5 rooms"
-				+ "on the second floor. The bedroom is about 60 square meters"
-				+ "with access to a nice balcony. In addition to the room, the"
-				+ "flat has: a living room, a kitchen, a bathroom, a seperate WC,"
-				+ "a storage in the basement, a balcony, a laundry room in the basement."
-				+ "The bedroom is big and bright and has a nice parquet floor."
-				+ "Possibility to keep some furnitures like the bed.";
-		String roomPreferences10 = "an easy going flatmate man or woman between 20 and 30";
+				+ " on the second floor. The bedroom is about 60 square meters"
+				+ " with access to a nice balcony. In addition to the room, the"
+				+ " flat has: a living room, a kitchen, a bathroom, a seperate WC,"
+				+ " a storage in the basement, a balcony, a laundry room in the basement."
+				+ " The bedroom is big and bright and has a nice parquet floor."
+				+ " Possibility to keep some furnitures like the bed.";
 		
 		Ad adDavos = new Ad();
 		adDavos.setZipcode(7260);
@@ -529,11 +515,10 @@ public class AdTestDataSaver {
 		adDao.save(adDavos);
 
 		String studioDescription11 = "Studio meublé au 3ème étage, comprenant"
-				+ "une kitchenette entièrement équipée (frigo, plaques,"
-				+ "four et hotte), une pièce à vivre donnant sur un balcon,"
-				+ "une salle de bains avec wc. Cave, buanderie et site satellite"
-				+ "à disposition.";
-		String roomPreferences11 = "tout le monde est bienvenu";
+				+ " une kitchenette entièrement équipée (frigo, plaques,"
+				+ " four et hotte), une pièce à vivre donnant sur un balcon,"
+				+ " une salle de bains avec wc. Cave, buanderie et site satellite"
+				+ " à disposition.";
 		
 		Ad adLausanne = new Ad();
 		adLausanne.setZipcode(1000);
@@ -558,7 +543,7 @@ public class AdTestDataSaver {
 		adLausanne.setGarage(true);
 		adLausanne.setBuildYear(1960);
 		adLausanne.setRenovationYear(1980);
-		adLausanne.setDistancePublicTransport(3000);
+		adLausanne.setDistancePublicTransport(300);
 		adLausanne.setDistanceSchool(100);
 		adLausanne.setDistanceShopping(900);
 		adLausanne.setFloorLevel(1);
@@ -573,9 +558,8 @@ public class AdTestDataSaver {
 		adDao.save(adLausanne);
 
 		String studioDescription12 = "A place just for yourself in a very nice part of Biel."
-				+ "A studio for 1-2 persons with a big balcony, bathroom, kitchen and furniture already there."
-				+ "It's quiet and nice, very close to the old city of Biel.";
-		String roomPreferences12 = "A nice and easy going person. Minimum rent is two months";
+				+ " A studio for 1-2 persons with a big balcony, bathroom, kitchen and furniture already there."
+				+ " It's quiet and nice, very close to the old city of Biel.";
 		
 		Ad adLocarno = new Ad();
 		adLocarno.setZipcode(6600);
@@ -600,9 +584,9 @@ public class AdTestDataSaver {
 		adLocarno.setGarage(true);
 		adLocarno.setBuildYear(1800);
 		adLocarno.setRenovationYear(1980);
-		adLocarno.setDistancePublicTransport(3000);
-		adLocarno.setDistanceSchool(10000);
-		adLocarno.setDistanceShopping(9000);
+		adLocarno.setDistancePublicTransport(300);
+		adLocarno.setDistanceSchool(1000);
+		adLocarno.setDistanceShopping(900);
 		adLocarno.setFloorLevel(4);
 		adLocarno.setNumberOfRooms(6);
 		adLocarno.setInfrastructureType(InfrastructureType.CABLE);

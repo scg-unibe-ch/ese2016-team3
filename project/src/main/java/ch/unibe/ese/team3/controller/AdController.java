@@ -21,6 +21,7 @@ import ch.unibe.ese.team3.controller.service.BookmarkService;
 import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.controller.service.VisitService;
+import ch.unibe.ese.team3.exceptions.ResourceNotFoundException;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.User;
 
@@ -51,6 +52,11 @@ public class AdController {
 	public ModelAndView ad(@RequestParam("id") long id, Principal principal) {
 		ModelAndView model = new ModelAndView("adDescription");
 		Ad ad = adService.getAdById(id);
+		
+		if (ad == null){
+			throw new ResourceNotFoundException();
+		}
+		
 		model.addObject("shownAd", ad);
 		model.addObject("messageForm", new MessageForm());
 

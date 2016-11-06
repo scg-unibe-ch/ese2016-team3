@@ -15,6 +15,7 @@ import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.enums.PageMode;
 import ch.unibe.ese.team3.model.BuyMode;
+import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
 
 /** Handles all requests concerning the search for ads. */
@@ -49,6 +50,7 @@ public class SearchController {
 			ModelAndView model = new ModelAndView("results");
 			model.addObject("results", adService.queryResults(searchForm, BuyMode.fromPageMode(pageMode)));
 			model.addObject("types", Type.values());
+			model.addObject("infrastructureTypes", InfrastructureType.values());
 			return model;
 		} else {
 			// go back

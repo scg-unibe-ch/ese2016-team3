@@ -91,7 +91,7 @@
 					<strong>Date sent: </strong><span id="message-preview-date">${formattedDateSent}</span>
 				</p>
 				<br />
-				<p id="message-preview-content">${messages[0].text }</p>
+				<p id="message-preview-content">${messages[0].getTextWithLineBreaks() }</p>
 			</div>
 		</div>
 	</div>

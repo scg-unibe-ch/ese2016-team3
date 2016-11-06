@@ -44,6 +44,7 @@
 	}
 </script>
 
+<%--
 <script>
 	function typeOfAlert(alert) {
 		if (alert.getBothRoomAndStudio())
@@ -54,6 +55,7 @@
 			return "Room"
 	}
 </script>
+	--%>
 
 <script>
 	$(document).ready(function() {
@@ -91,12 +93,13 @@
 					class="form-horizontal">
 					<div class="panel panel-default">
 						<div class="panel-body">
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Type</label>
 								<div class="col-sm-6">
-									<c:forEach var="type" items="${alertTypes}">
+									<c:forEach var="type" items="${types}">
 										<label class="checkbox-inline"> <form:checkbox
-												path="alertTypes" value="${type.type}" /> ${type.name}
+												path="types" value="${type}" /> ${type.name}
 										</label>
 									</c:forEach>
 								</div>
@@ -184,25 +187,21 @@
 											</thead>
 											<c:forEach var="alert" items="${alerts}">
 												<tr>
-												<%-- added --%>
 													<td><c:forEach var="alertType"
-															items="${alert.alertTypes}">
-															<td>${alert.alertType}</td>
-															<td><c:out value="${alertType}" /></td>
-														</c:forEach></td>
-													<c:forEach items="${alert.alertTypes}" var="item">
-														<tr>
-															<td><c:out value="${item.alertTypes}" /></td>
-														</tr>
-													</c:forEach>
-
-													<%-- <td>${alert.alertTypes}</td> --%>
+															items="${alert.alertTypes}" varStatus="loop">
+															<c:choose>
+																<c:when test="${loop.index eq 0 }">${alertType.type.name}</c:when>
+																<c:otherwise>, ${alertType.type.name}</c:otherwise>
+															</c:choose>
+														</c:forEach>
+													</td>
 													<td>${alert.city}</td>
 													<td>${alert.radius}km</td>
 													<td>${alert.price}Chf</td>
 													<td><button type="button" class="btn btn-danger"
 															data-id="${alert.id}" onClick="deleteAlert(this)">Delete</button></td>
 												</tr>
+
 											</c:forEach>
 										</table>
 									</c:otherwise>
