@@ -238,7 +238,8 @@ public class ProfileController {
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
 		if (!bindingResult.hasErrors()) {
-			upgradeService.upgradeFrom(upgradeForm, user);
+			PremiumChoice premiumChoice = premiumChoiceService.findPremiumChoiceByDuration(upgradeForm.getDuration());
+			upgradeService.upgradeFrom(upgradeForm, user, premiumChoice);
 			user = userService.findUserByUsername(username);
 			return user(user.getId(), principal);
 		} else {
