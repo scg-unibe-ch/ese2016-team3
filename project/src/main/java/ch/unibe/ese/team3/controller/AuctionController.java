@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.controller.service.AuctionService;
@@ -40,12 +42,21 @@ public class AuctionController {
 
 	
 	@RequestMapping(value = "/profile/bidAuction", method = RequestMethod.POST)
-	public void bid(Principal principal, int amount , @RequestParam long id){
+	public void bid(Principal principal, int amount , @RequestParam long id, RedirectAttributes redirectAttributes){
 		
 //		User bidder = userService.findUserByUsername(principal.getName());
 //		Ad ad = adService.getAdById(id);
 //		
 //		bidService.bid(ad, bidder, amount);
+		
+		
+//		ModelAndView model = new ModelAndView("adDescription");
+//		redirectAttributes.addFlashAttribute("confirmationMessage",
+//				"Your bid was registered successfully.");
+//		
+//		model = new ModelAndView("searchAd");
+//		
+//		return model;
 		
 	}
 	
