@@ -104,6 +104,17 @@
 									</c:forEach>
 								</div>
 							</div>
+							
+							<spring:bind path="buyMode">
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="buyMode">For</label>
+									<div class="col-sm-4">
+										<form:select path="buyMode" cssClass="form-control">
+											<form:options items="${buyModes}" itemLabel="label" />
+										</form:select>
+									</div>
+								</div>
+							</spring:bind>
 
 							<spring:bind path="city">
 								<div class="form-group">
@@ -179,6 +190,7 @@
 											<thead>
 												<tr>
 													<th>Type</th>
+													<th>For</th>
 													<th>City</th>
 													<th>Radius</th>
 													<th>max. Price</th>
@@ -195,6 +207,7 @@
 															</c:choose>
 														</c:forEach>
 													</td>
+													<td>${alert.buyMode.label}</td>
 													<td>${alert.city}</td>
 													<td>${alert.radius}km</td>
 													<td>${alert.price}Chf</td>

@@ -14,6 +14,7 @@ import ch.unibe.ese.team3.dto.Location;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Alert;
 import ch.unibe.ese.team3.model.AlertType;
+import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.Type;
@@ -56,7 +57,7 @@ public class AlertService {
 		String zip = alertForm.getCity().substring(0, 4);
 		alert.setZipcode(Integer.parseInt(zip));
 		alert.setCity(alertForm.getCity().substring(7));
-
+		alert.setBuyMode(alertForm.getBuyMode());
 		alert.setPrice(alertForm.getPrice());
 
 		alert.setRadius(alertForm.getRadius());
@@ -96,7 +97,8 @@ public class AlertService {
 	@Transactional
 	public void triggerAlerts(Ad ad) {
 		int adPrice = ad.getPrizePerMonth();
-		Iterable<Alert> alerts = alertDao.findByPriceGreaterThan(adPrice - 1);
+		BuyMode buyMode = ad.getBuyMode();
+		Iterable<Alert> alerts = alertDao.findByPriceGreaterThanAndBuyMode(adPrice - 1, buyMode);
 
 		// loop through all ads with matching city and price range, throw out
 		// mismatches

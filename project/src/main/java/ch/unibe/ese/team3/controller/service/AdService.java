@@ -88,7 +88,8 @@ public class AdService {
 		// java.util.Calendar uses a month range of 0-11 instead of the
 		// XMLGregorianCalendar which uses 1-12
 		try {
-			if (placeAdForm.getStartDate().length() >= 1) {
+			String startDate = placeAdForm.getStartDate();
+			if (startDate != null && startDate.length() >= 1) {
 				int dayStart = Integer.parseInt(placeAdForm.getStartDate().substring(0, 2));
 				int monthStart = Integer.parseInt(placeAdForm.getStartDate().substring(3, 5));
 				int yearStart = Integer.parseInt(placeAdForm.getStartDate().substring(6, 10));
@@ -96,10 +97,11 @@ public class AdService {
 				ad.setStartDate(calendar.getTime());
 			}
 
-			if (placeAdForm.getEndDate().length() >= 1) {
-				int dayEnd = Integer.parseInt(placeAdForm.getEndDate().substring(0, 2));
-				int monthEnd = Integer.parseInt(placeAdForm.getEndDate().substring(3, 5));
-				int yearEnd = Integer.parseInt(placeAdForm.getEndDate().substring(6, 10));
+			String endDate = placeAdForm.getEndDate();
+			if (endDate != null && endDate.length() >= 1) {
+				int dayEnd = Integer.parseInt(endDate.substring(0, 2));
+				int monthEnd = Integer.parseInt(endDate.substring(3, 5));
+				int yearEnd = Integer.parseInt(endDate.substring(6, 10));
 				calendar.set(yearEnd, monthEnd - 1, dayEnd);
 				ad.setEndDate(calendar.getTime());
 			}

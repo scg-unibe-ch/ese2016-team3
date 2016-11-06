@@ -150,6 +150,8 @@ public class AdServiceTest {
 		Date result = df.parse("2015-02-27");
 
 		assertEquals(0, result.compareTo(ad.getMoveInDate()));
+		
+		adDao.delete(ad);
 	}
 
 	@Test
@@ -175,7 +177,7 @@ public class AdServiceTest {
 		ArrayList<Ad> adList = (ArrayList) ads;
 
 		// assert number of returned ads equals number in DB
-		assertEquals(countAds, adList.size());
+		assertEquals(adList.size(), countAds);
 	}
 
 	@Test
@@ -228,7 +230,6 @@ public class AdServiceTest {
 		searchForm.setPrize(600);
 		searchForm.setRadius(80);
 		searchForm.setBalcony(true);
-		searchForm.setBalcony(true);
 		searchForm.setGarage(true);
 
 		Type[] types = { Type.APARTMENT }; 
@@ -238,12 +239,11 @@ public class AdServiceTest {
 		ArrayList<Ad> adList = (ArrayList) queryedAds;
 
 	
-		assertEquals(adList.size(), 3); 
+		assertEquals(3, adList.size()); 
 		// assert right ads are returned
 		
-		assertEquals(adList.get(0).getTitle(), "Direkt am Quai: hübsches Studio");
-		assertEquals(adList.get(1).getTitle(), "Roommate wanted in Bern");
-		assertEquals(adList.get(2).getTitle(), "title");
+		assertEquals("Nice studio", adList.get(0).getTitle());
+		assertEquals("Roommate wanted in Bern", adList.get(1).getTitle());
 	}
 
 	@Test
@@ -285,9 +285,9 @@ public class AdServiceTest {
 
 		assertEquals(listNewestAds.size(), 3);
 		
-		assertEquals(listNewestAds.get(0).getTitle(), "title");
-		assertEquals(listNewestAds.get(1).getTitle(), "Direkt am Quai: hübsches Studio");
-		assertEquals(listNewestAds.get(2).getTitle(), "Malibu-style Beachhouse");
+		assertEquals("Olten Residence", listNewestAds.get(0).getTitle());
+		assertEquals("Nice studio", listNewestAds.get(1).getTitle());
+		assertEquals("Malibu-style Beachhouse", listNewestAds.get(2).getTitle());
 		
 
 	}

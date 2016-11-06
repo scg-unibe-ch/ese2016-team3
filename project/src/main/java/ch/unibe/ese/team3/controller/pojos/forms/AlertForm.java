@@ -7,6 +7,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 
@@ -30,6 +32,17 @@ public class AlertForm {
 	private Integer price;
 	
 	private int zipCode;
+	
+	@NotNull(message = "Required")
+	private BuyMode buyMode;
+
+	public BuyMode getBuyMode() {
+		return buyMode;
+	}
+
+	public void setBuyMode(BuyMode buyMode) {
+		this.buyMode = buyMode;
+	}
 
 	public String getCity() {
 		return city;

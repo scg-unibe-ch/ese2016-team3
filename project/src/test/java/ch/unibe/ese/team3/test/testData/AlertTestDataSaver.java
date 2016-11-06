@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.model.Alert;
 import ch.unibe.ese.team3.model.AlertType;
+import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.AlertDao;
@@ -55,6 +56,7 @@ public class AlertTestDataSaver {
 		Alert alert = new Alert();
 		alert.setUser(ese);
 		alert.setAlertTypes(alertTypes);
+		alert.setBuyMode(BuyMode.BUY);
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
 		alert.setPrice(1500);
@@ -66,6 +68,7 @@ public class AlertTestDataSaver {
 		Alert alert2 = new Alert();
 		alert2.setUser(ese);
 		alert2.setAlertTypes(alertTypes2);
+		alert2.setBuyMode(BuyMode.BUY);
 		alert2.setCity("Zürich");
 		alert2.setZipcode(8000);
 		alert2.setPrice(1000);
@@ -76,6 +79,7 @@ public class AlertTestDataSaver {
 		// One alert for Jane Doe
 		alert = new Alert();
 		alert.setUser(jane);
+		alert.setBuyMode(BuyMode.BUY);
 		alert.setCity("Luzern");
 		alert.setZipcode(6003);
 		alert.setPrice(900);

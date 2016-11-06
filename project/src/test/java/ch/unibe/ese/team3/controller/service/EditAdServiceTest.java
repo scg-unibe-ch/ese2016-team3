@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,6 +23,7 @@ import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.AdPicture;
 import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Gender;
+import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.UserRole;
@@ -103,16 +105,44 @@ public class EditAdServiceTest {
 	}
 	
 	@Test
-	public void PlaceAdFormTest(){
+	public void PlaceAdFormTest() throws ParseException{
 		
 		Ad ad = new Ad();
-		ad.setRoomDescription("This is a wonderful flat");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		ad.setBalcony(true);
+		ad.setBuildYear(2010);
+		ad.setBuyItNowPrice(200);
+		ad.setCity("Bern");
+		ad.setZipcode(3000);
+		ad.setDishwasher(false);
+		ad.setDistancePublicTransport(1000);
+		ad.setDistanceSchool(200);
+		ad.setDistanceShopping(300);
+		ad.setElevator(true);
+		ad.setEndDate(dateFormat.parse("2016-10-10"));
+		ad.setFloorLevel(3);
+		ad.setGarage(true);
+		ad.setIncreaseBidPrice(100);
+		ad.setInfrastructureType(InfrastructureType.CABLE);
+		ad.setMoveInDate(dateFormat.parse("2016-11-10"));
+		ad.setNumberOfBath(4);
+		ad.setNumberOfRooms(5);
+		ad.setParking(false);
+		ad.setPrizePerMonth(2000);
+		ad.setRenovationYear(2012);
+		ad.setRoomDescription("Hello world!");
+		ad.setSquareFootage(120);
+		ad.setStartDate(dateFormat.parse("2016-09-10"));
+		ad.setStartPrice(2000);
+		ad.setStreet("Testweg 14");
+		ad.setTitle("Test ad");
+		ad.setType(Type.APARTMENT);
+				
+		PlaceAdForm placeAdForm = editadservice.fillForm(ad);	
 		
-		PlaceAdForm placeAdForm = editadservice.fillForm(ad);
 		
-		
-		
-		assertEquals("This is a wonderful flat", placeAdForm.getRoomDescription());
+		assertEquals("Hello world!", placeAdForm.getRoomDescription());
 		
 	}
 	
