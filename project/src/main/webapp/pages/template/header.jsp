@@ -9,8 +9,6 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	
-
 		<Title>Ithaca</Title>
 		<script src="/js/jquery.min.js"></script>
 		<script src="/js/jquery-ui.min.js"></script>
@@ -20,6 +18,7 @@
 		<link rel="stylesheet" href="/css/style.css">
 		<script src="/js/bootstrap.min.js"></script>
 		<script src="/js/unreadMessages.js"></script>
+		<script src="/js/jquery.fileupload.js"></script>
 		
 		<style>
 			/* ensure that autocomplete lists are not too long and have a scrollbar */
@@ -37,12 +36,10 @@
 				});
 			});
 		</script>
-	
 	</head>
 	
 	<!-- check if user is logged in -->
 	<security:authorize var="loggedIn" url="/profile" />
-
 	
 	<body>
 		<div class="container">
@@ -59,6 +56,10 @@
 						<li><a href="/buy/">Buy</a></li>
 						<li class="active"><a href="/rent/">Rent</a></li>
 					</c:when>
+					<c:otherwise>
+						<li><a href="/buy/">Buy</a></li>
+						<li><a href="/rent/">Rent</a></li>
+					</c:otherwise>
 				</c:choose>
 			</ul>
 			<nav class="navbar navbar-default" id="mainNav">
@@ -67,16 +68,17 @@
 						<ul class="nav navbar-nav">
 							<li><a href="/${pagemode}/">Homepage</a></li>
 							<li><a href="/${pagemode}/searchAd">Find ad</a></li>
-							<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
+							<c:if test="${loggedIn}">
+								<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
+							</c:if>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="navbar-right dropdown"><c:choose>
 									<c:when test="${loggedIn}">
 										<%@include file='/pages/getUserPicture.jsp'%>
 										<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-											<span class="glyphicon glyphicon-user"></span> <%
-	 	out.print(String.format("%s %s", realUser.getFirstName(), realUser.getLastName()));
-	 %>
+											<span class="glyphicon glyphicon-user"></span>
+											<% out.print(String.format("%s %s", realUser.getFirstName(), realUser.getLastName())); %>
 											<span class="caret"></span>
 										</a>
 										<ul class="dropdown-menu">

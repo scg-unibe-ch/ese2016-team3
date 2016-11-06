@@ -59,24 +59,32 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${messages}" var="message" varStatus="loop">
-						<fmt:formatDate value="${message.dateSent}"
-							var="singleFormattedDateSent" type="date"
-							pattern="HH:mm, dd.MM.yyyy" />
+					<c:choose>
+						<c:when test="${not empty messages }">
+							<c:forEach items="${messages}" var="message" varStatus="loop">
+								<fmt:formatDate value="${message.dateSent}"
+									var="singleFormattedDateSent" type="date"
+									pattern="HH:mm, dd.MM.yyyy" />
 
-						<tr data-id="${message.id}"
-							class="message-row ${loop.index == 0 ? 'info' : ''} ${message.state == 'UNREAD' ? 'message-unread' : ''}">
-							<td><a>${message.subject}</a></td>
-							<td>${message.sender.email}</td>
-							<td>${message.recipient.email }</td>
-							<td>${singleFormattedDateSent}</td>
-						</tr>
-					</c:forEach>
+								<tr data-id="${message.id}"
+									class="message-row ${loop.index == 0 ? 'info' : ''} ${message.state == 'UNREAD' ? 'message-unread' : ''}">
+									<td><a>${message.subject}</a></td>
+									<td>${message.sender.email}</td>
+									<td>${message.recipient.email }</td>
+									<td>${singleFormattedDateSent}</td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td colspan="4">You have no messages</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
 				</tbody>
 			</table>
 		</div>
-
-		<div class="panel panel-default" id="messageDetail">
+		<div class="panel panel-default" style="${empty messages ? 'display: none;' : '' }" id="messageDetail">
 			<div class="panel-heading">
 				<h4 id="message-preview-subject">${messages[0].subject }</h4>
 			</div>

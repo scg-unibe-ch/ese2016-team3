@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.enums.PageMode;
+import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Type;
 
 /**
@@ -30,7 +31,7 @@ public class IndexController {
 	@RequestMapping(value = "/")
 	public ModelAndView index(@RequestAttribute("pageMode") PageMode pageMode) {		
 		ModelAndView model = new ModelAndView("index");
-		model.addObject("newest", adService.getNewestAds(4));
+		model.addObject("newest", adService.getNewestAds(4, BuyMode.fromPageMode(pageMode)));
 		model.addObject("types", Type.values());
 		return model;
 	}

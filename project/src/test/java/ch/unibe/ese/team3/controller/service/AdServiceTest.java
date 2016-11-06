@@ -25,6 +25,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.model.Ad;
+import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
@@ -104,7 +105,7 @@ public class AdServiceTest {
 		hans.setAboutMe("Hansi Hinterseer");
 		userDao.save(hans);
 
-		adService.saveFrom(placeAdForm, filePaths, hans);
+		adService.saveFrom(placeAdForm, filePaths, hans, BuyMode.BUY);
 
 		Ad ad = new Ad();
 		Iterable<Ad> ads = adService.getAllAds();
@@ -132,6 +133,7 @@ public class AdServiceTest {
 
 		assertEquals(ad.getNumberOfBath(), 2);
 		assertEquals(ad.getType(), Type.APARTMENT);
+		assertEquals(ad.getBuyMode(), BuyMode.BUY);
 		assertEquals(ad.getInfrastructureType(), InfrastructureType.CABLE);
 
 		assertEquals(ad.getDistancePublicTransport(), 1000);
@@ -148,6 +150,8 @@ public class AdServiceTest {
 		Date result = df.parse("2015-02-27");
 
 		assertEquals(0, result.compareTo(ad.getMoveInDate()));
+		
+		adDao.delete(ad);
 	}
 
 	@Test
@@ -160,7 +164,7 @@ public class AdServiceTest {
 	public void getAllAds() {
 		// return all Ads in DB
 		int maxInt = 2147483647; // all ads should be cheaper than that value
-		Iterable<Ad> adsInDB = adDao.findByPrizePerMonthLessThan(2147483647);
+		Iterable<Ad> adsInDB = adDao.findByPrizePerMonthLessThanAndBuyMode(2147483647, BuyMode.BUY);
 		int countAds = 0;
 		
 		for (Ad ad : adsInDB) {
@@ -173,7 +177,7 @@ public class AdServiceTest {
 		ArrayList<Ad> adList = (ArrayList) ads;
 
 		// assert number of returned ads equals number in DB
-		assertEquals(countAds, adList.size());
+		assertEquals(adList.size(), countAds);
 	}
 
 	@Test
@@ -185,7 +189,7 @@ public class AdServiceTest {
 		searchForm.setBalcony(true);
 		Type[] types = { Type.APARTMENT };
 		searchForm.setTypes(types);
-		Iterable<Ad> queryedAds = adService.queryResults(searchForm);
+		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
 		ArrayList<Ad> adList = (ArrayList) queryedAds;
 
 		assertEquals(adList.size(), 1);
@@ -193,28 +197,53 @@ public class AdServiceTest {
 	}
 	
 	@Test
+	public void testFilterBalcony() {
+		SearchForm searchForm = new SearchForm();
+		searchForm.setCity("3001 - Bern");
+		searchForm.setPrize(500);
+		searchForm.setRadius(5);
+		searchForm.setBalcony(true);
+		Type[] types = { Type.APARTMENT };
+		searchForm.setTypes(types);
+		
+		SearchForm searchForm2 = new SearchForm();
+		searchForm2.setCity("3001 - Bern");
+		searchForm2.setPrize(500);
+		searchForm2.setRadius(5);
+		searchForm2.setBalcony(false);
+		searchForm2.setTypes(types);
+				
+		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
+		ArrayList<Ad> adList = (ArrayList) queryedAds;
+		
+		Iterable<Ad> queryedAds2 = adService.queryResults(searchForm2, BuyMode.BUY);
+		ArrayList<Ad> adList2 = (ArrayList) queryedAds2;
+
+		assertNotEquals(adList.get(0).getId(), adList2.get(0).getId());
+
+	}
+
+	@Test
 	public void querryWithMultipleResults() {
 		SearchForm searchForm = new SearchForm();
 		searchForm.setCity("3001 - Bern");
 		searchForm.setPrize(600);
 		searchForm.setRadius(80);
 		searchForm.setBalcony(true);
-		searchForm.setBalcony(true);
 		searchForm.setGarage(true);
 
 		Type[] types = { Type.APARTMENT }; 
 		
 		searchForm.setTypes(types);
-		Iterable<Ad> queryedAds = adService.queryResults(searchForm);
+		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
 		ArrayList<Ad> adList = (ArrayList) queryedAds;
 
 	
-		assertEquals(adList.size(), 3); 
+		assertEquals(3, adList.size()); 
 		// assert right ads are returned
 		
-		assertEquals(adList.get(0).getTitle(), "Direkt am Quai: hübsches Studio");
-		assertEquals(adList.get(1).getTitle(), "Roommate wanted in Bern");
-		assertEquals(adList.get(2).getTitle(), "title");
+		assertEquals("Nice studio", adList.get(0).getTitle());
+		assertEquals("Roommate wanted in Bern", adList.get(1).getTitle());
 	}
 
 	@Test
@@ -231,13 +260,14 @@ public class AdServiceTest {
 		// no ad should be returned if search works correctly (no test ad has that extreme values)
 		searchForm.setTypes(types);
 		searchForm.setNumberOfBathMax(100);
-		Iterable<Ad> queryedAds = adService.queryResults(searchForm);
+		searchForm.setNumberOfRoomsMax(100);
+		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
 		ArrayList<Ad> adList = (ArrayList) queryedAds;
 
 		assertEquals(adList.size(), 0);
 		
 		searchForm.setNumberOfRoomsMax(100);
-		queryedAds = adService.queryResults(searchForm);
+		queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
 		adList = (ArrayList) queryedAds;
 		
 		assertEquals(adList.size(), 0);		
@@ -250,14 +280,14 @@ public class AdServiceTest {
 
 	@Test
 	public void getNewestAds() {
-		Iterable<Ad> newestdAds = adService.getNewestAds(3);
+		Iterable<Ad> newestdAds = adService.getNewestAds(3, BuyMode.BUY);
 		ArrayList<Ad> listNewestAds = (ArrayList) newestdAds;
 
 		assertEquals(listNewestAds.size(), 3);
 		
-		assertEquals(listNewestAds.get(0).getTitle(), "title");
-		assertEquals(listNewestAds.get(1).getTitle(), "Direkt am Quai: hübsches Studio");
-		assertEquals(listNewestAds.get(2).getTitle(), "Malibu-style Beachhouse");
+		assertEquals("Olten Residence", listNewestAds.get(0).getTitle());
+		assertEquals("Nice studio", listNewestAds.get(1).getTitle());
+		assertEquals("Malibu-style Beachhouse", listNewestAds.get(2).getTitle());
 		
 
 	}

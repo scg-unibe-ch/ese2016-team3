@@ -17,11 +17,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import ch.unibe.ese.team3.controller.pojos.forms.AlertForm;
 import ch.unibe.ese.team3.model.Ad;
-import ch.unibe.ese.team3.model.AdPicture;
 import ch.unibe.ese.team3.model.Alert;
 import ch.unibe.ese.team3.model.AlertType;
+import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.Type;
@@ -88,6 +87,7 @@ public class AlertServiceTest {
 		// Create 2 alerts for Adolf Ogi
 		Alert alert = new Alert();
 		alert.setUser(adolfOgi);
+		alert.setBuyMode(BuyMode.BUY);
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
 		alert.setPrice(1500);
@@ -98,6 +98,7 @@ public class AlertServiceTest {
 
 		alert = new Alert();
 		alert.setUser(adolfOgi);
+		alert.setBuyMode(BuyMode.BUY);
 		alert.setCity("Bern");
 		alert.setZipcode(3002);
 		alert.setPrice(1000);
@@ -148,6 +149,7 @@ public class AlertServiceTest {
 		// Create 2 alerts for Thomy F
 		Alert alert = new Alert();
 		alert.setUser(thomyF);
+		alert.setBuyMode(BuyMode.BUY);
 		alert.setAlertTypes(alertTypes);
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
@@ -157,6 +159,7 @@ public class AlertServiceTest {
 
 		alert = new Alert();
 		alert.setUser(thomyF);
+		alert.setBuyMode(BuyMode.BUY);
 		alert.setAlertTypes(alertTypes2);
 		alert.setCity("Bern");
 		alert.setZipcode(3002);
@@ -172,6 +175,7 @@ public class AlertServiceTest {
 		Date date = new Date();
 		Ad oltenResidence = new Ad();
 		oltenResidence.setZipcode(4600);
+		oltenResidence.setBuyMode(BuyMode.BUY);
 		oltenResidence.setMoveInDate(date);
 		oltenResidence.setCreationDate(date);
 		oltenResidence.setPrizePerMonth(1200);
@@ -217,6 +221,7 @@ public class AlertServiceTest {
 		Alert alert = new Alert();
 		alert.setUser(alertMessageReceiver);
 		alert.setAlertTypes(alertTypes);
+		alert.setBuyMode(BuyMode.BUY);
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
 		alert.setPrice(1500);
@@ -228,6 +233,7 @@ public class AlertServiceTest {
 		Date date = new Date();
 		Ad oltenResidence = new Ad();
 		oltenResidence.setZipcode(4600);
+		oltenResidence.setBuyMode(BuyMode.BUY);
 		oltenResidence.setMoveInDate(date);
 		oltenResidence.setCreationDate(date);
 		oltenResidence.setPrizePerMonth(1200);
@@ -269,6 +275,7 @@ public class AlertServiceTest {
 		// create Alert
 		Alert alert = new Alert();
 		alert.setUser(userNoTrigger);
+		alert.setBuyMode(BuyMode.BUY);
 		alert.setAlertTypes(alertTypes);
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
@@ -278,28 +285,29 @@ public class AlertServiceTest {
 		
 		// create Ad
 		Date date = new Date();
-		Ad tooExpansiveAd = new Ad();
-		tooExpansiveAd.setZipcode(3000);
-		tooExpansiveAd.setMoveInDate(date);
-		tooExpansiveAd.setCreationDate(date);
-		tooExpansiveAd.setPrizePerMonth(1700);
-		tooExpansiveAd.setSquareFootage(42);
-		tooExpansiveAd.setType(Type.LOFT);
-		tooExpansiveAd.setRoomDescription("blah");
-		tooExpansiveAd.setUser(userNoTrigger);
-		tooExpansiveAd.setTitle("tooExpansiveAd");
-		tooExpansiveAd.setStreet("Florastr. 100");
-		tooExpansiveAd.setCity("Bern");
+		Ad tooExpensiveAd = new Ad();
+		tooExpensiveAd.setZipcode(3000);
+		tooExpensiveAd.setBuyMode(BuyMode.BUY);
+		tooExpensiveAd.setMoveInDate(date);
+		tooExpensiveAd.setCreationDate(date);
+		tooExpensiveAd.setPrizePerMonth(1700);
+		tooExpensiveAd.setSquareFootage(42);
+		tooExpensiveAd.setType(Type.LOFT);
+		tooExpensiveAd.setRoomDescription("blah");
+		tooExpensiveAd.setUser(userNoTrigger);
+		tooExpensiveAd.setTitle("tooExpansiveAd");
+		tooExpensiveAd.setStreet("Florastr. 100");
+		tooExpensiveAd.setCity("Bern");
 		
 		//  no mismatches
-		assertFalse(alertService.radiusMismatch(tooExpansiveAd, alert));
-		assertFalse(alertService.typeMismatch(tooExpansiveAd, alert));
+		assertFalse(alertService.radiusMismatch(tooExpensiveAd, alert));
+		assertFalse(alertService.typeMismatch(tooExpensiveAd, alert));
 		
 		// trigger alerts and make sure the user gets no message
 		Iterable<Message> messagesBefore = messageDao.findByRecipient(userNoTrigger);
 		assertEquals(countIterable(messagesBefore), 0);
 		
-		alertService.triggerAlerts(tooExpansiveAd);
+		alertService.triggerAlerts(tooExpensiveAd);
 		
 		Iterable<Message> messagesAfter = messageDao.findByRecipient(userNoTrigger);
 		assertEquals(countIterable(messagesAfter), 0);

@@ -100,7 +100,7 @@
 <div class="row">
 	<div class="col-md-12 col-xs-12">
 
-		<h3>Place an ad</h3>
+		<h3>Place an ad for ${ pagemode eq 'buy' ? 'buying' : 'renting' }</h3>
 		<div class="row">
 			<div class="col-md-12">
 				<form:form method="post" modelAttribute="placeAdForm"
@@ -309,7 +309,7 @@
 							<spring:bind path="prize">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label" for="field-Prize">Normal
-										Buy Prize(without Auction) </label>
+										Price (without Auction) </label>
 									<div class="col-sm-5">
 										<form:input id="field-Prize" type="number" min="0"
 											path="prize" placeholder="Prize " step="50"
@@ -423,11 +423,7 @@
 									</div>
 								</div>
 							</spring:bind>
-
-
-
-
-
+							
 							<div class="checkbox">
 
 								<label class="col-sm-3 control-label">Garage</label>
@@ -480,101 +476,98 @@
 							</div>
 						</spring:bind>
 					</div>
+					<h4>Visiting times (optional)</h4>
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="row form-inline bottom15">
+								<div class="col-sm-3">
+									<label>Day</label> <input type="text" id="field-visitDay"
+										class="form-control">
+								</div>
+								<div class="col-sm-9">
+									<label>Time</label> <select id="startHour" class="form-control">
+
+										<%
+											for (int i = 0; i < 24; i++) {
+													String hour = String.format("%02d", i);
+													out.print("<option value=\"" + hour + "\">" + hour + "</option>");
+												}
+										%>
+									</select> <select id="startMinutes" class="form-control">
+										<%
+											for (int i = 0; i < 60; i++) {
+													String minute = String.format("%02d", i);
+													out.print("<option value=\"" + minute + "\">" + minute + "</option>");
+												}
+										%>
+									</select> <span>to&thinsp; </span> <select id="endHour"
+										class="form-control">
+										<%
+											for (int i = 0; i < 24; i++) {
+													String hour = String.format("%02d", i);
+													out.print("<option value=\"" + hour + "\">" + hour + "</option>");
+												}
+										%>
+									</select> <select id="endMinutes" class="form-control">
+										<%
+											for (int i = 0; i < 60; i++) {
+													String minute = String.format("%02d", i);
+													out.print("<option value=\"" + minute + "\">" + minute + "</option>");
+												}
+										%>
+									</select>
+
+
+									<button type="button" class="btn btn-primary"
+										id="addVisitButton">
+										<span class="glyphicon glyphicon-plus"></span>
+									</button>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12" id="addedVisits">
+									<%-- ?? --%>
+								</div>
+							</div>
+						</div>
+					</div>
+					<h4>Pictures (optional)</h4>
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="row form-horizontal bottom15">
+								<div class="col-sm-3">
+									<label class="control-label" for="field-pictures">Add
+										pictures</label>
+								</div>
+								<div class="col-sm-3">
+									<input type="file" id="field-pictures" accept="image/*"
+										multiple="multiple">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<table id="uploaded-pictures" class="table">
+										<thead>
+											<tr>
+												<th id="name-column">Uploaded picture</th>
+												<th>Size</th>
+												<th>Delete</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group pull-right">
+						<div class="col-sm-12">
+							<a href="/">
+								<button type="reset" class="btn btn-default">Cancel</button>
+							</a>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</div>
 				</form:form>
-			</div>
-
-			<h4>Visiting times (optional)</h4>
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<div class="row form-inline bottom15">
-						<div class="col-sm-3">
-							<label>Day</label> <input type="text" id="field-visitDay"
-								class="form-control">
-						</div>
-						<div class="col-sm-9">
-							<label>Time</label> <select id="startHour" class="form-control">
-
-								<%
-									for (int i = 0; i < 24; i++) {
-										String hour = String.format("%02d", i);
-										out.print("<option value=\"" + hour + "\">" + hour + "</option>");
-									}
-								%>
-							</select> <select id="startMinutes" class="form-control">
-								<%
-									for (int i = 0; i < 60; i++) {
-										String minute = String.format("%02d", i);
-										out.print("<option value=\"" + minute + "\">" + minute + "</option>");
-									}
-								%>
-							</select> <span>to&thinsp; </span> <select id="endHour"
-								class="form-control">
-								<%
-									for (int i = 0; i < 24; i++) {
-										String hour = String.format("%02d", i);
-										out.print("<option value=\"" + hour + "\">" + hour + "</option>");
-									}
-								%>
-							</select> <select id="endMinutes" class="form-control">
-								<%
-									for (int i = 0; i < 60; i++) {
-										String minute = String.format("%02d", i);
-										out.print("<option value=\"" + minute + "\">" + minute + "</option>");
-									}
-								%>
-							</select>
-
-
-							<button type="button" class="btn btn-primary" id="addVisitButton">
-								<span class="glyphicon glyphicon-plus"></span>
-							</button>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-12" id="addedVisits">
-							<%-- ?? --%>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-
-			<h4>Pictures (optional)</h4>
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<div class="row form-horizontal bottom15">
-						<div class="col-sm-3">
-							<label class="control-label" for="field-pictures">Add
-								pictures</label>
-						</div>
-						<div class="col-sm-3">
-							<input type="file" id="field-pictures" accept="image/*"
-								multiple="multiple" />
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-6">
-							<table id="uploaded-pictures" class="table">
-								<thead>
-									<tr>
-										<th id="name-column">Uploaded picture</th>
-										<th>Size</th>
-										<th>Delete</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="form-group pull-right">
-				<div class="col-sm-12">
-					<a href="/">
-						<button type="reset" class="btn btn-default">Cancel</button>
-					</a>
-					<button type="submit" class="btn btn-primary">Submit</button>
-				</div>
 			</div>
 		</div>
 	</div>

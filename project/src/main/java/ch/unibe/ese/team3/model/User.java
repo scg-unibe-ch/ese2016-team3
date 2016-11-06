@@ -72,6 +72,10 @@ public class User {
 	
 	@Column(nullable = true)
 	private String creditcardName;
+	
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.MERGE)
+	private PremiumChoice premiumChoice;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -261,6 +265,14 @@ public class User {
 
 	public void setBids(List<Bid> bids) {
 		this.bids = bids;
+	}
+	
+	public PremiumChoice getPremiumChoice(){
+		return premiumChoice;
+	}
+	
+	public void setPremiumChoice(PremiumChoice premiumChoice){
+		this.premiumChoice = premiumChoice;
 	}
 
 	@Override

@@ -40,6 +40,9 @@ public class SignupForm {
 
 	@NotNull
 	private boolean isPremium;
+	
+	@NotNull
+	private int duration;
 
 	private String creditCard;
 
@@ -328,5 +331,13 @@ public class SignupForm {
 	public void setCreditcardType(CreditcardType type) {
 		this.creditcardType = type;
 		validCreditcardDetails();
+	}
+	
+	public void setDuration(int duration){
+		this.duration = duration;
+	}
+	
+	public int getDuration(){
+		return duration;
 	}
 }

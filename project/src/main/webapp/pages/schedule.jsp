@@ -31,7 +31,7 @@
 					</thead>
 					<c:forEach var="presentation" items="${presentations}">
 						<tr>
-							<td><a href="../ad?id=${presentation.ad.id}">${presentation.ad.street}, ${presentation.ad.zipcode}
+							<td><a href="/${presentation.ad.buyMode.name}/ad?id=${presentation.ad.id}">${presentation.ad.street}, ${presentation.ad.zipcode}
 								 ${presentation.ad.city}</a></td>
 							<td><fmt:formatDate value="${presentation.startTimestamp}"
 									var="formattedVisitDay" type="date" pattern="dd.MM.yyyy" />
@@ -66,7 +66,7 @@
 					</thead>
 					<c:forEach var="visit" items="${visits}">
 						<tr>
-							<td><a href="/ad?id=${visit.ad.id}">${visit.ad.street}, ${visit.ad.zipcode} ${visit.ad.city}</a></td>
+							<td><a href="/${visit.ad.buyMode.name}/ad?id=${visit.ad.id}">${visit.ad.street}, ${visit.ad.zipcode} ${visit.ad.city}</a></td>
 							<td><fmt:formatDate value="${visit.startTimestamp}"
 									var="formattedVisitDay" type="date" pattern="dd.MM.yyyy" />
 								${formattedVisitDay}</td>

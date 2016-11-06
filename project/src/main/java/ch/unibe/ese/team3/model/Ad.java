@@ -92,6 +92,9 @@ public class Ad {
 	
 	@Enumerated(EnumType.STRING)
 	private Type type;
+	
+	@Enumerated(EnumType.STRING)
+	private BuyMode buyMode;
 
 	@Fetch(FetchMode.SELECT)
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -265,6 +268,13 @@ public class Ad {
 	}
 	public void setType(Type type){
 		this.type = type;
+	}
+	
+	public BuyMode getBuyMode() {
+		return buyMode;
+	}
+	public void setBuyMode(BuyMode buyMode) {
+		this.buyMode = buyMode;
 	}
 	
 	//new

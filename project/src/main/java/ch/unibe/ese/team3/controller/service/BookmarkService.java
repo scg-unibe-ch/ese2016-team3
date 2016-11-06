@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ch.unibe.ese.team3.enums.BookmarkStatus;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.UserDao;
@@ -37,16 +38,16 @@ public class BookmarkService {
 		if(bookmarked) {
 			tempAdList.remove(ad);
 			updateUser(tempAdList, user);
-			return 2;
+			return BookmarkStatus.NotBookmarked.getStatusCode();
 		}
 		
 		if(!bookmarked) {
 			tempAdList.add(ad);
 			updateUser(tempAdList, user);
-			return 3;
+			return BookmarkStatus.Bookmarked.getStatusCode();
 		}
 		
-		return 1;
+		return BookmarkStatus.NoUserFound.getStatusCode();
 	}
 	
 	// updates effectively the new List into DB

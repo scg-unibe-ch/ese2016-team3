@@ -5,6 +5,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 
@@ -16,6 +17,9 @@ public class AlertType {
 	
 	@Enumerated(EnumType.STRING)
 	private Type type;
+	
+	@ManyToOne
+	private Alert alert;
 	
 	public long getId() {
 		return id;
@@ -31,5 +35,13 @@ public class AlertType {
 
 	public void setType(Type type) {
 		this.type = type;
+	}
+	
+	public void setAlert(Alert alert){
+		this.alert = alert;
+	}
+	
+	public Alert getAlert(){
+		return this.alert;
 	}
 }
