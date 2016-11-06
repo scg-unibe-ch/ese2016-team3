@@ -46,12 +46,7 @@
 										path="prize" placeholder="Price (max)" cssClass="form-control" />
 								</div>
 							</div>
-							<div class="col-md-2 bottom15">
-								<form:input type="number" name="rooms" id="roomInput"
-									path="numberOfRoomsMax" placeholder="Rooms (max)"
-									cssClass="form-control" />
-							</div>
-							<div class="col-md-3 bottom15">
+							<div class="col-md-5 bottom15">
 								<div class="pull-right">
 									<button type="submit" class="btn btn-primary">Search</button>
 								</div>

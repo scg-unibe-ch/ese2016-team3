@@ -8,6 +8,8 @@ import javax.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import ch.unibe.ese.team3.enums.Distance;
+
 /** Describes an advertisement that users can place and search for. */
 @Entity
 public class Ad {
@@ -94,6 +96,14 @@ public class Ad {
 	@Fetch(FetchMode.SELECT)
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<AdPicture> pictures;
+	
+	
+//	//new
+//	@Fetch(FetchMode.SELECT)
+//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+//	private List<Bid> bids;
+
+	
 
 	@ManyToOne(optional = false)
 	private User user;
@@ -105,6 +115,7 @@ public class Ad {
 	private int floorLevel;
 	
 	// auction specific attributes
+	
 	@Column(nullable = true)
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
@@ -121,6 +132,33 @@ public class Ad {
 	
 	@Column(nullable = true)
 	private int buyItNowPrice;
+	
+	private int currentAuctionPrice;
+	
+	private int bidPriceForUser;
+	
+	@Column(nullable = false)
+	private boolean auction;
+	
+	
+	public boolean isAuction() {
+		return auction;
+	}
+	public void setAuction(boolean auction) {
+		this.auction = auction;
+	}
+	public int getbidPriceForUser(){
+		return this.bidPriceForUser;
+	}
+	public void setbidPriceForUser(int newBidPrice){
+		this.bidPriceForUser=newBidPrice;
+	}
+	public int getcurrentAuctionPrice(){
+		return this.currentAuctionPrice;
+	}
+	public void setcurrentAuctionPrice(int Price){
+		this.currentAuctionPrice=Price;
+	}
 	
 	
 	public Date getStartDate() {
@@ -303,24 +341,36 @@ public class Ad {
 		this.distanceSchool = distanceToSchool;
 	}
 	
+	public Distance getDistanceSchoolAsEnum(){
+		return Distance.fromInt(distanceSchool);
+	}
+	
 	public int getDistanceShopping(){
 		return distanceShopping;
+	}
+	
+	public Distance getDistanceShoppingAsEnum(){
+		return Distance.fromInt(distanceShopping);
 	}
 	
 	public void setDistanceShopping(int distanceShopping){
 		this.distanceShopping = distanceShopping;
 	}
 	
+	public Distance getDistancePublicTransportAsEnum(){
+		return Distance.fromInt(distancePublicTransport);
+	}
+	
 	public int getDistancePublicTransport(){
 		return distancePublicTransport;
 	}
-	
-	public void setDistancePublicTransportl(int distancePublicTransport){
-		this.distancePublicTransport = distancePublicTransport;
-	}
-		
+			
 	public String getRoomDescription() {
 		return roomDescription;
+	}
+	
+	public String getRoomDescriptionWithLineBreaks(){
+		return roomDescription.replaceAll("\\r\\n?|\\n", "<br/>");
 	}
 
 	public void setRoomDescription(String roomDescription) {
@@ -382,6 +432,12 @@ public class Ad {
 	public void setDishwasher(boolean dishwasher) {
 		this.dishwasher = dishwasher;
 	}
+/*	public List<Bid> getBids() {
+		return bids;
+	}
+	public void setBids(List<Bid> bids) {
+		this.bids = bids;
+	}*/
 
 	
 	@Override
@@ -405,5 +461,12 @@ public class Ad {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+	
+	public boolean isPremiumAd() {
+		if (this.user != null){
+			return this.user.isPremium();
+		}
+		return false;
 	}
 }

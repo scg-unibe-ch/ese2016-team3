@@ -6,8 +6,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:import url="template/header.jsp" />
-<pre>
-<a href="/">Homepage</a>   &gt;   Enquiries</pre>
+
+<ol class="breadcrumb">
+	<li><a href="/${pagemode}/">Homepage</a></li>
+	<li class="active">Enquiries</li>
+</ol>
 
 <!-- format the dates -->
 <fmt:formatDate value="${enquiries[0].dateSent}" var="formattedDateSent"
@@ -40,7 +43,7 @@
 																+ id);
 												$(cell)
 														.html(
-																"Accepted <button class='undoButton' data-id='"+ id+ "'>Undo</button>");
+																"Accepted <button class='undoButton btn btn-danger' data-id='"+ id+ "'>Undo</button>");
 												attachUndoHandler();
 											});
 							
@@ -55,7 +58,7 @@
 																+ id);
 												$(cell)
 														.html(
-																"Declined <button class='undoButton' data-id='"+ id+ "'>Undo</button>");
+																"Declined <button class='undoButton btn btn-danger' data-id='"+ id+ "'>Undo</button>");
 												attachUndoHandler();
 											});
 						}
@@ -72,7 +75,7 @@
 																+ id);
 												$(cell)
 														.html(
-																"<button class='acceptButton' data-id='"+ id + "'>Accept</button><button class='declineButton' data-id='" + id + "'>Decline</button>");
+																"<button class='acceptButton btn btn-success' data-id='"+ id + "'>Accept</button><button class='declineButton btn btn-danger' data-id='" + id + "'>Decline</button>");
 												attachHandlers();
 											});
 						}
@@ -120,9 +123,9 @@
 								<p>Declined</p>
 							</c:when>
 							<c:otherwise>
-								<button type="submit" class="acceptButton"
+								<button type="button" class="acceptButton btn btn-success"
 									data-id="${enquiry.id}">Accept</button>
-								<button type="button" class="declineButton"
+								<button type="button" class="declineButton btn btn-danger"
 									data-id="${enquiry.id}">Decline</button>
 							</c:otherwise>
 						</c:choose></td>

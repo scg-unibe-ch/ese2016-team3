@@ -45,8 +45,7 @@ public class EditAdService {
 	 *            currently logged in user
 	 */
 	@Transactional
-	public Ad saveFrom(PlaceAdForm placeAdForm, List<String> filePaths,
-			User user, long adId) {
+	public Ad saveFrom(PlaceAdForm placeAdForm, List<String> filePaths, User user, long adId) {
 
 		Ad ad = adService.getAdById(adId);
 
@@ -57,7 +56,7 @@ public class EditAdService {
 
 		ad.setStreet(placeAdForm.getStreet());
 
-		//ad.setStudio(placeAdForm.getStudio());
+		// ad.setStudio(placeAdForm.getStudio());
 
 		// take the zipcode - first four digits
 		String zip = placeAdForm.getCity().substring(0, 4);
@@ -69,12 +68,9 @@ public class EditAdService {
 		// XMLGregorianCalendar which uses 1-12
 		try {
 			if (placeAdForm.getMoveInDate().length() >= 1) {
-				int dayMoveIn = Integer.parseInt(placeAdForm.getMoveInDate()
-						.substring(0, 2));
-				int monthMoveIn = Integer.parseInt(placeAdForm.getMoveInDate()
-						.substring(3, 5));
-				int yearMoveIn = Integer.parseInt(placeAdForm.getMoveInDate()
-						.substring(6, 10));
+				int dayMoveIn = Integer.parseInt(placeAdForm.getMoveInDate().substring(0, 2));
+				int monthMoveIn = Integer.parseInt(placeAdForm.getMoveInDate().substring(3, 5));
+				int yearMoveIn = Integer.parseInt(placeAdForm.getMoveInDate().substring(6, 10));
 				calendar.set(yearMoveIn, monthMoveIn - 1, dayMoveIn);
 				ad.setMoveInDate(calendar.getTime());
 			}
@@ -90,7 +86,7 @@ public class EditAdService {
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
 		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
 		ad.setDistanceShopping(placeAdForm.getDistanceShopping());
-		ad.setDistancePublicTransportl(placeAdForm.getDistancePublicTransport());
+		ad.setDistancePublicTransport(placeAdForm.getDistancePublicTransport());
 		ad.setBuildYear(placeAdForm.getBuildYear());
 		ad.setRenovationYear(placeAdForm.getRenovationYear());
 		ad.setNumberOfRooms(placeAdForm.getNumberOfRooms());
@@ -105,7 +101,6 @@ public class EditAdService {
 		ad.setElevator(placeAdForm.isElevator());
 		ad.setInfrastructureType(placeAdForm.getInfrastructureType());
 		ad.setFloorLevel(placeAdForm.getFloorLevel());
-
 
 		/*
 		 * Save the paths to the picture files, the pictures are assumed to be
@@ -183,9 +178,42 @@ public class EditAdService {
 	public PlaceAdForm fillForm(Ad ad) {
 		PlaceAdForm adForm = new PlaceAdForm();
 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		adForm.setBalcony(ad.getBalcony());
+		adForm.setBuildYear(ad.getBuildYear());
+		adForm.setBuyItNowPrice(ad.getBuyItNowPrice());
+		adForm.setCity(String.format("%d - %s", ad.getZipcode(), ad.getCity().replaceAll("/", ";")));
+		adForm.setDishwasher(ad.getDishwasher());
+		adForm.setDistancePublicTransport(ad.getDistancePublicTransport());
+		adForm.setDistanceSchool(ad.getDistanceSchool());
+		adForm.setDistanceShopping(ad.getDistanceShopping());
+		adForm.setElevator(ad.getElevator());
+		if (ad.getEndDate() != null){
+			adForm.setEndDate(dateFormat.format(ad.getEndDate()));
+		}
+		adForm.setFloorLevel(ad.getFloorLevel());
+		adForm.setGarage(ad.getGarage());
+		adForm.setIncreaseBidPrice(ad.getIncreaseBidPrice());
+		adForm.setInfrastructureType(ad.getInfrastructureType());
+		if (ad.getMoveInDate() != null){
+			adForm.setMoveInDate(dateFormat.format(ad.getMoveInDate()));
+		}
+		adForm.setNumberOfBath(ad.getNumberOfBath());
+		adForm.setNumberOfRooms(ad.getNumberOfRooms());
+		adForm.setParking(ad.getParking());
+		adForm.setPrize(ad.getPrizePerMonth());
+		adForm.setRenovationYear(ad.getRenovationYear());
 		adForm.setRoomDescription(ad.getRoomDescription());
+		adForm.setSquareFootage(ad.getSquareFootage());
+		if (ad.getStartDate() != null){
+			adForm.setStartDate(dateFormat.format(ad.getStartDate()));
+		}
+		adForm.setStartPrice(ad.getStartPrice());
+		adForm.setStreet(ad.getStreet());
+		adForm.setTitle(ad.getTitle());
 		adForm.setType(ad.getType());
-		
+
 		return adForm;
 	}
 

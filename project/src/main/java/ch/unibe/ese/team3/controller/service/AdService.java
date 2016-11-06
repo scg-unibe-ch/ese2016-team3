@@ -19,12 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
+import ch.unibe.ese.team3.dto.Location;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.AdPicture;
-import ch.unibe.ese.team3.model.Location;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
 import ch.unibe.ese.team3.model.dao.AdDao;
+import ch.unibe.ese.team3.util.PremiumAdComparator;
 
 /** Handles all persistence operations concerning ad placement and retrieval. */
 @Service
@@ -79,38 +80,44 @@ public class AdService {
 
 		} catch (NumberFormatException e) {
 		}
-
+// This causes java.lang.NullPointerException when Ad is placed
 		// this is for auction
 		// java.util.Calendar uses a month range of 0-11 instead of the
 		// XMLGregorianCalendar which uses 1-12
 		try {
 			if (placeAdForm.getStartDate().length() >= 1) {
-				int dayMoveIn = Integer.parseInt(placeAdForm.getStartDate().substring(0, 2));
-				int monthMoveIn = Integer.parseInt(placeAdForm.getStartDate().substring(3, 5));
-				int yearMoveIn = Integer.parseInt(placeAdForm.getStartDate().substring(6, 10));
-				calendar.set(yearMoveIn, monthMoveIn - 1, dayMoveIn);
+				int dayStart = Integer.parseInt(placeAdForm.getStartDate().substring(0, 2));
+				int monthStart = Integer.parseInt(placeAdForm.getStartDate().substring(3, 5));
+				int yearStart = Integer.parseInt(placeAdForm.getStartDate().substring(6, 10));
+				calendar.set(yearStart, monthStart - 1, dayStart);
 				ad.setStartDate(calendar.getTime());
 			}
 
 			if (placeAdForm.getEndDate().length() >= 1) {
-				int dayMoveOut = Integer.parseInt(placeAdForm.getEndDate().substring(0, 2));
-				int monthMoveOut = Integer.parseInt(placeAdForm.getEndDate().substring(3, 5));
-				int yearMoveOut = Integer.parseInt(placeAdForm.getEndDate().substring(6, 10));
-				calendar.set(yearMoveOut, monthMoveOut - 1, dayMoveOut);
+				int dayEnd = Integer.parseInt(placeAdForm.getEndDate().substring(0, 2));
+				int monthEnd = Integer.parseInt(placeAdForm.getEndDate().substring(3, 5));
+				int yearEnd = Integer.parseInt(placeAdForm.getEndDate().substring(6, 10));
+				calendar.set(yearEnd, monthEnd - 1, dayEnd);
 				ad.setEndDate(calendar.getTime());
 			}
 		} catch (NumberFormatException e) {
 		}
+
 		// for auction
 		ad.setStartPrice(placeAdForm.getStartPrice());
 		ad.setBuyItNowPrice(placeAdForm.getBuyItNowPrice());
 		ad.setIncreaseBidPrice(placeAdForm.getIncreaseBidPrice());
+		ad.setbidPriceForUser(placeAdForm.getStartPrice() + placeAdForm.getIncreaseBidPrice());
+		ad.setcurrentAuctionPrice(placeAdForm.getStartPrice());
+		ad.setAuction(placeAdForm.getAuction());
+		
+		
 
 		ad.setPrizePerMonth(placeAdForm.getPrize());
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
 		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
 		ad.setDistanceShopping(placeAdForm.getDistanceShopping());
-		ad.setDistancePublicTransportl(placeAdForm.getDistancePublicTransport());
+		ad.setDistancePublicTransport(placeAdForm.getDistancePublicTransport());
 		ad.setBuildYear(placeAdForm.getBuildYear());
 		ad.setRenovationYear(placeAdForm.getRenovationYear());
 		ad.setNumberOfRooms(placeAdForm.getNumberOfRooms());
@@ -226,7 +233,7 @@ public class AdService {
 	public Iterable<Ad> queryResults(SearchForm searchForm) {
 		Iterable<Ad> results = null;
 
-		if (searchForm.getTypes().length > 0) {
+		if (searchForm.getTypes() != null && searchForm.getTypes().length > 0) {
 			results = adDao.findByPrizePerMonthLessThanAndTypeIn(searchForm.getPrize() + 1, searchForm.getTypes());
 		}
 		else {
@@ -382,12 +389,18 @@ public class AdService {
 				if (ad.getDistancePublicTransport() < searchForm.getDistancePublicTransportMin()
 						|| ad.getDistancePublicTransport() > searchForm.getDistancePublicTransportMax())
 					iterator.remove();
-
+				
+				// filter for infrastructureType
+				if (!ad.getInfrastructureType().equals(searchForm.getInfrastructureType()))
+					iterator.remove();
 			}
 		}
+		
+		locatedResults.sort(new PremiumAdComparator());
+		
 		return locatedResults;
 	}
-
+	
 	private List<Ad> validateDate(List<Ad> ads, boolean inOrOut, Date earliestDate, Date latestDate) {
 		if (ads.size() > 0) {
 			// Move-in dates

@@ -30,6 +30,11 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="message" />
+	</bean>
+	
 	<mvc:interceptors>
     	<bean class="ch.unibe.ese.team3.interceptors.LoggingInterceptor" />
     	<bean class="ch.unibe.ese.team3.interceptors.UriInterceptor" />

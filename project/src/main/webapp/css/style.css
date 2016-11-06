@@ -58,3 +58,15 @@ tr.message-unread {
 tr.message-row {
 	cursor: pointer;
 }
+
+.input60 {
+	width: 60px !important;
+}
+
+.betweenLabel {
+	margin: 0px 7px;
+}
+
+.table > tbody > tr > td {
+	vertical-align: middle !important;
+}

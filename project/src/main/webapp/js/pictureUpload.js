@@ -1,5 +1,5 @@
 function showPictures() {
-	$.post('/profile/placeAd/getUploadedPictures', function(data) {
+	$.post('placeAd/getUploadedPictures', function(data) {
 		$("#uploaded-pictures tr:gt(0)").remove();
 		$.each(data, function(index, picture) {
 			appendPictureRow(picture.name, picture.size, picture.url);
@@ -13,7 +13,7 @@ function appendPictureRow(name, size, url) {
 			.append(
 					'<tr><td>' + name + '</td><td>' + size
 							+ '</td><td data-delete-url="' + url
-							+ '">Delete</td></tr>');
+							+ '"><button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button></td></tr>');
 }
 
 $(function() {

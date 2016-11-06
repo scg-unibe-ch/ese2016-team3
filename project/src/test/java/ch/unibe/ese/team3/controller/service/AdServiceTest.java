@@ -3,6 +3,7 @@ package ch.unibe.ese.team3.controller.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.text.DateFormat;
@@ -88,10 +89,14 @@ public class AdServiceTest {
 
 		placeAdForm.setBuildYear(1960);
 		placeAdForm.setRenovationYear(1980);
-
+		
 		placeAdForm.setFloorLevel(5);
 		placeAdForm.setNumberOfRooms(5);
-
+		
+		// set auction specific fields (required for saveForm)
+		placeAdForm.setStartDate("03.10.2016");
+		placeAdForm.setEndDate("03.12.2016");
+	
 		ArrayList<String> filePaths = new ArrayList<>();
 		filePaths.add("/img/test/ad1_1.jpg");
 
@@ -153,14 +158,22 @@ public class AdServiceTest {
 
 	@Test
 	public void getAllAds() {
-		int adsInDb = 16;
+		// return all Ads in DB
+		int maxInt = 2147483647; // all ads should be cheaper than that value
+		Iterable<Ad> adsInDB = adDao.findByPrizePerMonthLessThan(2147483647);
+		int countAds = 0;
+		
+		for (Ad ad : adsInDB) {
+			countAds++;
+		}
+		
 		Iterable<Ad> ads = adService.getAllAds();
 
 		// convert to List
 		ArrayList<Ad> adList = (ArrayList) ads;
 
 		// assert number of returned ads equals number in DB
-		assertEquals(adsInDb, adList.size());
+		assertEquals(countAds, adList.size());
 	}
 
 	@Test
@@ -180,34 +193,7 @@ public class AdServiceTest {
 	}
 	
 	@Test
-	public void testFilterBalcony() {
-		SearchForm searchForm = new SearchForm();
-		searchForm.setCity("3001 - Bern");
-		searchForm.setPrize(500);
-		searchForm.setRadius(5);
-		searchForm.setBalcony(true);
-		Type[] types = { Type.APARTMENT };
-		searchForm.setTypes(types);
-		
-		SearchForm searchForm2 = new SearchForm();
-		searchForm2.setCity("3001 - Bern");
-		searchForm2.setPrize(500);
-		searchForm2.setRadius(5);
-		searchForm2.setBalcony(false);
-		searchForm2.setTypes(types);
-				
-		Iterable<Ad> queryedAds = adService.queryResults(searchForm);
-		ArrayList<Ad> adList = (ArrayList) queryedAds;
-		
-		Iterable<Ad> queryedAds2 = adService.queryResults(searchForm2);
-		ArrayList<Ad> adList2 = (ArrayList) queryedAds2;
-
-		assertNotEquals(adList.get(0).getId(), adList2.get(0).getId());
-
-	}
-
-	@Test
-	public void extendedQuery() {
+	public void querryWithMultipleResults() {
 		SearchForm searchForm = new SearchForm();
 		searchForm.setCity("3001 - Bern");
 		searchForm.setPrize(600);
@@ -215,26 +201,20 @@ public class AdServiceTest {
 		searchForm.setBalcony(true);
 		searchForm.setBalcony(true);
 		searchForm.setGarage(true);
-		Type[] types = { Type.APARTMENT }; // why changes the the Id of the
-											// existing Elements in the database
-											// ?
+
+		Type[] types = { Type.APARTMENT }; 
+		
 		searchForm.setTypes(types);
 		Iterable<Ad> queryedAds = adService.queryResults(searchForm);
 		ArrayList<Ad> adList = (ArrayList) queryedAds;
 
-		assertEquals(adList.size(), 4); // in the flatfindr app, only 3 ads are
-										// displayed
-		assertEquals(adList.get(0).getId(), 1);
-		assertEquals(adList.get(1).getId(), 6);
-		assertEquals(adList.get(2).getId(), 11);
-		// assertEquals(adList.get(3).getId(), 13); // where does 4th element
-		// come from?
-
+	
+		assertEquals(adList.size(), 3); 
 		// assert right ads are returned
-
-		assertEquals(adList.get(0).getId(), 1);
-		assertEquals(adList.get(1).getId(), 6);
-		assertEquals(adList.get(2).getId(), 11);
+		
+		assertEquals(adList.get(0).getTitle(), "Direkt am Quai: hübsches Studio");
+		assertEquals(adList.get(1).getTitle(), "Roommate wanted in Bern");
+		assertEquals(adList.get(2).getTitle(), "title");
 	}
 
 	@Test
@@ -246,15 +226,26 @@ public class AdServiceTest {
 		searchForm.setPrize(600);
 		searchForm.setRadius(80);
 		searchForm.setBalcony(false);
-		searchForm.setGarage(true); // criteria garage and balcony have no
-									// influence at the query!!
+		searchForm.setGarage(true); 
+		
+		// no ad should be returned if search works correctly (no test ad has that extreme values)
 		searchForm.setTypes(types);
-	//	searchForm.setNumberOfRooms(1000);
-	//	searchForm.setNumberOfBath(10);
+		searchForm.setNumberOfBathMax(100);
 		Iterable<Ad> queryedAds = adService.queryResults(searchForm);
 		ArrayList<Ad> adList = (ArrayList) queryedAds;
 
 		assertEquals(adList.size(), 0);
+		
+		searchForm.setNumberOfRoomsMax(100);
+		queryedAds = adService.queryResults(searchForm);
+		adList = (ArrayList) queryedAds;
+		
+		assertEquals(adList.size(), 0);		
+	}
+	
+	@Test
+	public void testCheckboxes() {
+		assertFalse(true);
 	}
 
 	@Test
@@ -263,10 +254,12 @@ public class AdServiceTest {
 		ArrayList<Ad> listNewestAds = (ArrayList) newestdAds;
 
 		assertEquals(listNewestAds.size(), 3);
+		
+		assertEquals(listNewestAds.get(0).getTitle(), "title");
+		assertEquals(listNewestAds.get(1).getTitle(), "Direkt am Quai: hübsches Studio");
+		assertEquals(listNewestAds.get(2).getTitle(), "Malibu-style Beachhouse");
+		
 
-		assertEquals(listNewestAds.get(0).getId(), 13);
-		assertEquals(listNewestAds.get(1).getId(), 6);
-		assertEquals(listNewestAds.get(2).getId(), 12);
 	}
 
 	@Test

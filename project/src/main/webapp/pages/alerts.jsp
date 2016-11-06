@@ -12,17 +12,17 @@
 </ol>
 
 <script>
-function deleteAlert(button) {
-	var id = $(button).attr("data-id");
-	$.get("/profile/alerts/deleteAlert?id=" + id, function(){
-		$("#alertsDiv").load(document.URL + " #alertsDiv");
-	});
-}
+	function deleteAlert(button) {
+		var id = $(button).attr("data-id");
+		$.get("/profile/alerts/deleteAlert?id=" + id, function() {
+			$("#alertsDiv").load(document.URL + " #alertsDiv");
+		});
+	}
 </script>
 
 <script>
-function validateType(form)
-{
+	function validateType(form) {
+<%-- 
 	var room = document.getElementById('room');
 	var studio = document.getElementById('studio');
 	var neither = document.getElementById('neither');
@@ -40,20 +40,23 @@ function validateType(form)
 		both.checked = false;
 		neither.checked = false;
 	}
-}
+	--%>
+	}
 </script>
 
+<%--
 <script>
-function typeOfAlert(alert) {
-	if(alert.getBothRoomAndStudio())
-		return "Both"
-	else if(alert.getStudio())
-		return "Studio"
-	else
-		return "Room"
-}	
+	function typeOfAlert(alert) {
+		if (alert.getBothRoomAndStudio())
+			return "Both"
+		else if (alert.getStudio())
+			return "Studio"
+		else
+			return "Room"
+	}
 </script>
-	
+	--%>
+
 <script>
 	$(document).ready(function() {
 		$("#city").autocomplete({
@@ -66,13 +69,13 @@ function typeOfAlert(alert) {
 			enabled : true,
 			autoFocus : true
 		});
-		
+
 		var price = document.getElementById('priceInput');
 		var radius = document.getElementById('radiusInput');
-		
-		if(price.value == null || price.value == "" || price.value == "0")
+
+		if (price.value == null || price.value == "" || price.value == "0")
 			price.value = "500";
-		if(radius.value == null || radius.value == "" || radius.value == "0")
+		if (radius.value == null || radius.value == "" || radius.value == "0")
 			radius.value = "5";
 	});
 </script>
@@ -90,16 +93,18 @@ function typeOfAlert(alert) {
 					class="form-horizontal">
 					<div class="panel panel-default">
 						<div class="panel-body">
-						
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Type</label>
 								<div class="col-sm-6">
-									<c:forEach var="type" items="${types}">
+									<c:forEach var="alertType" items="${alertTypes}">
 										<label class="checkbox-inline"> <form:checkbox
-												path="types" value="${type}" /> ${type.name}
+												path="alertTypes" value="${alertType}" /> ${alertType.name}
 										</label>
 									</c:forEach>
 								</div>
+
+
+
 							</div>
 
 							<spring:bind path="city">
@@ -113,7 +118,7 @@ function typeOfAlert(alert) {
 									</div>
 								</div>
 							</spring:bind>
-							
+
 							<spring:bind path="radius">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label for="radiusInput" class="col-sm-2 control-label">Within
@@ -128,7 +133,7 @@ function typeOfAlert(alert) {
 									</div>
 								</div>
 							</spring:bind>
-							
+
 							<spring:bind path="price">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-2 control-label" for="price">Price
@@ -148,8 +153,8 @@ function typeOfAlert(alert) {
 
 					<div class="form-group pull-right">
 						<div class="col-sm-12">
-							<button type="reset" class="btn btn-primary">Cancel</button>
-							<button type="submit" class="btn btn-default"
+							<button type="reset" class="btn btn-default">Cancel</button>
+							<button type="submit" class="btn btn-primary"
 								onClick="validateType(this.form)">Subscribe</button>
 
 						</div>
@@ -184,13 +189,28 @@ function typeOfAlert(alert) {
 											</thead>
 											<c:forEach var="alert" items="${alerts}">
 												<tr>
-													<td>${alert.type}</td>
-													<td>${alert.city}</td>
-													<td>${alert.radius}km</td>
-													<td>${alert.price}Chf</td>
-													<td><button type="button" class="deleteButton"
-															data-id="${alert.id}" onClick="deleteAlert(this)">Delete</button></td>
+													<%-- added
+													<td><c:forEach var="alertType"
+															items="${alert.alertTypes}">
+															<td>${alert.alertType}</td>
+															<td><c:out value="${alertType}" /></td>
+														</c:forEach></td>
+													<c:forEach items="${alert.alertTypes}" var="item">
+														<tr>
+															<td><c:out value="${item.alertTypes}" /></td>
+													
+													</c:forEach>
+															 --%>
 												</tr>
+
+
+												<%-- <td>${alert.alertTypes}</td> --%>
+												<td>${alert.city}</td>
+												<td>${alert.radius}km</td>
+												<td>${alert.price}Chf</td>
+												<td><button type="button" class="btn btn-danger"
+														data-id="${alert.id}" onClick="deleteAlert(this)">Delete</button></td>
+
 											</c:forEach>
 										</table>
 									</c:otherwise>
