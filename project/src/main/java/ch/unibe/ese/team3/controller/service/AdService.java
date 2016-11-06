@@ -22,6 +22,7 @@ import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.dto.Location;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.AdPicture;
+import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
 import ch.unibe.ese.team3.model.dao.AdDao;
@@ -80,7 +81,7 @@ public class AdService {
 
 		} catch (NumberFormatException e) {
 		}
-// This causes java.lang.NullPointerException when Ad is placed
+		// This causes java.lang.NullPointerException when Ad is placed
 		// this is for auction
 		// java.util.Calendar uses a month range of 0-11 instead of the
 		// XMLGregorianCalendar which uses 1-12
@@ -110,8 +111,6 @@ public class AdService {
 		ad.setbidPriceForUser(placeAdForm.getStartPrice() + placeAdForm.getIncreaseBidPrice());
 		ad.setcurrentAuctionPrice(placeAdForm.getStartPrice());
 		ad.setAuction(placeAdForm.getAuction());
-		
-		
 
 		ad.setPrizePerMonth(placeAdForm.getPrize());
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
@@ -233,17 +232,12 @@ public class AdService {
 
 		if (searchForm.getTypes() != null && searchForm.getTypes().length > 0) {
 			results = adDao.findByPrizePerMonthLessThanAndTypeIn(searchForm.getPrize() + 1, searchForm.getTypes());
-		}
-		else {
+		} else {
 			results = adDao.findByPrizePerMonthLessThan(searchForm.getPrize() + 1);
 		}
 
 		// filter out zipcode
 		String city = searchForm.getCity().substring(7);
-
-		// get the location that the user searched for and take the one with the
-		// lowest zip code
-		Location searchedLocation = geoDataService.getLocationsByCity(city).get(0);
 
 		// create a list of the results and of their locations
 		List<Ad> locatedResults = new ArrayList<>();
@@ -251,8 +245,147 @@ public class AdService {
 			locatedResults.add(ad);
 		}
 
+		// get the location that the user searched for and take the one with the
+		// lowest zip code
+		List<Location> locations = geoDataService.getLocationsByCity(city);
+		if (!locations.isEmpty()) {
+			Location searchedLocation = locations.get(0);
+
+			List<Integer> zipcodes = getZipCodesWithinRadius(searchedLocation, searchForm.getRadius());
+			if (!zipcodes.isEmpty()) {
+				locatedResults = locatedResults.stream().filter(ad -> zipcodes.contains(ad.getZipcode()))
+						.collect(Collectors.toList());
+			}
+		}
+
+		// filter for additional criteria
+
+		// prepare date filtering - by far the most difficult filter
+		Date earliestInDate = null;
+		Date latestInDate = null;
+
+		// parse move-in and move-out dates
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		try {
+			earliestInDate = formatter.parse(searchForm.getEarliestMoveInDate());
+		} catch (Exception e) {
+		}
+		try {
+			latestInDate = formatter.parse(searchForm.getLatestMoveInDate());
+		} catch (Exception e) {
+		}
+
+		// filtering by dates
+		locatedResults = validateDate(locatedResults, true, earliestInDate, latestInDate);
+
+		// filtering for the rest
+		// dishwasher
+		if (searchForm.getDishwasher()) {
+			Iterator<Ad> iterator = locatedResults.iterator();
+			while (iterator.hasNext()) {
+				Ad ad = iterator.next();
+				if (!ad.getDishwasher())
+					iterator.remove();
+			}
+		}
+		// elevator
+		if (searchForm.getElevator()) {
+			Iterator<Ad> iterator = locatedResults.iterator();
+			while (iterator.hasNext()) {
+				Ad ad = iterator.next();
+				if (!ad.getElevator())
+					iterator.remove();
+			}
+		}
+		// parking
+		if (searchForm.getParking()) {
+			Iterator<Ad> iterator = locatedResults.iterator();
+			while (iterator.hasNext()) {
+				Ad ad = iterator.next();
+				if (!ad.getParking())
+					iterator.remove();
+			}
+		}
+
+		// balcony
+		if (searchForm.getBalcony()) {
+			Iterator<Ad> iterator = locatedResults.iterator();
+			while (iterator.hasNext()) {
+				Ad ad = iterator.next();
+				if (!ad.getBalcony())
+					iterator.remove();
+			}
+		}
+
+		// garage
+		if (searchForm.getGarage()) {
+			Iterator<Ad> iterator = locatedResults.iterator();
+			while (iterator.hasNext()) {
+				Ad ad = iterator.next();
+				if (!ad.getGarage())
+					iterator.remove();
+			}
+		}
+		
+		InfrastructureType infraType = searchForm.getInfrastructureType();
+		if (infraType != null){
+			Iterator<Ad> iterator = locatedResults.iterator();
+			while (iterator.hasNext()) {
+				Ad ad = iterator.next();
+				if (!ad.getInfrastructureType().equals(searchForm.getInfrastructureType())){
+					iterator.remove();
+				}
+			}
+		}
+
+		// --------------------
+		// added search logic
+
+		// filter based on number of baths. Search Results are removed, if
+		// the number of baths of the ad is
+		// smaller than the desired number of baths in the searchForm
+		Iterator<Ad> iterator = locatedResults.iterator();
+		while (iterator.hasNext()) {
+			Ad ad = iterator.next();
+
+			Integer minBath = convertToNullableInt(searchForm.getNumberOfBathMin());
+			Integer maxBath = convertToNullableInt(searchForm.getNumberOfBathMax());
+			Integer minSquareFootage = convertToNullableInt(searchForm.getSquareFootageMin());
+			Integer maxSquareFootage = convertToNullableInt(searchForm.getSquareFootageMax());
+			Integer minNumberOfRooms = convertToNullableInt(searchForm.getNumberOfRoomsMin());
+			Integer maxNumberOfRooms = convertToNullableInt(searchForm.getNumberOfRoomsMax());
+			Integer minFloorLevel = convertToNullableInt(searchForm.getFloorLevelMin());
+			Integer maxFloorLevel = convertToNullableInt(searchForm.getFloorLevelMax());
+			Integer minDistanceSchool = convertToNullableInt(searchForm.getDistanceSchoolMin());
+			Integer maxDistanceSchool = convertToNullableInt(searchForm.getDistanceSchoolMax());
+			Integer minDistanceShopping = convertToNullableInt(searchForm.getDistanceShoppingMin());
+			Integer maxDistanceShopping = convertToNullableInt(searchForm.getDistanceShoppingMax());
+			Integer minDistancePublicTransport = convertToNullableInt(searchForm.getDistancePublicTransportMin());
+			Integer maxDistancePublicTransport = convertToNullableInt(searchForm.getDistancePublicTransportMax());
+
+			if (!inRange(minBath, maxBath, ad.getNumberOfBath())
+					|| !inRange(minSquareFootage, maxSquareFootage, ad.getSquareFootage())
+					|| !inRange(minNumberOfRooms, maxNumberOfRooms, ad.getNumberOfRooms())
+					|| !inRange(minFloorLevel, maxFloorLevel, ad.getFloorLevel())
+					|| !inRange(minDistanceSchool, maxDistanceSchool, ad.getDistanceSchool())
+					|| !inRange(minDistanceShopping, maxDistanceShopping, ad.getDistanceShopping())
+					|| !inRange(minDistancePublicTransport, maxDistancePublicTransport,	ad.getDistancePublicTransport())) {
+				iterator.remove();
+			}
+		}
+
+		locatedResults.sort(new PremiumAdComparator());
+
+		return locatedResults;
+	}
+
+	private Integer convertToNullableInt(int value) {
+		return value > 0 ? value : null;
+	}
+
+	private List<Integer> getZipCodesWithinRadius(Location searchedLocation, int radius) {
 		final int earthRadiusKm = 6380;
-		List<Location> locations = geoDataService.getAllLocations();
+		List<Location> allLocations = geoDataService.getAllLocations();
 		double radSinLat = Math.sin(Math.toRadians(searchedLocation.getLatitude()));
 		double radCosLat = Math.cos(Math.toRadians(searchedLocation.getLatitude()));
 		double radLong = Math.toRadians(searchedLocation.getLongitude());
@@ -262,180 +395,34 @@ public class AdService {
 		 * The distance is calculated using the law of cosines.
 		 * http://www.movable-type.co.uk/scripts/latlong.html
 		 */
-		List<Integer> zipcodes = locations.parallelStream().filter(location -> {
+		List<Integer> zipcodes = allLocations.parallelStream().filter(location -> {
 			double radLongitude = Math.toRadians(location.getLongitude());
 			double radLatitude = Math.toRadians(location.getLatitude());
 			double distance = Math.acos(radSinLat * Math.sin(radLatitude)
 					+ radCosLat * Math.cos(radLatitude) * Math.cos(radLong - radLongitude)) * earthRadiusKm;
-			return distance < searchForm.getRadius();
+			return distance < radius;
 		}).map(location -> location.getZip()).collect(Collectors.toList());
 
-		locatedResults = locatedResults.stream().filter(ad -> zipcodes.contains(ad.getZipcode()))
-				.collect(Collectors.toList());
-
-		// filter for additional criteria
-		if (searchForm.getFiltered()) {
-			// prepare date filtering - by far the most difficult filter
-			Date earliestInDate = null;
-			Date latestInDate = null;
-
-			// parse move-in and move-out dates
-			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-			try {
-				earliestInDate = formatter.parse(searchForm.getEarliestMoveInDate());
-			} catch (Exception e) {
-			}
-			try {
-				latestInDate = formatter.parse(searchForm.getLatestMoveInDate());
-			} catch (Exception e) {
-			}
-			
-
-			// filtering by dates
-			locatedResults = validateDate(locatedResults, true, earliestInDate, latestInDate);
-
-			// filtering for the rest
-			// dishwasher
-			if (searchForm.getDishwasher()) {
-				Iterator<Ad> iterator = locatedResults.iterator();
-				while (iterator.hasNext()) {
-					Ad ad = iterator.next();
-					if (!ad.getDishwasher())
-						iterator.remove();
-				}
-			}
-			// elevator
-			if (searchForm.getElevator()) {
-				Iterator<Ad> iterator = locatedResults.iterator();
-				while (iterator.hasNext()) {
-					Ad ad = iterator.next();
-					if (!ad.getElevator())
-						iterator.remove();
-				}
-			}
-			// parking
-			if (searchForm.getParking()) {
-				Iterator<Ad> iterator = locatedResults.iterator();
-				while (iterator.hasNext()) {
-					Ad ad = iterator.next();
-					if (!ad.getParking())
-						iterator.remove();
-				}
-			}
-
-			// balcony
-			if (searchForm.getBalcony()) {
-				Iterator<Ad> iterator = locatedResults.iterator();
-				while (iterator.hasNext()) {
-					Ad ad = iterator.next();
-					if (!ad.getBalcony())
-						iterator.remove();
-				}
-			}
-
-			// garage
-			if (searchForm.getGarage()) {
-				Iterator<Ad> iterator = locatedResults.iterator();
-				while (iterator.hasNext()) {
-					Ad ad = iterator.next();
-					if (!ad.getGarage())
-						iterator.remove();
-				}
-			}
-
-			// --------------------
-			// added search logic
-
-			// filter based on number of baths. Search Results are removed, if
-			// the number of baths of the ad is
-			// smaller than the desired number of baths in the searchForm
-			Iterator<Ad> iterator = locatedResults.iterator();
-			while (iterator.hasNext()) {
-				Ad ad = iterator.next();
-				if (ad.getNumberOfBath() < searchForm.getNumberOfBathMin()
-						|| ad.getNumberOfBath() > searchForm.getNumberOfBathMax())
-					iterator.remove();
-
-				// filter for size
-				if (ad.getSquareFootage() < searchForm.getSquareFootageMin()
-						|| ad.getSquareFootage() > searchForm.getSquareFootageMax())
-					iterator.remove();
-
-				// filter for infrastructureType
-
-				// filter for number of Rooms
-				if (ad.getNumberOfRooms() < searchForm.getNumberOfBathMin()
-						|| ad.getNumberOfRooms() > searchForm.getNumberOfRoomsMax())
-					iterator.remove();
-
-				// filter for floorLevel
-				if (ad.getFloorLevel() < searchForm.getFloorLevelMin()
-						|| ad.getFloorLevel() > searchForm.getFloorLevelMax())
-					iterator.remove();
-
-				// filter for distance to school
-				if (ad.getDistanceSchool() < searchForm.getDistanceSchoolMin()
-						|| ad.getDistanceSchool() > searchForm.getDistanceSchoolMax())
-					iterator.remove();
-
-				// filter for distance to shopping center
-				if (ad.getDistanceShopping() < searchForm.getDistanceShoppingMin()
-						|| ad.getDistanceShopping() > searchForm.getDistanceShoppingMax())
-					iterator.remove();
-
-				// filter for distance to public transport
-				if (ad.getDistancePublicTransport() < searchForm.getDistancePublicTransportMin()
-						|| ad.getDistancePublicTransport() > searchForm.getDistancePublicTransportMax())
-					iterator.remove();
-				
-				// filter for infrastructureType
-				if (!ad.getInfrastructureType().equals(searchForm.getInfrastructureType()))
-					iterator.remove();
-			}
-		}
-		
-		locatedResults.sort(new PremiumAdComparator());
-		
-		return locatedResults;
+		return zipcodes;
 	}
-	
+
 	private List<Ad> validateDate(List<Ad> ads, boolean inOrOut, Date earliestDate, Date latestDate) {
 		if (ads.size() > 0) {
-			// Move-in dates
-			// Both an earliest AND a latest date to compare to
-			if (earliestDate != null) {
-				if (latestDate != null) {
-					Iterator<Ad> iterator = ads.iterator();
-					while (iterator.hasNext()) {
-						Ad ad = iterator.next();
-						if (ad.getMoveInDate().compareTo(earliestDate) < 0
-								|| ad.getMoveInDate().compareTo(latestDate) > 0) {
-							iterator.remove();
-						}
-					}
+
+			Iterator<Ad> iterator = ads.iterator();
+			while (iterator.hasNext()) {
+				Ad ad = iterator.next();
+				if (!((earliestDate == null || earliestDate.compareTo(ad.getMoveInDate()) <= 0)
+						&& (latestDate == null || latestDate.compareTo(ad.getMoveInDate()) >= 0))) {
+					iterator.remove();
 				}
-				// only an earliest date
-				else {
-					Iterator<Ad> iterator = ads.iterator();
-					while (iterator.hasNext()) {
-						Ad ad = iterator.next();
-						if (ad.getMoveInDate().compareTo(earliestDate) < 0)
-							iterator.remove();
-					}
-				}
-			}
-			// only a latest date
-			else if (latestDate != null && earliestDate == null) {
-				Iterator<Ad> iterator = ads.iterator();
-				while (iterator.hasNext()) {
-					Ad ad = iterator.next();
-					if (ad.getMoveInDate().compareTo(latestDate) > 0)
-						iterator.remove();
-				}
-			} else {
 			}
 		}
 		return ads;
+	}
+
+	private boolean inRange(Integer min, Integer max, int value) {
+		return (min == null || value >= min) && (max == null || value <= max);
 	}
 
 	/** Returns all ads that were placed by the given user. */

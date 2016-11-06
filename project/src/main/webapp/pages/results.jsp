@@ -192,7 +192,8 @@
 							<label class="control-label" for="infrastructureType-room">InfrastructureType</label>
 							<form:select id="infrastructureType" path="infrastructureType"
 								cssClass="form-control">
-								<form:options items="${infrastructureType}" itemLabel="name" />
+								<option value=""></option>
+								<form:options items="${infrastructureTypes}" itemLabel="name" />
 							</form:select>
 						</div>
 					</spring:bind>
