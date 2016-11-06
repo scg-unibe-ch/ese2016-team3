@@ -37,8 +37,8 @@ public class AuctionController {
 	@Autowired
 	private AuctionService auctionService;
 
-	@Autowired
-	private TaskScheduler scheduler;
+//	@Autowired
+//	private TaskScheduler scheduler;
 
 	@RequestMapping(value = "/profile/bidAuction", method = RequestMethod.POST)
 	public void bid(Principal principal, int amount, @RequestParam long id, RedirectAttributes redirectAttributes) {
@@ -66,16 +66,16 @@ public class AuctionController {
 	 * Define scheduled execution of method checkAuctionsStillRunning
 	 * 	according to: http://stackoverflow.com/questions/8584876/spring-mvc-3-time-scheduled-task-starting-at-a-specific-time
 	 */
-	public void init() {
-		scheduler.scheduleAtFixedRate(new Runnable() {
-			public void run() {
-				checkAuctionsStillRunning();
-			}
-		}, new Date(), 1000 * 60 * 60 * 2);
-	}
-
-	public void checkAuctionsStillRunning() {
-		// method, which should be scheduled
-	}
+//	public void init() {
+//		scheduler.scheduleAtFixedRate(new Runnable() {
+//			public void run() {
+//				checkAuctionsStillRunning();
+//			}
+//		}, new Date(), 1000 * 60 * 60 * 2);
+//	}
+//
+//	public void checkAuctionsStillRunning() {
+//		// method, which should be scheduled
+//	}
 
 }
