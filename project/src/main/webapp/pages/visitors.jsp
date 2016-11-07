@@ -41,7 +41,7 @@ function rate(id, rating) {
 </script>
 
 <ol class="breadcrumb">
-	<li><a href="./">Homepage</a></li>
+	<li><a href="/${pagemode}/">Homepage</a></li>
 	<li><a href="./schedule">Schedule</a></li>
 	<li class="active">Visitors</li>
 </ol>

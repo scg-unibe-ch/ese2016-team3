@@ -8,7 +8,7 @@
 <c:import url="template/header.jsp" />
 
 <ol class="breadcrumb">
-	<li><a href="../Home">Homepage</a></li>
+	<li><a href="/${pagemode}/">Homepage</a></li>
 	<li>Messages</li>
 </ol>
 
