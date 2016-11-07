@@ -89,7 +89,6 @@ The following sections describe abbreviations and special terms used in this doc
 |uc11|View advertiser profile|The user of the web application|Med|2| 
 |uc12|Send message to advertiser|The user of the web application|Med|1| 
 |uc13|Send enquiry to advertiser|The user of the web application|Med|1| 
-|uc30|Bid for an open auction|The user of the web application|Med|1|
 |uc14|View ad location|The user of the web application|Med|2| 
 |uc15|Create Ad|The user of the web application|High|1| 
 |uc16|Create and send Message|The user of the web application|Med|1| 
@@ -106,6 +105,10 @@ The following sections describe abbreviations and special terms used in this doc
 |uc27|Subscribe to alert|The user of the web application|Med|1| 
 |uc28|Delete alert|The user of the web application|Low|2|
 |uc29|Upgrade account|The user of the web application|Med|1|
+|uc30|Bid for an open auction|The user of the web application|Med|1|
+|uc31|Buy a property for auction directly|The user of the web application|Med|1|
+|uc32|Specify that an auction will take place in order to sell property|The user of the web application|Med|1|
+
 
 
 #### User management
@@ -538,6 +541,31 @@ The following sections describe abbreviations and special terms used in this doc
 
 ![Auctions](images/Auction2.0.png)
 
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc30`|
+|**Name**|Bid on Property|
+|**Description**|The user bids the next bigger value in an open auction.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application. The user is viewing an ad of a property that is being sold through an auction.|
+|**Trigger**|The user wants to buy a property through auction.|
+|**Normal flow**||1. The user views the description of the ad and sees how much has been bid for the property and how much increase he has to bid in order to partake in the auction.
+||2. The user pushes the bid button and a message pops up that the bid was successful.| 
+|**Alternate flow**|If the auction ends during the time the user is viewing the ad and tries to bid, an error message is shown, that the auction has already ended.|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc31`|
+|**Name**|Buy Property directly|
+|**Description**|The user buys a property in an open auction directly for a fixed price.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application. The user is viewing an ad of a property that is being sold through an auction.|
+|**Trigger**|The user wants to buy a property directly and not bid in the auction.|
+|**Normal flow**||1. The user views the description of the ad and checks what the fix buying price for the property is.
+||2. The user pushes the buy button and a message pops up that the purchase was successful.
+||3. The auction field disappears from the ad site.| 
+|**Alternate flow**|If the auction ends during the time the user is viewing the ad and tries to bid, an error message is shown, that the auction has already ended.|
+
 
 
 see [http://www.gatherspace.com/static/use_case_example.html](http://www.gatherspace.com/static/use_case_example.html)
@@ -757,24 +785,25 @@ A logged in user can see his enquiries by choosing "Enquiries" from the Profile 
 A logged in user can see his personal schedule by choosing "Schedule" from the Profile drop-down menu. The schedule shows two tables, one named *Your presentations*, the other *Your visits*
 
 _Your presentations_-table:
-A table of the users owned flats, which he wants to rent to other people, containing the following:
+A table of the users owned properties, which he wants to rent to other people, containing the following:
 
-- *Address*: The address of the flat to be presented to interested people,
-- *Date*: The date of the flat presentation,
-- *Time*: The time of the flat presentation,
+- *Address*: The address of the property to be presented to interested people,
+- *Date*: The date of the property presentation,
+- *Time*: The time of the property presentation,
 - *Visit Ad*: A button that if clicked will lead the user to the ad he posted about the flat in question
 - *Visitors*: A button which will open a new site with some information about the property in question and a table of all people that will attend its presentation. The table contains the following: *Name* (full name of the user), *Username* (the Ithaca username of the user), *Profile* (a button that leads to the user's personal profile), *Rating* (the rating of one to 5 stars that this user has on the website)
 
 _Your visits_-table:
-A table of the flats a user is interested in and will or has already visited, containing the following:
+A table of the properties a user is interested in and will or has already visited, containing the following:
 
 - *Address*: The address of the flat, the user has visited,
 - *Date*: The date of the presentation the user has attended,
 - *Time*: The time of the presentation the user has attended,
-- *Visit Ad*: A button that if clicked will guide the user to the advertisement of the flat in question.
+- *Visit Ad*: A button that if clicked will guide the user to the advertisement of the property in question.
 
 ### Non-functional requirements
 
 #### Design of the application
 
-The application should have a modern look and feel. It should be mobile ready.
+- The application design is built with bootstrap and can adapt to the size of any browser or device, such as tablet/notebook/smartphone
+- The feel of the design is very modern, simple and user friendly
