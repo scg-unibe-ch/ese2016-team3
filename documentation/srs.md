@@ -105,11 +105,8 @@ The following sections describe abbreviations and special terms used in this doc
 |uc27|Subscribe to alert|The user of the web application|Med|1| 
 |uc28|Delete alert|The user of the web application|Low|2|
 |uc29|Upgrade account|The user of the web application|Med|1|
-|uc30|Bid for an open auction|The user of the web application|Med|1|
-|uc31|Buy a property for auction directly|The user of the web application|Med|1|
-|uc32|Specify that an auction will take place in order to sell property|The user of the web application|Med|1|
-
-
+|uc30|Bid on property|The user of the web application|Med|1|
+|uc31|Buy property directly|The user of the web application|Med|1|
 
 #### User management
 ![User management](images/User_Management2.0.png)
