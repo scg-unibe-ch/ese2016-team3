@@ -236,7 +236,7 @@
 						<th>Number of bath rooms</th>
 						<td>${shownAd.numberOfBath}</td>
 					</tr>
-					
+
 					<tr>
 						<th>Internet/TV infrastructure</th>
 						<td>${shownAd.infrastructureType.name}</td>
@@ -293,32 +293,42 @@
 						<td></td>
 					</tr>
 				</table>
-				<p class="bottom15"><span class="glyphicon glyphicon-ok"></span> = Available, <span class="glyphicon glyphicon-remove"></span> = Not available</p>
+				<p class="bottom15">
+					<span class="glyphicon glyphicon-ok"></span> = Available, <span
+						class="glyphicon glyphicon-remove"></span> = Not available
+				</p>
 				<h4>Visiting times</h4>
-				<table class="table table-striped" id="visitList">
-					<c:forEach items="${visits }" var="visit">
-						<tr>
-							<td><fmt:formatDate value="${visit.startTimestamp}"
-									pattern="dd-MM-yyyy " /> &nbsp; from <fmt:formatDate
-									value="${visit.startTimestamp}" pattern=" HH:mm " /> until <fmt:formatDate
-									value="${visit.endTimestamp}" pattern=" HH:mm" /></td>
-							<td><c:choose>
-									<c:when test="${loggedIn}">
-										<c:if test="${loggedInUserEmail != shownAd.user.username}">
-											<button class="btn btn-primary" type="button"
-												data-id="${visit.id}" onclick="sendEnquiry(${visit.id});">Send
-												enquiry to advertiser</button>
-										</c:if>
-									</c:when>
-									<c:otherwise>
-										<a href="./login"><button class="btn btn-default"
-												type="button" data-id="${visit.id}">Login to send
-												enquiries</button></a>
-									</c:otherwise>
-								</c:choose></td>
-						</tr>
-					</c:forEach>
-				</table>
+				<c:choose>
+					<c:when test="${empty visits }">
+						<p>No visiting times available</p>
+					</c:when>
+					<c:otherwise>
+						<table class="table table-striped" id="visitList">
+							<c:forEach items="${visits }" var="visit">
+								<tr>
+									<td><fmt:formatDate value="${visit.startTimestamp}"
+											pattern="dd-MM-yyyy " /> &nbsp; from <fmt:formatDate
+											value="${visit.startTimestamp}" pattern=" HH:mm " /> until <fmt:formatDate
+											value="${visit.endTimestamp}" pattern=" HH:mm" /></td>
+									<td><c:choose>
+											<c:when test="${loggedIn}">
+												<c:if test="${loggedInUserEmail != shownAd.user.username}">
+													<button class="btn btn-primary" type="button"
+														data-id="${visit.id}" onclick="sendEnquiry(${visit.id});">Send
+														enquiry to advertiser</button>
+												</c:if>
+											</c:when>
+											<c:otherwise>
+												<a href="./login"><button class="btn btn-default"
+														type="button" data-id="${visit.id}">Login to send
+														enquiries</button></a>
+											</c:otherwise>
+										</c:choose></td>
+								</tr>
+							</c:forEach>
+						</table>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<c:if test="${ not empty shownAd.pictures }">
@@ -333,7 +343,7 @@
 									class=" ${loop.index == 0 ? 'active' : ''}"></li>
 							</c:forEach>
 						</ol>
-	
+
 						<!-- Wrapper for slides -->
 						<div class="carousel-inner" role="listbox">
 							<c:forEach items="${shownAd.pictures}" var="picture"
@@ -343,16 +353,16 @@
 								</div>
 							</c:forEach>
 						</div>
-	
+
 						<!-- Controls -->
 						<a class="left carousel-control" href="#carousel-example-generic"
 							role="button" data-slide="prev"> <span
 							class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 							<span class="sr-only">Previous</span>
-						</a> <a class="right carousel-control" href="#carousel-example-generic"
-							role="button" data-slide="next"> <span
-							class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-							<span class="sr-only">Next</span>
+						</a> <a class="right carousel-control"
+							href="#carousel-example-generic" role="button" data-slide="next">
+							<span class="glyphicon glyphicon-chevron-right"
+							aria-hidden="true"></span> <span class="sr-only">Next</span>
 						</a>
 					</div>
 				</c:if>
@@ -402,12 +412,17 @@
 				</div>
 
 
-				<c:if test="${shownAd.auction  && shownAd.isAuctionRunning() && loggedInUserEmail != shownAd.user.username}">
+				<c:if
+					test="${shownAd.auction  && shownAd.isAuctionRunning() && loggedInUserEmail != shownAd.user.username}">
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-sm-4">
+								<div class="col-sm-12">
 									<h4>Auction</h4>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
 									<fmt:formatDate value="${shownAd.endDate}"
 										var="formattedEndDate" type="date" pattern="dd.MM.yyyy" />
 									<p>Running until: ${formattedEndDate}</p>
@@ -426,7 +441,8 @@
 
 								<div class="col-sm-8">
 
-									<form:form name="AuctionBid" action="./profile/bidAuction" method="post">
+									<form:form name="AuctionBid" action="./profile/bidAuction"
+										method="post">
 										<input type="hidden" name="id" value="${shownAd.id }" />
 										<input type="hidden" name="amount"
 											value="${shownAd.currentAuctionPrice}" />
@@ -438,8 +454,8 @@
 												<div class="input-group-addon">CHF</div>
 												<%--<input type="number" class="form-controll" placeholder="Amount" name="bid"> es fehlt: id = und value= --%>
 												<input class="form-control" id="disabledInput" type="text"
-													placeholder=${shownAd.currentAuctionPrice } disabled> <span
-													class="input-group-btn"> <c:choose>
+													placeholder=${shownAd.currentAuctionPrice } disabled>
+												<span class="input-group-btn"> <c:choose>
 														<c:when test="${loggedIn }">
 															<button type="submit" class="btn btn-success">Bid</button>
 														</c:when>
@@ -454,7 +470,8 @@
 
 
 									<!-- 2nd form -->
-									<form:form name="AuctionBuy" action="./profile/buyAuction" method="post">
+									<form:form name="AuctionBuy" action="./profile/buyAuction"
+										method="post">
 										<input type="hidden" name="id" value="${shownAd.id }" />
 										<input type="hidden" name="amount"
 											value="${shownAd.buyItNowPrice}" />
@@ -467,8 +484,7 @@
 												<div class="input-group-addon">CHF</div>
 												<input class="form-control" id="disabledInput" type="text"
 													placeholder=${shownAd.buyItNowPrice } disabled> <span
-													class="input-group-btn">
-													<c:choose>
+													class="input-group-btn"> <c:choose>
 														<c:when test="${loggedIn }">
 															<button type="submit" class="btn btn-success">Buy</button>
 														</c:when>
