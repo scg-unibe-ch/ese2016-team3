@@ -178,7 +178,7 @@ public class AlertServiceTest {
 		oltenResidence.setBuyMode(BuyMode.BUY);
 		oltenResidence.setMoveInDate(date);
 		oltenResidence.setCreationDate(date);
-		oltenResidence.setPrizePerMonth(1200);
+		oltenResidence.setPrice(1200);
 		oltenResidence.setSquareFootage(42);
 		oltenResidence.setType(Type.APARTMENT);
 		oltenResidence.setRoomDescription("blah");
@@ -236,7 +236,7 @@ public class AlertServiceTest {
 		oltenResidence.setBuyMode(BuyMode.BUY);
 		oltenResidence.setMoveInDate(date);
 		oltenResidence.setCreationDate(date);
-		oltenResidence.setPrizePerMonth(1200);
+		oltenResidence.setPrice(1200);
 		oltenResidence.setSquareFootage(42);
 		oltenResidence.setType(Type.LOFT);
 		oltenResidence.setRoomDescription("blah");
@@ -290,7 +290,7 @@ public class AlertServiceTest {
 		tooExpensiveAd.setBuyMode(BuyMode.BUY);
 		tooExpensiveAd.setMoveInDate(date);
 		tooExpensiveAd.setCreationDate(date);
-		tooExpensiveAd.setPrizePerMonth(1700);
+		tooExpensiveAd.setPrice(1700);
 		tooExpensiveAd.setSquareFootage(42);
 		tooExpensiveAd.setType(Type.LOFT);
 		tooExpensiveAd.setRoomDescription("blah");

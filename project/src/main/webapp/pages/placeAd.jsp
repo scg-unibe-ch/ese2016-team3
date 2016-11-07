@@ -12,82 +12,17 @@
 <script src="/js/jquery.fileupload.js"></script>
 
 <script src="/js/pictureUpload.js"></script>
+<script src="/js/placeAd.js"></script>
 
 <script>
-	$(document)
-			.ready(
-					function() {
-
-						// Go to controller take what you need from user
-						// save it to a hidden field
-						// iterate through it
-						// if there is id == x then make "Bookmark Me" to "bookmarked"
-
-						$("#field-city").autocomplete({
-							minLength : 2,
-							source : <c:import url="getzipcodes.jsp" />,
-							enabled : true,
-							autoFocus : true
-						});
-						$("#field-moveInDate").datepicker({
-							dateFormat : 'dd-mm-yy'
-						});
-
-						$("#field-endDate").datepicker({
-							dateFormat : 'dd-mm-yy'
-						});
-
-						$("#field-visitDay").datepicker({
-							dateFormat : 'dd-mm-yy'
-						});
-
-						$("#addVisitButton")
-								.click(
-										function() {
-											var date = $("#field-visitDay")
-													.val();
-											if (date == "") {
-												return;
-											}
-
-											var startHour = $("#startHour")
-													.val();
-											var startMinutes = $(
-													"#startMinutes").val();
-											var endHour = $("#endHour").val();
-											var endMinutes = $("#endMinutes")
-													.val();
-
-											if (startHour > endHour) {
-												alert("Invalid times. The visit can't end before being started.");
-												return;
-											} else if (startHour == endHour
-													&& startMinutes >= endMinutes) {
-												alert("Invalid times. The visit can't end before being started.");
-												return;
-											}
-
-											var newVisit = date + ";"
-													+ startHour + ":"
-													+ startMinutes + ";"
-													+ endHour + ":"
-													+ endMinutes;
-											var newVisitLabel = date + " "
-													+ startHour + ":"
-													+ startMinutes + " to "
-													+ endHour + ":"
-													+ endMinutes;
-
-											var index = $("#addedVisits input").length;
-
-											var label = "<p>" + newVisitLabel
-													+ "</p>";
-											var input = "<input type='hidden' value='" + newVisit + "' name='visits[" + index + "]' />";
-
-											$("#addedVisits").append(
-													label + input);
-										});
-					});
+	$(document).ready(function(){
+		$("#field-city").autocomplete({
+								minLength : 2,
+								source : <c:import url="getzipcodes.jsp" />,
+								enabled : true,
+								autoFocus : true
+							});
+	});
 </script>
 
 
@@ -286,113 +221,104 @@
 									</div>
 								</div>
 							</spring:bind>
-
-
-							<%-- 			<spring:bind path="prize">
-								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="field-Prize">Prize
-										per month</label>
-									<div class="col-sm-5">
-										<form:input id="field-Prize" type="number" min="0"
-											path="prize" placeholder="Prize per month" step="50"
-											cssClass="form-control" />
-										<form:errors path="prize" cssClass="text-danger" />
-									</div>
-								</div>
-							</spring:bind>   --%>
 						</div>
 					</div>
 					<h4>Prizing</h4>
 					<div class="panel panel-default">
 						<div class="panel-body">
-
-							<spring:bind path="prize">
-								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="field-Prize">Normal
-										Price (without Auction) </label>
-									<div class="col-sm-5">
-										<form:input id="field-Prize" type="number" min="0"
-											path="prize" placeholder="Prize " step="50"
-											cssClass="form-control" />
-										<form:errors path="prize" cssClass="text-danger" />
+							<c:if test="${pagemode == 'buy' }">
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Auction</label>
+									<div class="col-sm-9">
+										<div class="checkbox">
+											<label> <form:checkbox id="field-auction"
+													path="auction" value="1" /> Yes
+											</label>
+										</div>
 									</div>
 								</div>
-							</spring:bind>
-
-							<div class="form-group">
-
-								<label class="col-sm-3 control-label">Auction</label>
-								<div class="col-sm-offset-3 col-sm-10">
-									<div class="checkbox">
-										<label> <form:checkbox id="field-auction"
-												path="auction" value="1" /> Yes
-										</label>
+							</c:if>
+							<div id="panel-buy-normal">
+								<spring:bind path="validPrice">
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label class="col-sm-3 control-label" for="field-Price">Normal
+											Price (without Auction) </label>
+										<div class="col-sm-5">
+											<form:input id="field-Price" type="number" min="0"
+												path="price" placeholder="Price" step="1"
+												cssClass="form-control" />
+											<form:errors path="validPrice" cssClass="text-danger" />
+										</div>
 									</div>
-								</div>
+								</spring:bind>
 							</div>
+							<c:if test="${pagemode == 'buy' }">
+								<div id="panel-buy-auction">
+									<spring:bind path="validPrice">
+										<div class="form-group ${status.error ? 'has-error' : '' }">
+											<label class="col-sm-3 control-label" for="field-BuyNowPrice">Immediate
+												Buy Price for Auction </label>
+											<div class="col-sm-5">
+												<form:input id="field-BuyNowPrice" type="number" min="0"
+													path="auctionPrice" placeholder="Price " step="50"
+													cssClass="form-control" />
+												<form:errors path="validPrice" cssClass="text-danger" />
+											</div>
+										</div>
+									</spring:bind>
 
-							<spring:bind path="buyItNowPrice">
-								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="field-BuyNowPrize">Immediate
-										Buy Price for Auction </label>
-									<div class="col-sm-5">
-										<form:input id="field-BuyNowPrize" type="number" min="0"
-											path="buyItNowPrice" placeholder="Prize " step="50"
-											cssClass="form-control" />
-										<form:errors path="buyItNowPrice" cssClass="text-danger" />
-									</div>
+									<spring:bind path="validStartDate">
+										<div class="form-group ${status.error ? 'has-error' : '' }">
+											<label class="col-sm-3 control-label" for="field-startDate">Startdate
+												for Auction </label>
+											<div class="col-sm-5">
+												<form:input type="text" id="field-startDate"
+													path="startDate" cssClass="form-control" />
+												<form:errors path="validStartDate" cssClass="text-danger" />
+											</div>
+										</div>
+									</spring:bind>
+
+									<spring:bind path="validEndDate">
+										<div class="form-group ${status.error ? 'has-error' : '' }">
+											<label class="col-sm-3 control-label" for="field-endDate">Enddate
+												for Auction </label>
+											<div class="col-sm-5">
+												<form:input type="text" id="field-endDate" path="endDate"
+													cssClass="form-control" />
+													<form:errors path="validEndDate" cssClass="text-danger" />
+											</div>
+										</div>
+									</spring:bind>
+
+									<spring:bind path="validStartPrice">
+										<div class="form-group ${status.error ? 'has-error' : '' }">
+											<label class="col-sm-3 control-label" for="field-startPrice">Startprice
+												for Auction </label>
+											<div class="col-sm-5">
+												<form:input id="field-startPrice" path="startPrice"
+													type="number" min="0" placeholder="Startprice " step="1"
+													cssClass="form-control" />
+												<form:errors path="validStartPrice" cssClass="text-danger" />
+											</div>
+										</div>
+									</spring:bind>
+
+									<spring:bind path="validIncreaseBidPrice">
+										<div class="form-group ${status.error ? 'has-error' : '' }">
+											<label class="col-sm-3 control-label"
+												for="field-increasePrice">Amount of increase of bid
+												price </label>
+											<div class="col-sm-5">
+												<form:input id="field-increasePrice" path="increaseBidPrice"
+													type="number" min="0" placeholder="Startprice " step="1"
+													cssClass="form-control" />
+												<form:errors path="validIncreaseBidPrice" cssClass="text-danger" />
+											</div>
+										</div>
+									</spring:bind>
 								</div>
-							</spring:bind>
-
-							<spring:bind path="startDate">
-								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="field-startDate">Startdate
-										for Auction </label>
-									<div class="col-sm-5">
-										<form:input type="datetime-local" value="2016-08-19T13:45:00"
-											id="field-startDate" path="startDate" cssClass="form-control" />
-
-									</div>
-
-								</div>
-							</spring:bind>
-
-							<spring:bind path="endDate">
-								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="field-endDate">Enddate
-										for Auction </label>
-									<div class="col-sm-5">
-										<form:input type="text" id="field-endDate" path="endDate"
-											cssClass="form-control" />
-									</div>
-								</div>
-							</spring:bind>
-
-							<spring:bind path="startPrice">
-								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="field-startPrice">Startprice
-										for Auction </label>
-									<div class="col-sm-5">
-										<form:input id="field-startPrice" path="startPrice"
-											type="number" min="0" placeholder="Startprice " step="1"
-											cssClass="form-control" />
-										<form:errors path="startPrice" cssClass="text-danger" />
-									</div>
-								</div>
-							</spring:bind>
-
-							<spring:bind path="increaseBidPrice">
-								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="field-increasePrice">Amount
-										of increase of bid price </label>
-									<div class="col-sm-5">
-										<form:input id="field-increasePrice" path="increaseBidPrice"
-											type="number" min="0" placeholder="Startprice " step="1"
-											cssClass="form-control" />
-										<form:errors path="increaseBidPrice" cssClass="text-danger" />
-									</div>
-								</div>
-							</spring:bind>
+							</c:if>
 						</div>
 					</div>
 					<h4>Description</h4>
@@ -423,58 +349,46 @@
 									</div>
 								</div>
 							</spring:bind>
-							
-							<div class="checkbox">
 
-								<label class="col-sm-3 control-label">Garage</label>
-								<div class="col-sm-5">
-									<form:checkbox id="field-garage" path="garage" value="1" />
-								</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-5">
+									<div class="checkbox">
+										<label><form:checkbox id="field-garage" path="garage" />
+											Garage</label>
+									</div>
+									<div class="checkbox">
+										<label><form:checkbox id="field-balcony"
+												path="balcony" /> Balcony or Patio</label>
+									</div>
 
+									<div class="checkbox">
+										<label><form:checkbox id="field-parking"
+												path="parking" /> Parking</label>
+									</div>
 
-							</div>
-							<div class="checkbox">
-								<label class="col-sm-3 control-label">Parking</label>
-								<div class="col-sm-5">
-									<form:checkbox id="field-parking" path="parking" value="1" />
+									<div class="checkbox">
+										<label><form:checkbox id="field-elevator"
+												path="elevator" /> Elevator</label>
+									</div>
 
-								</div>
-							</div>
-
-							<div class="checkbox">
-								<label class="col-sm-3 control-label">Balcony or Patio</label>
-								<div class="col-sm-5">
-									<form:checkbox id="field-balcony" path="balcony" value="1" />
-								</div>
-							</div>
-							<div class="checkbox">
-								<label class="col-sm-3 control-label">Elevator </label>
-								<div class="col-sm-5">
-									<form:checkbox id="field-elevator" path="elevator" value="1" />
+									<div class="checkbox">
+										<label><form:checkbox id="field-dishwasher"
+												path="dishwasher" /> Dishwasher</label>
+									</div>
 								</div>
 							</div>
-							<div class="checkbox">
-								<label class="col-sm-3 control-label">Dishwasher</label>
-								<div class="col-sm-5">
-									<form:checkbox id="field-dishwasher" path="dishwasher"
-										value="1" />
+
+							<spring:bind path="roomDescription">
+								<div class="form-group ${status.error ? 'has-error' : '' }">
+									<label class="col-sm-3 control-label" for="roomDescription">Description:</label>
+									<div class="col-sm-5">
+										<form:textarea path="roomDescription" rows="10" cols="70"
+											placeholder="Description" class="form-control" />
+										<form:errors path="roomDescription" cssClass="text-danger" />
+									</div>
 								</div>
-							</div>
+							</spring:bind>
 						</div>
-
-						<br />
-
-						<spring:bind path="roomDescription">
-							<div class="form-group ${status.error ? 'has-error' : '' }">
-								<label class="col-sm-3 control-label" for="roomDescription">Room
-									Description:</label>
-								<div class="col-sm-5">
-									<form:textarea path="roomDescription" rows="10" cols="70"
-										placeholder="Room Description" class="form-control" />
-									<form:errors path="roomDescription" cssClass="text-danger" />
-								</div>
-							</div>
-						</spring:bind>
 					</div>
 					<h4>Visiting times (optional)</h4>
 					<div class="panel panel-default">

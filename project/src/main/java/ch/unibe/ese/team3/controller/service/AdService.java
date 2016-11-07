@@ -110,13 +110,11 @@ public class AdService {
 
 		// for auction
 		ad.setStartPrice(placeAdForm.getStartPrice());
-		ad.setBuyItNowPrice(placeAdForm.getBuyItNowPrice());
 		ad.setIncreaseBidPrice(placeAdForm.getIncreaseBidPrice());
-		ad.setbidPriceForUser(placeAdForm.getStartPrice() + placeAdForm.getIncreaseBidPrice());
-		ad.setcurrentAuctionPrice(placeAdForm.getStartPrice());
+		ad.setcurrentAuctionPrice(placeAdForm.getStartPrice() + placeAdForm.getIncreaseBidPrice());
 		ad.setAuction(placeAdForm.getAuction());
 
-		ad.setPrizePerMonth(placeAdForm.getPrize());
+		ad.setPrice(placeAdForm.getPriceForAd());
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
 		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
 		ad.setDistanceShopping(placeAdForm.getDistanceShopping());
@@ -240,10 +238,10 @@ public class AdService {
 	public Iterable<Ad> queryResults(SearchForm searchForm, BuyMode buyMode) {
 		Iterable<Ad> results = null;
 		if (searchForm.getTypes() != null && searchForm.getTypes().length > 0) {
-			results = adDao.findByPrizePerMonthLessThanAndTypeInAndBuyMode(searchForm.getPrize() + 1, searchForm.getTypes(), buyMode);
+			results = adDao.findByPriceLessThanAndTypeInAndBuyMode(searchForm.getPrice() + 1, searchForm.getTypes(), buyMode);
 		}
 		else {
-			results = adDao.findByPrizePerMonthLessThanAndBuyMode(searchForm.getPrize() + 1, buyMode);
+			results = adDao.findByPriceLessThanAndBuyMode(searchForm.getPrice() + 1, buyMode);
 		}
 
 		// filter out zipcode

@@ -1,6 +1,6 @@
 package ch.unibe.ese.team3.controller.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.junit.After;
@@ -22,13 +21,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import ch.unibe.ese.team3.model.dao.UserDao;
-import ch.unibe.ese.team3.model.dao.MessageDao;
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.UserRole;
+import ch.unibe.ese.team3.model.dao.MessageDao;
+import ch.unibe.ese.team3.model.dao.UserDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
