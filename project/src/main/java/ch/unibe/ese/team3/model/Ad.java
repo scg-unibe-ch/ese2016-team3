@@ -163,6 +163,9 @@ public class Ad {
 		this.currentAuctionPrice=Price;
 	}
 	
+	public boolean isAuctionRunning(){
+		return available && endDate.after(new Date());
+	}
 	
 	public Date getStartDate() {
 		return startDate;

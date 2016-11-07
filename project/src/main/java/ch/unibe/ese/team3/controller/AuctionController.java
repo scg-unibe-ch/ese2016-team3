@@ -47,16 +47,36 @@ public class AuctionController {
 					"Your bid was registered successfully.");
 			return model;
 		}
-		else
-		
-		// else: write message, that auction is no longer available
-		
-		// return ModelAndView?
-		// redirect user to back to adDescription page
-			// ModelAndView model = new ModelAndView("adDescription");
-		return new ModelAndView();
+		else{
+			ModelAndView model = new ModelAndView("redirect:../ad?id=" + ad.getId());
+			redirectAttributes.addFlashAttribute("errorMessage",
+					"Sorry, someone else bade more");
+			return model;
+		}
 
 	}
+	
+	@RequestMapping(value = "/profile/buyAuction", method = RequestMethod.POST)
+	public ModelAndView buy(Principal principal, @RequestParam long id, RedirectAttributes redirectAttributes) {
+
+		User purchaser = userService.findUserByUsername(principal.getName());
+		Ad ad = adService.getAdById(id);
+		
+		if (auctionService.checkAndBuy(ad, purchaser)) {			
+			ModelAndView model = new ModelAndView("redirect:../ad?id=" + ad.getId());
+			redirectAttributes.addFlashAttribute("confirmationMessage",
+					"Your purchase was registered successfully.");
+			return model;
+		}
+		else{
+			ModelAndView model = new ModelAndView("redirect:../ad?id=" + ad.getId());
+			redirectAttributes.addFlashAttribute("errorMessage",
+					"Sorry, someone else bought it already.");
+			return model;
+		}
+
+	}
+	
 	
 	@Scheduled(fixedRate=1000)
 	public void testSchedule(){

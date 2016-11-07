@@ -394,7 +394,7 @@
 				</div>
 
 
-				<c:if test="${shownAd.auction}">
+				<c:if test="${shownAd.auction  && shownAd.isAuctionRunning() && loggedInUserEmail != shownAd.user.username}">
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="row">
@@ -446,7 +446,7 @@
 
 
 									<!-- 2nd form -->
-									<form:form name="AuctionBuy" action="./buyAuction">
+									<form:form name="AuctionBuy" action="./profile/buyAuction" method="post">
 										<input type="hidden" name="id" value="${shownAd.id }" />
 										<input type="hidden" name="amount"
 											value="${shownAd.buyItNowPrice}" />
@@ -460,7 +460,14 @@
 												<input class="form-control" id="disabledInput" type="text"
 													placeholder=${shownAd.buyItNowPrice } disabled> <span
 													class="input-group-btn">
-													<button type="submit" class="btn btn-success">Buy</button>
+													<c:choose>
+														<c:when test="${loggedIn }">
+															<button type="submit" class="btn btn-success">Buy</button>
+														</c:when>
+														<c:otherwise>
+															<a href="./login" class="btn btn-success">Buy</a>
+														</c:otherwise>
+													</c:choose>
 												</span>
 											</div>
 										</div>

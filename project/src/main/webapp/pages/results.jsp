@@ -389,35 +389,34 @@
 										<p>Move-in date: ${formattedMoveInDate }</p>
 									</div>
 
-									<c:if test="${ ad.auction}">
+									<c:if test="${ad.auction  && ad.isAuctionRunning() && loggedInUserEmail != ad.user.username }">
 
 
 										<div class="col-sm-3 col-md-3">
+											<p>
+												<strong>Auction</strong>
+											</p>
+											<fmt:formatDate value="${ad.startDate}"
+												var="formattedStartDate" type="date" pattern="dd.MM.yyyy" />
+											<p>Running until: ${formattedStartDate}</p>
+
+											<p>
+												Current price: <strong>${ad.currentAuctionPrice - ad.increaseBidPrice}
+													CHF</strong>
+											</p>
+											<p>
+												<a href="./ad?id=${ad.id}">Bid</a>
+											</p>
+											<%-- 	
 											<form:form method="post" modelAttribute="placeAdForm"
 												action="./results" id="bidForm" autocomplete="off">
-												<%-- id = ?? , action =" /results" oder /resultsAction?? --%>
-
-												<p>
-													<strong>Auction</strong>
-												</p>
-
-												<fmt:formatDate value="${ad.startDate}"
-													var="formattedStartDate" type="date" pattern="dd.MM.yyyy" />
-												<p>Running until :${formattedStartDate}</p>
-
-												<p>
-													Current price: <strong>${ad.currentAuctionPrice}
-														CHF</strong>
-
-
-												</p>
 												<div class="form-group">
 													<label class="sr-only" for="bid">Amount</label>
-													<%-- for="bid" stimmt wahrscheinlich nicht --%>
+													<!-- for="bid" stimmt wahrscheinlich nicht -->
 													<div class="input-group">
 														<div class="input-group-addon">CHF</div>
-														<%--<input type="number" class="form-controll" placeholder="Amount" name="bid"> es fehlt: id = und value= --%>
-														<%-- fehlt noch: if not logged in-> you can not bid, und wirst zur Login Seite umgeleitet beim Klicken auf bid --%>
+														<!--<input type="number" class="form-controll" placeholder="Amount" name="bid"> es fehlt: id = und value= -->
+														<!-- fehlt noch: if not logged in-> you can not bid, und wirst zur Login Seite umgeleitet beim Klicken auf bid -->
 														<input class="form-control" id="disabledInput" type="text"
 															placeholder=${ad.bidPriceForUser } disabled> <span
 															class="input-group-btn">
@@ -433,8 +432,8 @@
 												<div class="form-group">
 													<label class="sr-only" for="exampleInputAmount">Buy
 														now Price in CHF</label>
-													<%-- for stimmt wahrscheinlich nicht --%>
-													<%-- fehlt noch: if not logged in-> you can not bid, und wirst zur Login Seite umgeleitet beim Klicken auf bid --%>
+													<!-- for stimmt wahrscheinlich nicht -->
+													<!-- fehlt noch: if not logged in-> you can not bid, und wirst zur Login Seite umgeleitet beim Klicken auf bid -->
 													<div class="input-group">
 														<div class="input-group-addon">CHF</div>
 														<input class="form-control" id="disabledInput" type="text"
@@ -446,6 +445,7 @@
 													</div>
 												</div>
 											</form:form>
+											--%>
 										</div>
 									</c:if>
 								</div>

@@ -129,3 +129,8 @@
 					<p>${confirmationMessage }</p>
 				</div>
 			</c:if>
+			<c:if test="${not empty errorMessage }">
+				<div class="alert alert-danger">
+					<p>${errorMessage }</p>
+				</div>
+			</c:if>
