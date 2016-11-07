@@ -540,56 +540,61 @@ The following sections describe abbreviations and special terms used in this doc
 see [http://www.gatherspace.com/static/use_case_example.html](http://www.gatherspace.com/static/use_case_example.html)
 
 ### Actor characteristics
-In general, the users of the FlatFindr are expected to have little or no technical experience. However, they are expected to have some base knowledge of the general use of message services and internet applications.
+In general, the users of the Ithaca are expected to have little or no technical experience. However, they are expected to have some base knowledge of the general use of message services and internet applications.
 
 The users of the FlatFindr can be divided in two main categories: 
 
 1. The users, which search a real estate (=suitors).
-2. The users, which have a real estate to rent (real estate managers).
+2. The users, which have a real estate to rent or sell (real estate managers).
 
 #### Suitors
-Suitors are people who want to rent a real estate. As FlatFindr is a platform which promotes Ads for single rooms or studios. Thus, it is expected that the suitors are mainly students or young people in general.
+Suitors are people who want to rent or buy a real estate. As Ithaca is a platform which promotes ads for different types of homes, both for renting and buying, the suitors can be people of all ages in different situations in life.
 
 **Expectations of at the application**
 Suitors expect, that the application
 
 1. offers a good and easy search service 
 2. has a message service
-3. can contact them, when an Ad of interest is created
+3. can contact them, when an ad of interest is created
 4. allows an easy way to schedule visit times with the real estate managers
-5. has a schedule function, which gives the suitors an overview over his planed visits
+5. has a schedule function, which gives the suitors an overview over his planned visits
 
 **User interactions**
 The suitors 
 
-1. searches Ads 
+1. searches ads 
 2. creates alerts
 3. writes and receives messages 
 4. sends enquiries to real estate managers
 5. edits his public profile
 6. checks his schedule to get an overview over his enquiries
+7. participates in auctions
+8. pays to upgrade his account to premium
 
 #### Real estate manager
-Real estate managers have a real estate to rent.
+Real estate managers have a real estate to rent or sell.
 
 **Expectations of at the application**
 Real estate managers expect, that the application
 
-1. offers an easy way to create Ads
+1. offers an easy way to create ads
 2. has a message service
-3. allows management of multiple Ads 
+3. allows management of multiple ads 
 4. offers an easy way to schedule visit times with suitors.
 5. has a schedule function, which gives the real estate managers an overview over the visit times of suitors.
+6. has a working auction functionality for sale of property
 
 **User interactions**
 The real estate manager
 
-1. creates Ads
+1. creates ads
 2. writes and receives messages 
 3. Accepts or declines enquiries from suitors
 4. edits his public profile
 5. checks his schedule to get an overview over his enquiries and the visiting suitors
 6. edits his public profile
+7. pays to upgrade his account to premium
+8. controls direct buying price and bid increase in auctions
 
 ## Requirements
 
@@ -605,7 +610,7 @@ The user can login to the application. Therefore he has to enter his email-addre
 
 For signing up as a new user he has to enter his first and last name, select his gender and give his email-address and a password, which has to be at least 6 characters long.
 
-The user can choose the account type. There are two account types (premium and normal) If the user chooses premium, he has to enter his credit card information during signup.
+The user can choose the account type. There are two account types (premium and normal) If the user chooses premium, he has to enter his credit card information and duration of premium membership during signup. 
 
 If any of these informations aren't filled in, an error occurs, which tells the user that he must fill in a valid information.
 
@@ -614,7 +619,8 @@ If any of these informations aren't filled in, an error occurs, which tells the 
 A logged in user can:
 
 - logout
-- edit his public profile.There he can change his password, first name, last name, username and write something about himself. By clicking "update" his changes will be saved. Normal users can upgrade their account to a premium account there as well.
+- edit his public profile.There he can change his password, first name, last name, username and write something about himself. By clicking "update" his changes will be saved. 
+- Normal users can upgrade their account to a premium account.
 
 
 #### Messaging system
@@ -622,12 +628,12 @@ A logged in user can:
 A logged in user can:
 
 - **Send messages** in two ways:
- + sending messages by visiting the advertiser Profile and clicking on the button "Message".Then he can enter the subject and his message and click on "Send" if the want to send the message or click on "Cancel" to exit the message form. If no subject is filled in, the message won't be send. If the subject is entered but no message, then the message wont'be send. Only of both( subject and message) are entered, the message will be send.
- + other way of sending messages is by sending the message from the users Profile. For the new message he has to specify to whom he wants to send the email and give in the subject and write his message. Then he can click either "send"(for sending the message) or "cancel"(for leaving the message form).If the user puts in a invalid email address of the recipient then there will appear a box saying :"This user does not exist". Again all information (to, subject, and message) have to be filled in, if not, the message won't be send.
+ + sending messages by visiting the advertiser Profile and clicking on the button "Message".Then he can enter the subject and his message and click on "Send" if the want to send the message or click on "Cancel" to exit the message form. If no subject is filled in, the message won't be sent. If the subject is entered but no message, then the message wont'be sent. Only if both( subject and message) are entered, the message will be sent.
+ + the other way of sending messages is by going into "Messages" from the dropdown menu and there click "New message". For the new message he has to specify to whom he wants to send the email and give in the subject and write his message. Then he can click either "send"(for sending the message) or "cancel"(for leaving the message form).If the user puts in a invalid email address of the recipient then there will appear a box saying: "This user does not exist". Again all information (to, subject, and message) have to be filled in, if not, the message won't be sent.
 
-- **view his sent messages**. Furthermore  he can see in a chart the subject, sender, recipient and the date sent from each message he has ever sent. By clicking on a line from this chart he gets a view of the send message.
+- **view his sent messages**: He can see in a chart the subject, sender, recipient and the date sent from each message he has ever sent. By clicking on a line from this chart he gets a view of the sent message.
 
-- **view imcoming messages**. Furthermore he can see in a chart the subject, sender, recipient and the date sent from the each message he has received. By clicking on a line from this chart he gets a view of the message.
+- **view incoming messages**: He can see in a chart the subject, sender, recipient and the date sent from the each message he has received. By clicking on a line from this chart he gets a view of the message.
 
 ##### E-Mail
 
@@ -635,25 +641,27 @@ Messages to the inbox of the user aren't just sent to the internal inbox of the 
 
 #### Searching and viewing ads
 
-A user can search for ads by clicking the search button whether or not he's logged in. The initial search is filtered by zip code with max radius and max price.
+A user can search for ads by clicking the search button whether or not he's logged in. The initial search is filtered by zip code with max radius, max price and type (apartment, villa, house, studio or loft).
 
-In the result lists, the ads of premium users are displayed slightly different than the ads of normal users, to catch more attention. They're also ranked higher than normal ads (see section "User roles" below).
+In the result lists, the ads of premium users are ranked higher than normal ads (see section "User roles" below).
 
 After the results are displayed, the user can choose to:
 
 - *Sort search:* The search results can be sorted by: ascending or descending price, move-in date earliest to latest or latest to earliest, or by the date the ad was created, youngest to oldest or oldest to youngest. 
 
-- *Filter search:* The search can be filtered further by filling out the earliest and latest move-in date in a dropdown calendar and optionally the earliest and latest move-out date. The user can also check boxes for; allowing smoking inside, allowing animals inside, co-use garden, balcony or patio, cellar or attic, furnished, cable TV, garage and/or WiFi. The search criteria are always visible to the user.
+- *Filter search:* The search can be filtered further by filling out the earliest and latest move-in date in a dropdown calendar. The user can also check boxes for; balcony or patio, garage, parking, elevator and dishwasher. In a dropdown menu, the user can choose between the infrastructure types; satellite, cable or fiber optic cable. He can also choose upper and lower limits for; floor level, nr. of bathrooms, nr. of rooms, build year, renovation year, distance to school, shopping and public transport. The search criteria are always visible to the user.
+
+- *Participate in auction:* The user can participate in an auction when looking at ads for sale by directly buying or bidding from the result page.
 
 - *View ad:* The user can click on an ad to view it. 
 
 From the view of the ad, the user can:
 
-- Bookmark ad or delete bookmark by clicking the button in the top right corner if the user is logged in.
+- Bookmark ad or delete bookmark if the user is logged in.
 
-- View the ad information. On the left is listed: Address, date the property is available from, move-out date, monthly rent, size of property in square meters and the date the ad was created. The visiting times and the information of the advertiser are shown.
+- View the ad information. Description, address and the searchable criteria are all displayed. The visiting times and the information of the advertiser are shown.
 
-- View the pictures of the property on the right of the information box. They can be viewed one after the other by clicking a button to the right or to the left of the picture. Under the pictures there is a list of the requirements that the user could check the boxes for, where it shows with green if the requirement is met and red if it isn't.
+- View the pictures of the property. They can be viewed one after the other by clicking a button to the right or to the left of the picture. 
 
 - View advertiser profile, contact or send enquiry to advertiser if the user is logged in. If the user is not logged in, the boxes you can click to do these actions show "Login to send enquiries", "Login to visit profile" and "Login to contact advertiser" and will send you to the login screen.
 
@@ -663,7 +671,7 @@ From the view of the ad, the user can:
 
 A logged in user can view and modify his alerts by choosing "Alerts" from the Profile drop-down menu. He can create a new alert by filling in the initial search criteria and clicking "Subscribe". Below where the user can create new alerts is "Your active alerts", where he can view a list of alerts in a table with type, city, radius, max price and a column "Action" with a button to delete the alert.
 
-If an alert is triggered, the user gets a message to his inbox in the application. The message is also sent to his mail account.
+If an alert is triggered, the user gets a message to his inbox in the application. The message is also sent to his email account.
 
 The application distinguishes between normal and premium users (see section 'User roles' below).
 
@@ -672,17 +680,33 @@ The application distinguishes between normal and premium users (see section 'Use
 
 A real estate manager can create a new advertisement for real estate. An advertisement consists of required general information and additonal optional information about the real estate it concerns.
 
+The advertiser can specify, whether he wants to sell or rent a real estate by choosing the appropriate tab "buy" or "rent" before placing the ad.
+
 The following general information can be declared:
 
 - The *title* of the advertisement (text)
 - The *type* of the real estate (appartment, house, villa, loft, studio)
 - The *location* of the real estate (*street* and *zip code*)
 - The *move-in date*
-- The *move-out date* (optional)
-- The *construction / renovation date*
-- The *price* (per month for renting or total price for buying)
 - The *size* of the real estate in square meters
 - The *number of rooms*
+- The *floor level*
+- The *distance to school/shopping center/public transport* from dropdown menu (100m intervals)
+- The *construction / renovation date*
+- The *price* (per month for renting or total price for buying)
+
+In the case of selling property, it can be done by *auction*. A checkbox can be checked and additional information entered:
+
+- *Immediate buy price for auction*
+- *Startdate for auction*
+- *Enddate for auction* from dropdown calendar
+- *Startprice for auction*
+- *Amount of increase of bid price*
+
+The following information can be specified with a number or with a selection of options:
+
+- number of *bath rooms*
+- type of *infrastructure* for TV/internet (satellite, fiber, cable etc.)
 
 The following *additional attributes* of the real estate can be specified in a yes/no manner:
 
@@ -691,34 +715,15 @@ The following *additional attributes* of the real estate can be specified in a y
 - *elevator* available
 - *dishwasher* available (only for rent)
 
-The following attributes can be specified in 100 m steps up to 1 km:
-
-- distance to *public transport*
-- distance to *shopping possibilities*
-- distance to *schools*
-
-The following information can be specified with a number or with a selection of options:
-
-- *floor level*
-- number of *bath rooms*
-- type of *infrastructure* for TV/internet (satellite, fiber, cable etc.)
-
 Additionally a *textual description* of the real estate can be added to the ad.
 
 *Images* of the real estate can be added to the advertisement to give users a better impression of the real estate. This is not mandatory.
 
-The advertiser can state his *preferences* in questions of tenants with a textual description. This is not mandatory.
-
 The advertiser can specify multiple possible *visiting times* for enquiries. A visiting time is specified by a date, a start time and an end time. This is not mandatory.
 
-The advertiser can specify, whether he wants to sell or rent a real estate.
+#### Auctions
 
-If he chooses to sell real estate, he can sell it by *auction*. If he chooses so, he can specify the following parameters of the auction:
-
-- *start time* and *end time*
-- *start price*
-- *increment* of the price
-- *direct buy* price
+When an ad is up for sale and the owner has chosen the *auction* option, users can bid on the property. There is also a "buy directly" price. Both startprice for bidding and bidding increment is specified by the property owner, as is the direct buy price. The auction has an end date when it is no longer possible to bid.
 
 #### User roles
 
@@ -728,7 +733,9 @@ The application behaves different for the different user roles as follows:
 
 - If a new advertisement meets the filter criteria of an alert of a premium user, he immediately gets a message by the internal system mail box and by email.
 - In the same situation, a normal user gets a summary of all triggered alerts once a day. The summary is sent to the internal system mail box and also by email.
-- The advertisement of premium users are shown at the top of the search result list. The images of the property of premium users are larger.
+- The advertisement of premium users are shown at the top of the search result list.
+
+A normal user can upgrade to premium for a choice of durations with different prices. For this he has to give his credit card information. After the amount of days he has paid for has passed, the user is reverted back to normal status, the premium membership has run out. It is not possible to cancel the premium subscription since it is paid for in full.
 
 #### Enquiries
 
@@ -757,7 +764,7 @@ A table of the users owned flats, which he wants to rent to other people, contai
 - *Date*: The date of the flat presentation,
 - *Time*: The time of the flat presentation,
 - *Visit Ad*: A button that if clicked will lead the user to the ad he posted about the flat in question
-- *Visitors*: A button which will open a new site with some information about the property in question and a table of all people that will attend its presentation. The table contains the following: *Name* (full name of the user), *Username* (the flatfindr username of the user), *Profile* (a button that leads to the user's personal profile), *Rating* (the rating of one to 5 stars that this user has on the website)
+- *Visitors*: A button which will open a new site with some information about the property in question and a table of all people that will attend its presentation. The table contains the following: *Name* (full name of the user), *Username* (the Ithaca username of the user), *Profile* (a button that leads to the user's personal profile), *Rating* (the rating of one to 5 stars that this user has on the website)
 
 _Your visits_-table:
 A table of the flats a user is interested in and will or has already visited, containing the following:
