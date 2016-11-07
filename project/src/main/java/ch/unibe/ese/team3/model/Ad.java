@@ -105,6 +105,9 @@ public class Ad {
 
 	@ManyToOne(optional = false)
 	private User user;
+	
+	@ManyToOne(optional = true)
+	private User purchaser;
 
 	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Visit> visits;
@@ -416,6 +419,13 @@ public class Ad {
 		this.visits = visits;
 	}
 	
+	public User getPurchaser() {
+		return purchaser;
+	}
+	public void setPurchaser(User purchaser) {
+		this.purchaser = purchaser;
+	}
+	
 	public boolean getDishwasher() {
 		return dishwasher;
 	}
@@ -423,12 +433,6 @@ public class Ad {
 	public void setDishwasher(boolean dishwasher) {
 		this.dishwasher = dishwasher;
 	}
-/*	public List<Bid> getBids() {
-		return bids;
-	}
-	public void setBids(List<Bid> bids) {
-		this.bids = bids;
-	}*/
 
 	
 	@Override
