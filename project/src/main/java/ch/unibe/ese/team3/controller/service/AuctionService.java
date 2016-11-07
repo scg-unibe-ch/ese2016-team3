@@ -55,9 +55,8 @@ public class AuctionService {
 		logger.info(String.format("Successful purchase for ad %d by user %s", ad.getId(), purchaser.getEmail()));
 		return true;
 	}
-
-	public void bid(Ad ad, User user, int amount) {
-
+	
+	private void bid(Ad ad, User user, int amount) {
 		Bid bid = new Bid();
 		bid.setAd(ad);
 		bid.setAmount(amount);
@@ -67,7 +66,7 @@ public class AuctionService {
 		incrementBidPriceForUser(ad);
 	}
 
-	public void buy(Ad ad, User user) {
+	private void buy(Ad ad, User user) {
 		ad.setAvailable(false);
 		ad.setPurchaser(user);
 		adDao.save(ad);
