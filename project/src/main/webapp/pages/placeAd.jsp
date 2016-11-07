@@ -239,58 +239,59 @@
 								</div>
 							</c:if>
 							<div id="panel-buy-normal">
-								<spring:bind path="price">
+								<spring:bind path="validPrice">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label class="col-sm-3 control-label" for="field-Price">Normal
 											Price (without Auction) </label>
 										<div class="col-sm-5">
 											<form:input id="field-Price" type="number" min="0"
-												path="price" placeholder="Price " step="1"
+												path="price" placeholder="Price" step="1"
 												cssClass="form-control" />
-											<form:errors path="price" cssClass="text-danger" />
+											<form:errors path="validPrice" cssClass="text-danger" />
 										</div>
 									</div>
 								</spring:bind>
 							</div>
 							<c:if test="${pagemode == 'buy' }">
 								<div id="panel-buy-auction">
-									<spring:bind path="price">
+									<spring:bind path="validPrice">
 										<div class="form-group ${status.error ? 'has-error' : '' }">
 											<label class="col-sm-3 control-label" for="field-BuyNowPrice">Immediate
 												Buy Price for Auction </label>
 											<div class="col-sm-5">
 												<form:input id="field-BuyNowPrice" type="number" min="0"
-													path="price" placeholder="Price " step="50"
+													path="auctionPrice" placeholder="Price " step="50"
 													cssClass="form-control" />
-												<form:errors path="price" cssClass="text-danger" />
+												<form:errors path="validPrice" cssClass="text-danger" />
 											</div>
 										</div>
 									</spring:bind>
 
-									<spring:bind path="startDate">
+									<spring:bind path="validStartDate">
 										<div class="form-group ${status.error ? 'has-error' : '' }">
 											<label class="col-sm-3 control-label" for="field-startDate">Startdate
 												for Auction </label>
 											<div class="col-sm-5">
 												<form:input type="text" id="field-startDate"
 													path="startDate" cssClass="form-control" />
-
+												<form:errors path="validStartDate" cssClass="text-danger" />
 											</div>
 										</div>
 									</spring:bind>
 
-									<spring:bind path="endDate">
+									<spring:bind path="validEndDate">
 										<div class="form-group ${status.error ? 'has-error' : '' }">
 											<label class="col-sm-3 control-label" for="field-endDate">Enddate
 												for Auction </label>
 											<div class="col-sm-5">
 												<form:input type="text" id="field-endDate" path="endDate"
 													cssClass="form-control" />
+													<form:errors path="validEndDate" cssClass="text-danger" />
 											</div>
 										</div>
 									</spring:bind>
 
-									<spring:bind path="startPrice">
+									<spring:bind path="validStartPrice">
 										<div class="form-group ${status.error ? 'has-error' : '' }">
 											<label class="col-sm-3 control-label" for="field-startPrice">Startprice
 												for Auction </label>
@@ -298,12 +299,12 @@
 												<form:input id="field-startPrice" path="startPrice"
 													type="number" min="0" placeholder="Startprice " step="1"
 													cssClass="form-control" />
-												<form:errors path="startPrice" cssClass="text-danger" />
+												<form:errors path="validStartPrice" cssClass="text-danger" />
 											</div>
 										</div>
 									</spring:bind>
 
-									<spring:bind path="increaseBidPrice">
+									<spring:bind path="validIncreaseBidPrice">
 										<div class="form-group ${status.error ? 'has-error' : '' }">
 											<label class="col-sm-3 control-label"
 												for="field-increasePrice">Amount of increase of bid
@@ -312,7 +313,7 @@
 												<form:input id="field-increasePrice" path="increaseBidPrice"
 													type="number" min="0" placeholder="Startprice " step="1"
 													cssClass="form-control" />
-												<form:errors path="increaseBidPrice" cssClass="text-danger" />
+												<form:errors path="validIncreaseBidPrice" cssClass="text-danger" />
 											</div>
 										</div>
 									</spring:bind>
@@ -379,11 +380,10 @@
 
 							<spring:bind path="roomDescription">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="roomDescription">Room
-										Description:</label>
+									<label class="col-sm-3 control-label" for="roomDescription">Description:</label>
 									<div class="col-sm-5">
 										<form:textarea path="roomDescription" rows="10" cols="70"
-											placeholder="Room Description" class="form-control" />
+											placeholder="Description" class="form-control" />
 										<form:errors path="roomDescription" cssClass="text-danger" />
 									</div>
 								</div>

@@ -267,7 +267,7 @@ public class AdServiceTest {
 		
 		// iterate over each returned ad and check if the search criteria are fulfilled
 		for (Ad ad: queryedAds) {
-			assertTrue(ad.getPrice()<1000000); // price of form still refers to PrizePerMonth
+			assertTrue(ad.getPrice()<1000000);
 			assertTrue(ad.getType().equals(Type.APARTMENT) ||ad.getType().equals(Type.HOUSE) ||
 					ad.getType().equals(Type.STUDIO) ||ad.getType().equals(Type.VILLA));
 			assertTrue(ad.getBalcony());

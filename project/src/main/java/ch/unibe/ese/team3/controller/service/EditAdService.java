@@ -77,10 +77,6 @@ public class EditAdService {
 		} catch (NumberFormatException e) {
 		}
 
-		// for auction
-		ad.setStartPrice(placeAdForm.getStartPrice());
-		ad.setIncreaseBidPrice(placeAdForm.getIncreaseBidPrice());
-
 		ad.setPrice(placeAdForm.getPrice());
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
 		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
@@ -178,7 +174,8 @@ public class EditAdService {
 		PlaceAdForm adForm = new PlaceAdForm();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
+		adForm.setAuction(ad.isAuction());
+		adForm.setAuctionPrice(ad.getPrice());
 		adForm.setBalcony(ad.getBalcony());
 		adForm.setBuildYear(ad.getBuildYear());
 		adForm.setCity(String.format("%d - %s", ad.getZipcode(), ad.getCity().replaceAll("/", ";")));

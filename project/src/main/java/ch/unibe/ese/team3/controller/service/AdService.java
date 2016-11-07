@@ -114,7 +114,7 @@ public class AdService {
 		ad.setcurrentAuctionPrice(placeAdForm.getStartPrice() + placeAdForm.getIncreaseBidPrice());
 		ad.setAuction(placeAdForm.getAuction());
 
-		ad.setPrice(placeAdForm.getPrice());
+		ad.setPrice(placeAdForm.getPriceForAd());
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
 		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
 		ad.setDistanceShopping(placeAdForm.getDistanceShopping());
