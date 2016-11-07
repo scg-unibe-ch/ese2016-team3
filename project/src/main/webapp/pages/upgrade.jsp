@@ -19,7 +19,7 @@
 	})
 </script>
 <ol class="breadcrumb">
-	<li><a href="./">Homepage</a></li>
+	<li><a href="/${pagemode}/">Homepage</a></li>
 	<li><a href="/user?id=${currentUser.id}">Profile</a></li>
 	<li class="active">Upgrade to Premium</li>
 </ol>
