@@ -109,7 +109,7 @@ The following sections describe abbreviations and special terms used in this doc
 
 
 #### User management
-![User management](images/User_Management.png)
+![User management](images/User_Management2.0.png)
 
 
 |Use case element|Description|
@@ -191,7 +191,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Alternate flow**|If a user enters an invalid value, an error message is shown.|
 
 #### Searching and viewing ads
-![Searching and viewing ads](images/Ad.png)
+![Searching and viewing ads](images/Ad2.0.png)
 
 |Use case element|Description|
 |:---|:---|
@@ -325,7 +325,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Alternate flow**|None|
 
 #### Creating an ad
-![Creating an ad](images/CreateAd.png)
+![Creating an ad](images/CreateAd2.0.png)
 
 |Use case element|Description|
 |:---|:---|
@@ -347,7 +347,7 @@ The following sections describe abbreviations and special terms used in this doc
 
 #### Messaging
 
-![Messaging](images/Messages.png)
+![Messaging](images/Messages2.0.png)
 
 |Use case element|Description|
 |:---|:---|
@@ -396,7 +396,7 @@ The following sections describe abbreviations and special terms used in this doc
 
 #### Enquiries
 
-![Enquiries](images/Enquiries.png)
+![Enquiries](images/Enquiries2.0.png)
 
 |Use case element|Description|
 |:---|:---|
@@ -454,7 +454,7 @@ The following sections describe abbreviations and special terms used in this doc
 
 #### Schedule
 
-![Schedule](images/Schedule.png)
+![Schedule](images/Schedule2.0.png)
 
 |Use case element|Description|
 |:---|:---|
@@ -495,7 +495,7 @@ The following sections describe abbreviations and special terms used in this doc
 
 #### Alerts
 
-![Alerts](images/Alerts.png)
+![Alerts](images/Alerts2.0.png)
 
 |Use case element|Description|
 |:---|:---|
@@ -533,6 +533,11 @@ The following sections describe abbreviations and special terms used in this doc
 |**Normal flow**||1. The user views the active alerts in the Alerts view.
 ||2. The user deletes the alert by clicking the "Delete" button.| 
 |**Alternate flow**|None|
+
+#### Auctions
+
+![Auctions](images/Auction2.0.png)
+
 
 
 see [http://www.gatherspace.com/static/use_case_example.html](http://www.gatherspace.com/static/use_case_example.html)
