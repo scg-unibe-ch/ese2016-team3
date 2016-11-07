@@ -635,10 +635,6 @@ A logged in user can:
 
 - **view incoming messages**: He can see in a chart the subject, sender, recipient and the date sent from the each message he has received. By clicking on a line from this chart he gets a view of the message.
 
-##### E-Mail
-
-Messages to the inbox of the user aren't just sent to the internal inbox of the application. The user also receives them by email.
-
 #### Searching and viewing ads
 
 A user can search for ads by clicking the search button whether or not he's logged in. The initial search is filtered by zip code with max radius, max price and type (apartment, villa, house, studio or loft).
