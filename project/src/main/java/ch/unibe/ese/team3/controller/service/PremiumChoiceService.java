@@ -1,6 +1,5 @@
 package ch.unibe.ese.team3.controller.service;
 
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
