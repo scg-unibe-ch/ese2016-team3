@@ -195,17 +195,7 @@
 							</div>
 							<div class="col-sm-4">
 								<div class="pull-right">
-									<%-- if funktioniert noch nicht ganz... --%>
-									<c:choose>
-										<c:when test="${shownAd.auction }">
-											<h3>${shownAd.buyItNowPrice}&#32;CHF</h3>
-										</c:when>
-										<c:otherwise>
-											<h3>${shownAd.prizePerMonth}&#32;CHF</h3>
-
-										</c:otherwise>
-
-									</c:choose>
+									<h3>${shownAd.price}&#32;CHF</h3>
 								</div>
 							</div>
 						</div>
@@ -474,7 +464,7 @@
 										method="post">
 										<input type="hidden" name="id" value="${shownAd.id }" />
 										<input type="hidden" name="amount"
-											value="${shownAd.buyItNowPrice}" />
+											value="${shownAd.price}" />
 										<div class="form-group">
 											<label class="sr-only" for="exampleInputAmount">Buy
 												now Price in CHF</label>
@@ -483,7 +473,7 @@
 											<div class="input-group">
 												<div class="input-group-addon">CHF</div>
 												<input class="form-control" id="disabledInput" type="text"
-													placeholder=${shownAd.buyItNowPrice } disabled> <span
+													placeholder=${shownAd.price } disabled> <span
 													class="input-group-btn"> <c:choose>
 														<c:when test="${loggedIn }">
 															<button type="submit" class="btn btn-success">Buy</button>

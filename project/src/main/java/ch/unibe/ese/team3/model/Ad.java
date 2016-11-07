@@ -39,7 +39,7 @@ public class Ad {
 	private Date moveInDate;
 
 	@Column(nullable = false)
-	private int prizePerMonth;
+	private int price;
 
 	@Column(nullable = false)
 	private int squareFootage;
@@ -136,9 +136,6 @@ public class Ad {
 	@Column(nullable = true)
 	private int increaseBidPrice;
 	
-	@Column(nullable = true)
-	private int buyItNowPrice;
-	
 	@Column(nullable=true)
 	private int currentAuctionPrice;
 	
@@ -196,12 +193,6 @@ public class Ad {
 	}
 	public void setIncreaseBidPrice(int increaseBidPrice) {
 		this.increaseBidPrice = increaseBidPrice;
-	}
-	public int getBuyItNowPrice() {
-		return buyItNowPrice;
-	}
-	public void setBuyItNowPrice(int buyItNowPrice) {
-		this.buyItNowPrice = buyItNowPrice;
 	}
 	public void setFloorLevel(int floorLevel) {
 		this.floorLevel = floorLevel;
@@ -335,12 +326,12 @@ public class Ad {
 		this.moveInDate = moveInDate;
 	}
 
-	public int getPrizePerMonth() {
-		return prizePerMonth;
+	public int getPrice() {
+		return price;
 	}
 
-	public void setPrizePerMonth(int prizePerMonth) {
-		this.prizePerMonth = prizePerMonth;
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 	public int getSquareFootage() {

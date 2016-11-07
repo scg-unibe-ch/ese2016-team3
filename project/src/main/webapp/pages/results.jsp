@@ -142,14 +142,14 @@
 							</div>
 						</div>
 					</spring:bind>
-					<spring:bind path="prize">
+					<spring:bind path="price">
 						<div class="form-group ${status.error ? 'has-error' : '' }">
-							<label for="prizeInput">Price (max.)</label>
+							<label for="priceInput">Price (max.)</label>
 							<div class="input-group">
 								<span class="input-group-addon">Fr.</span>
-								<form:input id="prizeInput" type="number" path="prize"
+								<form:input id="priceInput" type="number" path="price"
 									placeholder="e.g. 5" step="50" cssClass="form-control" />
-								<form:errors path="prize" />
+								<form:errors path="price" />
 							</div>
 						</div>
 					</spring:bind>
@@ -360,7 +360,7 @@
 				<!-- 				</div> -->
 				<div class="row" id="resultsDiv">
 					<c:forEach var="ad" items="${results}">
-						<div data-price="${ad.prizePerMonth}"
+						<div data-price="${ad.price}"
 							data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}"
 							class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ad-wide-preview-outer resultAd ${ad.isPremiumAd() ? 'premiumAd' : '' }">
 							<div class="col-md-12 ad-wide-preview-inner">
@@ -380,7 +380,7 @@
 										<p>
 											<i>${ad.type.name}</i>
 										</p>
-										<strong>CHF ${ad.prizePerMonth }</strong>
+										<strong>CHF ${ad.price }</strong>
 										<fmt:formatDate value="${ad.moveInDate}"
 											var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 										<p>Move-in date: ${formattedMoveInDate }</p>

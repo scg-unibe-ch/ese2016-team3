@@ -79,10 +79,9 @@ public class EditAdService {
 
 		// for auction
 		ad.setStartPrice(placeAdForm.getStartPrice());
-		ad.setBuyItNowPrice(placeAdForm.getBuyItNowPrice());
 		ad.setIncreaseBidPrice(placeAdForm.getIncreaseBidPrice());
 
-		ad.setPrizePerMonth(placeAdForm.getPrize());
+		ad.setPrice(placeAdForm.getPrice());
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
 		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
 		ad.setDistanceShopping(placeAdForm.getDistanceShopping());
@@ -182,7 +181,6 @@ public class EditAdService {
 
 		adForm.setBalcony(ad.getBalcony());
 		adForm.setBuildYear(ad.getBuildYear());
-		adForm.setBuyItNowPrice(ad.getBuyItNowPrice());
 		adForm.setCity(String.format("%d - %s", ad.getZipcode(), ad.getCity().replaceAll("/", ";")));
 		adForm.setDishwasher(ad.getDishwasher());
 		adForm.setDistancePublicTransport(ad.getDistancePublicTransport());
@@ -202,7 +200,7 @@ public class EditAdService {
 		adForm.setNumberOfBath(ad.getNumberOfBath());
 		adForm.setNumberOfRooms(ad.getNumberOfRooms());
 		adForm.setParking(ad.getParking());
-		adForm.setPrize(ad.getPrizePerMonth());
+		adForm.setPrice(ad.getPrice());
 		adForm.setRenovationYear(ad.getRenovationYear());
 		adForm.setRoomDescription(ad.getRoomDescription());
 		adForm.setSquareFootage(ad.getSquareFootage());

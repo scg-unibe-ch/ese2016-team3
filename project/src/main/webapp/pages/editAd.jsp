@@ -283,15 +283,14 @@
 							</spring:bind>
 
 
-							<spring:bind path="prize">
+							<spring:bind path="price">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="field-Prize">Prize
-										per month</label>
+									<label class="col-sm-3 control-label" for="field-Price">Price</label>
 									<div class="col-sm-5">
-										<form:input id="field-Prize" type="number" min="0"
-											path="prize" placeholder="Prize per month" step="1"
+										<form:input id="field-Price" type="number" min="0"
+											path="price" placeholder="Price" step="1"
 											cssClass="form-control" />
-										<form:errors path="prize" cssClass="text-danger" />
+										<form:errors path="price" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -353,7 +352,7 @@
 
 									<div class="checkbox">
 										<label><form:checkbox id="field-dishwasher"
-												path="dishwasher" /> dishwasher</label>
+												path="dishwasher" /> Dishwasher</label>
 									</div>
 								</div>
 							</div>

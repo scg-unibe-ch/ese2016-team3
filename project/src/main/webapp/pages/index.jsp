@@ -42,8 +42,8 @@
 							<div class="col-md-3">
 								<div class="input-group">
 									<span class="input-group-addon">Fr.</span>
-									<form:input type="number" name="prize" id="prizeInput"
-										path="prize" placeholder="Price (max)" cssClass="form-control" />
+									<form:input type="number" name="price" id="priceInput"
+										path="price" placeholder="Price (max)" cssClass="form-control" />
 								</div>
 							</div>
 							<div class="col-md-3">
@@ -76,15 +76,7 @@
 								<p>
 									<i>${ad.type.name}</i>
 								</p>
-								<c:choose>
-									<c:when test="${ad.auction}">
-										<strong>CHF ${ad.buyItNowPrice }</strong>
-									</c:when>
-									<c:otherwise>
-
-										<strong>CHF ${ad.prizePerMonth }</strong>
-									</c:otherwise>
-								</c:choose>
+								<strong>CHF ${ad.price }</strong>
 								<fmt:formatDate value="${ad.moveInDate}"
 									var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 								<p>Move-in date: ${formattedMoveInDate }</p>

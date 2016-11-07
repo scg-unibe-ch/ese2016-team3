@@ -33,7 +33,7 @@
 				<c:forEach var="ad" items="${ownAdvertisements}">
 					<div class="row bottom15">
 						<div class="col-md-12 ad-wide-preview-inner">
-							<div class="resultAd" data-price="${ad.prizePerMonth}"
+							<div class="resultAd" data-price="${ad.price}"
 								data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
 								<div class="row">
 									<div class="col-sm-4 col-md-4">
@@ -49,7 +49,7 @@
 										<p>
 											<i>${ad.type.name}</i>
 										</p>
-										<strong>CHF ${ad.prizePerMonth }</strong>
+										<strong>CHF ${ad.price }</strong>
 										<p>Move-in date: ${ad.moveInDate }</p>
 									</div>
 								</div>
@@ -78,7 +78,7 @@
 				<c:forEach var="ad" items="${bookmarkedAdvertisements}">
 					<div class="row bottom15">
 						<div class="col-md-12 ad-wide-preview-inner">
-							<div class="resultAd" data-price="${ad.prizePerMonth}"
+							<div class="resultAd" data-price="${ad.price}"
 								data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
 								<div class="row">
 									<div class="col-sm-4 col-md-4">
@@ -94,7 +94,7 @@
 										<p>
 											<i>${ad.type.name}</i>
 										</p>
-										<strong>CHF ${ad.prizePerMonth }</strong>
+										<strong>CHF ${ad.price }</strong>
 										<p>Move-in date: ${ad.moveInDate }</p>
 									</div>
 								</div>

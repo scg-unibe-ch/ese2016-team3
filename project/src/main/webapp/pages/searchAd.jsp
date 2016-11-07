@@ -20,7 +20,7 @@
 			autoFocus : true
 		});
 		
-		var price = document.getElementById('prizeInput');
+		var price = document.getElementById('priceInput');
 		var radius = document.getElementById('radiusInput');
 		
 		if(price.value == null || price.value == "" || price.value == "0")
@@ -76,17 +76,17 @@
 									</div>
 								</div>
 							</spring:bind>
-							<spring:bind path="prize">
+							<spring:bind path="price">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-2 control-label" for="prizeInput">Price
+									<label class="col-sm-2 control-label" for="priceInput">Price
 										(max.)</label>
 									<div class="col-sm-4">
 										<div class="input-group">
 											<span class="input-group-addon">Fr.</span>
-											<form:input id="prizeInput" type="number" path="prize"
+											<form:input id="priceInput" type="number" path="price"
 												placeholder="e.g. 5" step="50" cssClass="form-control" />
 										</div>
-										<form:errors path="prize"/>
+										<form:errors path="price"/>
 									</div>
 								</div>
 							</spring:bind>
