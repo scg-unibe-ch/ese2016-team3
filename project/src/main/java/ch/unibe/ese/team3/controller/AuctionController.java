@@ -33,7 +33,13 @@ public class AuctionController {
 
 //	@Autowired
 //	private TaskScheduler scheduler;
-
+	
+	/**
+	 * @param principal				contains user data
+	 * @param amount				amount, which the user bids (should already be higher than currentAuctionPrice)
+	 * @param id					Ad id
+	 * @param redirectAttributes	
+	 */
 	@RequestMapping(value = "/profile/bidAuction", method = RequestMethod.POST)
 	public ModelAndView bid(Principal principal, @RequestParam int amount, @RequestParam long id, RedirectAttributes redirectAttributes) {
 		User bidder = userService.findUserByUsername(principal.getName());
