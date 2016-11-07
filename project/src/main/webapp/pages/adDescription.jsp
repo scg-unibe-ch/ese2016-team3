@@ -417,51 +417,33 @@
 									Better alternative to avoid duplicated code?-->
 
 								<div class="col-sm-8">
-									<c:choose>
-										<c:when test="${loggedIn}">
-											<form:form name="AuctionBid" action="./bidAuction">
-												<input type="hidden" name="id" value="${shownAd.id }" />
-												<input type="hidden" name="amount"
-													value="${shownAd.bidPriceForUser}" />
-												<%-- fehlt noch: if not logged in-> you can not bid, und wirst zur Login Seite umgeleitet beim Klicken auf bid --%>
-												<div class="form-group">
-													<label class="sr-only" for="bid">Amount</label>
-													<%-- for="bid" stimmt wahrscheinlich nicht --%>
-													<div class="input-group">
-														<div class="input-group-addon">CHF</div>
-														<%--<input type="number" class="form-controll" placeholder="Amount" name="bid"> es fehlt: id = und value= --%>
-														<input class="form-control" id="disabledInput" type="text"
-															placeholder=${shownAd.bidPriceForUser } disabled>
-														<span class="input-group-btn">
 
+									<form:form name="AuctionBid" action="./profile/bidAuction" method="post">
+										<input type="hidden" name="id" value="${shownAd.id }" />
+										<input type="hidden" name="amount"
+											value="${shownAd.bidPriceForUser}" />
+										<%-- fehlt noch: if not logged in-> you can not bid, und wirst zur Login Seite umgeleitet beim Klicken auf bid --%>
+										<div class="form-group">
+											<label class="sr-only" for="bid">Amount</label>
+											<%-- for="bid" stimmt wahrscheinlich nicht --%>
+											<div class="input-group">
+												<div class="input-group-addon">CHF</div>
+												<%--<input type="number" class="form-controll" placeholder="Amount" name="bid"> es fehlt: id = und value= --%>
+												<input class="form-control" id="disabledInput" type="text"
+													placeholder=${shownAd.bidPriceForUser } disabled> <span
+													class="input-group-btn"> <c:choose>
+														<c:when test="${loggedIn }">
 															<button type="submit" class="btn btn-success">Bid</button>
-														</span>
-													</div>
-												</div>
-											</form:form>
-										</c:when>
-										<c:otherwise>
-											<form:form name="AuctionBid" action="./login">
-												<input type="hidden" name="id" value="${shownAd.id }" />
-												<input type="hidden" name="amount"
-													value="${shownAd.bidPriceForUser}" />
-		
-												<div class="form-group">
-													<label class="sr-only" for="bid">Amount</label>
-													<%-- for="bid" stimmt wahrscheinlich nicht --%>
-													<div class="input-group">
-														<div class="input-group-addon">CHF</div>
-														<input class="form-control" id="disabledInput" type="text"
-															placeholder=${shownAd.bidPriceForUser } disabled>
-														<span class="input-group-btn">
+														</c:when>
+														<c:otherwise>
+															<a href="./login" class="btn btn-success">Bid</a>
+														</c:otherwise>
+													</c:choose>
+												</span>
+											</div>
+										</div>
+									</form:form>
 
-															<button type="submit" class="btn btn-success">Bid</button>
-														</span>
-													</div>
-												</div>
-											</form:form>
-										</c:otherwise>
-									</c:choose>
 
 									<!-- 2nd form -->
 									<form:form name="AuctionBuy" action="./buyAuction">

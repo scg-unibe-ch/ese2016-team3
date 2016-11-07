@@ -2,6 +2,7 @@ package ch.unibe.ese.team3.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -25,6 +26,7 @@ public class Bid {
 	@ManyToOne
 	private Ad ad;
 	
+	@Column
 	private int amount;
 	
 	@JsonFormat(pattern = "HH:mm, dd.MM.yyyy")
