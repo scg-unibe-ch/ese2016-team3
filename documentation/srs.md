@@ -4,7 +4,7 @@
 
 ### Purpose
 
-This document gives a detailed description of the requirements for the web application project **FlatFinder**.
+This document gives a detailed description of the requirements for the web application project **Ithaca**.
 
 All functional and non-functional requirements are listed and documented in this document. The document also gives a brief overview of the overall application and collaborating external systems.
 
@@ -16,9 +16,9 @@ The document is continuously updated during the whole project. Old versions of t
 
 ### System overview
 
-The web application **FlatFinder** is a web portal for real estate, where users can place ads for real estate. The goal of the customer is to build a web portal which provides the users effective support with doing real estate related tasks like managing enquiries, organizing on site visits and so on.
+The web application **Ithaca** is a web portal for real estate, where users can place ads for real estate. The goal of the customer is to build a web portal which provides the users with effective support doing real estate related tasks like managing enquiries, organizing on-site visits and so on.
 
-The system being built bases on a already existing application which should be generally revised and extended with additional functionality.
+The system being built is based on an already existing application which should be generally revised and extended with additional functionality.
 
 ### Stakeholders
 
@@ -36,12 +36,10 @@ The following sections describe abbreviations and special terms used in this doc
 
 |Term|Description|
 |---|---|
-|FlatFinder|The web-application for managing ads for real estate|
+|Ithaca|The web-application for managing ads for real estate|
 |Ad|An advertisement for real estate|
 |Enquiry|A request of a person to visit real state|
 |Real estate manager|The person which manages real estate (places ads, organizes visits)|
-|Studio|A small flat with several rooms for rent|
-|Room|A single room for rent|
 
 #### Technical terms
 
@@ -91,6 +89,7 @@ The following sections describe abbreviations and special terms used in this doc
 |uc11|View advertiser profile|The user of the web application|Med|2| 
 |uc12|Send message to advertiser|The user of the web application|Med|1| 
 |uc13|Send enquiry to advertiser|The user of the web application|Med|1| 
+|uc30|Bid for an open auction|The user of the web application|Med|1|
 |uc14|View ad location|The user of the web application|Med|2| 
 |uc15|Create Ad|The user of the web application|High|1| 
 |uc16|Create and send Message|The user of the web application|Med|1| 
@@ -117,19 +116,19 @@ The following sections describe abbreviations and special terms used in this doc
 |:---|:---|
 |**ID**|`uc01`|
 |**Name**|Sign up|
-|**Description**|The user creates a flatfindr account.|
+|**Description**|The user creates an account on Ithaca.|
 |**Primary actor**|User visiting the web portal|
-|**Precondition**|The user visits the start page of the web portal. The user has no flatfindr account yet.|
+|**Precondition**|The user visits the start page of the web portal. The user has no Ithaca account yet.|
 |**Trigger**|A visitor wants to use the application|
 |**Normal flow**|1. The user clicks on the button "login"|
 ||2. The login form and a link "sign up" is shown|
 ||3. The user clicks on the link "sign up"|
 ||4. The sign up form is shown|
-||5. The user enter his name, his email address, a password and selects his gender. He selects the type of his account (normal or premium)|
+||5. The user enter his name, his email address, a password and selects his gender. He selects the type of his account (normal or premium).|
 ||6. The user clicks on the button "Sign up"|
 ||7. The login page and a success message are shown|
 |**Alternate flow**|If the user doesn't fill up the entire sign up form in step 5, validation error messages are shown.|
-||If the user selects "premium" as account type in step 5, additional form elements to get his credit card information is shown.|
+||If the user selects "premium" as account type in step 5, additional form elements for his credit card information and a choice of premium packages for fixed amounts of time are shown.|
 
 |Use case element|Description|
 |:---|:---|
@@ -186,10 +185,10 @@ The following sections describe abbreviations and special terms used in this doc
 |**Precondition**|The user is logged into the the application (`uc02`) and visits his profile page (`uc03`).|
 |**Trigger**|The user wants to upgrade his account to get more benefit of the application|
 |**Normal flow**|1. The user clicks on the button "Upgrade account"|
-||2. A form to get the credit card information of the user is shown|
+||2. A form to get the credit card information of the user is shown. The user has to choose between different packages of a certain amount of time of premium subscription|
 ||3. The user fills out the form and clicks on "Save"|
 ||4. The account is upgraded to premium|
-|**Alternate flow**|None|
+|**Alternate flow**|If a user enters an invalid value, an error message is shown.|
 
 #### Searching and viewing ads
 ![Searching and viewing ads](images/Ad.png)
@@ -202,7 +201,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user visits the web portal.|
 |**Trigger**|The user wants to find specific ads|
-|**Normal flow**|1. The user clicks on the button "Search" in the menu bar|
+|**Normal flow**|1. The user clicks on the button "Find ad" in the menu bar|
 ||2. The search form is shown|
 ||3. The user enters his search criteria|
 ||4. The user clicks on the button "Search"|
@@ -307,7 +306,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Description**|The user send a visiting request to the advertiser|
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user is logged in `uc02` and views a specific ad `uc08`|
-|**Trigger**|The user wants to visit a specific room/studio|
+|**Trigger**|The user wants to visit a specific property|
 |**Normal flow**|1. The user chooses the visiting time from the list of the available visiting times|
 ||2. The user clicks on the button "Send enquiry to advertiser" next to the desired visiting time|
 ||3. The system saves the enquiry and sends it to the advertiser|
@@ -317,12 +316,12 @@ The following sections describe abbreviations and special terms used in this doc
 |:---|:---|
 |**ID**|`uc14`|
 |**Name**|View ad location|
-|**Description**|The user can see the location of the room/studio on a map|
+|**Description**|The user can see the location of the property on a map|
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user views a specific ad `uc08`|
-|**Trigger**|The user wants to see the location of a specific room/studio|
-|**Normal flow**|1. The user clicks on the address of the room/studio|
-||2. The browser opens the GoogleMaps web page and displays the location of the room/studio on the map|
+|**Trigger**|The user wants to see the location of a specific property|
+|**Normal flow**|1. The user clicks on the address of the property|
+||2. The browser opens the GoogleMaps web page and displays the location of the property on the map|
 |**Alternate flow**|None|
 
 #### Creating an ad
@@ -336,15 +335,14 @@ The following sections describe abbreviations and special terms used in this doc
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user is logged into the the application.|
 |**Trigger**|The user wants to create an Ad|
-|**Normal flow**|1. The user hovers over his user image in the header line of the web portal|
-||2. The user clicks on the appearing button "Place an ad"|
-||3. The form "Place an ad" is shown. Optional Fields are labelled with (optional)|
-||4. The user specifies a) the Ad Title, b) Street, c) Move-in date, d) Price per month, e) Type (Studio or Room), f) City / Zip code, g) Move-out date (optional), h) Square Meters|
-||5. The user adds room descriptions to the Ad. Descriptions are added when the user clicks on checkboxes. In addition, the user adds a description as free text.|
-||6. The user describes his preferences in a textfield|
-||7. The user uploads pictures|
-||8. The user specifies preferred Visiting times|
-||9. The user clicks on "Submit" in order to create the Ad|
+|**Normal flow**|1. The user clicks the button "place ad" in the header of the application|
+||2. The form "Place an ad" is shown. Optional Fields are labelled with (optional)|
+||3. The user specifies the Ad Title, the Type of Property; Address; Move-in-Date; Size and number of rooms; floor level; distance to school, shopping and public transport; year of construction and renovation.|
+||4. The user adds property descriptions to the Ad. Descriptions are added when the user clicks on checkboxes. In addition, the user adds a description as free text.|
+||5. The user chooses whether or not the property will be sold in an auction and specifies auction related fields such as starting price, amount of increase, immediate buying price and start and end dates of the auction.|
+||6. The user uploads pictures|
+||7. The user specifies preferred Visiting times|
+||8. The user clicks on "Submit" in order to create the Ad|
 |**Alternate flow**|If a mandatory field is not filled out, an error message pops up which advises the user to add the missing field.|
 
 #### Messaging
@@ -407,7 +405,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Description**|A user, which wants to visit a flat sends an enquiry to the Real estate manager.
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user is logged into the application.|
-|**Trigger**|The user wants visit a flat he is interested in.|
+|**Trigger**|The user wants visit a property he is interested in.|
 |**Normal flow**|1. The user clicks on an Ad he is interested in.|
 ||2. Under "Visiting times", the possible times of a visit are listed.|
 ||3. The user can click on the button "Send enquiry to advertiser" to send an enquiry.|
