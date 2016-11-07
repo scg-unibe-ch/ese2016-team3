@@ -110,6 +110,9 @@ public class Ad {
 
 	@ManyToOne(optional = false)
 	private User user;
+	
+	@ManyToOne(optional = true)
+	private User purchaser;
 
 	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Visit> visits;
@@ -136,12 +139,15 @@ public class Ad {
 	@Column(nullable = true)
 	private int buyItNowPrice;
 	
+	@Column(nullable=true)
 	private int currentAuctionPrice;
-	
-	private int bidPriceForUser;
 	
 	@Column(nullable = false)
 	private boolean auction;
+	
+	// not available if EndDate of auction is passed or 
+	//if someone bought the house before the auction ended
+	private boolean available = true;	
 	
 	
 	public boolean isAuction() {
@@ -150,11 +156,11 @@ public class Ad {
 	public void setAuction(boolean auction) {
 		this.auction = auction;
 	}
-	public int getbidPriceForUser(){
-		return this.bidPriceForUser;
+	public boolean isAvailable() {
+		return available;
 	}
-	public void setbidPriceForUser(int newBidPrice){
-		this.bidPriceForUser=newBidPrice;
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 	public int getcurrentAuctionPrice(){
 		return this.currentAuctionPrice;
@@ -163,6 +169,9 @@ public class Ad {
 		this.currentAuctionPrice=Price;
 	}
 	
+	public boolean isAuctionRunning(){
+		return available && endDate.after(new Date());
+	}
 	
 	public Date getStartDate() {
 		return startDate;
@@ -435,6 +444,13 @@ public class Ad {
 		this.visits = visits;
 	}
 	
+	public User getPurchaser() {
+		return purchaser;
+	}
+	public void setPurchaser(User purchaser) {
+		this.purchaser = purchaser;
+	}
+	
 	public boolean getDishwasher() {
 		return dishwasher;
 	}
@@ -442,12 +458,6 @@ public class Ad {
 	public void setDishwasher(boolean dishwasher) {
 		this.dishwasher = dishwasher;
 	}
-/*	public List<Bid> getBids() {
-		return bids;
-	}
-	public void setBids(List<Bid> bids) {
-		this.bids = bids;
-	}*/
 
 	
 	@Override

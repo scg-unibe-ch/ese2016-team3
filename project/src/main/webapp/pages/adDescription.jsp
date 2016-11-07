@@ -21,6 +21,11 @@
 <script src="/js/adDescription.js"></script>
 
 <script>
+	<%-- defines functionality of bid button--%>
+	function bidButton(){
+		print("HelloWorld");
+	}
+	
 	var shownAdvertisementID = "${shownAd.id}";
 	var shownAdvertisement = "${shownAd}";
 	
@@ -152,7 +157,8 @@
 							</button>
 						</c:when>
 						<c:otherwise>
-							<a class="btn btn-primary" href="./profile/editAd?id=${shownAd.id}">Edit Ad</a>
+							<a class="btn btn-primary"
+								href="./profile/editAd?id=${shownAd.id}">Edit Ad</a>
 						</c:otherwise>
 					</c:choose>
 				</c:when>
@@ -189,7 +195,17 @@
 							</div>
 							<div class="col-sm-4">
 								<div class="pull-right">
-									<h3>${shownAd.prizePerMonth}&#32;CHF</h3>
+									<%-- if funktioniert noch nicht ganz... --%>
+									<c:choose>
+										<c:when test="${shownAd.auction }">
+											<h3>${shownAd.buyItNowPrice}&#32;CHF</h3>
+										</c:when>
+										<c:otherwise>
+											<h3>${shownAd.prizePerMonth}&#32;CHF</h3>
+
+										</c:otherwise>
+
+									</c:choose>
 								</div>
 							</div>
 						</div>
@@ -209,12 +225,7 @@
 						<th>Available from</th>
 						<td>${formattedMoveInDate}</td>
 					</tr>
-				<%-- 
-					<tr>
-						<th>Move-out date</th>
-						<td>${formattedMoveOutDate}</td>
-					</tr>
-					--%>
+
 
 					<tr>
 						<th>Square meters</th>
@@ -391,62 +402,97 @@
 				</div>
 
 
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-sm-4">
-								<h4>Auction</h4>
-								<fmt:formatDate value="${ad.startDate}"
-												var="formattedStartDate" type="date" pattern="dd.MM.yyyy" />
-											<p>Running until :${formattedStartDate}</p>
+				<c:if test="${shownAd.auction  && shownAd.isAuctionRunning() && loggedInUserEmail != shownAd.user.username}">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-sm-4">
+									<h4>Auction</h4>
+									<fmt:formatDate value="${shownAd.endDate}"
+										var="formattedEndDate" type="date" pattern="dd.MM.yyyy" />
+									<p>Running until: ${formattedEndDate}</p>
 
-											<p>
-												Current price: <strong>${ad.currentAuctionPrice} CHF</strong>
-											</p>
-							</div>
-							
-							 <div class="col-sm-8">
-							 <%-- <form:form ?? --%>
-							<div class="form-group">
-												<label class="sr-only" for="bid">Amount</label>
-												<%-- for="bid" stimmt wahrscheinlich nicht --%>
-												<div class="input-group">
-													<div class="input-group-addon">CHF</div>
-													<%--<input type="number" class="form-controll" placeholder="Amount" name="bid"> es fehlt: id = und value= --%>
-													<input class="form-control" id="disabledInput" type="text"
-														placeholder=${ad.bidPriceForUser } disabled> <span
-														class="input-group-btn">
-														<button type="button" class="btn btn-success">Bid</button>
-													</span>
+									<p>
+										Current price: <strong>${shownAd.currentAuctionPrice  - shownAd.increaseBidPrice}
+											CHF</strong>
+									</p>
+								</div>
+								<!-- Exception is thrown if button is pressed without login -->
 
-												</div>
-											</div>
-							
-							
-							
-											<div class="form-group">
-												<label class="sr-only" for="exampleInputAmount">Buy
-													now Price in CHF</label>
-												<%-- for stimmt wahrscheinlich nicht --%>
-												<div class="input-group">
-													<div class="input-group-addon">CHF</div>
-													<input class="form-control" id="disabledInput" type="text"
-														placeholder=${ad.buyItNowPrice } disabled> <span
-														class="input-group-btn">
-														<button type="button" class="btn btn-success">Buy
-														</button>
-													</span>
-												</div>
+								<!-- 2 forms are created: one for buy, one for bid. The buy / bid buttons submit the form to the controller 
+									creates different forms when user is logged in, and when user is not logged in
+									
+									Better alternative to avoid duplicated code?-->
+
+								<div class="col-sm-8">
+
+									<form:form name="AuctionBid" action="./profile/bidAuction" method="post">
+										<input type="hidden" name="id" value="${shownAd.id }" />
+										<input type="hidden" name="amount"
+											value="${shownAd.currentAuctionPrice}" />
+										<%-- fehlt noch: if not logged in-> you can not bid, und wirst zur Login Seite umgeleitet beim Klicken auf bid --%>
+										<div class="form-group">
+											<label class="sr-only" for="bid">Amount</label>
+											<%-- for="bid" stimmt wahrscheinlich nicht --%>
+											<div class="input-group">
+												<div class="input-group-addon">CHF</div>
+												<%--<input type="number" class="form-controll" placeholder="Amount" name="bid"> es fehlt: id = und value= --%>
+												<input class="form-control" id="disabledInput" type="text"
+													placeholder=${shownAd.currentAuctionPrice } disabled> <span
+													class="input-group-btn"> <c:choose>
+														<c:when test="${loggedIn }">
+															<button type="submit" class="btn btn-success">Bid</button>
+														</c:when>
+														<c:otherwise>
+															<a href="./login" class="btn btn-success">Bid</a>
+														</c:otherwise>
+													</c:choose>
+												</span>
 											</div>
 										</div>
-							
+									</form:form>
+
+
+									<!-- 2nd form -->
+									<form:form name="AuctionBuy" action="./profile/buyAuction" method="post">
+										<input type="hidden" name="id" value="${shownAd.id }" />
+										<input type="hidden" name="amount"
+											value="${shownAd.buyItNowPrice}" />
+										<div class="form-group">
+											<label class="sr-only" for="exampleInputAmount">Buy
+												now Price in CHF</label>
+											<%-- for stimmt wahrscheinlich nicht --%>
+											<%-- fehlt noch: if not logged in-> you can not bid, und wirst zur Login Seite umgeleitet beim Klicken auf bid --%>
+											<div class="input-group">
+												<div class="input-group-addon">CHF</div>
+												<input class="form-control" id="disabledInput" type="text"
+													placeholder=${shownAd.buyItNowPrice } disabled> <span
+													class="input-group-btn">
+													<c:choose>
+														<c:when test="${loggedIn }">
+															<button type="submit" class="btn btn-success">Buy</button>
+														</c:when>
+														<c:otherwise>
+															<a href="./login" class="btn btn-success">Buy</a>
+														</c:otherwise>
+													</c:choose>
+												</span>
+											</div>
+										</div>
+									</form:form>
+								</div>
+
+							</div>
 						</div>
 					</div>
-				</div>
-				
-				
-				
-				
+
+
+				</c:if>
+
+
+
+
+
 			</div>
 		</div>
 

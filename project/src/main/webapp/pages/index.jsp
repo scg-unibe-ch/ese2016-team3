@@ -76,7 +76,15 @@
 								<p>
 									<i>${ad.type.name}</i>
 								</p>
-								<strong>CHF ${ad.prizePerMonth }</strong>
+								<c:choose>
+									<c:when test="${ad.auction}">
+										<strong>CHF ${ad.buyItNowPrice }</strong>
+									</c:when>
+									<c:otherwise>
+
+										<strong>CHF ${ad.prizePerMonth }</strong>
+									</c:otherwise>
+								</c:choose>
 								<fmt:formatDate value="${ad.moveInDate}"
 									var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 								<p>Move-in date: ${formattedMoveInDate }</p>

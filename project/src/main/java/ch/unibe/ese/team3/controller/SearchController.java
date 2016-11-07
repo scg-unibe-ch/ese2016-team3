@@ -1,5 +1,7 @@
 package ch.unibe.ese.team3.controller;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,13 +46,16 @@ public class SearchController {
 	 * in the search form.
 	 */
 	@RequestMapping(value = "/results", method = RequestMethod.POST)
-	public ModelAndView results(@Valid SearchForm searchForm,
-			BindingResult result, @RequestAttribute("pageMode") PageMode pageMode) {
+	public ModelAndView results(@Valid SearchForm searchForm, BindingResult result,
+			@RequestAttribute("pageMode") PageMode pageMode, Principal principal) {
 		if (!result.hasErrors()) {
 			ModelAndView model = new ModelAndView("results");
 			model.addObject("results", adService.queryResults(searchForm, BuyMode.fromPageMode(pageMode)));
 			model.addObject("types", Type.values());
 			model.addObject("infrastructureTypes", InfrastructureType.values());
+			
+			String loggedInUserEmail = (principal == null) ? "" : principal.getName();
+			model.addObject("loggedInUserEmail", loggedInUserEmail);
 			return model;
 		} else {
 			// go back
