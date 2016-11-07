@@ -56,7 +56,7 @@ public class AuctionService {
 		return true;
 	}
 
-	public void bid(Ad ad, User user, int amount) {
+	private void bid(Ad ad, User user, int amount) {
 		
 		Bid bid = new Bid();
 		bid.setAd(ad);
@@ -67,7 +67,7 @@ public class AuctionService {
 		incrementBidPriceForUser(ad);
 	}
 
-	public void buy(Ad ad, User user) {
+	private void buy(Ad ad, User user) {
 		ad.setAvailable(false);
 		ad.setPurchaser(user);
 		adDao.save(ad);
