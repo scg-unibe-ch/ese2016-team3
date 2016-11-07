@@ -405,7 +405,7 @@
 									<p>Running until: ${formattedEndDate}</p>
 
 									<p>
-										Current price: <strong>${shownAd.currentAuctionPrice}
+										Current price: <strong>${shownAd.currentAuctionPrice  - shownAd.increaseBidPrice}
 											CHF</strong>
 									</p>
 								</div>
@@ -421,7 +421,7 @@
 									<form:form name="AuctionBid" action="./profile/bidAuction" method="post">
 										<input type="hidden" name="id" value="${shownAd.id }" />
 										<input type="hidden" name="amount"
-											value="${shownAd.bidPriceForUser}" />
+											value="${shownAd.currentAuctionPrice}" />
 										<%-- fehlt noch: if not logged in-> you can not bid, und wirst zur Login Seite umgeleitet beim Klicken auf bid --%>
 										<div class="form-group">
 											<label class="sr-only" for="bid">Amount</label>
@@ -430,7 +430,7 @@
 												<div class="input-group-addon">CHF</div>
 												<%--<input type="number" class="form-controll" placeholder="Amount" name="bid"> es fehlt: id = und value= --%>
 												<input class="form-control" id="disabledInput" type="text"
-													placeholder=${shownAd.bidPriceForUser } disabled> <span
+													placeholder=${shownAd.currentAuctionPrice } disabled> <span
 													class="input-group-btn"> <c:choose>
 														<c:when test="${loggedIn }">
 															<button type="submit" class="btn btn-success">Bid</button>

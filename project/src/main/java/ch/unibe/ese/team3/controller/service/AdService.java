@@ -107,8 +107,7 @@ public class AdService {
 		ad.setStartPrice(placeAdForm.getStartPrice());
 		ad.setBuyItNowPrice(placeAdForm.getBuyItNowPrice());
 		ad.setIncreaseBidPrice(placeAdForm.getIncreaseBidPrice());
-		ad.setbidPriceForUser(placeAdForm.getStartPrice() + placeAdForm.getIncreaseBidPrice());
-		ad.setcurrentAuctionPrice(placeAdForm.getStartPrice());
+		ad.setcurrentAuctionPrice(placeAdForm.getStartPrice() + placeAdForm.getIncreaseBidPrice());
 		ad.setAuction(placeAdForm.getAuction());
 		
 		

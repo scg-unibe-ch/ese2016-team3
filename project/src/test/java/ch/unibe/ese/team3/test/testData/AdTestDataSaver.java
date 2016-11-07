@@ -673,8 +673,7 @@ public class AdTestDataSaver {
 		auctionAd1.setStartPrice(1500);
 		auctionAd1.setBuyItNowPrice(5000);
 		auctionAd1.setIncreaseBidPrice(100);
-		auctionAd1.setcurrentAuctionPrice(auctionAd1.getStartPrice());
-		auctionAd1.setbidPriceForUser(auctionAd1.getcurrentAuctionPrice() + auctionAd1.getIncreaseBidPrice() );
+		auctionAd1.setcurrentAuctionPrice(auctionAd1.getStartPrice() + auctionAd1.getIncreaseBidPrice());
 		auctionAd1.setStartDate(startAuctionDate1);
 		auctionAd1.setEndDate(endAuctionDate1);
 		

@@ -75,7 +75,7 @@ public class AuctionService {
 
 	private void incrementBidPriceForUser(Ad ad) {
 
-		ad.setbidPriceForUser(ad.getcurrentAuctionPrice() + ad.getIncreaseBidPrice());
+		ad.setcurrentAuctionPrice(ad.getcurrentAuctionPrice() + ad.getIncreaseBidPrice());
 		adDao.save(ad);
 	}
 	

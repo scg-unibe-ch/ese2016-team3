@@ -133,9 +133,8 @@ public class Ad {
 	@Column(nullable = true)
 	private int buyItNowPrice;
 	
+	@Column(nullable=true)
 	private int currentAuctionPrice;
-	
-	private int bidPriceForUser;
 	
 	@Column(nullable = false)
 	private boolean auction;
@@ -156,12 +155,6 @@ public class Ad {
 	}
 	public void setAvailable(boolean available) {
 		this.available = available;
-	}
-	public int getbidPriceForUser(){
-		return this.bidPriceForUser;
-	}
-	public void setbidPriceForUser(int newBidPrice){
-		this.bidPriceForUser=newBidPrice;
 	}
 	public int getcurrentAuctionPrice(){
 		return this.currentAuctionPrice;
