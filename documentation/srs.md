@@ -521,7 +521,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user is logged into the application. The user is in the Alerts view (`uc25`).|
 |**Trigger**|The user want to subscribe to an alert.|
-|**Normal flow**||1. The user fills out a form, in which he specifies under which conditions a newly created Ad creates an alert. Type of room, Location and maximal price are specified.|
+|**Normal flow**|1. The user fills out a form, in which he specifies under which conditions a newly created Ad creates an alert. Type of room, Location and maximal price are specified.|
 ||2. The user subscribes to the alert by clicking the "Subscribe" button.| 
 |**Alternate flow**|If the criteria specified under point 1. are not entered correctly, an error message is displayed.|
 
@@ -533,7 +533,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user is logged into the application. The user is in the Alerts view (`uc25`). The user has created an alert.|
 |**Trigger**|The user wants to delete an alert.|
-|**Normal flow**||1. The user views the active alerts in the Alerts view.|
+|**Normal flow**|1. The user views the active alerts in the Alerts view.|
 ||2. The user deletes the alert by clicking the "Delete" button.| 
 |**Alternate flow**|None|
 
@@ -549,7 +549,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user is logged into the application. The user is viewing an ad of a property that is being sold through an auction.|
 |**Trigger**|The user wants to buy a property through auction.|
-|**Normal flow**||1. The user views the description of the ad and sees how much has been bid for the property and how much increase he has to bid in order to partake in the auction.|
+|**Normal flow**|1. The user views the description of the ad and sees how much has been bid for the property and how much increase he has to bid in order to partake in the auction.|
 ||2. The user pushes the bid button and a message pops up that the bid was successful.| 
 |**Alternate flow**|If the auction ends during the time the user is viewing the ad and tries to bid, an error message is shown, that the auction has already ended.|
 
@@ -561,7 +561,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user is logged into the application. The user is viewing an ad of a property that is being sold through an auction.|
 |**Trigger**|The user wants to buy a property directly and not bid in the auction.|
-|**Normal flow**||1. The user views the description of the ad and checks what the fix buying price for the property is.|
+|**Normal flow**|1. The user views the description of the ad and checks what the fix buying price for the property is.|
 ||2. The user pushes the buy button and a message pops up that the purchase was successful.|
 ||3. The auction field disappears from the ad site.| 
 |**Alternate flow**|If the auction ends during the time the user is viewing the ad and tries to bid, an error message is shown, that the auction has already ended.|
