@@ -137,7 +137,7 @@ public class Ad {
 	private int increaseBidPrice;
 	
 	@Column(nullable=true)
-	private int currentAuctionPrice;
+	private int currentAuctionPrice = startPrice + increaseBidPrice;
 	
 	@Column(nullable = false)
 	private boolean auction;

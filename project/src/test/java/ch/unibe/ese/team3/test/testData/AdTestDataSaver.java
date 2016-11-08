@@ -96,7 +96,7 @@ public class AdTestDataSaver {
 		adBern.setDistanceShopping(100);
 		adBern.setFloorLevel(2);
 		adBern.setNumberOfRooms(2);
-		adBern.setAuction(false);
+	//	adBern.setAuction(false);
 		
 		// set auction specific attributes
 		adBern.setAuction(true);
@@ -669,7 +669,7 @@ public class AdTestDataSaver {
 		auctionAd1.setAuction(true);
 		auctionAd1.setStartPrice(1500);
 		auctionAd1.setIncreaseBidPrice(100);
-		auctionAd1.setcurrentAuctionPrice(auctionAd1.getStartPrice() + auctionAd1.getIncreaseBidPrice());
+	//	auctionAd1.setcurrentAuctionPrice(auctionAd1.getStartPrice() + auctionAd1.getIncreaseBidPrice());
 		auctionAd1.setStartDate(startAuctionDate1);
 		auctionAd1.setEndDate(endAuctionDate1);
 		
