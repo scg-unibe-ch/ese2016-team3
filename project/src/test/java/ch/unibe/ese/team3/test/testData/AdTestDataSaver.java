@@ -104,6 +104,7 @@ public class AdTestDataSaver {
 		adBern.setEndDate(formatter.parse("03.12.2016"));
 		adBern.setStartPrice(70000);
 		adBern.setIncreaseBidPrice(1000);
+		adBern.setcurrentAuctionPrice(adBern.getStartPrice() + adBern.getIncreaseBidPrice());
 		
 		adBern.setInfrastructureType(InfrastructureType.CABLE);
 		List<AdPicture> pictures = new ArrayList<>();
@@ -659,7 +660,7 @@ public class AdTestDataSaver {
 		auctionAd1.setBuildYear(1999);
 		auctionAd1.setRenovationYear(2015);
 		auctionAd1.setDistancePublicTransport(1000);
-		auctionAd1.setDistanceSchool(10000);
+		auctionAd1.setDistanceSchool(2000);
 		auctionAd1.setDistanceShopping(800);
 		auctionAd1.setFloorLevel(1);
 		auctionAd1.setNumberOfRooms(10);
