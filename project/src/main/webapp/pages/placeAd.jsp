@@ -260,7 +260,7 @@
 												Buy Price for Auction </label>
 											<div class="col-sm-5">
 												<form:input id="field-BuyNowPrice" type="number" min="0"
-													path="auctionPrice" placeholder="Price " step="50"
+													path="auctionPrice" placeholder="Price "
 													cssClass="form-control" />
 												<form:errors path="validPrice" cssClass="text-danger" />
 											</div>
