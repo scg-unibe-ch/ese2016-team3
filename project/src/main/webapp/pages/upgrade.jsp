@@ -157,19 +157,27 @@
 					</spring:bind>
 
 
+					<div class="form-group pull-right">
+						<div class="col-sm-12">
+							<form:button href="/user?id=${currentUser.id}"
+								class="btn btn-default">Cancel</form:button>
+							<form:button type="submit" class="btn btn-primary" value="update">Upgrade Now</form:button>
+						</div>
+					</div>
+
 			</div>
-			</div>
+		</div>	
 			
 		<div class="form-group pull-right">
 			<div class="col-sm-12">	
 				<form:button href="/user?id=${currentUser.id}" class="btn btn-default">Cancel</form:button>
 
 				<form:button type="submit" class="btn btn-primary" value="update" >Upgrade Now</form:button>
+				</form:form>
 			</div>
+>>>>>>> 6735ba81547cbde7ea8c206e16c90cf42520ed54
 		</div>
-		</form:form>
 	</div>
-</div>
 </div>
 
 
