@@ -33,14 +33,6 @@ public class AuctionService {
 	@Autowired
 	private AdDao adDao;
 
-	private boolean auctionIsRunning(Ad ad) {
-		Date endDate = ad.getEndDate();
-		Date startDate = ad.getStartDate();
-		Date currentDate = new Date();
-
-		return !(currentDate.after(endDate) || currentDate.before(startDate));
-	}
-
 	@Transactional
 	public boolean checkAndBid(Ad ad, User bidder, int amount) {
 		if (!canBid(ad, amount)) {
@@ -93,14 +85,14 @@ public class AuctionService {
 	}
 
 	private boolean canBuy(Ad ad) {
-		if (!ad.isAvailable() || !auctionIsRunning(ad)) {
+		if (!ad.isAvailableForAuction() || !ad.isAuctionRunning()) {
 			return false;
 		}
 		return true;
 	}
 
 	private boolean canBid(Ad ad, int amount) {
-		if (!ad.isAvailable() || !auctionIsRunning(ad)) {
+		if (!ad.isAvailableForAuction() || !ad.isAuctionRunning()) {
 			return false;
 		}
 
@@ -113,24 +105,29 @@ public class AuctionService {
 	}
 
 	public void resumeAuction(Ad ad) {
-		ad.setAvailable(true);
+		ad.setAvailableForAuction(true);
 		adDao.save(ad);
 	}
 
 	public void stopAuction(Ad ad) {
-		ad.setAvailable(false);
+		ad.setAvailableForAuction(false);
+		adDao.save(ad);
+	}
+	
+	public void completeAuction(Ad ad){
+		ad.setAuctionCompleted(true);
+		ad.setAvailableForAuction(false);
 		adDao.save(ad);
 	}
 
 	public List<Ad> getNotYetRunningAuctionsForUser(User owner) {
-		Date now = new Date();
 		ArrayList<Ad> ads = new ArrayList<Ad>();
 		Iterable<Ad> auctionAds = adDao.findByUserAndAuction(owner, true);
 		Iterator<Ad> iter = auctionAds.iterator();
 
 		while (iter.hasNext()) {
 			Ad ad = iter.next();
-			if (ad.isAvailable() && now.before(ad.getStartDate())) {
+			if (ad.isAuctionNotYetRunning()) {
 				ads.add(ad);
 			}
 		}
@@ -139,13 +136,12 @@ public class AuctionService {
 	}
 
 	public List<Ad> getRunningAuctionsForUser(User owner) {
-		Date now = new Date();
 		ArrayList<Ad> ads = new ArrayList<Ad>();
 		Iterable<Ad> auctionAds = adDao.findByUserAndAuction(owner, true);
 		Iterator<Ad> iter = auctionAds.iterator();
 		while (iter.hasNext()) {
 			Ad ad = iter.next();
-			if (ad.isAvailable() && (now.after(ad.getStartDate()) && now.before(ad.getEndDate()))) {
+			if (ad.isAuctionRunning()) {
 				ads.add(ad);
 			}
 		}
@@ -154,14 +150,13 @@ public class AuctionService {
 	}
 
 	public List<Ad> getExpiredAuctionsForUser(User owner) {
-		Date now = new Date();
 		ArrayList<Ad> ads = new ArrayList<Ad>();
 		Iterable<Ad> auctionAds = adDao.findByUserAndAuction(owner, true);
 		Iterator<Ad> iter = auctionAds.iterator();
 
 		while (iter.hasNext()) {
 			Ad ad = iter.next();
-			if (ad.isAvailable() && now.after(ad.getEndDate())) {
+			if (ad.hasAuctionExpired()) {
 				ads.add(ad);
 			}
 		}
@@ -170,14 +165,13 @@ public class AuctionService {
 	}
 
 	public List<Ad> getStoppedAuctionsForUser(User owner) {
-		Date now = new Date();
 		ArrayList<Ad> ads = new ArrayList<Ad>();
 		Iterable<Ad> auctionAds = adDao.findByUserAndAuction(owner, true);
 		Iterator<Ad> iter = auctionAds.iterator();
 
 		while (iter.hasNext()) {
 			Ad ad = iter.next();
-			if (!ad.isAvailable() && (now.after(ad.getStartDate()) && now.before(ad.getEndDate()))) {
+			if (ad.isAuctionStopped()) {
 				ads.add(ad);
 			}
 		}
@@ -186,14 +180,13 @@ public class AuctionService {
 	}
 
 	public List<Ad> getCompletedAuctionsForUser(User owner) {
-		Date now = new Date();
 		ArrayList<Ad> ads = new ArrayList<Ad>();
 		Iterable<Ad> auctionAds = adDao.findByUserAndAuction(owner, true);
 		Iterator<Ad> iter = auctionAds.iterator();
 
 		while (iter.hasNext()) {
 			Ad ad = iter.next();
-			if (!ad.isAvailable() && now.after(ad.getEndDate())) {
+			if (ad.isAuctionCompleted()) {
 				ads.add(ad);
 			}
 		}

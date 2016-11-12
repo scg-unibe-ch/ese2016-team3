@@ -53,6 +53,36 @@
 				</div>
 			</div>
 		</div>
+		<c:if test="${ad.isAuctionRunning() || ad.hasAuctionExpired() || ad.isAuctionStopped() }">
+			<form:form method="Post" cssClass="pull-right"
+				action="/${pagemode}/profile/auction/complete">
+				<input type="hidden" id="adIdComplete" name="adIdComplete"
+					value="${ad.id}" />
+				<button class="btn btn-success" type="submit">
+					<span class="glyphicon glyphicon-check"></span> Complete auction
+				</button>
+			</form:form>
+		</c:if>
+		<c:if test="${ad.isAuctionStopped()}">
+			<form:form method="Post" cssClass="pull-right"
+				action="/${pagemode}/profile/auction/resume">
+				<input type="hidden" id="adIdResume" name="adIdResume"
+					value="${ad.id}" />
+				<button class="btn btn-default" type="submit">
+					<span class="glyphicon glyphicon-repeat"></span> Resume auction
+				</button>
+			</form:form>
+		</c:if>
+		<c:if test="${ad.isAuctionRunning() }">
+			<form:form method="Post" cssClass="pull-right"
+				action="/${pagemode}/profile/auction/pause">
+				<input type="hidden" id="adIdPause" name="adIdPause"
+					value="${ad.id}" />
+				<button class="btn btn-default" type="submit">
+					<span class="glyphicon glyphicon-pause"></span> Pause auction
+				</button>
+			</form:form>
+		</c:if>
 	</div>
 </div>
 <div class="row">

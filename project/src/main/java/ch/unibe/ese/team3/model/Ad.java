@@ -154,32 +154,38 @@ public class Ad {
 	@Column(nullable = false)
 	private boolean auction;
 	
-	// not available if EndDate of auction is passed or 
-	//if someone bought the house before the auction ended
-	private boolean available = true;	
+	private boolean availableForAuction = true;
 	
+	private boolean auctionCompleted = false;
 	
 	public boolean isAuction() {
 		return auction;
 	}
+	
 	public void setAuction(boolean auction) {
 		this.auction = auction;
 	}
-	public boolean isAvailable() {
-		return available;
+	
+	public boolean isAvailableForAuction() {
+		return availableForAuction;
 	}
-	public void setAvailable(boolean available) {
-		this.available = available;
+	
+	public void setAvailableForAuction(boolean available) {
+		this.availableForAuction = available;
+	}
+
+	public boolean isAuctionCompleted() {
+		return auctionCompleted;
+	}
+	
+	public void setAuctionCompleted(boolean auctionCompleted) {
+		this.auctionCompleted = auctionCompleted;
 	}
 	public int getCurrentAuctionPrice(){
 		return this.currentAuctionPrice;
 	}
 	public void setcurrentAuctionPrice(int Price){
 		this.currentAuctionPrice=Price;
-	}
-	
-	public boolean isAuctionRunning(){
-		return available && endDate.after(new Date());
 	}
 	
 	public Date getStartDate() {
@@ -491,5 +497,25 @@ public class Ad {
 		this.purchaseRequests = new ArrayList<PurchaseRequest>();
 		this.visits = new ArrayList<Visit>();
 		this.pictures = new ArrayList<AdPicture>();
+	}
+	
+	public boolean isAuctionStopped() {
+		Date now = new Date();
+		return !auctionCompleted && !availableForAuction && now.after(startDate) && now.before(endDate);
+	}
+	
+	public boolean hasAuctionExpired() {
+		Date now = new Date();
+		return !auctionCompleted && availableForAuction && now.after(endDate);
+	}
+	
+	public boolean isAuctionRunning(){
+		Date now = new Date();
+		return !auctionCompleted && availableForAuction && now.after(startDate) && now.before(endDate);
+	}
+	
+	public boolean isAuctionNotYetRunning() {
+		Date now = new Date();
+		return !auctionCompleted && availableForAuction && now.before(startDate);
 	}
 }
