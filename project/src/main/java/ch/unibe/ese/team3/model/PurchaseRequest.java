@@ -1,8 +1,6 @@
 package ch.unibe.ese.team3.model;
 
 import java.util.Date;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,22 +12,17 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public class Bid {
-	
-
+public class PurchaseRequest {
 	@Id
 	@GeneratedValue
 	private long id; 
 	
 	@ManyToOne
-	private User bidder;
+	private User purchaser;
 	
 	@ManyToOne
 	@JoinColumn(name = "ad_id")
 	private Ad ad;
-	
-	@Column
-	private int amount;
 	
 	@JsonFormat(pattern = "HH:mm, dd.MM.yyyy")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -44,12 +37,12 @@ public class Bid {
 		this.id = id;
 	}
 
-	public User getBidder() {
-		return bidder;
+	public User getPurchaser() {
+		return purchaser;
 	}
 
-	public void setBidder(User bidder) {
-		this.bidder = bidder;
+	public void setPurchaser(User purchaser) {
+		this.purchaser = purchaser;
 	}
 
 	public Ad getAd() {
@@ -60,14 +53,6 @@ public class Bid {
 		this.ad = ad;
 	}
 
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
 	public Date getTimeStamp() {
 		return timeStamp;
 	}
@@ -75,6 +60,4 @@ public class Bid {
 	public void setTimeStamp(Date timeStamp) {
 		this.timeStamp = timeStamp;
 	}
-	
-
 }

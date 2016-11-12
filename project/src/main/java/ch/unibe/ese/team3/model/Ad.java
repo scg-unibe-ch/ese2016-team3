@@ -1,5 +1,6 @@
 package ch.unibe.ese.team3.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -100,19 +101,30 @@ public class Ad {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<AdPicture> pictures;
 	
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval=true, fetch = FetchType.EAGER)	
+	private List<Bid> bids;
+		
+	public List<Bid> getBids() {
+		return bids;
+	}
+	public void setBids(List<Bid> bids) {
+		this.bids = bids;
+	}
 	
-//	//new
-//	@Fetch(FetchMode.SELECT)
-//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
-//	private List<Bid> bids;
-
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval=true, fetch = FetchType.EAGER)	
+	private List<PurchaseRequest> purchaseRequests;
 	
+	public List<PurchaseRequest> getPurchaseRequests() {
+		return purchaseRequests;
+	}
+	public void setPurchaseRequests(List<PurchaseRequest> purchaseRequests) {
+		this.purchaseRequests = purchaseRequests;
+	}
 
 	@ManyToOne(optional = false)
 	private User user;
-	
-	@ManyToOne(optional = true)
-	private User purchaser;
 
 	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Visit> visits;
@@ -159,7 +171,7 @@ public class Ad {
 	public void setAvailable(boolean available) {
 		this.available = available;
 	}
-	public int getcurrentAuctionPrice(){
+	public int getCurrentAuctionPrice(){
 		return this.currentAuctionPrice;
 	}
 	public void setcurrentAuctionPrice(int Price){
@@ -435,13 +447,6 @@ public class Ad {
 		this.visits = visits;
 	}
 	
-	public User getPurchaser() {
-		return purchaser;
-	}
-	public void setPurchaser(User purchaser) {
-		this.purchaser = purchaser;
-	}
-	
 	public boolean getDishwasher() {
 		return dishwasher;
 	}
@@ -479,5 +484,12 @@ public class Ad {
 			return this.user.isPremium();
 		}
 		return false;
+	}
+	
+	public Ad(){
+		this.bids = new ArrayList<Bid>();
+		this.purchaseRequests = new ArrayList<PurchaseRequest>();
+		this.visits = new ArrayList<Visit>();
+		this.pictures = new ArrayList<AdPicture>();
 	}
 }

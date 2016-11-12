@@ -144,7 +144,11 @@ public class AdService {
 			picture.setFilePath(filePath);
 			pictures.add(picture);
 		}
-		ad.setPictures(pictures);
+		
+		List<AdPicture> existingPictures = ad.getPictures();
+		
+		existingPictures.clear();
+		existingPictures.addAll(pictures);
 
 		// visits
 		List<Visit> visits = new LinkedList<>();
@@ -171,7 +175,7 @@ public class AdService {
 				visit.setAd(ad);
 				visits.add(visit);
 			}
-			ad.setVisits(visits);
+			ad.getVisits().addAll(visits);
 		}
 
 		ad.setUser(user);

@@ -110,7 +110,7 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adBern, "/img/test/ad1_1.jpg"));
 		pictures.add(createPicture(adBern, "/img/test/ad1_2.jpg"));
 		pictures.add(createPicture(adBern, "/img/test/ad1_3.jpg"));
-		adBern.setPictures(pictures);
+		adBern.getPictures().addAll(pictures);
 		adDao.save(adBern);
 
 		String studioDescription2 = "It is small studio close to the"
@@ -160,7 +160,7 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adBern2, "/img/test/ad2_1.jpg"));
 		pictures.add(createPicture(adBern2, "/img/test/ad2_2.jpg"));
 		pictures.add(createPicture(adBern2, "/img/test/ad2_3.jpg"));
-		adBern2.setPictures(pictures);
+		adBern2.getPictures().addAll(pictures);
 		adDao.save(adBern2);
 
 		String studioDescription3 = " In the center of Gundeli (5 Min. away from the"
@@ -210,7 +210,7 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adBasel, "/img/test/ad3_1.jpg"));
 		pictures.add(createPicture(adBasel, "/img/test/ad3_2.jpg"));
 		pictures.add(createPicture(adBasel, "/img/test/ad3_3.jpg"));
-		adBasel.setPictures(pictures);
+		adBasel.getPictures().addAll(pictures);
 		adDao.save(adBasel);
 		
 		String studioDescription4 = "Flatshare of 3 persons. Flat with 5 rooms"
@@ -257,7 +257,7 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adOlten, "/img/test/ad4_1.png"));
 		pictures.add(createPicture(adOlten, "/img/test/ad4_2.png"));
 		pictures.add(createPicture(adOlten, "/img/test/ad4_3.png"));
-		adOlten.setPictures(pictures);
+		adOlten.getPictures().addAll(pictures);
 		adDao.save(adOlten);
 
 		String studioDescription5 = "Studio meublé au 3ème étage, comprenant"
@@ -302,7 +302,7 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adNeuchâtel, "/img/test/ad5_1.jpg"));
 		pictures.add(createPicture(adNeuchâtel, "/img/test/ad5_2.jpg"));
 		pictures.add(createPicture(adNeuchâtel, "/img/test/ad5_3.jpg"));
-		adNeuchâtel.setPictures(pictures);
+		adNeuchâtel.getPictures().addAll(pictures);
 		adDao.save(adNeuchâtel);
 
 		String studioDescription6 = "A place just for yourself in a very nice part of Biel."
@@ -345,7 +345,7 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adBiel, "/img/test/ad6_1.png"));
 		pictures.add(createPicture(adBiel, "/img/test/ad6_2.png"));
 		pictures.add(createPicture(adBiel, "/img/test/ad6_3.png"));
-		adBiel.setPictures(pictures);
+		adBiel.getPictures().addAll(pictures);
 		adDao.save(adBiel);
 		
 		
@@ -392,7 +392,7 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adZurich, "/img/test/ad1_3.jpg"));
 		pictures.add(createPicture(adZurich, "/img/test/ad1_2.jpg"));
 		pictures.add(createPicture(adZurich, "/img/test/ad1_1.jpg"));
-		adZurich.setPictures(pictures);
+		adZurich.getPictures().addAll(pictures);
 		adDao.save(adZurich);
 	
 		
@@ -442,7 +442,7 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adLuzern, "/img/test/ad2_3.jpg"));
 		pictures.add(createPicture(adLuzern, "/img/test/ad2_2.jpg"));
 		pictures.add(createPicture(adLuzern, "/img/test/ad2_1.jpg"));
-		adLuzern.setPictures(pictures);
+		adLuzern.getPictures().addAll(pictures);
 		adDao.save(adLuzern);
 
 		String studioDescription9 = "In the center of Gundeli (5 Min. away from the"
@@ -495,7 +495,7 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adAarau, "/img/test/ad2_2.jpg"));
 		pictures.add(createPicture(adAarau, "/img/test/ad2_3.jpg"));
 		
-		adAarau.setPictures(pictures);
+		adAarau.getPictures().addAll(pictures);
 		adDao.save(adAarau);
 		
 		String studioDescription10 = "Flatshare of 3 persons. Flat with 5 rooms"
@@ -541,7 +541,7 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adDavos, "/img/test/ad4_3.png"));
 		pictures.add(createPicture(adDavos, "/img/test/ad4_2.png"));
 		pictures.add(createPicture(adDavos, "/img/test/ad4_1.png"));
-		adDavos.setPictures(pictures);
+		adDavos.getPictures().addAll(pictures);
 		adDao.save(adDavos);
 
 		String studioDescription11 = "Studio meublé au 3ème étage, comprenant"
@@ -586,7 +586,7 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adLausanne, "/img/test/ad5_3.jpg"));
 		pictures.add(createPicture(adLausanne, "/img/test/ad5_2.jpg"));
 		pictures.add(createPicture(adLausanne, "/img/test/ad5_1.jpg"));
-		adLausanne.setPictures(pictures);
+		adLausanne.getPictures().addAll(pictures);
 		adDao.save(adLausanne);
 
 		String studioDescription12 = "A place just for yourself in a very nice part of Biel."
@@ -629,7 +629,7 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adLocarno, "/img/test/ad6_3.png"));
 		pictures.add(createPicture(adLocarno, "/img/test/ad6_2.png"));
 		pictures.add(createPicture(adLocarno, "/img/test/ad6_1.png"));
-		adLocarno.setPictures(pictures);
+		adLocarno.getPictures().addAll(pictures);
 		adDao.save(adLocarno);
 		
 		
@@ -676,9 +676,8 @@ public class AdTestDataSaver {
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(auctionAd1, "/img/test/HouseAuction.jpg"));
 		
-		auctionAd1.setPictures(pictures);
+		auctionAd1.getPictures().addAll(pictures);
 		adDao.save(auctionAd1);
-		
 
 	}
 
