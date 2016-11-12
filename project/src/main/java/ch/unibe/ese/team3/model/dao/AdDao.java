@@ -11,7 +11,7 @@ public interface AdDao extends CrudRepository<Ad, Long> {
 	
 	public Iterable<Ad> findByUser(User user);
 
-	public Iterable<Ad> findByPrizePerMonthLessThanAndTypeInAndBuyMode(int i, Type[] types, BuyMode buyMode);
+	public Iterable<Ad> findByPriceLessThanAndTypeInAndBuyMode(int price, Type[] types, BuyMode buyMode);
 
-	public Iterable<Ad> findByPrizePerMonthLessThanAndBuyMode(int i, BuyMode buyMode);
+	public Iterable<Ad> findByPriceLessThanAndBuyMode(int price, BuyMode buyMode);
 }

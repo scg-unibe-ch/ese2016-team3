@@ -4,7 +4,7 @@
 
 ### Purpose
 
-This document gives a detailed description of the requirements for the web application project **FlatFinder**.
+This document gives a detailed description of the requirements for the web application project **Ithaca**.
 
 All functional and non-functional requirements are listed and documented in this document. The document also gives a brief overview of the overall application and collaborating external systems.
 
@@ -16,9 +16,9 @@ The document is continuously updated during the whole project. Old versions of t
 
 ### System overview
 
-The web application **FlatFinder** is a web portal for real estate, where users can place ads for real estate. The goal of the customer is to build a web portal which provides the users effective support with doing real estate related tasks like managing enquiries, organizing on site visits and so on.
+The web application **Ithaca** is a web portal for real estate, where users can place ads for real estate. The goal of the customer is to build a web portal which provides the users with effective support doing real estate related tasks like managing enquiries, organizing on-site visits and so on.
 
-The system being built bases on a already existing application which should be generally revised and extended with additional functionality.
+The system being built is based on an already existing application which should be generally revised and extended with additional functionality.
 
 ### Stakeholders
 
@@ -36,12 +36,10 @@ The following sections describe abbreviations and special terms used in this doc
 
 |Term|Description|
 |---|---|
-|FlatFinder|The web-application for managing ads for real estate|
+|Ithaca|The web-application for managing ads for real estate|
 |Ad|An advertisement for real estate|
 |Enquiry|A request of a person to visit real state|
 |Real estate manager|The person which manages real estate (places ads, organizes visits)|
-|Studio|A small flat with several rooms for rent|
-|Room|A single room for rent|
 
 #### Technical terms
 
@@ -107,29 +105,30 @@ The following sections describe abbreviations and special terms used in this doc
 |uc27|Subscribe to alert|The user of the web application|Med|1| 
 |uc28|Delete alert|The user of the web application|Low|2|
 |uc29|Upgrade account|The user of the web application|Med|1|
-
+|uc30|Bid on property|The user of the web application|Med|1|
+|uc31|Buy property directly|The user of the web application|Med|1|
 
 #### User management
-![User management](images/User_Management.png)
+![User management](images/User_Management2.0.png)
 
 
 |Use case element|Description|
 |:---|:---|
 |**ID**|`uc01`|
 |**Name**|Sign up|
-|**Description**|The user creates a flatfindr account.|
+|**Description**|The user creates an account on Ithaca.|
 |**Primary actor**|User visiting the web portal|
-|**Precondition**|The user visits the start page of the web portal. The user has no flatfindr account yet.|
+|**Precondition**|The user visits the start page of the web portal. The user has no Ithaca account yet.|
 |**Trigger**|A visitor wants to use the application|
 |**Normal flow**|1. The user clicks on the button "login"|
 ||2. The login form and a link "sign up" is shown|
 ||3. The user clicks on the link "sign up"|
 ||4. The sign up form is shown|
-||5. The user enter his name, his email address, a password and selects his gender. He selects the type of his account (normal or premium)|
+||5. The user enter his name, his email address, a password and selects his gender. He selects the type of his account (normal or premium).|
 ||6. The user clicks on the button "Sign up"|
 ||7. The login page and a success message are shown|
 |**Alternate flow**|If the user doesn't fill up the entire sign up form in step 5, validation error messages are shown.|
-||If the user selects "premium" as account type in step 5, additional form elements to get his credit card information is shown.|
+||If the user selects "premium" as account type in step 5, additional form elements for his credit card information and a choice of premium packages for fixed amounts of time are shown.|
 
 |Use case element|Description|
 |:---|:---|
@@ -186,13 +185,13 @@ The following sections describe abbreviations and special terms used in this doc
 |**Precondition**|The user is logged into the the application (`uc02`) and visits his profile page (`uc03`).|
 |**Trigger**|The user wants to upgrade his account to get more benefit of the application|
 |**Normal flow**|1. The user clicks on the button "Upgrade account"|
-||2. A form to get the credit card information of the user is shown|
+||2. A form to get the credit card information of the user is shown. The user has to choose between different packages of a certain amount of time of premium subscription|
 ||3. The user fills out the form and clicks on "Save"|
 ||4. The account is upgraded to premium|
-|**Alternate flow**|None|
+|**Alternate flow**|If a user enters an invalid value, an error message is shown.|
 
 #### Searching and viewing ads
-![Searching and viewing ads](images/Ad.png)
+![Searching and viewing ads](images/Ad2.0.png)
 
 |Use case element|Description|
 |:---|:---|
@@ -202,7 +201,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user visits the web portal.|
 |**Trigger**|The user wants to find specific ads|
-|**Normal flow**|1. The user clicks on the button "Search" in the menu bar|
+|**Normal flow**|1. The user clicks on the button "Find ad" in the menu bar|
 ||2. The search form is shown|
 ||3. The user enters his search criteria|
 ||4. The user clicks on the button "Search"|
@@ -307,7 +306,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Description**|The user send a visiting request to the advertiser|
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user is logged in `uc02` and views a specific ad `uc08`|
-|**Trigger**|The user wants to visit a specific room/studio|
+|**Trigger**|The user wants to visit a specific property|
 |**Normal flow**|1. The user chooses the visiting time from the list of the available visiting times|
 ||2. The user clicks on the button "Send enquiry to advertiser" next to the desired visiting time|
 ||3. The system saves the enquiry and sends it to the advertiser|
@@ -317,16 +316,16 @@ The following sections describe abbreviations and special terms used in this doc
 |:---|:---|
 |**ID**|`uc14`|
 |**Name**|View ad location|
-|**Description**|The user can see the location of the room/studio on a map|
+|**Description**|The user can see the location of the property on a map|
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user views a specific ad `uc08`|
-|**Trigger**|The user wants to see the location of a specific room/studio|
-|**Normal flow**|1. The user clicks on the address of the room/studio|
-||2. The browser opens the GoogleMaps web page and displays the location of the room/studio on the map|
+|**Trigger**|The user wants to see the location of a specific property|
+|**Normal flow**|1. The user clicks on the address of the property|
+||2. The browser opens the GoogleMaps web page and displays the location of the property on the map|
 |**Alternate flow**|None|
 
 #### Creating an ad
-![Creating an ad](images/CreateAd.png)
+![Creating an ad](images/CreateAd2.0.png)
 
 |Use case element|Description|
 |:---|:---|
@@ -336,20 +335,19 @@ The following sections describe abbreviations and special terms used in this doc
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user is logged into the the application.|
 |**Trigger**|The user wants to create an Ad|
-|**Normal flow**|1. The user hovers over his user image in the header line of the web portal|
-||2. The user clicks on the appearing button "Place an ad"|
-||3. The form "Place an ad" is shown. Optional Fields are labelled with (optional)|
-||4. The user specifies a) the Ad Title, b) Street, c) Move-in date, d) Price per month, e) Type (Studio or Room), f) City / Zip code, g) Move-out date (optional), h) Square Meters|
-||5. The user adds room descriptions to the Ad. Descriptions are added when the user clicks on checkboxes. In addition, the user adds a description as free text.|
-||6. The user describes his preferences in a textfield|
-||7. The user uploads pictures|
-||8. The user specifies preferred Visiting times|
-||9. The user clicks on "Submit" in order to create the Ad|
+|**Normal flow**|1. The user clicks the button "place ad" in the header of the application|
+||2. The form "Place an ad" is shown. Optional Fields are labelled with (optional)|
+||3. The user specifies the Ad Title, the Type of Property; Address; Move-in-Date; Size and number of rooms; floor level; distance to school, shopping and public transport; year of construction and renovation.|
+||4. The user adds property descriptions to the Ad. Descriptions are added when the user clicks on checkboxes. In addition, the user adds a description as free text.|
+||5. The user chooses whether or not the property will be sold in an auction and specifies auction related fields such as starting price, amount of increase, immediate buying price and start and end dates of the auction.|
+||6. The user uploads pictures|
+||7. The user specifies preferred Visiting times|
+||8. The user clicks on "Submit" in order to create the Ad|
 |**Alternate flow**|If a mandatory field is not filled out, an error message pops up which advises the user to add the missing field.|
 
 #### Messaging
 
-![Messaging](images/Messages.png)
+![Messaging](images/Messages2.0.png)
 
 |Use case element|Description|
 |:---|:---|
@@ -398,7 +396,7 @@ The following sections describe abbreviations and special terms used in this doc
 
 #### Enquiries
 
-![Enquiries](images/Enquiries.png)
+![Enquiries](images/Enquiries2.0.png)
 
 |Use case element|Description|
 |:---|:---|
@@ -407,7 +405,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Description**|A user, which wants to visit a flat sends an enquiry to the Real estate manager.
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user is logged into the application.|
-|**Trigger**|The user wants visit a flat he is interested in.|
+|**Trigger**|The user wants visit a property he is interested in.|
 |**Normal flow**|1. The user clicks on an Ad he is interested in.|
 ||2. Under "Visiting times", the possible times of a visit are listed.|
 ||3. The user can click on the button "Send enquiry to advertiser" to send an enquiry.|
@@ -456,7 +454,7 @@ The following sections describe abbreviations and special terms used in this doc
 
 #### Schedule
 
-![Schedule](images/Schedule.png)
+![Schedule](images/Schedule2.0.png)
 
 |Use case element|Description|
 |:---|:---|
@@ -497,7 +495,7 @@ The following sections describe abbreviations and special terms used in this doc
 
 #### Alerts
 
-![Alerts](images/Alerts.png)
+![Alerts](images/Alerts2.0.png)
 
 |Use case element|Description|
 |:---|:---|
@@ -520,7 +518,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user is logged into the application. The user is in the Alerts view (`uc25`).|
 |**Trigger**|The user want to subscribe to an alert.|
-|**Normal flow**||1. The user fills out a form, in which he specifies under which conditions a newly created Ad creates an alert. Type of room, Location and maximal price are specified.
+|**Normal flow**|1. The user fills out a form, in which he specifies under which conditions a newly created Ad creates an alert. Type of room, Location and maximal price are specified.|
 ||2. The user subscribes to the alert by clicking the "Subscribe" button.| 
 |**Alternate flow**|If the criteria specified under point 1. are not entered correctly, an error message is displayed.|
 
@@ -532,64 +530,99 @@ The following sections describe abbreviations and special terms used in this doc
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user is logged into the application. The user is in the Alerts view (`uc25`). The user has created an alert.|
 |**Trigger**|The user wants to delete an alert.|
-|**Normal flow**||1. The user views the active alerts in the Alerts view.
+|**Normal flow**|1. The user views the active alerts in the Alerts view.|
 ||2. The user deletes the alert by clicking the "Delete" button.| 
 |**Alternate flow**|None|
+
+#### Auctions
+
+![Auctions](images/Auction2.0.png)
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc30`|
+|**Name**|Bid on Property|
+|**Description**|The user bids the next bigger value in an open auction.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application. The user is viewing an ad of a property that is being sold through an auction.|
+|**Trigger**|The user wants to buy a property through auction.|
+|**Normal flow**|1. The user views the description of the ad and sees how much has been bid for the property and how much increase he has to bid in order to partake in the auction.|
+||2. The user pushes the bid button and a message pops up that the bid was successful.| 
+|**Alternate flow**|If the auction ends during the time the user is viewing the ad and tries to bid, an error message is shown, that the auction has already ended.|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc31`|
+|**Name**|Buy Property directly|
+|**Description**|The user buys a property in an open auction directly for a fixed price.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application. The user is viewing an ad of a property that is being sold through an auction.|
+|**Trigger**|The user wants to buy a property directly and not bid in the auction.|
+|**Normal flow**|1. The user views the description of the ad and checks what the fix buying price for the property is.|
+||2. The user pushes the buy button and a message pops up that the purchase was successful.|
+||3. The auction field disappears from the ad site.| 
+|**Alternate flow**|If the auction ends during the time the user is viewing the ad and tries to bid, an error message is shown, that the auction has already ended.|
+
 
 
 see [http://www.gatherspace.com/static/use_case_example.html](http://www.gatherspace.com/static/use_case_example.html)
 
 ### Actor characteristics
-In general, the users of the FlatFindr are expected to have little or no technical experience. However, they are expected to have some base knowledge of the general use of message services and internet applications.
+In general, the users of the Ithaca are expected to have little or no technical experience. However, they are expected to have some base knowledge of the general use of message services and internet applications.
 
 The users of the FlatFindr can be divided in two main categories: 
 
 1. The users, which search a real estate (=suitors).
-2. The users, which have a real estate to rent (real estate managers).
+2. The users, which have a real estate to rent or sell (real estate managers).
 
 #### Suitors
-Suitors are people who want to rent a real estate. As FlatFindr is a platform which promotes Ads for single rooms or studios. Thus, it is expected that the suitors are mainly students or young people in general.
+Suitors are people who want to rent or buy a real estate. As Ithaca is a platform which promotes ads for different types of homes, both for renting and buying, the suitors can be people of all ages in different situations in life.
 
 **Expectations of at the application**
 Suitors expect, that the application
 
 1. offers a good and easy search service 
 2. has a message service
-3. can contact them, when an Ad of interest is created
+3. can contact them, when an ad of interest is created
 4. allows an easy way to schedule visit times with the real estate managers
-5. has a schedule function, which gives the suitors an overview over his planed visits
+5. has a schedule function, which gives the suitors an overview over his planned visits
 
 **User interactions**
 The suitors 
 
-1. searches Ads 
+1. searches ads 
 2. creates alerts
 3. writes and receives messages 
 4. sends enquiries to real estate managers
 5. edits his public profile
 6. checks his schedule to get an overview over his enquiries
+7. participates in auctions
+8. pays to upgrade his account to premium
 
 #### Real estate manager
-Real estate managers have a real estate to rent.
+Real estate managers have a real estate to rent or sell.
 
 **Expectations of at the application**
 Real estate managers expect, that the application
 
-1. offers an easy way to create Ads
+1. offers an easy way to create ads
 2. has a message service
-3. allows management of multiple Ads 
+3. allows management of multiple ads 
 4. offers an easy way to schedule visit times with suitors.
 5. has a schedule function, which gives the real estate managers an overview over the visit times of suitors.
+6. has a working auction functionality for sale of property
 
 **User interactions**
 The real estate manager
 
-1. creates Ads
+1. creates ads
 2. writes and receives messages 
 3. Accepts or declines enquiries from suitors
 4. edits his public profile
 5. checks his schedule to get an overview over his enquiries and the visiting suitors
 6. edits his public profile
+7. pays to upgrade his account to premium
+8. controls direct buying price and bid increase in auctions
 
 ## Requirements
 
@@ -605,7 +638,7 @@ The user can login to the application. Therefore he has to enter his email-addre
 
 For signing up as a new user he has to enter his first and last name, select his gender and give his email-address and a password, which has to be at least 6 characters long.
 
-The user can choose the account type. There are two account types (premium and normal) If the user chooses premium, he has to enter his credit card information during signup.
+The user can choose the account type. There are two account types (premium and normal) If the user chooses premium, he has to enter his credit card information and duration of premium membership during signup. 
 
 If any of these informations aren't filled in, an error occurs, which tells the user that he must fill in a valid information.
 
@@ -614,7 +647,8 @@ If any of these informations aren't filled in, an error occurs, which tells the 
 A logged in user can:
 
 - logout
-- edit his public profile.There he can change his password, first name, last name, username and write something about himself. By clicking "update" his changes will be saved. Normal users can upgrade their account to a premium account there as well.
+- edit his public profile.There he can change his password, first name, last name, username and write something about himself. By clicking "update" his changes will be saved. 
+- Normal users can upgrade their account to a premium account.
 
 
 #### Messaging system
@@ -622,38 +656,36 @@ A logged in user can:
 A logged in user can:
 
 - **Send messages** in two ways:
- + sending messages by visiting the advertiser Profile and clicking on the button "Message".Then he can enter the subject and his message and click on "Send" if the want to send the message or click on "Cancel" to exit the message form. If no subject is filled in, the message won't be send. If the subject is entered but no message, then the message wont'be send. Only of both( subject and message) are entered, the message will be send.
- + other way of sending messages is by sending the message from the users Profile. For the new message he has to specify to whom he wants to send the email and give in the subject and write his message. Then he can click either "send"(for sending the message) or "cancel"(for leaving the message form).If the user puts in a invalid email address of the recipient then there will appear a box saying :"This user does not exist". Again all information (to, subject, and message) have to be filled in, if not, the message won't be send.
+ + sending messages by visiting the advertiser Profile and clicking on the button "Message".Then he can enter the subject and his message and click on "Send" if the want to send the message or click on "Cancel" to exit the message form. If no subject is filled in, the message won't be sent. If the subject is entered but no message, then the message wont'be sent. Only if both( subject and message) are entered, the message will be sent.
+ + the other way of sending messages is by going into "Messages" from the dropdown menu and there click "New message". For the new message he has to specify to whom he wants to send the email and give in the subject and write his message. Then he can click either "send"(for sending the message) or "cancel"(for leaving the message form).If the user puts in a invalid email address of the recipient then there will appear a box saying: "This user does not exist". Again all information (to, subject, and message) have to be filled in, if not, the message won't be sent.
 
-- **view his sent messages**. Furthermore  he can see in a chart the subject, sender, recipient and the date sent from each message he has ever sent. By clicking on a line from this chart he gets a view of the send message.
+- **view his sent messages**: He can see in a chart the subject, sender, recipient and the date sent from each message he has ever sent. By clicking on a line from this chart he gets a view of the sent message.
 
-- **view imcoming messages**. Furthermore he can see in a chart the subject, sender, recipient and the date sent from the each message he has received. By clicking on a line from this chart he gets a view of the message.
-
-##### E-Mail
-
-Messages to the inbox of the user aren't just sent to the internal inbox of the application. The user also receives them by email.
+- **view incoming messages**: He can see in a chart the subject, sender, recipient and the date sent from the each message he has received. By clicking on a line from this chart he gets a view of the message.
 
 #### Searching and viewing ads
 
-A user can search for ads by clicking the search button whether or not he's logged in. The initial search is filtered by zip code with max radius and max price.
+A user can search for ads by clicking the search button whether or not he's logged in. The initial search is filtered by zip code with max radius, max price and type (apartment, villa, house, studio or loft).
 
-In the result lists, the ads of premium users are displayed slightly different than the ads of normal users, to catch more attention. They're also ranked higher than normal ads (see section "User roles" below).
+In the result lists, the ads of premium users are ranked higher than normal ads (see section "User roles" below).
 
 After the results are displayed, the user can choose to:
 
 - *Sort search:* The search results can be sorted by: ascending or descending price, move-in date earliest to latest or latest to earliest, or by the date the ad was created, youngest to oldest or oldest to youngest. 
 
-- *Filter search:* The search can be filtered further by filling out the earliest and latest move-in date in a dropdown calendar and optionally the earliest and latest move-out date. The user can also check boxes for; allowing smoking inside, allowing animals inside, co-use garden, balcony or patio, cellar or attic, furnished, cable TV, garage and/or WiFi. The search criteria are always visible to the user.
+- *Filter search:* The search can be filtered further by filling out the earliest and latest move-in date in a dropdown calendar. The user can also check boxes for; balcony or patio, garage, parking, elevator and dishwasher. In a dropdown menu, the user can choose between the infrastructure types; satellite, cable or fiber optic cable. He can also choose upper and lower limits for; floor level, nr. of bathrooms, nr. of rooms, build year, renovation year, distance to school, shopping and public transport. The search criteria are always visible to the user.
+
+- *Participate in auction:* The user can participate in an auction when looking at ads for sale by directly buying or bidding from the result page.
 
 - *View ad:* The user can click on an ad to view it. 
 
 From the view of the ad, the user can:
 
-- Bookmark ad or delete bookmark by clicking the button in the top right corner if the user is logged in.
+- Bookmark ad or delete bookmark if the user is logged in.
 
-- View the ad information. On the left is listed: Address, date the property is available from, move-out date, monthly rent, size of property in square meters and the date the ad was created. The visiting times and the information of the advertiser are shown.
+- View the ad information. Description, address and the searchable criteria are all displayed. The visiting times and the information of the advertiser are shown.
 
-- View the pictures of the property on the right of the information box. They can be viewed one after the other by clicking a button to the right or to the left of the picture. Under the pictures there is a list of the requirements that the user could check the boxes for, where it shows with green if the requirement is met and red if it isn't.
+- View the pictures of the property. They can be viewed one after the other by clicking a button to the right or to the left of the picture. 
 
 - View advertiser profile, contact or send enquiry to advertiser if the user is logged in. If the user is not logged in, the boxes you can click to do these actions show "Login to send enquiries", "Login to visit profile" and "Login to contact advertiser" and will send you to the login screen.
 
@@ -663,7 +695,7 @@ From the view of the ad, the user can:
 
 A logged in user can view and modify his alerts by choosing "Alerts" from the Profile drop-down menu. He can create a new alert by filling in the initial search criteria and clicking "Subscribe". Below where the user can create new alerts is "Your active alerts", where he can view a list of alerts in a table with type, city, radius, max price and a column "Action" with a button to delete the alert.
 
-If an alert is triggered, the user gets a message to his inbox in the application. The message is also sent to his mail account.
+If an alert is triggered, the user gets a message to his inbox in the application. The message is also sent to his email account.
 
 The application distinguishes between normal and premium users (see section 'User roles' below).
 
@@ -672,17 +704,33 @@ The application distinguishes between normal and premium users (see section 'Use
 
 A real estate manager can create a new advertisement for real estate. An advertisement consists of required general information and additonal optional information about the real estate it concerns.
 
+The advertiser can specify, whether he wants to sell or rent a real estate by choosing the appropriate tab "buy" or "rent" before placing the ad.
+
 The following general information can be declared:
 
 - The *title* of the advertisement (text)
 - The *type* of the real estate (appartment, house, villa, loft, studio)
 - The *location* of the real estate (*street* and *zip code*)
 - The *move-in date*
-- The *move-out date* (optional)
-- The *construction / renovation date*
-- The *price* (per month for renting or total price for buying)
 - The *size* of the real estate in square meters
 - The *number of rooms*
+- The *floor level*
+- The *distance to school/shopping center/public transport* from dropdown menu (100m intervals)
+- The *construction / renovation date*
+- The *price* (per month for renting or total price for buying)
+
+In the case of selling property, it can be done by *auction*. A checkbox can be checked and additional information entered:
+
+- *Immediate buy price for auction*
+- *Startdate for auction*
+- *Enddate for auction* from dropdown calendar
+- *Startprice for auction*
+- *Amount of increase of bid price*
+
+The following information can be specified with a number or with a selection of options:
+
+- number of *bath rooms*
+- type of *infrastructure* for TV/internet (satellite, fiber, cable etc.)
 
 The following *additional attributes* of the real estate can be specified in a yes/no manner:
 
@@ -691,34 +739,15 @@ The following *additional attributes* of the real estate can be specified in a y
 - *elevator* available
 - *dishwasher* available (only for rent)
 
-The following attributes can be specified in 100 m steps up to 1 km:
-
-- distance to *public transport*
-- distance to *shopping possibilities*
-- distance to *schools*
-
-The following information can be specified with a number or with a selection of options:
-
-- *floor level*
-- number of *bath rooms*
-- type of *infrastructure* for TV/internet (satellite, fiber, cable etc.)
-
 Additionally a *textual description* of the real estate can be added to the ad.
 
 *Images* of the real estate can be added to the advertisement to give users a better impression of the real estate. This is not mandatory.
 
-The advertiser can state his *preferences* in questions of tenants with a textual description. This is not mandatory.
-
 The advertiser can specify multiple possible *visiting times* for enquiries. A visiting time is specified by a date, a start time and an end time. This is not mandatory.
 
-The advertiser can specify, whether he wants to sell or rent a real estate.
+#### Auctions
 
-If he chooses to sell real estate, he can sell it by *auction*. If he chooses so, he can specify the following parameters of the auction:
-
-- *start time* and *end time*
-- *start price*
-- *increment* of the price
-- *direct buy* price
+When an ad is up for sale and the owner has chosen the *auction* option, users can bid on the property. There is also a "buy directly" price. Both startprice for bidding and bidding increment is specified by the property owner, as is the direct buy price. The auction has an end date when it is no longer possible to bid.
 
 #### User roles
 
@@ -728,7 +757,9 @@ The application behaves different for the different user roles as follows:
 
 - If a new advertisement meets the filter criteria of an alert of a premium user, he immediately gets a message by the internal system mail box and by email.
 - In the same situation, a normal user gets a summary of all triggered alerts once a day. The summary is sent to the internal system mail box and also by email.
-- The advertisement of premium users are shown at the top of the search result list. The images of the property of premium users are larger.
+- The advertisement of premium users are shown at the top of the search result list.
+
+A normal user can upgrade to premium for a choice of durations with different prices. For this he has to give his credit card information. After the amount of days he has paid for has passed, the user is reverted back to normal status, the premium membership has run out. It is not possible to cancel the premium subscription since it is paid for in full.
 
 #### Enquiries
 
@@ -751,24 +782,25 @@ A logged in user can see his enquiries by choosing "Enquiries" from the Profile 
 A logged in user can see his personal schedule by choosing "Schedule" from the Profile drop-down menu. The schedule shows two tables, one named *Your presentations*, the other *Your visits*
 
 _Your presentations_-table:
-A table of the users owned flats, which he wants to rent to other people, containing the following:
+A table of the users owned properties, which he wants to rent to other people, containing the following:
 
-- *Address*: The address of the flat to be presented to interested people,
-- *Date*: The date of the flat presentation,
-- *Time*: The time of the flat presentation,
+- *Address*: The address of the property to be presented to interested people,
+- *Date*: The date of the property presentation,
+- *Time*: The time of the property presentation,
 - *Visit Ad*: A button that if clicked will lead the user to the ad he posted about the flat in question
-- *Visitors*: A button which will open a new site with some information about the property in question and a table of all people that will attend its presentation. The table contains the following: *Name* (full name of the user), *Username* (the flatfindr username of the user), *Profile* (a button that leads to the user's personal profile), *Rating* (the rating of one to 5 stars that this user has on the website)
+- *Visitors*: A button which will open a new site with some information about the property in question and a table of all people that will attend its presentation. The table contains the following: *Name* (full name of the user), *Username* (the Ithaca username of the user), *Profile* (a button that leads to the user's personal profile), *Rating* (the rating of one to 5 stars that this user has on the website)
 
 _Your visits_-table:
-A table of the flats a user is interested in and will or has already visited, containing the following:
+A table of the properties a user is interested in and will or has already visited, containing the following:
 
 - *Address*: The address of the flat, the user has visited,
 - *Date*: The date of the presentation the user has attended,
 - *Time*: The time of the presentation the user has attended,
-- *Visit Ad*: A button that if clicked will guide the user to the advertisement of the flat in question.
+- *Visit Ad*: A button that if clicked will guide the user to the advertisement of the property in question.
 
 ### Non-functional requirements
 
 #### Design of the application
 
-The application should have a modern look and feel. It should be mobile ready.
+- The application design is built with bootstrap and can adapt to the size of any browser or device, such as tablet/notebook/smartphone
+- The feel of the design is very modern, simple and user friendly

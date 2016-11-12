@@ -283,15 +283,14 @@
 							</spring:bind>
 
 
-							<spring:bind path="prize">
+							<spring:bind path="validPrice">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
-									<label class="col-sm-3 control-label" for="field-Prize">Prize
-										per month</label>
+									<label class="col-sm-3 control-label" for="field-Price">Price</label>
 									<div class="col-sm-5">
-										<form:input id="field-Prize" type="number" min="0"
-											path="prize" placeholder="Prize per month" step="1"
+										<form:input id="field-Price" type="number" min="0"
+											path="price" placeholder="Price" step="1"
 											cssClass="form-control" />
-										<form:errors path="prize" cssClass="text-danger" />
+										<form:errors path="validPrice" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -310,7 +309,7 @@
 									<label class="col-sm-3 control-label" for="field-NumberOfBath">Number
 										of baths</label>
 									<div class="col-sm-5">
-										<form:input id="field-NumberOfBath" type="number" min="0" 
+										<form:input id="field-NumberOfBath" type="number" min="0"
 											path="numberOfBath" placeholder="Number of baths" step="1"
 											cssClass="form-control" />
 										<form:errors path="numberOfBath" cssClass="text-danger" />
@@ -353,7 +352,7 @@
 
 									<div class="checkbox">
 										<label><form:checkbox id="field-dishwasher"
-												path="dishwasher" /> dishwasher</label>
+												path="dishwasher" /> Dishwasher</label>
 									</div>
 								</div>
 							</div>
@@ -370,120 +369,121 @@
 						</div>
 
 					</div>
-				</div>
 
-				<h4>Edit visiting times (optional)</h4>
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<div class="row form-inline bottom15">
-							<div class="col-sm-3">
-								<label>Day</label> <input type="text" id="field-visitDay"
-									class="form-control">
+
+					<h4>Edit visiting times (optional)</h4>
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="row form-inline bottom15">
+								<div class="col-sm-3">
+									<label>Day</label> <input type="text" id="field-visitDay"
+										class="form-control">
+								</div>
+								<div class="col-sm-9">
+									<label>Time</label> <select id="startHour" class="form-control">
+
+										<%
+											for (int i = 0; i < 24; i++) {
+													String hour = String.format("%02d", i);
+													out.print("<option value=\"" + hour + "\">" + hour + "</option>");
+												}
+										%>
+									</select> <select id="startMinutes" class="form-control">
+										<%
+											for (int i = 0; i < 60; i++) {
+													String minute = String.format("%02d", i);
+													out.print("<option value=\"" + minute + "\">" + minute + "</option>");
+												}
+										%>
+									</select> <span>to&thinsp; </span> <select id="endHour"
+										class="form-control">
+										<%
+											for (int i = 0; i < 24; i++) {
+													String hour = String.format("%02d", i);
+													out.print("<option value=\"" + hour + "\">" + hour + "</option>");
+												}
+										%>
+									</select> <select id="endMinutes" class="form-control">
+										<%
+											for (int i = 0; i < 60; i++) {
+													String minute = String.format("%02d", i);
+													out.print("<option value=\"" + minute + "\">" + minute + "</option>");
+												}
+										%>
+									</select>
+
+									<button type="button" class="btn btn-primary"
+										id="addVisitButton">
+										<span class="glyphicon glyphicon-plus"></span>
+									</button>
+								</div>
 							</div>
-							<div class="col-sm-9">
-								<label>Time</label> <select id="startHour" class="form-control">
-
-									<%
-										for (int i = 0; i < 24; i++) {
-												String hour = String.format("%02d", i);
-												out.print("<option value=\"" + hour + "\">" + hour + "</option>");
-											}
-									%>
-								</select> <select id="startMinutes" class="form-control">
-									<%
-										for (int i = 0; i < 60; i++) {
-												String minute = String.format("%02d", i);
-												out.print("<option value=\"" + minute + "\">" + minute + "</option>");
-											}
-									%>
-								</select> <span>to&thinsp; </span> <select id="endHour"
-									class="form-control">
-									<%
-										for (int i = 0; i < 24; i++) {
-												String hour = String.format("%02d", i);
-												out.print("<option value=\"" + hour + "\">" + hour + "</option>");
-											}
-									%>
-								</select> <select id="endMinutes" class="form-control">
-									<%
-										for (int i = 0; i < 60; i++) {
-												String minute = String.format("%02d", i);
-												out.print("<option value=\"" + minute + "\">" + minute + "</option>");
-											}
-									%>
-								</select>
-
-								<button type="button" class="btn btn-primary"
-									id="addVisitButton">
-									<span class="glyphicon glyphicon-plus"></span>
-								</button>
+							<div class="row">
+								<div class="col-sm-12" id="addedVisits">
+									<%-- ?? --%>
+								</div>
 							</div>
+
 						</div>
-						<div class="row">
-							<div class="col-sm-12" id="addedVisits">
-								<%-- ?? --%>
-							</div>
-						</div>
-
 					</div>
-				</div>
 
 
 
-				<h4>Change Pictures</h4>
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<div class="row bottom15">
-							<div class="col-sm-12">
-								<label class="control-label">Delete existing pictures</label>
+					<h4>Change Pictures</h4>
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="row bottom15">
+								<div class="col-sm-12">
+									<label class="control-label">Delete existing pictures</label>
+								</div>
 							</div>
-						</div>
-						<div class="row">
-							<c:forEach items="${existingPictures }" var="picture">
-								<div class="col-xs-12 col-sm-4 col-md-3 pictureThumbnail">
-									<div class="thumbnail">
-										<img src="${picture.filePath}" style="height: 200px;" />
-										<div class="caption">
-											<button type="button" class="btn btn-danger"
-												data-ad-id="${adId }" data-picture-id="${picture.id }">
-												<span class="glyphicon glyphicon-trash"></span> Delete
-											</button>
+							<div class="row">
+								<c:forEach items="${existingPictures }" var="picture">
+									<div class="col-xs-12 col-sm-4 col-md-3 pictureThumbnail">
+										<div class="thumbnail">
+											<img src="${picture.filePath}" style="height: 200px;" />
+											<div class="caption">
+												<button type="button" class="btn btn-danger"
+													data-ad-id="${adId }" data-picture-id="${picture.id }">
+													<span class="glyphicon glyphicon-trash"></span> Delete
+												</button>
+											</div>
 										</div>
 									</div>
+								</c:forEach>
+							</div>
+							<div class="row form-horizontal bottom15">
+								<div class="col-sm-3">
+									<label class="control-label" for="field-pictures">Add
+										pictures</label>
 								</div>
-							</c:forEach>
-						</div>
-						<div class="row form-horizontal bottom15">
-							<div class="col-sm-3">
-								<label class="control-label" for="field-pictures">Add
-									pictures</label>
+								<div class="col-sm-3">
+									<input type="file" id="field-pictures" accept="image/*"
+										multiple="multiple" />
+								</div>
 							</div>
-							<div class="col-sm-3">
-								<input type="file" id="field-pictures" accept="image/*"
-									multiple="multiple" />
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6">
-								<table id="uploaded-pictures" class="table">
-									<thead>
-										<tr>
-											<th id="name-column">Uploaded picture</th>
-											<th>Size</th>
-											<th>Delete</th>
-										</tr>
-									</thead>
-								</table>
+							<div class="row">
+								<div class="col-sm-6">
+									<table id="uploaded-pictures" class="table">
+										<thead>
+											<tr>
+												<th id="name-column">Uploaded picture</th>
+												<th>Size</th>
+												<th>Delete</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="form-group pull-right">
-					<div class="col-sm-12">
-						<a href="/">
-							<button type="reset" class="btn btn-default">Cancel</button>
-						</a>
-						<button type="submit" class="btn btn-primary">Submit</button>
+					<div class="form-group pull-right">
+						<div class="col-sm-12">
+							<a href="/">
+								<button type="reset" class="btn btn-default">Cancel</button>
+							</a>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -1,6 +1,8 @@
 package ch.unibe.ese.team3.controller.pojos.forms;
  
 import java.util.List;
+
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
@@ -23,8 +25,7 @@ public class PlaceAdForm {
 	@NotBlank(message = "Required")
 	private String moveInDate;
 
-	@Min(value = 1, message = "Has to be equal to 1 or more")
-	private int prize;
+	private int price;
 
 	@Min(value = 1, message = "Has to be equal to 1 or more")
 	private int squareFootage;
@@ -59,13 +60,71 @@ public class PlaceAdForm {
 	private String roomDescription;
 
 
-	// auction specific attributes
 	
+	// validation attributes
+	
+	@AssertTrue(message = "Required")
+	private boolean validStartDate;
+	
+	@AssertTrue(message = "Required")
+	private boolean validEndDate;
+	
+	@AssertTrue(message = "Must be greater than zero")
+	private boolean validStartPrice;
+	
+	@AssertTrue(message = "Must be greater than zero")
+	private boolean validIncreaseBidPrice;
+	
+	@AssertTrue(message = "Has to be equal to 1 or more")
+	private boolean validPrice;
+	
+	// auction specific attributes
+			
+	public boolean isValidPrice() {
+		return validPrice;
+	}
+
+	public void setValidPrice(boolean validPrice) {
+		this.validPrice = validPrice;
+	}
+
+	public boolean isValidStartDate() {
+		return validStartDate;
+	}
+
+	public void setValidStartDate(boolean validStartDate) {
+		this.validStartDate = validStartDate;
+	}
+
+	public boolean isValidEndDate() {
+		return validEndDate;
+	}
+
+	public void setValidEndDate(boolean validEndDate) {
+		this.validEndDate = validEndDate;
+	}
+
+	public boolean isValidStartPrice() {
+		return validStartPrice;
+	}
+
+	public void setValidStartPrice(boolean validStartPrice) {
+		this.validStartPrice = validStartPrice;
+	}
+
+	public boolean isValidIncreaseBidPrice() {
+		return validIncreaseBidPrice;
+	}
+
+	public void setValidIncreaseBidPrice(boolean validIncreaseBidPrice) {
+		this.validIncreaseBidPrice = validIncreaseBidPrice;
+	}
+
+	private int auctionPrice;	
 	private String startDate;
 	private String endDate;
 	private int startPrice;
 	private int increaseBidPrice;
-	private int buyItNowPrice;
 	private boolean auction;
 	
 	
@@ -76,12 +135,22 @@ public class PlaceAdForm {
 	private boolean garage;
 	private boolean dishwasher;
 	
+	public int getAuctionPrice(){
+		return auctionPrice;
+	}
+	
+	public void setAuctionPrice(int price){
+		auctionPrice = price;
+		validate();
+	}
+	
 	public String getStartDate() {
 		return startDate;
 	}
 
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
+		validate();
 	}
 
 	public String getEndDate() {
@@ -90,6 +159,7 @@ public class PlaceAdForm {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+		validate();
 	}
 
 	public int getIncreaseBidPrice() {
@@ -98,14 +168,7 @@ public class PlaceAdForm {
 
 	public void setIncreaseBidPrice(int increaseBidPrice) {
 		this.increaseBidPrice = increaseBidPrice;
-	}
-
-	public int getBuyItNowPrice() {
-		return buyItNowPrice;
-	}
-
-	public void setBuyItNowPrice(int buyItNowPrice) {
-		this.buyItNowPrice = buyItNowPrice;
+		validate();
 	}
 
 	public boolean getAuction() {
@@ -114,6 +177,7 @@ public class PlaceAdForm {
 
 	public void setAuction(boolean auction) {
 		this.auction = auction;
+		validate();
 	}
 
 	public boolean getDishwasher() {
@@ -134,12 +198,13 @@ public class PlaceAdForm {
 		this.city = city;
 	}
 
-	public int getPrize() {
-		return prize;
+	public int getPrice() {
+		return price;
 	}
 
-	public void setPrize(int prize) {
-		this.prize = prize;
+	public void setPrice(int price) {
+		this.price = price;
+		validate();
 	}
 
 	public String getRoomDescription() {
@@ -297,5 +362,30 @@ public class PlaceAdForm {
 
 	public void setStartPrice(int startPrice) {
 		this.startPrice = startPrice;
+		validate();
+	}
+	
+	public int getPriceForAd(){
+		if (auction){
+			return auctionPrice;
+		}
+		return price;
+	}
+	
+	private void validate(){
+		if (!auction){
+			validEndDate = true;
+			validStartDate = true;
+			validStartPrice = true;
+			validIncreaseBidPrice = true;
+			validPrice = (price > 0);
+		}
+		else {
+			validStartDate = (startDate != null && !startDate.isEmpty());
+			validEndDate =(endDate != null && !endDate.isEmpty());
+			validIncreaseBidPrice = increaseBidPrice > 0;
+			validStartPrice = startPrice > 0;
+			validPrice = (auctionPrice > 0);
+		}
 	}
 }

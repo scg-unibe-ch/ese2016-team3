@@ -1,9 +1,7 @@
 package ch.unibe.ese.team3.controller.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.text.DateFormat;
@@ -66,7 +64,7 @@ public class AdServiceTest {
 		placeAdForm.setCity("3018 - Bern");
 		placeAdForm.setType(Type.APARTMENT);
 		placeAdForm.setRoomDescription("Test Room description");
-		placeAdForm.setPrize(600);
+		placeAdForm.setPrice(600);
 		placeAdForm.setSquareFootage(50);
 		placeAdForm.setTitle("title");
 		placeAdForm.setStreet("Hauptstrasse 13");
@@ -119,7 +117,7 @@ public class AdServiceTest {
 		assertEquals("Bern", ad.getCity());
 		assertEquals(3018, ad.getZipcode());
 		assertEquals("Test Room description", ad.getRoomDescription());
-		assertEquals(600, ad.getPrizePerMonth());
+		assertEquals(600, ad.getPrice());
 		assertEquals(50, ad.getSquareFootage());
 		assertEquals("title", ad.getTitle());
 		assertEquals("Hauptstrasse 13", ad.getStreet());
@@ -164,7 +162,7 @@ public class AdServiceTest {
 	public void getAllAds() {
 		// return all Ads in DB
 		int maxInt = 2147483647; // all ads should be cheaper than that value
-		Iterable<Ad> adsInDB = adDao.findByPrizePerMonthLessThanAndBuyMode(2147483647, BuyMode.BUY);
+		Iterable<Ad> adsInDB = adDao.findByPriceLessThanAndBuyMode(2147483647, BuyMode.BUY);
 		int acctualAdNumber = countIterable(adsInDB);
 		
 		Iterable<Ad> ads = adService.getAllAds();
@@ -180,7 +178,7 @@ public class AdServiceTest {
 	public void queryResults() {
 		SearchForm searchForm = new SearchForm();
 		searchForm.setCity("3001 - Bern");
-		searchForm.setPrize(500);
+		searchForm.setPrice(500);
 		searchForm.setRadius(5);
 		searchForm.setBalcony(true);
 		Type[] types = { Type.APARTMENT };
@@ -188,15 +186,15 @@ public class AdServiceTest {
 		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
 		ArrayList<Ad> adList = (ArrayList) queryedAds;
 
-		assertEquals(adList.size(), 1);
-		assertEquals(adList.get(0).getId(), 1);
+		assertEquals(1, adList.size());
+		assertEquals(1, adList.get(0).getId());
 	}
 	
 	@Test
 	public void testFilterBalcony() {
 		SearchForm searchForm = new SearchForm();
 		searchForm.setCity("3001 - Bern");
-		searchForm.setPrize(6000);
+		searchForm.setPrice(6000);
 		searchForm.setRadius(1000);
 		searchForm.setBalcony(true);
 		Type[] types = { Type.APARTMENT };
@@ -204,7 +202,7 @@ public class AdServiceTest {
 		
 		SearchForm searchForm2 = new SearchForm();
 		searchForm2.setCity("3001 - Bern");
-		searchForm2.setPrize(6000);
+		searchForm2.setPrice(6000);
 		searchForm2.setRadius(1000);
 		searchForm2.setBalcony(false);
 		searchForm2.setTypes(types);
@@ -229,7 +227,7 @@ public class AdServiceTest {
 		
 		SearchForm searchForm = new SearchForm();
 		searchForm.setCity("3001 - Bern");
-		searchForm.setPrize(1000000);
+		searchForm.setPrice(1000000);
 		searchForm.setRadius(400);
 		
 		searchForm.setTypes(types);
@@ -269,7 +267,7 @@ public class AdServiceTest {
 		
 		// iterate over each returned ad and check if the search criteria are fulfilled
 		for (Ad ad: queryedAds) {
-			assertTrue(ad.getPrizePerMonth()<1000000); // price of form still refers to PrizePerMonth
+			assertTrue(ad.getPrice()<1000000);
 			assertTrue(ad.getType().equals(Type.APARTMENT) ||ad.getType().equals(Type.HOUSE) ||
 					ad.getType().equals(Type.STUDIO) ||ad.getType().equals(Type.VILLA));
 			assertTrue(ad.getBalcony());

@@ -57,7 +57,7 @@ public class EditAdServiceTest {
 		placeAdForm.setCity("3018 - Bern");
 		placeAdForm.setType(Type.APARTMENT);
 		placeAdForm.setRoomDescription("Test Room description");
-		placeAdForm.setPrize(600);
+		placeAdForm.setPrice(600);
 		placeAdForm.setSquareFootage(50);
 		placeAdForm.setTitle("title");
 		placeAdForm.setStreet("Hauptstrasse 13");
@@ -112,7 +112,6 @@ public class EditAdServiceTest {
 
 		ad.setBalcony(true);
 		ad.setBuildYear(2010);
-		ad.setBuyItNowPrice(200);
 		ad.setCity("Bern");
 		ad.setZipcode(3000);
 		ad.setDishwasher(false);
@@ -129,7 +128,7 @@ public class EditAdServiceTest {
 		ad.setNumberOfBath(4);
 		ad.setNumberOfRooms(5);
 		ad.setParking(false);
-		ad.setPrizePerMonth(2000);
+		ad.setPrice(2000);
 		ad.setRenovationYear(2012);
 		ad.setRoomDescription("Hello world!");
 		ad.setSquareFootage(120);

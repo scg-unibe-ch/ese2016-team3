@@ -142,14 +142,14 @@
 							</div>
 						</div>
 					</spring:bind>
-					<spring:bind path="prize">
+					<spring:bind path="price">
 						<div class="form-group ${status.error ? 'has-error' : '' }">
-							<label for="prizeInput">Price (max.)</label>
+							<label for="priceInput">Price (max.)</label>
 							<div class="input-group">
 								<span class="input-group-addon">Fr.</span>
-								<form:input id="prizeInput" type="number" path="prize"
+								<form:input id="priceInput" type="number" path="price"
 									placeholder="e.g. 5" step="50" cssClass="form-control" />
-								<form:errors path="prize" />
+								<form:errors path="price" />
 							</div>
 						</div>
 					</spring:bind>
@@ -221,8 +221,7 @@
 								path="numberOfBathMin" cssClass="form-control input60 " />
 							<label for="field-NumberOfBathMax" class="betweenLabel">
 								- </label>
-							<form:input type="number"
-								cssClass="form-control input60"
+							<form:input type="number" cssClass="form-control input60"
 								path="numberOfBathMax" id="field-NumberOfBathMax" />
 						</div>
 
@@ -239,8 +238,7 @@
 								path="numberOfRoomsMin" id="field-NumberOfRoomsMin" />
 							<label for="field-NumberOfRoomsMax" class="betweenLabel">
 								- </label>
-							<form:input type="number"
-								cssClass="form-control input60"
+							<form:input type="number" cssClass="form-control input60"
 								path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
 							<%-- muss man <form_error/> auch noch hinzufügen? --%>
 						</div>
@@ -255,9 +253,8 @@
 							<form:input type="number" cssClass="form-control input60"
 								path="buildYearMin" id="field-BuildYearMin" />
 							<label for="field-BuildYearMax" class="betweenLabel"> - </label>
-							<form:input type="number"
-								cssClass="form-control input60" path="buildYearMax"
-								id="field-BuildYearMax" />
+							<form:input type="number" cssClass="form-control input60"
+								path="buildYearMax" id="field-BuildYearMax" />
 						</div>
 
 					</div>
@@ -271,8 +268,7 @@
 								path="renovationYearMin" id="field-RenovationYearMin" />
 							<label for="field-RenovationYearMax" class="betweenLabel">
 								- </label>
-							<form:input type="number"
-								cssClass="form-control input60"
+							<form:input type="number" cssClass="form-control input60"
 								path="renovationYearMax" id="field-RenovationYearMax" />
 						</div>
 					</div>
@@ -351,20 +347,20 @@
 				<p>No results found!
 			</c:when>
 			<c:otherwise>
-<!-- 				<div class="row bottom15"> -->
-<!-- 					<div class="col-xs-12"> -->
-<!-- 						<div class="btn-group"> -->
-<!-- 							<button type="button" class="btn btn-default">All</button> -->
-<!-- 							<button type="button" class="btn btn-default">Buy -->
-<!-- 								directly</button> -->
-<!-- 							<button type="button" class="btn btn-default">Buy by -->
-<!-- 								auction</button> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
+				<!-- 				<div class="row bottom15"> -->
+				<!-- 					<div class="col-xs-12"> -->
+				<!-- 						<div class="btn-group"> -->
+				<!-- 							<button type="button" class="btn btn-default">All</button> -->
+				<!-- 							<button type="button" class="btn btn-default">Buy -->
+				<!-- 								directly</button> -->
+				<!-- 							<button type="button" class="btn btn-default">Buy by -->
+				<!-- 								auction</button> -->
+				<!-- 						</div> -->
+				<!-- 					</div> -->
+				<!-- 				</div> -->
 				<div class="row" id="resultsDiv">
 					<c:forEach var="ad" items="${results}">
-						<div data-price="${ad.prizePerMonth}"
+						<div data-price="${ad.price}"
 							data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}"
 							class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ad-wide-preview-outer resultAd ${ad.isPremiumAd() ? 'premiumAd' : '' }">
 							<div class="col-md-12 ad-wide-preview-inner">
@@ -384,67 +380,70 @@
 										<p>
 											<i>${ad.type.name}</i>
 										</p>
-										<strong>CHF ${ad.prizePerMonth }</strong>
+										<strong>CHF ${ad.price }</strong>
 										<fmt:formatDate value="${ad.moveInDate}"
 											var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 										<p>Move-in date: ${formattedMoveInDate }</p>
 									</div>
 
+									<c:if test="${ad.auction  && ad.isAuctionRunning() && loggedInUserEmail != ad.user.username }">
 
-
-									<div class="col-sm-4 col-md-4 auction-Column">
-										<form:form method="post" modelAttribute="placeAdForm"
-											action="./results" id="bidForm" autocomplete="off"> <%-- id = ?? , action =" /results" oder /resultsAction?? --%>
-
+										<div class="col-sm-4 col-md-4 auction-Column">
 											<p>
 												<strong>Auction</strong>
 											</p>
-
 											<fmt:formatDate value="${ad.startDate}"
 												var="formattedStartDate" type="date" pattern="dd.MM.yyyy" />
-											<p>Running until :${formattedStartDate}</p>
+											<p>Running until: ${formattedStartDate}</p>
 
 											<p>
-												Current price: <strong>${ad.currentAuctionPrice}
+												Current price: <strong>${ad.currentAuctionPrice - ad.increaseBidPrice}
 													CHF</strong>
-
-
 											</p>
-											<div class="form-group">
-												<label class="sr-only" for="bid">Amount</label>
-												<%-- for="bid" stimmt wahrscheinlich nicht --%>
-												<div class="input-group">
-													<div class="input-group-addon">CHF</div>
-													<%--<input type="number" class="form-controll" placeholder="Amount" name="bid"> es fehlt: id = und value= --%>
-													<input class="form-control" id="disabledInput" type="text"
-														placeholder=${ad.bidPriceForUser } disabled> <span
-														class="input-group-btn">
-														<button type="button" class="btn btn-success">Bid</button>
-													</span>
+											<p>
+												<a href="./ad?id=${ad.id}">Bid</a>
+											</p>
+											<%-- 	
+											<form:form method="post" modelAttribute="placeAdForm"
+												action="./results" id="bidForm" autocomplete="off">
+												<div class="form-group">
+													<label class="sr-only" for="bid">Amount</label>
+													<!-- for="bid" stimmt wahrscheinlich nicht -->
+													<div class="input-group">
+														<div class="input-group-addon">CHF</div>
+														<!--<input type="number" class="form-controll" placeholder="Amount" name="bid"> es fehlt: id = und value= -->
+														<!-- fehlt noch: if not logged in-> you can not bid, und wirst zur Login Seite umgeleitet beim Klicken auf bid -->
+														<input class="form-control" id="disabledInput" type="text"
+															placeholder=${ad.bidPriceForUser } disabled> <span
+															class="input-group-btn">
+															<button type="button" class="btn btn-success">Bid</button>
+														</span>
 
+													</div>
 												</div>
-											</div>
-										</form:form>
+											</form:form>
 
-										<form:form method="post" modelAttribute="placeAdForm"
-											action="./results" id="buyForm" autocomplete="off">
-											<div class="form-group">
-												<label class="sr-only" for="exampleInputAmount">Buy
-													now Price in CHF</label>
-												<%-- for stimmt wahrscheinlich nicht --%>
-												<div class="input-group">
-													<div class="input-group-addon">CHF</div>
-													<input class="form-control" id="disabledInput" type="text"
-														placeholder=${ad.buyItNowPrice } disabled> <span
-														class="input-group-btn">
-														<button type="button" class="btn btn-success">Buy
-														</button>
-													</span>
+											<form:form method="post" modelAttribute="placeAdForm"
+												action="./results" id="buyForm" autocomplete="off">
+												<div class="form-group">
+													<label class="sr-only" for="exampleInputAmount">Buy
+														now Price in CHF</label>
+													<!-- for stimmt wahrscheinlich nicht -->
+													<!-- fehlt noch: if not logged in-> you can not bid, und wirst zur Login Seite umgeleitet beim Klicken auf bid -->
+													<div class="input-group">
+														<div class="input-group-addon">CHF</div>
+														<input class="form-control" id="disabledInput" type="text"
+															placeholder=${ad.buyItNowPrice } disabled> <span
+															class="input-group-btn">
+															<button type="button" class="btn btn-success">Buy
+															</button>
+														</span>
+													</div>
 												</div>
-											</div>
-										</form:form>
-									</div>
-
+											</form:form>
+											--%>
+										</div>
+									</c:if>
 								</div>
 							</div>
 							<div class="clearfix"></div>

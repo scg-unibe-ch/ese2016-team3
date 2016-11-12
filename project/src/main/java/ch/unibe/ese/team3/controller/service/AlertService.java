@@ -99,7 +99,7 @@ public class AlertService {
 	 */
 	@Transactional
 	public void triggerAlerts(Ad ad) {
-		int adPrice = ad.getPrizePerMonth();
+		int adPrice = ad.getPrice();
 		BuyMode buyMode = ad.getBuyMode();
 		Iterable<Alert> alerts = alertDao.findByPriceGreaterThanAndBuyMode(adPrice - 1, buyMode);
 
