@@ -5,6 +5,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
+	
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<meta name="google-signin-client_id" content="181693442640-gbt2eh1lkdqkeekjura4f0oha91dndmb.apps.googleusercontent.com">
 
 <c:import url="template/header.jsp" />
 
@@ -45,8 +49,10 @@
 							</div>
 							<br />
 		
-			Or <a class="link" href="<c:url value="./signup" />">sign up</a> as a new user.
-		
+			Or <a class="link" href="<c:url value="./signup" />">sign up</a> as a new user.	
+			
+			<p>
+			<div class="g-signin2" data-onsuccess="onSignIn"></div>
 						</c:otherwise>
 					</c:choose>
 
