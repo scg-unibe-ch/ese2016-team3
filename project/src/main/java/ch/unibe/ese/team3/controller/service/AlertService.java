@@ -13,6 +13,7 @@ import ch.unibe.ese.team3.controller.pojos.forms.AlertForm;
 import ch.unibe.ese.team3.dto.Location;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Alert;
+import ch.unibe.ese.team3.model.AlertResult;
 import ch.unibe.ese.team3.model.AlertType;
 import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Message;
@@ -20,6 +21,7 @@ import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.AlertDao;
+import ch.unibe.ese.team3.model.dao.AlertResultDao;
 import ch.unibe.ese.team3.model.dao.MessageDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
@@ -38,6 +40,9 @@ public class AlertService {
 
 	@Autowired
 	MessageDao messageDao;
+	
+	@Autowired
+	AlertResultDao alertResultDao;
 
 	@Autowired
 	private GeoDataService geoDataService;
@@ -117,23 +122,40 @@ public class AlertService {
 		List<User> users = new ArrayList<User>();
 		for (Alert alert : alerts) {
 			User user = alert.getUser();
-			if (!users.contains(user) && user.isPremium()) {
+			if (!users.contains(user)) {
 				users.add(user);
 			}
 		}
 
-		// send messages to all users with matching alerts
+		// save triggered alerts into database
 		for (User user : users) {
 			Date now = new Date();
-			Message message = new Message();
-			message.setSubject("It's a match!");
-			message.setText(getAlertText(ad));
-			message.setSender(userDao.findByUsername("System"));
-			message.setRecipient(user);
-			message.setState(MessageState.UNREAD);
-			message.setDateSent(now);
-			messageDao.save(message);
-			messageService.sendEmail(user, "It's a match!", getAlertText(ad));
+			AlertResult alertResult = new AlertResult();
+			if (user.isPremium()) {
+				alertResult.setNotified(true);
+			}
+			else {
+				alertResult.setNotified(false);
+			}
+			alertResult.setTriggerAd(ad);
+			alertResult.setTriggerDate(now);
+			alertResult.setUser(user);
+			alertResultDao.save(alertResult);
+		}
+		// send messages to all users with matching alerts
+		for (User user : users) {
+			if (user.isPremium()) {
+				Date now = new Date();
+				Message message = new Message();
+				message.setSubject("It's a match!");
+				message.setText(getAlertText(ad));
+				message.setSender(userDao.findByUsername("System"));
+				message.setRecipient(user);
+				message.setState(MessageState.UNREAD);
+				message.setDateSent(now);
+				messageDao.save(message);
+				messageService.sendEmail(user, "It's a match!", getAlertText(ad));
+			}
 		}
 	}
 
