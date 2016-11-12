@@ -1,6 +1,9 @@
 package ch.unibe.ese.team3.controller.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -23,7 +26,7 @@ public class AuctionService {
 
 	@Autowired
 	private BidDao bidDao;
-	
+
 	@Autowired
 	private PurchaseRequestDao purchaseRequestDao;
 
@@ -46,7 +49,8 @@ public class AuctionService {
 		}
 
 		bid(ad, bidder, amount);
-		logger.info(String.format("Successful bid for ad %d by user %s, amount: %d", ad.getId(), bidder.getEmail(), amount));
+		logger.info(String.format("Successful bid for ad %d by user %s, amount: %d", ad.getId(), bidder.getEmail(),
+				amount));
 		return true;
 	}
 
@@ -61,7 +65,7 @@ public class AuctionService {
 		logger.info(String.format("Successful purchase for ad %d by user %s", ad.getId(), purchaser.getEmail()));
 		return true;
 	}
-	
+
 	private void bid(Ad ad, User user, int amount) {
 		Bid bid = new Bid();
 		bid.setAd(ad);
@@ -77,7 +81,7 @@ public class AuctionService {
 		PurchaseRequest request = new PurchaseRequest();
 		request.setAd(ad);
 		request.setPurchaser(purchaser);
-		request.setTimeStamp(new Date());
+		request.setCreated(new Date());
 		ad.getPurchaseRequests().add(request);
 		purchaseRequestDao.save(request);
 	}
@@ -104,7 +108,7 @@ public class AuctionService {
 		if (maxBid != null) {
 			return maxBid.getAmount() < amount;
 		}
-		
+
 		return amount >= ad.getCurrentAuctionPrice();
 	}
 
@@ -112,10 +116,109 @@ public class AuctionService {
 		ad.setAvailable(true);
 		adDao.save(ad);
 	}
-	
-	public void stopAuction(Ad ad){
+
+	public void stopAuction(Ad ad) {
 		ad.setAvailable(false);
 		adDao.save(ad);
+	}
+
+	public List<Ad> getNotYetRunningAuctionsForUser(User owner) {
+		Date now = new Date();
+		ArrayList<Ad> ads = new ArrayList<Ad>();
+		Iterable<Ad> auctionAds = adDao.findByUserAndAuction(owner, true);
+		Iterator<Ad> iter = auctionAds.iterator();
+
+		while (iter.hasNext()) {
+			Ad ad = iter.next();
+			if (ad.isAvailable() && now.before(ad.getStartDate())) {
+				ads.add(ad);
+			}
+		}
+
+		return ads;
+	}
+
+	public List<Ad> getRunningAuctionsForUser(User owner) {
+		Date now = new Date();
+		ArrayList<Ad> ads = new ArrayList<Ad>();
+		Iterable<Ad> auctionAds = adDao.findByUserAndAuction(owner, true);
+		Iterator<Ad> iter = auctionAds.iterator();
+		while (iter.hasNext()) {
+			Ad ad = iter.next();
+			if (ad.isAvailable() && (now.after(ad.getStartDate()) && now.before(ad.getEndDate()))) {
+				ads.add(ad);
+			}
+		}
+
+		return ads;
+	}
+
+	public List<Ad> getExpiredAuctionsForUser(User owner) {
+		Date now = new Date();
+		ArrayList<Ad> ads = new ArrayList<Ad>();
+		Iterable<Ad> auctionAds = adDao.findByUserAndAuction(owner, true);
+		Iterator<Ad> iter = auctionAds.iterator();
+
+		while (iter.hasNext()) {
+			Ad ad = iter.next();
+			if (ad.isAvailable() && now.after(ad.getEndDate())) {
+				ads.add(ad);
+			}
+		}
+
+		return ads;
+	}
+
+	public List<Ad> getStoppedAuctionsForUser(User owner) {
+		Date now = new Date();
+		ArrayList<Ad> ads = new ArrayList<Ad>();
+		Iterable<Ad> auctionAds = adDao.findByUserAndAuction(owner, true);
+		Iterator<Ad> iter = auctionAds.iterator();
+
+		while (iter.hasNext()) {
+			Ad ad = iter.next();
+			if (!ad.isAvailable() && (now.after(ad.getStartDate()) && now.before(ad.getEndDate()))) {
+				ads.add(ad);
+			}
+		}
+
+		return ads;
+	}
+
+	public List<Ad> getCompletedAuctionsForUser(User owner) {
+		Date now = new Date();
+		ArrayList<Ad> ads = new ArrayList<Ad>();
+		Iterable<Ad> auctionAds = adDao.findByUserAndAuction(owner, true);
+		Iterator<Ad> iter = auctionAds.iterator();
+
+		while (iter.hasNext()) {
+			Ad ad = iter.next();
+			if (!ad.isAvailable() && now.after(ad.getEndDate())) {
+				ads.add(ad);
+			}
+		}
+
+		return ads;
+	}
+
+	public List<Bid> getBidsForAd(Ad ad) {
+		return convertToList(bidDao.findByAdOrderByAmountDesc(ad));
+	}
+
+	public List<PurchaseRequest> getPurchaseRequestForAd(Ad ad) {
+		return convertToList(purchaseRequestDao.findByAdOrderByCreatedAsc(ad));
+	}
+
+	private <T> List<T> convertToList(Iterable<T> iterable) {
+		ArrayList<T> list = new ArrayList<T>();
+
+		Iterator<T> iterator = iterable.iterator();
+		while (iterator.hasNext()) {
+			T item = iterator.next();
+			list.add(item);
+		}
+
+		return list;
 	}
 
 }

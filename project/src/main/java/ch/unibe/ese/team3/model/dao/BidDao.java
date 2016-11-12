@@ -7,4 +7,5 @@ import ch.unibe.ese.team3.model.Bid;
 
 public interface BidDao extends CrudRepository<Bid, Long>{
 	public Bid findTopByAdOrderByAmountDesc(Ad ad);
+	public Iterable<Bid> findByAdOrderByAmountDesc(Ad ad);
 }

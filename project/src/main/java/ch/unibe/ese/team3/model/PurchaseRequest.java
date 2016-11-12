@@ -1,6 +1,8 @@
 package ch.unibe.ese.team3.model;
 
 import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,7 +28,7 @@ public class PurchaseRequest {
 	
 	@JsonFormat(pattern = "HH:mm, dd.MM.yyyy")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date timeStamp;
+	private Date created;
 	
 	
 	public long getId() {
@@ -53,11 +55,11 @@ public class PurchaseRequest {
 		this.ad = ad;
 	}
 
-	public Date getTimeStamp() {
-		return timeStamp;
+	public Date getCreated() {
+		return created;
 	}
 
-	public void setTimeStamp(Date timeStamp) {
-		this.timeStamp = timeStamp;
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 }

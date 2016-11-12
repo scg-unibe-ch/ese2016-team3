@@ -89,6 +89,8 @@
 											<li><a href="/${pagemode}/profile/myRooms"> <span
 													class="glyphicon glyphicon-home"></span> My Ads
 											</a></li>
+											<li><a href="/${pagemode}/profile/auctions">
+											Manage auctions</a></li>
 											<li><a href="/${pagemode}/profile/messages"> <span
 													class="glyphicon glyphicon glyphicon-envelope"></span>
 													Messages <span class="badge" id="navUnread"></span>
