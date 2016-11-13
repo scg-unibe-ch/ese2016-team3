@@ -125,7 +125,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </script>
     
 <script>
-var results =$(results);			// funktioniert das?
+var results =$(resultsInJonsen)	;	// funktioniert das?
+var obj = JSON.parse(results);
 var ad;
 var addresses=[];
 var adr;
@@ -134,8 +135,6 @@ for(ad in results){
 	addresses[ad] = $(ad.street) + " "+$( ad.zipcode) +" " +$(ad.city); // funktioniert das?
 	
 }
-
-
 
 var map;
 var infowindow;

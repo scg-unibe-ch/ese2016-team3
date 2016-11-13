@@ -1,6 +1,9 @@
 package ch.unibe.ese.team3.controller;
 
 import java.security.Principal;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -11,11 +14,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.controller.service.AdService;
+import ch.unibe.ese.team3.dto.PictureMeta;
 import ch.unibe.ese.team3.enums.PageMode;
+import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
@@ -26,6 +35,8 @@ public class SearchController {
 
 	@Autowired
 	private AdService adService;
+	
+	private ObjectMapper objectMapper;
 
 	/**
 	 * The search form that is used for searching. It is saved between request
@@ -53,6 +64,35 @@ public class SearchController {
 			model.addObject("results", adService.queryResults(searchForm, BuyMode.fromPageMode(pageMode)));
 			model.addObject("types", Type.values());
 			model.addObject("infrastructureTypes", InfrastructureType.values());
+			
+			List<Ad>adResults = new LinkedList<>();
+			Iterable<Ad> iter = adService.queryResults(searchForm, BuyMode.fromPageMode(pageMode));
+			Iterator<Ad> iterator = iter.iterator();
+
+			while (iterator.hasNext()) {
+				adResults.add(iterator.next());
+			}
+
+			objectMapper = new ObjectMapper();
+			String jsonResponse="{";
+			try {
+				jsonResponse += objectMapper.writeValueAsString(adResults);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			jsonResponse += "}";
+					
+//			String jsonResponse = "{\"files\": ";
+//			try {
+//				jsonResponse += objectMapper
+//						.writeValueAsString(adResults);
+//			} catch (JsonProcessingException e) {
+//				e.printStackTrace();
+//			}
+//			jsonResponse += "}";
+			
+			model.addObject("resultsInJonsen", jsonResponse);
 			
 			String loggedInUserEmail = (principal == null) ? "" : principal.getName();
 			model.addObject("loggedInUserEmail", loggedInUserEmail);
