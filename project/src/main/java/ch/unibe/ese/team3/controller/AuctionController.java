@@ -44,7 +44,7 @@ public class AuctionController {
 		if (auctionService.checkAndBid(ad, bidder, amount)) {			
 			ModelAndView model = new ModelAndView("redirect:../ad?id=" + ad.getId());
 			redirectAttributes.addFlashAttribute("confirmationMessage",
-					"Your bid was registered successfully.");
+					"Your bid was registered successfully. If you win the auction, the advertiser will contact you.");
 			return model;
 		}
 		else{
@@ -65,7 +65,7 @@ public class AuctionController {
 		if (auctionService.checkAndBuy(ad, purchaser)) {			
 			ModelAndView model = new ModelAndView("redirect:../ad?id=" + ad.getId());
 			redirectAttributes.addFlashAttribute("confirmationMessage",
-					"Your purchase was registered successfully.");
+					"Your purchase was registered successfully. The advertiser will contact you.");
 			return model;
 		}
 		else{

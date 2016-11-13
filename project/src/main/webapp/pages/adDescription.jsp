@@ -424,60 +424,108 @@
 								</div>
 
 								<div class="col-sm-8">
-
-									<form:form name="AuctionBid" action="./profile/bidAuction"
-										method="post">
-										<input type="hidden" name="id" value="${shownAd.id }" />
-										<input type="hidden" name="amount"
-											value="${shownAd.currentAuctionPrice}" />
-										<div class="form-group">
-											<label class="sr-only" for="bid">Amount</label>
-											<div class="input-group">
-												<div class="input-group-addon">CHF</div>
-												<input class="form-control" id="disabledInput" type="text"
-													placeholder=${shownAd.currentAuctionPrice } disabled>
-												<span class="input-group-btn"> <c:choose>
-														<c:when test="${loggedIn }">
-															<button type="submit" class="btn btn-success">Bid</button>
-														</c:when>
-														<c:otherwise>
-															<a href="./login" class="btn btn-success">Bid</a>
-														</c:otherwise>
-													</c:choose>
-												</span>
-											</div>
+									<div class="form-group">
+										<label class="sr-only" for="bid">Amount</label>
+										<div class="input-group">
+											<div class="input-group-addon">CHF</div>
+											<input class="form-control" id="disabledInput" type="text"
+												placeholder=${shownAd.currentAuctionPrice } disabled>
+											<span class="input-group-btn"> <c:choose>
+													<c:when test="${loggedIn }">
+														<button type="button" class="btn btn-primary"
+															data-toggle="modal" data-target="#bidModal">Bid</button>
+													</c:when>
+													<c:otherwise>
+														<a href="./login" class="btn btn-primary">Bid</a>
+													</c:otherwise>
+												</c:choose>
+											</span>
 										</div>
-									</form:form>
+									</div>
 
-									<form:form name="AuctionBuy" action="./profile/buyAuction"
-										method="post">
-										<input type="hidden" name="id" value="${shownAd.id }" />
-										<input type="hidden" name="amount"
-											value="${shownAd.price}" />
-										<div class="form-group">
-											<label class="sr-only" for="exampleInputAmount">Buy
-												now Price in CHF</label>
-											<div class="input-group">
-												<div class="input-group-addon">CHF</div>
-												<input class="form-control" id="disabledInput" type="text"
-													placeholder=${shownAd.price } disabled> <span
-													class="input-group-btn"> <c:choose>
-														<c:when test="${loggedIn }">
-															<button type="submit" class="btn btn-success">Buy</button>
-														</c:when>
-														<c:otherwise>
-															<a href="./login" class="btn btn-success">Buy</a>
-														</c:otherwise>
-													</c:choose>
-												</span>
-											</div>
+
+									<div class="form-group">
+										<label class="sr-only" for="exampleInputAmount">Buy
+											now Price in CHF</label>
+										<div class="input-group">
+											<div class="input-group-addon">CHF</div>
+											<input class="form-control" id="disabledInput" type="text"
+												placeholder=${shownAd.price } disabled> <span
+												class="input-group-btn"> <c:choose>
+													<c:when test="${loggedIn }">
+														<button type="button" class="btn btn-primary"
+															data-toggle="modal" data-target="#buyModal">Buy</button>
+													</c:when>
+													<c:otherwise>
+														<a href="./login" class="btn btn-primary">Buy</a>
+													</c:otherwise>
+												</c:choose>
+											</span>
 										</div>
-									</form:form>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</c:if>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="bidModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Bid for auction</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					Do you really want to bid <strong>CHF
+						${shownAd.currentAuctionPrice}.00</strong> for this ad?
+				</p>
+			</div>
+			<div class="modal-footer">
+				<form class="form" name="AuctionBid" action="./profile/bidAuction"
+					method="post">
+					<input type="hidden" name="id" value="${shownAd.id }" /> <input
+						type="hidden" name="amount" value="${shownAd.currentAuctionPrice}" />
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="submit" class="btn btn-primary" id="bidButton">Bid</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="buyModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Buy request for
+					auction</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					Do you really want to buy this real estate for <strong>CHF
+						${shownAd.price}.00</strong>?
+				</p>
+			</div>
+			<div class="modal-footer">
+				<form class="form" name="AuctionBid" action="./profile/buyAuction"
+					method="post">
+					<input type="hidden" name="id" value="${shownAd.id }" />
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="submit" class="btn btn-primary" id="bidButton">Buy</button>
+				</form>
 			</div>
 		</div>
 	</div>
