@@ -204,6 +204,12 @@ public class AuctionServiceTest {
 	}
 	
 	@Test
+	public void bidOnOwnAuctionFails(){
+		boolean success = auctionService.checkAndBid(auctionAd, auctionOwner, 901000);
+		assertFalse(success);
+	}
+	
+	@Test
 	public void buyRequest(){
 		boolean buySuccessful = auctionService.checkAndBuy(auctionAd, purchaser1);		
 		
@@ -223,6 +229,12 @@ public class AuctionServiceTest {
 		
 		int count = countIterable(purchaseRequestDao.findByAd(auctionAd));		
 		assertEquals(2, count);
+	}
+	
+	@Test
+	public void buyRequestForOwnAuctionFails(){
+		boolean success = auctionService.checkAndBuy(auctionAd, auctionOwner);
+		assertFalse(success);
 	}
 	
 	@Test

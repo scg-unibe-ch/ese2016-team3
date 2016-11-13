@@ -35,7 +35,7 @@ public class AuctionService {
 
 	@Transactional
 	public boolean checkAndBid(Ad ad, User bidder, int amount) {
-		if (!canBid(ad, amount)) {
+		if (!canBid(ad, bidder, amount)) {
 			logger.info(String.format("Bid failed for ad %d by user %s", ad.getId(), bidder.getEmail()));
 			return false;
 		}
@@ -48,7 +48,7 @@ public class AuctionService {
 
 	@Transactional
 	public boolean checkAndBuy(Ad ad, User purchaser) {
-		if (!canBuy(ad)) {
+		if (!canBuy(ad, purchaser)) {
 			logger.info(String.format("Purchase failed for ad %d by user %s", ad.getId(), purchaser.getEmail()));
 			return false;
 		}
@@ -84,15 +84,15 @@ public class AuctionService {
 		adDao.save(ad);
 	}
 
-	private boolean canBuy(Ad ad) {
-		if (!ad.isAvailableForAuction() || !ad.isAuctionRunning()) {
+	private boolean canBuy(Ad ad, User purchaser) {
+		if (!ad.isAvailableForAuction() || !ad.isAuctionRunning() || ad.getUser().equals(purchaser)) {
 			return false;
 		}
 		return true;
 	}
 
-	private boolean canBid(Ad ad, int amount) {
-		if (!ad.isAvailableForAuction() || !ad.isAuctionRunning()) {
+	private boolean canBid(Ad ad, User bidder, int amount) {
+		if (!ad.isAvailableForAuction() || !ad.isAuctionRunning() || ad.getUser().equals(bidder)) {
 			return false;
 		}
 

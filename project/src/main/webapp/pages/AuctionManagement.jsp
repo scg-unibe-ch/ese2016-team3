@@ -18,6 +18,8 @@
 </div>
 
 <div class="panel-group" id="accordion">
+
+	<!-- Running auctions -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
@@ -65,7 +67,57 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Not yet started auctions -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a role="button" data-toggle="collapse" 
+					href="#collapseNotYetRunning" aria-expanded="true"
+					aria-controls="collapseNotYetRunning">Not yet started auctions</a>
+			</h4>
+		</div>
+		<div class="panel-collapse collapse" id="collapseNotYetRunning">
+			<div class="panel-body table-responsive">
+				<c:choose>
+					<c:when test="${empty notStartedAuctions}">
+						<p>No not yet started auctions</p>
+					</c:when>
+					<c:otherwise>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Ad</th>
+									<th>Address</th>
+									<th>Start date</th>
+									<th>End date</th>
+									<th>Bids</th>
+									<th>Purchase requests</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="ad" items="${notStartedAuctions}">
+									<tr>
+										<td><a href="/${pagemode}/ad?id=${ad.id}">${ad.title}</a></td>
+										<td>${ad.street},&nbsp;${ad.zipcode}&nbsp;${ad.city}</td>
+										<td>${ad.startDate}</td>
+										<td>${ad.endDate}</td>
+										<td>${ad.bids.size() }</td>
+										<td>${ad.purchaseRequests.size() }</td>
+										<td><a href="/${pagemode}/profile/auction?id=${ad.id}">Auction
+												details</a></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+	</div>
 
+	<!-- Expired auctions -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
@@ -113,7 +165,8 @@
 			</div>
 		</div>
 	</div>
-
+	
+	<!-- Paused auctions -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
@@ -162,6 +215,7 @@
 		</div>
 	</div>
 
+	<!-- Completed auctions -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
