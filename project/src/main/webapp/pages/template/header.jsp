@@ -120,6 +120,8 @@
 				</div>
 			</div>
 		</nav>
+	</div>
+
 
 		<c:if test="${not empty confirmationMessage }">
 			<div class="alert alert-success">
