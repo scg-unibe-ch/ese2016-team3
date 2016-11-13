@@ -68,6 +68,8 @@
 						<ul class="nav navbar-nav">
 							<li><a href="/${pagemode}/">Homepage</a></li>
 							<li><a href="/${pagemode}/searchAd">Find ad</a></li>
+							<!-- Newly added for MapView -->
+							<li><a href="/${pagemode}/mapView">Map view</a></li>
 							<c:if test="${loggedIn}">
 								<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
 							</c:if>

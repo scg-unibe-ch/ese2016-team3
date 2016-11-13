@@ -1,5 +1,7 @@
 package ch.unibe.ese.team3.controller.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -15,6 +17,7 @@ import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Alert;
 import ch.unibe.ese.team3.model.AlertType;
 import ch.unibe.ese.team3.model.BuyMode;
+import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.Type;
@@ -61,19 +64,71 @@ public class AlertService {
 		alert.setPrice(alertForm.getPrice());
 
 		alert.setRadius(alertForm.getRadius());
-		
+
 		List<AlertType> alertTypes = new ArrayList<AlertType>();
-		for (Type type : alertForm.getTypes()){
+		for (Type type : alertForm.getTypes()) {
 			AlertType alertType = new AlertType();
 			alertType.setType(type);
 			alertType.setAlert(alert);
 			alertTypes.add(alertType);
 		}
-		
+
 		alert.setAlertTypes(alertTypes);
 
 		alert.setUser(user);
+
+		// Extended Alert Criteria
+
+		Date earliestDate = convertStringToDate(alertForm.getEarliestMoveInDate());
+		Date latestDate = convertStringToDate(alertForm.getLatestMoveInDate());
+		alert.setEarliestMoveInDate(earliestDate);
+		alert.setLatestMoveInDate(latestDate);
+
+		alert.setBalcony(alertForm.isBalcony());
+		alert.setParking(alertForm.isParking());
+		alert.setElevator(alertForm.isElevator());
+		alert.setGarage(alertForm.isGarage());
+		alert.setDishwasher(alertForm.isDishwasher());
+
+		alert.setInfrastructureType(alertForm.getInfrastructureType());
+		alert.setSquareFootageMin(alertForm.getSquareFootageMin());
+		alert.setSquareFootageMax(alertForm.getSquareFootageMax());
+
+		alert.setBuildYearMin(alertForm.getBuildYearMin());
+		alert.setBuildYearMax(alertForm.getBuildYearMax());
+
+		alert.setRenovationYearMin(alertForm.getRenovationYearMin());
+		alert.setRenovationYearMax(alertForm.getRenovationYearMax());
+
+		alert.setNumberOfRoomsMin(alertForm.getNumberOfRoomsMin());
+		alert.setNumberOfRoomsMax(alertForm.getNumberOfRoomsMax());
+
+		alert.setNumberOfBathMin(alertForm.getNumberOfBathMin());
+		alert.setNumberOfBathMax(alertForm.getNumberOfBathMax());
+
+		alert.setDistanceSchoolMin(alertForm.getDistanceSchoolMin());
+		alert.setDistanceSchoolMax(alertForm.getDistanceSchoolMax());
+
+		alert.setDistanceShoppingMin(alertForm.getDistanceShoppingMin());
+		alert.setDistanceShoppingMax(alertForm.getDistanceShoppingMax());
+
+		alert.setDistancePublicTransportMin(alertForm.getDistancePublicTransportMin());
+		alert.setDistancePublicTransportMax(alertForm.getDistancePublicTransportMax());
+
+		alert.setFloorLevelMin(alertForm.getFloorLevelMin());
+		alert.setFloorLevelMax(alertForm.getFloorLevelMax());
+
 		alertDao.save(alert);
+	}
+
+	private Date convertStringToDate(String date) {
+		try {
+			DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+			Date earliestMoveInDate = formatter.parse(date);
+			return earliestMoveInDate;
+		} catch (Exception e) {
+		}
+		return null;
 	}
 
 	/**
@@ -106,12 +161,17 @@ public class AlertService {
 		while (alertIterator.hasNext()) {
 			Alert alert = alertIterator.next();
 			if (typeMismatchWith(ad, alert) || radiusMismatchWith(ad, alert) || ad.getUser().equals(alert.getUser()))
-				alertIterator.remove();
+				alertIterator.remove(); // this also changes the number of
+										// elements in "alerts"
 		}
+
+		// extended alert criteria
+		filterWithExtendedCriteria(ad, alerts);
 
 		// send only one message per user, no matter how many alerts were
 		// triggered
 		List<User> users = new ArrayList<User>();
+
 		for (Alert alert : alerts) {
 			User user = alert.getUser();
 			if (!users.contains(user)) {
@@ -144,28 +204,160 @@ public class AlertService {
 				+ "Your FlatFindr crew";
 	}
 
-	/** Checks if an ad is conforming to the criteria in an alert. Return false if the type of Ad is within 
-	 * the types within Alert list
+	/**
+	 * Checks if an ad is conforming to the criteria in an alert. Return false
+	 * if the type of Ad is within the types within Alert list
 	 */
-	
 	private boolean typeMismatchWith(Ad ad, Alert alert) {
 		boolean mismatch = true;
 		List<AlertType> alertTypes = alert.getAlertTypes();
-		
+
 		// iterates over each alertType and compares the type to the ad's type
 		// if Ad type equals a type in alert, mismatch is false
 		for (AlertType alertType : alertTypes) {
-				if (ad.getType().equals(alertType.getType()))
-					mismatch = false;
+			if (ad.getType().equals(alertType.getType()))
+				mismatch = false;
 		}
 		return mismatch;
-		
-		/* (OLD) boolean mismatch = false;
-		if (!alert.getBothRoomAndStudio()
-				&& ad.getStudio() != alert.getStudio())
-			mismatch = true;
-		return mismatch;
-		*/
+	}
+
+	/**
+	 * Removes the alerts, which do not match with the placed ad, based on the
+	 * extended alert criteria
+	 * 
+	 * @param alerts
+	 */
+	private void filterWithExtendedCriteria(Ad ad, Iterable<Alert> alerts) {
+
+		filterByDate(alerts, ad);
+		filterBinaryCriteria(ad, alerts);
+		filterNumberCriteria(ad, alerts);
+		filterInfrastructureType(ad, alerts);
+	}
+
+	private void filterNumberCriteria(Ad ad, Iterable<Alert> alerts) {
+		Iterator<Alert> iterator = alerts.iterator(); // a new iterator has to
+														// be created, when the
+														// iteration should
+														// start anew (this
+														// resets the cursor)
+		while (iterator.hasNext()) {
+			Alert alert = iterator.next();
+			Integer minBath = convertToNullableInt(alert.getNumberOfBathMin());
+			Integer maxBath = convertToNullableInt(alert.getNumberOfBathMax());
+			Integer minSquareFootage = convertToNullableInt(alert.getSquareFootageMin());
+			Integer maxSquareFootage = convertToNullableInt(alert.getSquareFootageMax());
+			Integer minNumberOfRooms = convertToNullableInt(alert.getNumberOfRoomsMin());
+			Integer maxNumberOfRooms = convertToNullableInt(alert.getNumberOfRoomsMax());
+			Integer minFloorLevel = convertToNullableInt(alert.getFloorLevelMin());
+			Integer maxFloorLevel = convertToNullableInt(alert.getFloorLevelMax());
+			Integer minDistanceSchool = convertToNullableInt(alert.getDistanceSchoolMin());
+			Integer maxDistanceSchool = convertToNullableInt(alert.getDistanceSchoolMax());
+			Integer minDistanceShopping = convertToNullableInt(alert.getDistanceShoppingMin());
+			Integer maxDistanceShopping = convertToNullableInt(alert.getDistanceShoppingMax());
+			Integer minDistancePublicTransport = convertToNullableInt(alert.getDistancePublicTransportMin());
+			Integer maxDistancePublicTransport = convertToNullableInt(alert.getDistancePublicTransportMax());
+
+			Integer minBuildYear = convertToNullableInt(alert.getBuildYearMin());
+			Integer maxBuildYear = convertToNullableInt(alert.getBuildYearMax());
+			Integer minRenovationYear = convertToNullableInt(alert.getRenovationYearMin());
+			Integer maxRenovationYear = convertToNullableInt(alert.getRenovationYearMax());
+
+			if (!inRange(minBath, maxBath, ad.getNumberOfBath())
+					|| !inRange(minSquareFootage, maxSquareFootage, ad.getSquareFootage())
+					|| !inRange(minNumberOfRooms, maxNumberOfRooms, ad.getNumberOfRooms())
+					|| !inRange(minFloorLevel, maxFloorLevel, ad.getFloorLevel())
+					|| !inRange(minDistanceSchool, maxDistanceSchool, ad.getDistanceSchool())
+
+					|| !inRange(minBuildYear, maxBuildYear, ad.getBuildYear())
+					|| !inRange(minRenovationYear, maxRenovationYear, ad.getRenovationYear())
+
+					|| !inRange(minDistanceShopping, maxDistanceShopping, ad.getDistanceShopping())
+					|| !inRange(minDistancePublicTransport, maxDistancePublicTransport,
+							ad.getDistancePublicTransport())) {
+				iterator.remove();
+			}
+		}
+	}
+
+	private void filterInfrastructureType(Ad ad, Iterable<Alert> alerts) {
+		Iterator<Alert> iterator = alerts.iterator();
+		InfrastructureType infraType = ad.getInfrastructureType();
+
+		if (infraType != null) {
+			while (iterator.hasNext()) {
+				Alert alert = iterator.next();
+				if (!(alert.getInfrastructureType() == null)) {
+					if (!alert.getInfrastructureType().equals(infraType)) {
+						iterator.remove();
+					}
+				}
+			}
+		}
+	}
+
+	private void filterBinaryCriteria(Ad ad, Iterable<Alert> alerts) {
+		Iterator<Alert> iterator = alerts.iterator(); // a new iterator has to
+														// be created, when the
+														// iteration should
+														// start anew (this
+														// resets the cursor)
+		while (iterator.hasNext()) {
+			Alert alert = iterator.next();
+			if (alert.isDishwasher()) {
+				if (!ad.getDishwasher()) {
+					iterator.remove();
+				}
+			}
+		}
+
+		iterator = alerts.iterator();
+		while (iterator.hasNext()) {
+			Alert alert = iterator.next();
+			if (alert.isElevator()) {
+				if (!ad.getElevator()) {
+					iterator.remove();
+				}
+			}
+		}
+
+		iterator = alerts.iterator();
+		while (iterator.hasNext()) {
+			Alert alert = iterator.next();
+			if (alert.isBalcony()) {
+				if (!ad.getBalcony()) {
+					iterator.remove();
+				}
+			}
+		}
+
+		iterator = alerts.iterator();
+		while (iterator.hasNext()) {
+			Alert alert = iterator.next();
+			if (alert.isGarage()) {
+				if (!ad.getGarage()) {
+					iterator.remove();
+				}
+			}
+		}
+
+		iterator = alerts.iterator();
+		while (iterator.hasNext()) {
+			Alert alert = iterator.next();
+			if (alert.isParking()) {
+				if (!ad.getParking()) {
+					iterator.remove();
+				}
+			}
+		}
+	}
+
+	private Integer convertToNullableInt(int value) {
+		return value > 0 ? value : null;
+	}
+
+	private boolean inRange(Integer min, Integer max, int value) {
+		return (min == null || value >= min) && (max == null || value <= max);
 	}
 
 	/**
@@ -192,6 +384,38 @@ public class AlertService {
 		double distance = Math.acos(radSinLat * Math.sin(radLatitude)
 				+ radCosLat * Math.cos(radLatitude) * Math.cos(radLong - radLongitude)) * earthRadiusKm;
 		return (distance > alert.getRadius());
+	}
+
+	private void filterByDate(Iterable<Alert> alerts, Ad ad) {
+		assert ad.getMoveInDate() != null;
+		
+		// count alerts
+		Iterator<Alert> iterator = alerts.iterator();
+		int countAlerts = 0;
+
+		while (iterator.hasNext()) {
+			iterator.next();
+			countAlerts++;
+			iterator.remove();
+		}
+		
+		// reset iterator
+		iterator = alerts.iterator();
+
+		if (countAlerts > 0) {
+			while (iterator.hasNext()) {
+				iterator = alerts.iterator(); // reset cursor of iterator
+				Alert alert = iterator.next();
+
+				Date earliestDate = alert.getEarliestMoveInDate();
+				Date latestDate = alert.getLatestMoveInDate();
+
+				if (!((earliestDate == null || earliestDate.compareTo(ad.getMoveInDate()) <= 0)
+						&& (latestDate == null || latestDate.compareTo(ad.getMoveInDate()) >= 0))) {
+					iterator.remove();
+				}
+			}
+		}
 	}
 
 	// for testing
