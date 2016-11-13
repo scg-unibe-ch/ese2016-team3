@@ -214,4 +214,9 @@ public class AuctionService {
 		return list;
 	}
 
+	public boolean hasUserSentBuyRequest(Ad ad, User user) {
+		Iterable<PurchaseRequest> requests = purchaseRequestDao.findByAdAndPurchaser(ad, user);
+		return requests.iterator().hasNext();
+	}
+
 }

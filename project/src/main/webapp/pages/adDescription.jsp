@@ -425,7 +425,6 @@
 
 								<div class="col-sm-8">
 									<div class="form-group">
-										<label class="sr-only" for="bid">Amount</label>
 										<div class="input-group">
 											<div class="input-group-addon">CHF</div>
 											<input class="form-control" id="disabledInput" type="text"
@@ -443,26 +442,25 @@
 										</div>
 									</div>
 
-
-									<div class="form-group">
-										<label class="sr-only" for="exampleInputAmount">Buy
-											now Price in CHF</label>
-										<div class="input-group">
-											<div class="input-group-addon">CHF</div>
-											<input class="form-control" id="disabledInput" type="text"
-												placeholder=${shownAd.price } disabled> <span
-												class="input-group-btn"> <c:choose>
-													<c:when test="${loggedIn }">
-														<button type="button" class="btn btn-primary"
-															data-toggle="modal" data-target="#buyModal">Buy</button>
-													</c:when>
-													<c:otherwise>
-														<a href="./login" class="btn btn-primary">Buy</a>
-													</c:otherwise>
-												</c:choose>
-											</span>
+									<c:if test="${sentBuyRequest eq false }">
+										<div class="form-group">
+											<div class="input-group">
+												<div class="input-group-addon">CHF</div>
+												<input class="form-control" id="disabledInput" type="text"
+													placeholder=${shownAd.price } disabled> <span
+													class="input-group-btn"> <c:choose>
+														<c:when test="${loggedIn }">
+															<button type="button" class="btn btn-primary"
+																data-toggle="modal" data-target="#buyModal">Buy</button>
+														</c:when>
+														<c:otherwise>
+															<a href="./login" class="btn btn-primary">Buy</a>
+														</c:otherwise>
+													</c:choose>
+												</span>
+											</div>
 										</div>
-									</div>
+									</c:if>
 								</div>
 							</div>
 						</div>

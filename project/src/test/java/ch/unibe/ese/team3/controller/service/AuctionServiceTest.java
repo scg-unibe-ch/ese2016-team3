@@ -335,6 +335,17 @@ public class AuctionServiceTest {
 		List<Ad> notRunningAuctions = auctionService.getNotYetRunningAuctionsForUser(auctionOwner);
 		assertEquals(0, notRunningAuctions.size());
 	}
+	
+	@Test
+	public void userHasSentPurchaseRequestForAd(){
+		auctionService.checkAndBuy(auctionAd, purchaser1);
+		assertTrue(auctionService.hasUserSentBuyRequest(auctionAd, purchaser1));
+	}
+	
+	@Test
+	public void userHasNotSentPurchaseRequestForAd(){
+		assertFalse(auctionService.hasUserSentBuyRequest(auctionAd, purchaser1));
+	}
 
 	private <T> int countIterable(Iterable<T> iterable) {
 		int count = 0;
