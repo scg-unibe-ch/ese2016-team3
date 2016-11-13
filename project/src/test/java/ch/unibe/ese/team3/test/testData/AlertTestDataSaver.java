@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ch.unibe.ese.team3.controller.service.AlertService;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Alert;
 import ch.unibe.ese.team3.model.AlertResult;
@@ -37,13 +38,19 @@ public class AlertTestDataSaver {
 	
 	@Autowired 
 	private AdDao adDao;
+	
+	@Autowired
+	private AlertService alertService;
 
 
 	@Transactional
 	public void saveTestData() throws Exception {
 		User ese = userDao.findByUsername("ese@unibe.ch");
 		User jane = userDao.findByUsername("jane@doe.com");
+		User baer = userDao.findByUsername("user@bern.com");
 		Ad luzernAd = adDao.findByTitle("Elegant Studio in Lucerne");
+		Ad bernAd = adDao.findByTitle("Cheap studio in Bern!");
+		
 		// create list of AlertTypes
 		AlertType typeApartment = new AlertType();
 		typeApartment.setType(Type.APARTMENT);
@@ -97,12 +104,28 @@ public class AlertTestDataSaver {
 		alert.setRadius(22);
 		alertDao.save(alert);
 		
-		AlertResult alertResult = new AlertResult();
-		alertResult.setTriggerAd(luzernAd);
-		alertResult.setTriggerDate(new Date());
-		alertResult.setUser(jane);
-		alertResult.setNotified(false);
-		alertResultDao.save(alertResult);
+		AlertResult alertResultLuzern = new AlertResult();
+		alertResultLuzern.setTriggerAd(luzernAd);
+		alertResultLuzern.setTriggerDate(new Date());
+		alertResultLuzern.setUser(jane);
+		alertResultLuzern.setNotified(false);
+		alertResultDao.save(alertResultLuzern);
+		
+		AlertResult alertResultBern1 = new AlertResult();
+		alertResultBern1.setNotified(false);
+		alertResultBern1.setTriggerAd(bernAd);
+		alertResultBern1.setUser(baer);
+		alertResultBern1.setTriggerDate(new Date());
+		alertResultDao.save(alertResultBern1);
+		
+		AlertResult alertResultBern2 = new AlertResult();
+		alertResultBern2.setNotified(false);
+		alertResultBern2.setTriggerAd(bernAd);
+		alertResultBern2.setUser(jane);
+		alertResultBern2.setTriggerDate(new Date());
+		alertResultDao.save(alertResultBern2);
+		
+		
 	}
 
 }

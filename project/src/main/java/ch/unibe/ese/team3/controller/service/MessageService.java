@@ -185,8 +185,8 @@ public class MessageService {
 	 * the alerts that have been triggered for every user.
 	 * A message and an e-mail are sent.
 	 */
-	//@Scheduled(cron = "0 0 * * *") // everyday at 5 pm
-	@Scheduled(cron = "1 * * * * *") // every minute
+	@Scheduled(cron = "0 59 23 * * *") // everyday at one minute before midnight
+	//@Scheduled(cron = "1 * * * * *") // every minute
 	public void alertMessageForBasicUser() {
 		
 		String subject = "Your daily alerts";
@@ -204,7 +204,7 @@ public class MessageService {
 		for (User user: users) {
 			if (!user.isPremium()){
 				for (AlertResult alertResult : alertResultDao.findByUser(user)) {
-					if(alertResult.getTriggerDate().after(yesterday)) {
+					if(alertResult.getTriggerDate().after(yesterday) || alertResult.getNotified() == false) {
 						Ad ad = alertResult.getTriggerAd();
 						text += "</a><br><br> <a class=\"link\" href=/ad?id="
 								+ ad.getId() + ">" + ad.getTitle() + "</a><br><br>"
@@ -220,6 +220,8 @@ public class MessageService {
 				}
 				sendMessage(userDao.findByUsername("System"), user, subject, text);
 				sendEmail(user, subject, text);
+				
+				text = "All ads that match your alerts: \n";
 			}
 		}
 	}

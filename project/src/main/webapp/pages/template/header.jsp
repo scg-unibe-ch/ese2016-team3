@@ -35,7 +35,7 @@
 					$('#navUnread').html(unread);
 				});
 			});
-</script>
+		</script>
 </head>
 
 <!-- check if user is logged in -->
@@ -96,7 +96,7 @@
 										<li><a href="/${pagemode}/profile/messages"> <span
 												class="glyphicon glyphicon glyphicon-envelope"></span>
 												Messages <span class="badge" id="navUnread"></span>
-										</a></li>
+										</a>
 										<li><a href="/${pagemode}/profile/alerts"> <span
 												class="glyphicon glyphicon-bell"></span> Alerts
 										</a></li>
@@ -120,8 +120,6 @@
 				</div>
 			</div>
 		</nav>
-	</div>
-
 
 		<c:if test="${not empty confirmationMessage }">
 			<div class="alert alert-success">
