@@ -154,9 +154,11 @@ public class Ad {
 	@Column(nullable = false)
 	private boolean auction;
 	
-	private boolean availableForAuction = true;
+	@Column(nullable = true)
+	private boolean availableForAuction;
 	
-	private boolean auctionCompleted = false;
+	@Column(nullable = true)
+	private boolean auctionCompleted;
 	
 	public boolean isAuction() {
 		return auction;
@@ -497,6 +499,9 @@ public class Ad {
 		this.purchaseRequests = new ArrayList<PurchaseRequest>();
 		this.visits = new ArrayList<Visit>();
 		this.pictures = new ArrayList<AdPicture>();
+		this.auction = false;
+		this.auctionCompleted = false;
+		this.availableForAuction = true;
 	}
 	
 	public boolean isAuctionStopped() {

@@ -41,7 +41,7 @@
 					</div>
 					<div class="col-sm-3 col-xs-9">${ad.endDate}</div>
 				</div>
-				<div class="row">
+				<div class="row bottom15">
 					<div class="col-sm-3 col-xs-3">
 						<strong>Start price</strong>
 					</div>
@@ -50,6 +50,16 @@
 						<strong>Price increment</strong>
 					</div>
 					<div class="col-sm-3 col-xs-9">CHF ${ad.increaseBidPrice}.-</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3 col-xs-3">
+						<strong>Current auction price</strong>
+					</div>
+					<div class="col-sm-3 col-xs-9">CHF ${ad.currentAuctionPrice}.-</div>
+					<div class="col-sm-3 col-xs-3">
+						<strong>Price (buy directly)</strong>
+					</div>
+					<div class="col-sm-3 col-xs-9">CHF ${ad.price}.-</div>
 				</div>
 			</div>
 		</div>

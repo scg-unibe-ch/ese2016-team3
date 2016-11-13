@@ -11,6 +11,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -199,6 +200,7 @@ public class AuctionServiceTest {
 		boolean successBid = auctionService.checkAndBid(auctionAd, bidder1, amount);
 		assertFalse(successBid);
 		assertEquals(null, bidDao.findTopByAdOrderByAmountDesc(auctionAd));
+		assertEquals(1, auctionService.getNotYetRunningAuctionsForUser(auctionOwner).size());
 	}
 	
 	@Test
@@ -227,6 +229,7 @@ public class AuctionServiceTest {
 	public void stopAuction(){
 		auctionService.stopAuction(auctionAd);
 		assertFalse(auctionAd.isAvailableForAuction());
+		assertEquals(2, auctionService.getStoppedAuctionsForUser(auctionOwner).size());
 	}
 	
 	@Test
@@ -267,12 +270,14 @@ public class AuctionServiceTest {
 		auctionService.resumeAuction(auctionAd);
 		boolean success = auctionService.checkAndBid(auctionAd, bidder1, 901000);
 		assertFalse(success);
+		assertEquals(2, auctionService.getExpiredAuctionsForUser(auctionOwner).size());
 	}
 	
 	@Test
 	public void completeAuction(){
 		auctionService.completeAuction(auctionAd);
 		assertTrue(auctionAd.isAuctionCompleted());
+		assertEquals(2, auctionService.getCompletedAuctionsForUser(auctionOwner).size());
 	}
 	
 	@Test
@@ -287,6 +292,36 @@ public class AuctionServiceTest {
 		auctionService.completeAuction(auctionAd);
 		boolean success = auctionService.checkAndBuy(auctionAd, purchaser1);
 		assertFalse(success);
+	}
+	
+	@Test
+	public void getCompletedAuctions(){
+		List<Ad> completedAuctions = auctionService.getCompletedAuctionsForUser(auctionOwner);
+		assertEquals(1, completedAuctions.size());
+	}
+	
+	@Test
+	public void getRunningAuctions(){
+		List<Ad> runningAuctions = auctionService.getRunningAuctionsForUser(auctionOwner);
+		assertEquals(3, runningAuctions.size());
+	}
+	
+	@Test
+	public void getPausedAuctions(){
+		List<Ad> pausedAuctions = auctionService.getStoppedAuctionsForUser(auctionOwner);
+		assertEquals(1, pausedAuctions.size());
+	}
+	
+	@Test
+	public void getExpiredAuctions(){
+		List<Ad> expiredAuctions = auctionService.getExpiredAuctionsForUser(auctionOwner);
+		assertEquals(1, expiredAuctions.size());
+	}
+	
+	@Test
+	public void getNotYetRunningAuctions(){
+		List<Ad> notRunningAuctions = auctionService.getNotYetRunningAuctionsForUser(auctionOwner);
+		assertEquals(0, notRunningAuctions.size());
 	}
 
 	private <T> int countIterable(Iterable<T> iterable) {
