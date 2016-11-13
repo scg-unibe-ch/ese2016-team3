@@ -1,5 +1,6 @@
 package ch.unibe.ese.team3.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -100,19 +101,30 @@ public class Ad {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<AdPicture> pictures;
 	
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval=true, fetch = FetchType.EAGER)	
+	private List<Bid> bids;
+		
+	public List<Bid> getBids() {
+		return bids;
+	}
+	public void setBids(List<Bid> bids) {
+		this.bids = bids;
+	}
 	
-//	//new
-//	@Fetch(FetchMode.SELECT)
-//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
-//	private List<Bid> bids;
-
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval=true, fetch = FetchType.EAGER)	
+	private List<PurchaseRequest> purchaseRequests;
 	
+	public List<PurchaseRequest> getPurchaseRequests() {
+		return purchaseRequests;
+	}
+	public void setPurchaseRequests(List<PurchaseRequest> purchaseRequests) {
+		this.purchaseRequests = purchaseRequests;
+	}
 
 	@ManyToOne(optional = false)
 	private User user;
-	
-	@ManyToOne(optional = true)
-	private User purchaser;
 
 	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Visit> visits;
@@ -142,32 +154,40 @@ public class Ad {
 	@Column(nullable = false)
 	private boolean auction;
 	
-	// not available if EndDate of auction is passed or 
-	//if someone bought the house before the auction ended
-	private boolean available = true;	
+	@Column(nullable = true)
+	private boolean availableForAuction;
 	
+	@Column(nullable = true)
+	private boolean auctionCompleted;
 	
 	public boolean isAuction() {
 		return auction;
 	}
+	
 	public void setAuction(boolean auction) {
 		this.auction = auction;
 	}
-	public boolean isAvailable() {
-		return available;
+	
+	public boolean isAvailableForAuction() {
+		return availableForAuction;
 	}
-	public void setAvailable(boolean available) {
-		this.available = available;
+	
+	public void setAvailableForAuction(boolean available) {
+		this.availableForAuction = available;
 	}
-	public int getcurrentAuctionPrice(){
+
+	public boolean isAuctionCompleted() {
+		return auctionCompleted;
+	}
+	
+	public void setAuctionCompleted(boolean auctionCompleted) {
+		this.auctionCompleted = auctionCompleted;
+	}
+	public int getCurrentAuctionPrice(){
 		return this.currentAuctionPrice;
 	}
 	public void setcurrentAuctionPrice(int Price){
 		this.currentAuctionPrice=Price;
-	}
-	
-	public boolean isAuctionRunning(){
-		return available && endDate.after(new Date());
 	}
 	
 	public Date getStartDate() {
@@ -435,13 +455,6 @@ public class Ad {
 		this.visits = visits;
 	}
 	
-	public User getPurchaser() {
-		return purchaser;
-	}
-	public void setPurchaser(User purchaser) {
-		this.purchaser = purchaser;
-	}
-	
 	public boolean getDishwasher() {
 		return dishwasher;
 	}
@@ -479,5 +492,35 @@ public class Ad {
 			return this.user.isPremium();
 		}
 		return false;
+	}
+	
+	public Ad(){
+		this.bids = new ArrayList<Bid>();
+		this.purchaseRequests = new ArrayList<PurchaseRequest>();
+		this.visits = new ArrayList<Visit>();
+		this.pictures = new ArrayList<AdPicture>();
+		this.auction = false;
+		this.auctionCompleted = false;
+		this.availableForAuction = true;
+	}
+	
+	public boolean isAuctionStopped() {
+		Date now = new Date();
+		return !auctionCompleted && !availableForAuction && now.after(startDate) && now.before(endDate);
+	}
+	
+	public boolean hasAuctionExpired() {
+		Date now = new Date();
+		return !auctionCompleted && availableForAuction && now.after(endDate);
+	}
+	
+	public boolean isAuctionRunning(){
+		Date now = new Date();
+		return !auctionCompleted && availableForAuction && now.after(startDate) && now.before(endDate);
+	}
+	
+	public boolean isAuctionNotYetRunning() {
+		Date now = new Date();
+		return !auctionCompleted && availableForAuction && now.before(startDate);
 	}
 }

@@ -52,6 +52,10 @@ h1 {
 	margin-bottom: 15px;
 }
 
+.right15 {
+	margin-right: 15px;
+}
+
 tr.message-unread {
 	font-weight: bold;
 }
