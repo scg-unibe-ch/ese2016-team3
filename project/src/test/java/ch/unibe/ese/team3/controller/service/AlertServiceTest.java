@@ -351,13 +351,13 @@ public class AlertServiceTest {
 		// create list of AlertTypes	
 					
 				// create user
-				User userExtendedAlert1 = createUser("userExtendedAlert1@f.ch", "password", "userExtendedAlert1", "F", Gender.MALE);
+				User userExtendedAlert1 = createUser("userExtendedAlert1@f.ch", "password", "userExtendedAlert1", "F", Gender.MALE, AccountType.BASIC);
 				userDao.save(userExtendedAlert1);
 				
-				User userExtendedAlert2 = createUser("userExtendedAlert2@f.ch", "password", "userExtendedAlert2", "F", Gender.MALE);
+				User userExtendedAlert2 = createUser("userExtendedAlert2@f.ch", "password", "userExtendedAlert2", "F", Gender.MALE, AccountType.BASIC);
 				userDao.save(userExtendedAlert2);
 				
-				User userAdCreator = createUser("userAdCreator@f.ch", "password", "userAdCreator", "F", Gender.MALE);
+				User userAdCreator = createUser("userAdCreator@f.ch", "password", "userAdCreator", "F", Gender.MALE, AccountType.BASIC);
 				userDao.save(userAdCreator);
 				
 				//-----------------

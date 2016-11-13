@@ -16,6 +16,13 @@
 <div class="row">
 	<div class="col-md-12 col-xs-12">
 		<h3>Login</h3>
+		<c:if test="${!empty param.error}">
+			<div class="alert alert-danger">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>Login failed!</strong> Incorrect email or password. Please
+				retry using correct email and password.
+			</div>
+		</c:if>
 		<form:form id="login-form" class="form-horizontal" method="post"
 			action="/j_spring_security_check">
 			<div class="panel panel-default">
@@ -25,11 +32,6 @@
 							<p>You are already logged in!</p>
 						</c:when>
 						<c:otherwise>
-							<c:if test="${!empty param.error}">
-								<p>Incorrect email or password. Please retry using correct
-									email and password.</p>
-								<br />
-							</c:if>
 							<div class="form-group ${status.error ? 'has-error' : '' }">
 								<label class="col-sm-2 control-label" for="field-email">Email:</label>
 								<div class="col-sm-6">
@@ -60,13 +62,13 @@
 			</div>
 		</form:form>
 	</div>
-</div>	
-		<ul class="test-users">
-			<li>Email: <i>ese@unibe.ch</i>, password: <i>ese</i></li>
-			<li>Email: <i>jane@doe.com</i>, password: <i>password</i></li>
-			<li>Email: <i>user@bern.com</i>, password: <i>password</i></li>
-			<li>Email: <i>oprah@winfrey.com</i>, password: <i>password</i></li>
-		</ul>
+</div>
+<ul class="test-users">
+	<li>Email: <i>ese@unibe.ch</i>, password: <i>ese</i></li>
+	<li>Email: <i>jane@doe.com</i>, password: <i>password</i></li>
+	<li>Email: <i>user@bern.com</i>, password: <i>password</i></li>
+	<li>Email: <i>oprah@winfrey.com</i>, password: <i>password</i></li>
+</ul>
 
 
 <c:import url="template/footer.jsp" />
