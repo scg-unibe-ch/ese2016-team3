@@ -92,7 +92,7 @@ public class AuctionTestDataSaver {
 			ad.getBids().add(bid);
 			bidDao.save(bid);
 			int additionalSeconds = r.nextInt(3600 * 6); //max 6 hours
-			date = date.plusMinutes(additionalSeconds);
+			date = date.plusSeconds(additionalSeconds);
 		}
 		ad.setcurrentAuctionPrice(amount);
 		adDao.save(ad);
@@ -111,7 +111,7 @@ public class AuctionTestDataSaver {
 			ad.getPurchaseRequests().add(request);
 			purchaseDao.save(request);
 			int additionalSeconds = r.nextInt(3600*6); //max 6 hours
-			date = date.plusMinutes(additionalSeconds);
+			date = date.plusSeconds(additionalSeconds);
 		}
 		adDao.save(ad);
 	}

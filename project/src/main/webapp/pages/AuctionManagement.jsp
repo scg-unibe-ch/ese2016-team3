@@ -23,9 +23,9 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
-				<a role="button" data-toggle="collapse" 
-					href="#collapseRunning" aria-expanded="true"
-					aria-controls="collapseRunning"> Running auctions</a>
+				<a role="button" data-toggle="collapse" href="#collapseRunning"
+					aria-expanded="true" aria-controls="collapseRunning"> Running
+					auctions</a>
 			</h4>
 		</div>
 		<div class="panel-collapse collapse in" id="collapseRunning">
@@ -67,12 +67,12 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Not yet started auctions -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
-				<a role="button" data-toggle="collapse" 
+				<a role="button" data-toggle="collapse"
 					href="#collapseNotYetRunning" aria-expanded="true"
 					aria-controls="collapseNotYetRunning">Not yet started auctions</a>
 			</h4>
@@ -84,6 +84,7 @@
 						<p>No not yet started auctions</p>
 					</c:when>
 					<c:otherwise>
+						<p>The following auctions will start running soon.</p>
 						<table class="table table-striped">
 							<thead>
 								<tr>
@@ -121,9 +122,9 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
-				<a role="button" data-toggle="collapse" 
-					href="#collapseExpired" aria-expanded="true"
-					aria-controls="collapseExpired">Expired auctions</a>
+				<a role="button" data-toggle="collapse" href="#collapseExpired"
+					aria-expanded="true" aria-controls="collapseExpired">Expired
+					auctions</a>
 			</h4>
 		</div>
 		<div class="panel-collapse collapse" id="collapseExpired">
@@ -133,6 +134,8 @@
 						<p>No expired auctions</p>
 					</c:when>
 					<c:otherwise>
+						<p>The following auctions have expired. Please review them and
+							contact the auction winners. Please complete the auction afterwards.</p>
 						<table class="table table-striped">
 							<thead>
 								<tr>
@@ -165,14 +168,14 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Paused auctions -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
-				<a role="button" data-toggle="collapse"
-					href="#collapsePaused" aria-expanded="true"
-					aria-controls="collapsePaused">Paused auctions</a>
+				<a role="button" data-toggle="collapse" href="#collapsePaused"
+					aria-expanded="true" aria-controls="collapsePaused">Paused
+					auctions</a>
 			</h4>
 		</div>
 		<div class="panel-collapse collapse" id="collapsePaused">
@@ -182,6 +185,11 @@
 						<p>No paused auctions</p>
 					</c:when>
 					<c:otherwise>
+						<p>The following auctions have been stopped. Now you have two options:</p>
+						<ol>
+							<li>Contact the winner or purchaser and complete the auction afterwards</li>
+							<li>Resume the auction</li>
+						</ol>
 						<table class="table table-striped">
 							<thead>
 								<tr>
@@ -219,9 +227,9 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
-				<a role="button" data-toggle="collapse" 
-					href="#collapseCompleted" aria-expanded="true"
-					aria-controls="collapseCompleted">Completed auctions</a>
+				<a role="button" data-toggle="collapse" href="#collapseCompleted"
+					aria-expanded="true" aria-controls="collapseCompleted">Completed
+					auctions</a>
 			</h4>
 		</div>
 		<div class="panel-collapse collapse" id="collapseCompleted">
@@ -231,6 +239,7 @@
 						<p>No completed auctions</p>
 					</c:when>
 					<c:otherwise>
+						<p>The following auctions have been completed</p>
 						<table class="table table-striped">
 							<thead>
 								<tr>

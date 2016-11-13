@@ -27,7 +27,7 @@
 						<strong>Ad</strong>
 					</div>
 					<div class="col-xs-9">
-						<a href="/${ad.buyMode.name}/ad?id=${ad.id}">${ad.title},
+						<a href="/${ad.buyMode.name}/ad?id=${ad.id}" target="_blank">${ad.title},
 							${ad.street},&nbsp;${ad.zipcode}&nbsp;${ad.city}</a>
 					</div>
 				</div>
@@ -55,7 +55,8 @@
 					<div class="col-sm-3 col-xs-3">
 						<strong>Current auction price</strong>
 					</div>
-					<div class="col-sm-3 col-xs-9">CHF ${ad.currentAuctionPrice}.-</div>
+					<div class="col-sm-3 col-xs-9">CHF
+						${ad.currentAuctionPrice}.-</div>
 					<div class="col-sm-3 col-xs-3">
 						<strong>Price (buy directly)</strong>
 					</div>
@@ -63,7 +64,8 @@
 				</div>
 			</div>
 		</div>
-		<c:if test="${ad.isAuctionRunning() || ad.hasAuctionExpired() || ad.isAuctionStopped() }">
+		<c:if
+			test="${ad.isAuctionRunning() || ad.hasAuctionExpired() || ad.isAuctionStopped() }">
 			<form:form method="Post" cssClass="pull-right"
 				action="/${pagemode}/profile/auction/complete">
 				<input type="hidden" id="adIdComplete" name="adIdComplete"
@@ -74,7 +76,7 @@
 			</form:form>
 		</c:if>
 		<c:if test="${ad.isAuctionStopped()}">
-			<form:form method="Post" cssClass="pull-right"
+			<form:form method="Post" cssClass="pull-right right15"
 				action="/${pagemode}/profile/auction/resume">
 				<input type="hidden" id="adIdResume" name="adIdResume"
 					value="${ad.id}" />
@@ -84,7 +86,7 @@
 			</form:form>
 		</c:if>
 		<c:if test="${ad.isAuctionRunning() }">
-			<form:form method="Post" cssClass="pull-right"
+			<form:form method="Post" cssClass="pull-right right15"
 				action="/${pagemode}/profile/auction/pause">
 				<input type="hidden" id="adIdPause" name="adIdPause"
 					value="${ad.id}" />
@@ -106,19 +108,22 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>Bidder</th>
 							<th>Amount</th>
 							<th>Date</th>
+							<th>Bidder</th>
+							<th></th>
 						<tr>
 					</thead>
 					<tbody>
 						<c:forEach var="bid" items="${bids}" varStatus="loop">
 							<tr class="${loop.index == 0 ? 'success text-success' : '' }">
-								<td>${bid.bidder.firstName}&nbsp;${bid.bidder.lastName}</td>
-								<td>${bid.amount}</td>
+								<td>CHF ${bid.amount}.00</td>
 								<td><fmt:formatDate value="${bid.timeStamp}"
 										var="formattedDate" type="date" pattern="yyyy-MM-dd HH:mm:ss" />
 									${formattedDate}</td>
+								<td>${bid.bidder.firstName}&nbsp;${bid.bidder.lastName}</td>
+								<td><a class="btn btn-default"
+									href="/${pagemode}/user?id=${bid.bidder.id}" target="_blank">Visit profile</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -136,18 +141,21 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>Purchaser</th>
 							<th>Date</th>
+							<th>Purchaser</th>
+							<th></th>
 						<tr>
 					</thead>
 					<tbody>
 						<c:forEach var="request" items="${purchaseRequests}"
 							varStatus="loop">
 							<tr class="${loop.index == 0 ? 'success text-success' : '' }">
-								<td>${request.purchaser.firstName}&nbsp;${request.purchaser.lastName}</td>
 								<td><fmt:formatDate value="${request.created}"
 										var="formattedDate" type="date" pattern="yyyy-MM-dd HH:mm:ss" />
 									${formattedDate}</td>
+								<td>${request.purchaser.firstName}&nbsp;${request.purchaser.lastName}</td>
+								<td><a class="btn btn-default"
+									href="/${pagemode}/user?id=${bid.bidder.id}" target="_blank">Visit profile</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>
