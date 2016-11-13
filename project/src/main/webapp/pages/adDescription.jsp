@@ -422,12 +422,6 @@
 											CHF</strong>
 									</p>
 								</div>
-								<!-- Exception is thrown if button is pressed without login -->
-
-								<!-- 2 forms are created: one for buy, one for bid. The buy / bid buttons submit the form to the controller 
-									creates different forms when user is logged in, and when user is not logged in
-									
-									Better alternative to avoid duplicated code?-->
 
 								<div class="col-sm-8">
 
@@ -436,13 +430,10 @@
 										<input type="hidden" name="id" value="${shownAd.id }" />
 										<input type="hidden" name="amount"
 											value="${shownAd.currentAuctionPrice}" />
-										<%-- fehlt noch: if not logged in-> you can not bid, und wirst zur Login Seite umgeleitet beim Klicken auf bid --%>
 										<div class="form-group">
 											<label class="sr-only" for="bid">Amount</label>
-											<%-- for="bid" stimmt wahrscheinlich nicht --%>
 											<div class="input-group">
 												<div class="input-group-addon">CHF</div>
-												<%--<input type="number" class="form-controll" placeholder="Amount" name="bid"> es fehlt: id = und value= --%>
 												<input class="form-control" id="disabledInput" type="text"
 													placeholder=${shownAd.currentAuctionPrice } disabled>
 												<span class="input-group-btn"> <c:choose>
@@ -458,8 +449,6 @@
 										</div>
 									</form:form>
 
-
-									<!-- 2nd form -->
 									<form:form name="AuctionBuy" action="./profile/buyAuction"
 										method="post">
 										<input type="hidden" name="id" value="${shownAd.id }" />
@@ -468,8 +457,6 @@
 										<div class="form-group">
 											<label class="sr-only" for="exampleInputAmount">Buy
 												now Price in CHF</label>
-											<%-- for stimmt wahrscheinlich nicht --%>
-											<%-- fehlt noch: if not logged in-> you can not bid, und wirst zur Login Seite umgeleitet beim Klicken auf bid --%>
 											<div class="input-group">
 												<div class="input-group-addon">CHF</div>
 												<input class="form-control" id="disabledInput" type="text"
@@ -487,24 +474,12 @@
 										</div>
 									</form:form>
 								</div>
-
 							</div>
 						</div>
 					</div>
-
-
 				</c:if>
-
-
-
-
-
 			</div>
 		</div>
-
-
-
-
 	</div>
 </div>
 

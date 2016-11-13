@@ -156,3 +156,5 @@
 		</c:choose>
 	</div>
 </div>
+
+<c:import url="template/footer.jsp" />
