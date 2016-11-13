@@ -35,55 +35,7 @@
 					$('#navUnread').html(unread);
 				});
 			});
-		</script>
-<<<<<<< HEAD
-	</head>
-	
-	<!-- check if user is logged in -->
-	<security:authorize var="loggedIn" url="/profile" />
-	
-	<body>
-		<div class="container">
-			<h1>
-				<img id="logo" src="/img/logoNew.png"> Ithaca
-			</h1>
-			<ul class="nav nav-tabs" role="tablist">
-				<c:choose>
-					<c:when test="${pagemode == 'buy'}">
-						<li class="active"><a href="/buy/">Buy</a></li>
-						<li><a href="/rent/">Rent</a></li>
-					</c:when>
-					<c:when test="${pagemode == 'rent'}">
-						<li><a href="/buy/">Buy</a></li>
-						<li class="active"><a href="/rent/">Rent</a></li>
-					</c:when>
-					<c:otherwise>
-						<li><a href="/buy/">Buy</a></li>
-						<li><a href="/rent/">Rent</a></li>
-					</c:otherwise>
-				</c:choose>
-			</ul>
-			<nav class="navbar navbar-default" id="mainNav">
-				<div class="navbar-inner">
-					<div class="container-fluid">
-						<ul class="nav navbar-nav">
-							<li><a href="/${pagemode}/">Homepage</a></li>
-							<li><a href="/${pagemode}/searchAd">Find ad</a></li>
-							<!-- Newly added for MapView -->
-							<li><a href="/${pagemode}/mapView">Map view</a></li>
-							<c:if test="${loggedIn}">
-								<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
-							</c:if>
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<li class="navbar-right dropdown"><c:choose>
-									<c:when test="${loggedIn}">
-										<%@include file='/pages/getUserPicture.jsp'%>
-										<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-											<span class="glyphicon glyphicon-user"></span>
-											<% out.print(String.format("%s %s", realUser.getFirstName(), realUser.getLastName())); %>
-											<span class="caret"></span>
-=======
+</script>
 </head>
 
 <!-- check if user is logged in -->
@@ -144,8 +96,7 @@
 										<li><a href="/${pagemode}/profile/messages"> <span
 												class="glyphicon glyphicon glyphicon-envelope"></span>
 												Messages <span class="badge" id="navUnread"></span>
->>>>>>> 64c95e324250709b601eff6135f294e37f2492b9
-										</a>
+										</a></li>
 										<li><a href="/${pagemode}/profile/alerts"> <span
 												class="glyphicon glyphicon-bell"></span> Alerts
 										</a></li>
