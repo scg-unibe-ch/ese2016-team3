@@ -121,6 +121,11 @@
 							<button type="button" data-toggle="modal" data-target="#msgDiv" id="newMsg" type="button" class="btn btn-primary">Message</button>
 						</c:if>
 						<c:choose>
+							<c:when test="${'ADMIN' eq user.gender && principalID eq user.id}">
+								<a id="manage" class="btn btn-primary" href="./adminManagement">Manage Website</a>
+							</c:when>
+						</c:choose>
+						<c:choose>
 							<c:when test="${principalID eq user.id}">
 								<a id="edit" class="btn btn-primary" href="./profile/editProfile">Edit Profile</a>
 							</c:when>
