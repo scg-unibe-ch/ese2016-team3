@@ -369,7 +369,8 @@ public class AdTestDataSaver {
 		adZurich.setRoomDescription(roomDescription7);
 		adZurich.setUser(oprah);
 		adZurich.setTitle("Roommate wanted in Zürich");
-		adZurich.setStreet("Hauptstrasse 61");
+		//adZurich.setStreet("Hauptstrasse 61");
+		adZurich.setStreet("Ankerstrasse 108");
 		adZurich.setCity("Zürich");
 		adZurich.setNumberOfBath(2);
 		
@@ -469,7 +470,8 @@ public class AdTestDataSaver {
 		adAarau.setRoomDescription(studioDescription9);
 		adAarau.setUser(oprah);
 		adAarau.setTitle("Beautiful studio in Aarau");
-		adAarau.setStreet("Bruderholzstrasse 32");
+	//	adAarau.setStreet("Bruderholzstrasse 32");
+		adAarau.setStreet("Herzbergstrasse 31");
 		adAarau.setCity("Aarau");
 		adAarau.setNumberOfBath(1);
 
@@ -519,7 +521,8 @@ public class AdTestDataSaver {
 		adDavos.setRoomDescription(studioDescription10);
 		adDavos.setUser(oprah);
 		adDavos.setTitle("Free room in Davos City");
-		adDavos.setStreet("Kathrinerweg 5");
+	//	adDavos.setStreet("Kathrinerweg 5");
+		adDavos.setStreet("Rossweidstrasse 9");
 		adDavos.setCity("Davos");
 		adDavos.setBalcony(false);
 		adDavos.setGarage(false);
@@ -606,7 +609,8 @@ public class AdTestDataSaver {
 		adLocarno.setRoomDescription(studioDescription12);
 		adLocarno.setUser(jane);
 		adLocarno.setTitle("Malibu-style Beachhouse");
-		adLocarno.setStreet("Kirchweg 12");
+		//adLocarno.setStreet("Kirchweg 12");
+		adLocarno.setStreet("Via Serafino Balestra 36");
 		adLocarno.setCity("Locarno");
 		adLocarno.setNumberOfBath(1);
 		
@@ -648,7 +652,7 @@ public class AdTestDataSaver {
 		auctionAd1.setRoomDescription(roomDescription13);
 		auctionAd1.setUser(jane);
 		auctionAd1.setTitle("Vintage Villa");
-		auctionAd1.setStreet("Laubweg 3");
+		auctionAd1.setStreet("Spühlibachweg 10");
 		auctionAd1.setCity("Interlaken");
 		auctionAd1.setNumberOfBath(5);
 		

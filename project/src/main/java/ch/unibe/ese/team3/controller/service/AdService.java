@@ -372,14 +372,24 @@ public class AdService {
 			Integer maxDistanceShopping = convertToNullableInt(searchForm.getDistanceShoppingMax());
 			Integer minDistancePublicTransport = convertToNullableInt(searchForm.getDistancePublicTransportMin());
 			Integer maxDistancePublicTransport = convertToNullableInt(searchForm.getDistancePublicTransportMax());
+			
+			Integer minBuildYear = convertToNullableInt(searchForm.getBuildYearMin());
+			Integer maxBuildYear = convertToNullableInt(searchForm.getBuildYearMax());
+			Integer minRenovationYear = convertToNullableInt(searchForm.getRenovationYearMin());
+			Integer maxRenovationYear = convertToNullableInt(searchForm.getRenovationYearMax());
 
 			if (!inRange(minBath, maxBath, ad.getNumberOfBath())
 					|| !inRange(minSquareFootage, maxSquareFootage, ad.getSquareFootage())
 					|| !inRange(minNumberOfRooms, maxNumberOfRooms, ad.getNumberOfRooms())
 					|| !inRange(minFloorLevel, maxFloorLevel, ad.getFloorLevel())
+					
+					|| !inRange(minBuildYear, maxBuildYear, ad.getBuildYear())
+					|| !inRange(minRenovationYear, maxRenovationYear, ad.getRenovationYear())
+					
 					|| !inRange(minDistanceSchool, maxDistanceSchool, ad.getDistanceSchool())
 					|| !inRange(minDistanceShopping, maxDistanceShopping, ad.getDistanceShopping())
-					|| !inRange(minDistancePublicTransport, maxDistancePublicTransport,	ad.getDistancePublicTransport())) {
+					|| !inRange(minDistancePublicTransport, maxDistancePublicTransport,	ad.getDistancePublicTransport()))
+					{
 				iterator.remove();
 			}
 		}

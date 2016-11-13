@@ -135,52 +135,36 @@
 	</div>
 </div>
 
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+       #map {
+        height: 400px;
+        width: 100%;
+       }
+    </style>
+  </head>
+  <body>
+    <h3>My Google Maps Demo</h3>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUWLIH0Ch16wQFDrRoRQ6XyKjWl2TQF8w&callback=initMap">
+    </script>
+  </body>
+</html>
 
-
-
-<%-- 
-<hr />
-<div id="enquiryList">
-	<table class="styledTable">
-		<tr>
-			<th>Sender</th>
-			<th>Ad</th>
-			<th>Date of the visit</th>
-			<th>Date sent</th>
-			<th>Actions</th>
-		</tr>
-		<c:forEach items="${enquiries}" var="enquiry">
-			<fmt:formatDate value="${enquiry.dateSent}"
-				var="singleFormattedDateSent" type="date"
-				pattern="HH:mm, dd.MM.yyyy" />
-			<fmt:formatDate value="${enquiry.visit.startTimestamp}"
-				var="startTime" type="date" pattern="HH:mm" />
-			<fmt:formatDate value="${enquiry.visit.endTimestamp}" var="endTime"
-				type="date" pattern="HH:mm" />
-			<fmt:formatDate value="${enquiry.visit.startTimestamp }" var="date"
-				type="date" pattern="dd.MM.yyyy" />
-
-			<tr>
-				<td><a href="/user?id=${enquiry.sender.id}">${enquiry.sender.email}</a></td>
-				<td><a href="/ad?id=${enquiry.visit.ad.id }">${enquiry.visit.ad.street },
-						${enquiry.visit.ad.zipcode } ${enquiry.visit.ad.city }</a></td>
-				<td>${date},&#32;${startTime}&#32;to&#32;${endTime }</td>
-				<td>${singleFormattedDateSent}</td>
-				<td><c:choose>
-						<c:when test="${enquiry.state == 'ACCEPTED'}">
-							<p>Accepted</p>
-						</c:when>
-						<c:when test="${enquiry.state == 'DECLINED' }">
-							<p>Declined</p>
-						</c:when>
-						<c:otherwise>
-							<button class="acceptButton" data-id="${enquiry.id}">Accept</button>
-							<button class="declineButton" data-id="${enquiry.id}">Decline</button>
-						</c:otherwise>
-					</c:choose></td>
-			</tr>
-		</c:forEach>
-	</table>
-</div>
---%>
 <c:import url="template/footer.jsp" />
