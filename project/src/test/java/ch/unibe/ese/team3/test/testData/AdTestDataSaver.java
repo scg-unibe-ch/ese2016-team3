@@ -37,7 +37,7 @@ public class AdTestDataSaver {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 		
 		Date creationDate1 = formatter.parse("03.10.2014");
-		Date creationDate2 = formatter.parse("11.10.2014");
+		Date creationDate2 = formatter.parse("13.11.2016");
 		Date creationDate3 = formatter.parse("25.10.2014");
 		Date creationDate4 = formatter.parse("05.11.2016");
 		Date creationDate5 = formatter.parse("25.11.2013");
@@ -414,7 +414,7 @@ public class AdTestDataSaver {
 		adLuzern.setBuyMode(BuyMode.BUY);
 		adLuzern.setMoveInDate(moveInDate8);
 		adLuzern.setCreationDate(creationDate2);
-		adLuzern.setPrice(2500);
+		adLuzern.setPrice(900);
 		adLuzern.setSquareFootage(60);
 		
 		adLuzern.setRoomDescription(studioDescription8);

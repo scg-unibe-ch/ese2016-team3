@@ -1,18 +1,23 @@
 package ch.unibe.ese.team3.test.testData;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Alert;
+import ch.unibe.ese.team3.model.AlertResult;
 import ch.unibe.ese.team3.model.AlertType;
 import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
+import ch.unibe.ese.team3.model.dao.AdDao;
 import ch.unibe.ese.team3.model.dao.AlertDao;
+import ch.unibe.ese.team3.model.dao.AlertResultDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
 /**
@@ -26,13 +31,19 @@ public class AlertTestDataSaver {
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private AlertResultDao alertResultDao;
+	
+	@Autowired 
+	private AdDao adDao;
 
 
 	@Transactional
 	public void saveTestData() throws Exception {
 		User ese = userDao.findByUsername("ese@unibe.ch");
 		User jane = userDao.findByUsername("jane@doe.com");
-		
+		Ad luzernAd = adDao.findByTitle("Elegant Studio in Lucerne");
 		// create list of AlertTypes
 		AlertType typeApartment = new AlertType();
 		typeApartment.setType(Type.APARTMENT);
@@ -62,7 +73,7 @@ public class AlertTestDataSaver {
 		alert.setPrice(1500);
 		alert.setRadius(30);
 		alertDao.save(alert);
-		
+				
 		alertTypes.add(typeVilla);
 		
 		Alert alert2 = new Alert();
@@ -81,10 +92,17 @@ public class AlertTestDataSaver {
 		alert.setUser(jane);
 		alert.setBuyMode(BuyMode.BUY);
 		alert.setCity("Luzern");
-		alert.setZipcode(6003);
+		alert.setZipcode(6000);
 		alert.setPrice(900);
 		alert.setRadius(22);
 		alertDao.save(alert);
+		
+		AlertResult alertResult = new AlertResult();
+		alertResult.setTriggerAd(luzernAd);
+		alertResult.setTriggerDate(new Date());
+		alertResult.setUser(jane);
+		alertResult.setNotified(false);
+		alertResultDao.save(alertResult);
 	}
 
 }

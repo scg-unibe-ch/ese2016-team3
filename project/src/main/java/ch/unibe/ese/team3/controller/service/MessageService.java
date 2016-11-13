@@ -19,11 +19,13 @@ import org.springframework.stereotype.Service;
 
 import ch.unibe.ese.team3.controller.pojos.forms.MessageForm;
 import ch.unibe.ese.team3.model.Ad;
+import ch.unibe.ese.team3.model.AlertResult;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.AdDao;
 import ch.unibe.ese.team3.model.dao.AlertDao;
+import ch.unibe.ese.team3.model.dao.AlertResultDao;
 import ch.unibe.ese.team3.model.dao.MessageDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
@@ -43,7 +45,7 @@ public class MessageService {
 	private AdDao adDao;
 	
 	@Autowired
-	private AlertDao alertDao;
+	private AlertResultDao alertResultDao;
 
 	/** Gets all messages in the inbox of the given user, sorted newest to oldest */
 	@Transactional
@@ -132,6 +134,12 @@ public class MessageService {
 		messageDao.save(message);
 	}
 	
+	/** Sends an e-mail to a certain user
+	 * 
+	 * @param recipient the user who will receive the e-mail
+	 * @param subject the subject of the message
+	 * @param text the text of the message
+	 */
 	public void sendEmail(User recipient, String subject, String text) {
 		
 		Properties properties = System.getProperties();
@@ -164,7 +172,7 @@ public class MessageService {
 			message.setText(text);
 			
 			Transport.send(message);
-			System.out.println("Message sent successfully");
+			System.out.println("Message sent successfully for " + recipient.getUsername());
 		}catch (MessagingException e)
 		{
 			e.printStackTrace();
@@ -172,8 +180,13 @@ public class MessageService {
 		
 	}
 	
-	//@Scheduled(cron = "0 0 17 1/1 * *") // everyday at 5 pm
-	@Scheduled(cron = "0,30 * * * * *") // every 30 seconds
+	/** Sends the daily alert message for the basic users
+	 * it is scheduled to midnight of every day and contains exactly
+	 * the alerts that have been triggered for every user.
+	 * A message and an e-mail are sent.
+	 */
+	//@Scheduled(cron = "0 0 * * *") // everyday at 5 pm
+	@Scheduled(cron = "1 * * * * *") // every minute
 	public void alertMessageForBasicUser() {
 		
 		String subject = "Your daily alerts";
@@ -190,19 +203,20 @@ public class MessageService {
 		
 		for (User user: users) {
 			if (!user.isPremium()){
-				for (Ad ad: adDao.findAll()) {
-					if(ad.getCreationDate().after(yesterday)) {
-						//if(alertDao.findByUser(user))
+				for (AlertResult alertResult : alertResultDao.findByUser(user)) {
+					if(alertResult.getTriggerDate().after(yesterday)) {
+						Ad ad = alertResult.getTriggerAd();
 						text += "</a><br><br> <a class=\"link\" href=/ad?id="
 								+ ad.getId() + ">" + ad.getTitle() + "</a><br><br>"
 								+ ad.getRoomDescription() + "\n";
+						alertResult.setNotified(true);
 					}
 					
 		
 				}			
 				if (text.equals("All ads that match your alerts: \n")) {
-						text = "There are no new Ads that match your alerts, but"
-								+ " have a look at our highlights on our page.";
+						text = "There are no new Ads that match your alerts, but why"
+								+ " not have a look at the highlights on our page anyway?";
 				}
 				sendMessage(userDao.findByUsername("System"), user, subject, text);
 				sendEmail(user, subject, text);

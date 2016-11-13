@@ -19,13 +19,16 @@ public class AlertResult {
 	@GeneratedValue
 	private long id;
 	
+	@Column(nullable = false)
 	@ManyToOne	
 	private User user;
 	
+	@Column(nullable = false)
 	@JsonFormat(pattern = "HH:mm, dd.MM.yyyy")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date triggerDate;
 	
+	@Column(nullable = false)
 	@ManyToOne
 	private Ad triggerAd;
 	
