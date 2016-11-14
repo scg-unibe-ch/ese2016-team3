@@ -53,6 +53,9 @@ public class Alert {
 	@Enumerated(EnumType.STRING)
 	private BuyMode buyMode;
 	
+	@Column(nullable = true)
+	private boolean extendedAlert;
+	
 	//------------------
 	// Extended Alert Criteria
 	@Column(nullable = true)
@@ -408,6 +411,11 @@ public class Alert {
 		this.floorLevelMax = floorLevelMax;
 	}
 	
-	
+	public boolean isExtendedAlert() {
+		return extendedAlert;
+	}
 
+	public void setExtendedAlert(boolean extendedAlert) {
+		this.extendedAlert = extendedAlert;
+	}
 }

@@ -70,6 +70,7 @@ public class AlertService {
 		alert.setCity(alertForm.getCity().substring(7));
 		alert.setBuyMode(alertForm.getBuyMode());
 		alert.setPrice(alertForm.getPrice());
+		alert.setExtendedAlert(alertForm.isExtendedAlert());
 
 		alert.setRadius(alertForm.getRadius());
 
@@ -82,50 +83,49 @@ public class AlertService {
 		}
 
 		alert.setAlertTypes(alertTypes);
-
 		alert.setUser(user);
 
-		// Extended Alert Criteria
+		// Add extended Alert criteria only if extendedAlert = true
+		if (alert.isExtendedAlert()) {
+			Date earliestDate = convertStringToDate(alertForm.getEarliestMoveInDate());
+			Date latestDate = convertStringToDate(alertForm.getLatestMoveInDate());
+			alert.setEarliestMoveInDate(earliestDate);
+			alert.setLatestMoveInDate(latestDate);
 
-		Date earliestDate = convertStringToDate(alertForm.getEarliestMoveInDate());
-		Date latestDate = convertStringToDate(alertForm.getLatestMoveInDate());
-		alert.setEarliestMoveInDate(earliestDate);
-		alert.setLatestMoveInDate(latestDate);
+			alert.setBalcony(alertForm.isBalcony());
+			alert.setParking(alertForm.isParking());
+			alert.setElevator(alertForm.isElevator());
+			alert.setGarage(alertForm.isGarage());
+			alert.setDishwasher(alertForm.isDishwasher());
 
-		alert.setBalcony(alertForm.isBalcony());
-		alert.setParking(alertForm.isParking());
-		alert.setElevator(alertForm.isElevator());
-		alert.setGarage(alertForm.isGarage());
-		alert.setDishwasher(alertForm.isDishwasher());
+			alert.setInfrastructureType(alertForm.getInfrastructureType());
+			alert.setSquareFootageMin(alertForm.getSquareFootageMin());
+			alert.setSquareFootageMax(alertForm.getSquareFootageMax());
 
-		alert.setInfrastructureType(alertForm.getInfrastructureType());
-		alert.setSquareFootageMin(alertForm.getSquareFootageMin());
-		alert.setSquareFootageMax(alertForm.getSquareFootageMax());
+			alert.setBuildYearMin(alertForm.getBuildYearMin());
+			alert.setBuildYearMax(alertForm.getBuildYearMax());
 
-		alert.setBuildYearMin(alertForm.getBuildYearMin());
-		alert.setBuildYearMax(alertForm.getBuildYearMax());
+			alert.setRenovationYearMin(alertForm.getRenovationYearMin());
+			alert.setRenovationYearMax(alertForm.getRenovationYearMax());
 
-		alert.setRenovationYearMin(alertForm.getRenovationYearMin());
-		alert.setRenovationYearMax(alertForm.getRenovationYearMax());
+			alert.setNumberOfRoomsMin(alertForm.getNumberOfRoomsMin());
+			alert.setNumberOfRoomsMax(alertForm.getNumberOfRoomsMax());
 
-		alert.setNumberOfRoomsMin(alertForm.getNumberOfRoomsMin());
-		alert.setNumberOfRoomsMax(alertForm.getNumberOfRoomsMax());
+			alert.setNumberOfBathMin(alertForm.getNumberOfBathMin());
+			alert.setNumberOfBathMax(alertForm.getNumberOfBathMax());
 
-		alert.setNumberOfBathMin(alertForm.getNumberOfBathMin());
-		alert.setNumberOfBathMax(alertForm.getNumberOfBathMax());
+			alert.setDistanceSchoolMin(alertForm.getDistanceSchoolMin());
+			alert.setDistanceSchoolMax(alertForm.getDistanceSchoolMax());
 
-		alert.setDistanceSchoolMin(alertForm.getDistanceSchoolMin());
-		alert.setDistanceSchoolMax(alertForm.getDistanceSchoolMax());
+			alert.setDistanceShoppingMin(alertForm.getDistanceShoppingMin());
+			alert.setDistanceShoppingMax(alertForm.getDistanceShoppingMax());
 
-		alert.setDistanceShoppingMin(alertForm.getDistanceShoppingMin());
-		alert.setDistanceShoppingMax(alertForm.getDistanceShoppingMax());
+			alert.setDistancePublicTransportMin(alertForm.getDistancePublicTransportMin());
+			alert.setDistancePublicTransportMax(alertForm.getDistancePublicTransportMax());
 
-		alert.setDistancePublicTransportMin(alertForm.getDistancePublicTransportMin());
-		alert.setDistancePublicTransportMax(alertForm.getDistancePublicTransportMax());
-
-		alert.setFloorLevelMin(alertForm.getFloorLevelMin());
-		alert.setFloorLevelMax(alertForm.getFloorLevelMax());
-
+			alert.setFloorLevelMin(alertForm.getFloorLevelMin());
+			alert.setFloorLevelMax(alertForm.getFloorLevelMax());
+		}
 		alertDao.save(alert);
 	}
 
@@ -173,7 +173,6 @@ public class AlertService {
 										// elements in "alerts"
 		}
 
-		// extended alert criteria
 		filterWithExtendedCriteria(ad, alerts);
 
 		// send only one message per user, no matter how many alerts were
@@ -414,7 +413,7 @@ public class AlertService {
 
 	private void filterByDate(Iterable<Alert> alerts, Ad ad) {
 		assert ad.getMoveInDate() != null;
-		
+
 		// count alerts
 		Iterator<Alert> iterator = alerts.iterator();
 		int countAlerts = 0;
@@ -422,16 +421,17 @@ public class AlertService {
 		while (iterator.hasNext()) {
 			iterator.next();
 			countAlerts++;
-			iterator.remove();
 		}
-		
+
 		// reset iterator
 		iterator = alerts.iterator();
 
 		if (countAlerts > 0) {
+			iterator = alerts.iterator(); // reset cursor of iterator
+
 			while (iterator.hasNext()) {
-				iterator = alerts.iterator(); // reset cursor of iterator
 				Alert alert = iterator.next();
+				// iterator.next();
 
 				Date earliestDate = alert.getEarliestMoveInDate();
 				Date latestDate = alert.getLatestMoveInDate();

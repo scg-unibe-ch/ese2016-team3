@@ -43,6 +43,8 @@ public class AlertForm {
 	private boolean balcony;
 	private boolean garage;
 	private boolean dishwasher;
+	
+	private boolean extendedAlert;
 
 	private InfrastructureType infrastructureType;
 	private int squareFootageMin;
@@ -333,6 +335,14 @@ public class AlertForm {
 
 	public void setFloorLevelMax(int floorLevelMax) {
 		this.floorLevelMax = floorLevelMax;
+	}
+	
+	public boolean isExtendedAlert() {
+		return extendedAlert;
+	}
+
+	public void setExtendedAlert(boolean extendedAlert) {
+		this.extendedAlert = extendedAlert;
 	}
 	
 	

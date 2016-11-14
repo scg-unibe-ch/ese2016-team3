@@ -4,6 +4,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+
+<!-- loads functions from placeAd.js -->
+<script src="/js/alerts.js"></script>
+
+
 <c:import url="template/header.jsp" />
 
 <ol class="breadcrumb">
@@ -19,43 +24,6 @@
 		});
 	}
 </script>
-
-<script>
-	function validateType(form) {
-<%-- 
-	var room = document.getElementById('room');
-	var studio = document.getElementById('studio');
-	var neither = document.getElementById('neither');
-	var both = document.getElementById('both');
-	
-	if(room.checked && studio.checked) {
-		both.checked = true;
-		neither.checked = false;
-	}
-	else if(!room.checked && !studio.checked) {
-		both.checked = false;
-		neither.checked = true;
-	}
-	else {
-		both.checked = false;
-		neither.checked = false;
-	}
-	--%>
-	}
-</script>
-
-<%--
-<script>
-	function typeOfAlert(alert) {
-		if (alert.getBothRoomAndStudio())
-			return "Both"
-		else if (alert.getStudio())
-			return "Studio"
-		else
-			return "Room"
-	}
-</script>
-	--%>
 
 <script>
 	$(document).ready(function() {
@@ -104,7 +72,7 @@
 									</c:forEach>
 								</div>
 							</div>
-							
+
 							<spring:bind path="buyMode">
 								<div class="form-group">
 									<label class="col-sm-2 control-label" for="buyMode">For</label>
@@ -157,19 +125,40 @@
 									</div>
 								</div>
 							</spring:bind>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Extended Alert</label>
+								<div class="col-sm-4">
+									<div class="checkbox">
+										<label> <form:checkbox id="field-alert"
+												path="extendedAlert" value="1" /> Yes
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<!-- this should only be displayed, if alert criteria is true  -->
+							<div class="panel panel-default" id="panel-extended-alert">
+								<h5>
+									<b>Extended alert criteria</b>
+								</h5>
+							</div>
+
 						</div>
 					</div>
+
 
 					<div class="form-group pull-right">
 						<div class="col-sm-12">
 							<button type="reset" class="btn btn-default">Cancel</button>
-							<button type="submit" class="btn btn-primary"
-								onClick="validateType(this.form)">Subscribe</button>
+							<button type="submit" class="btn btn-primary">Subscribe</button>
 
 						</div>
 					</div>
-
 				</form:form>
+
+
+
 				<br />
 
 
@@ -205,8 +194,7 @@
 																<c:when test="${loop.index eq 0 }">${alertType.type.name}</c:when>
 																<c:otherwise>, ${alertType.type.name}</c:otherwise>
 															</c:choose>
-														</c:forEach>
-													</td>
+														</c:forEach></td>
 													<td>${alert.buyMode.label}</td>
 													<td>${alert.city}</td>
 													<td>${alert.radius}km</td>
