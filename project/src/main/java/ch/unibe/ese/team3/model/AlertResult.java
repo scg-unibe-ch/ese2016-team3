@@ -2,6 +2,7 @@ package ch.unibe.ese.team3.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ public class AlertResult {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date triggerDate;
 	
-	@ManyToOne
+	@ManyToOne (cascade = {CascadeType.ALL})
 	private Ad triggerAd;
 	
 	@Column(nullable = false)

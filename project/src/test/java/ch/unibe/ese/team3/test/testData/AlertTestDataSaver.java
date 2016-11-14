@@ -104,7 +104,7 @@ public class AlertTestDataSaver {
 		alert.setRadius(22);
 		alertDao.save(alert);
 		
-		AlertResult alertResultLuzern = new AlertResult();
+		/*AlertResult alertResultLuzern = new AlertResult();
 		alertResultLuzern.setTriggerAd(luzernAd);
 		alertResultLuzern.setTriggerDate(new Date());
 		alertResultLuzern.setUser(jane);
@@ -123,7 +123,7 @@ public class AlertTestDataSaver {
 		alertResultBern2.setTriggerAd(bernAd);
 		alertResultBern2.setUser(jane);
 		alertResultBern2.setTriggerDate(new Date());
-		alertResultDao.save(alertResultBern2);
+		alertResultDao.save(alertResultBern2);*/
 		
 		
 	}

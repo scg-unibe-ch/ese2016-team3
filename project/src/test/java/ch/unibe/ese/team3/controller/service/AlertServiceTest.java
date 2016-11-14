@@ -22,6 +22,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Alert;
+import ch.unibe.ese.team3.model.AlertResult;
 import ch.unibe.ese.team3.model.AlertType;
 import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Gender;
@@ -32,6 +33,7 @@ import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.AdDao;
 import ch.unibe.ese.team3.model.dao.AlertDao;
+import ch.unibe.ese.team3.model.dao.AlertResultDao;
 import ch.unibe.ese.team3.model.dao.MessageDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
@@ -59,6 +61,9 @@ public class AlertServiceTest {
 
 	@Autowired
 	AlertService alertService;
+	
+	@Autowired
+	AlertResultDao alertResultDao;
 
 	@Test
 	public void createAlerts() {
@@ -256,8 +261,21 @@ public class AlertServiceTest {
 
 		assertEquals(countIterable(messagesBeforeAlert), 0);
 		
+		Iterable<AlertResult> resultsBefore = alertResultDao.findAll();
+		
+		int sizeBefore = 0;
+		for(AlertResult result : resultsBefore) {
+		   sizeBefore++;
+		}
 		// trigger alert
 		alertService.triggerAlerts(oltenResidence);
+		Iterable<AlertResult> results = alertResultDao.findAll();
+		
+		int size = 0;
+		for(AlertResult result : results) {
+		   size++;
+		}
+		assertEquals(sizeBefore+1, size);
 		
 		// assert alertMessageReceiver receives a message when alert triggers
 		Iterable<Message> messagesAfterAlert = messageDao.findByRecipient(alertMessageReceiver);

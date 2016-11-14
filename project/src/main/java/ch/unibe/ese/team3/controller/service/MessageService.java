@@ -143,10 +143,10 @@ public class MessageService {
 	public void sendEmail(User recipient, String subject, String text) {
 		
 		Properties properties = System.getProperties();
-		/*properties.setProperty("mail.smtp.host", "smtp.gmail.com");
+		properties.setProperty("mail.smtp.host", "smtp.gmail.com");
 		properties.setProperty("mail.smtp.user", "ithacaserver@gmail.com");
 		properties.setProperty("mail.smtp.debug", "true");
-		properties.setProperty("mail.smtp.auth", "false");
+		properties.setProperty("mail.smtp.auth", "true");
 		properties.setProperty("mail.smtp.port", "587");
 		properties.setProperty("mail.smtp.starttls.enable", "true");
 
@@ -155,14 +155,14 @@ public class MessageService {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication("ithacaserver@gmail.com", "flatfindr");
 		}
-		});*/
+		});
 		
-		properties.put("mail.smtp.auth", "false");
+		/*properties.put("mail.smtp.auth", "false");
 		properties.put("mail.smtp.starttls.enable", "true");
 		properties.put("mail.smtp.host", "localhost");
 		properties.put("mail.smtp.port", "2525");
 		
-		Session session = Session.getDefaultInstance(properties);
+		Session session = Session.getDefaultInstance(properties);*/
 		
 		try {
 			MimeMessage message = new MimeMessage(session);
