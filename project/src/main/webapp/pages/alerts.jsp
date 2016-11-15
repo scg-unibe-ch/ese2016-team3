@@ -5,11 +5,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 
-<!-- loads functions from placeAd.js -->
-<script src="/js/alerts.js"></script>
-
 
 <c:import url="template/header.jsp" />
+
+<!-- loads functions from placeAd.js -->
+<script src="/js/alerts.js"></script>
 
 <ol class="breadcrumb">
 	<li><a href="/${pagemode}/">Homepage</a></li>
