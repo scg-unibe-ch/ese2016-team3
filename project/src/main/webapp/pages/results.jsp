@@ -92,10 +92,7 @@
 
 
 <script>
-	//<script type="application/json"> ??
 	var addresses = ${resultsInJson};
-	
-
 	var map;
 	var infowindow;
 	var myhome;
@@ -160,7 +157,19 @@
 					map : map,
 					position : results[0].geometry.location
 				});
-				contentString = "<a href=\"./ad?id=" + ad.id + "\">" +  results[0].formatted_address + "</a>";
+				contentString ='<div id="content">'+
+							   '<h5>'+ad.name +'</h5>'+
+							  '<div id="bodyContent">'+
+							  
+							  
+					"<a href=\"./ad?id=" + ad.id + "\">" +  results[0].formatted_address + "</a>"
+							+'</div>'
+							+'</div>';
+				
+				
+				
+				
+				
 				infowindow = new google.maps.InfoWindow({
 					content : contentString,
 					maxWidth : 200
@@ -435,10 +444,11 @@
 
 
 	</div>
-	<div class="col-xs-12 col-sm-12 col-md-8 col-ls-8" id="map"
-		style="width: 760px; height: 400px"></div>
+	
 	<div class="col-xs-12 col-sm-12 col-md-8 col-ls-8">
 		<h4>Results</h4>
+		<div  class ="ad-wide-preview-outer" id="map"
+		style="width: 750px; height: 400px"></div>
 		<c:choose>
 			<c:when test="${empty results}">
 				<p>No results found!

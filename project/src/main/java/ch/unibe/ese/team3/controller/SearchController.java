@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ch.unibe.ese.team3.controller.pojos.PictureUploader;
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.dto.AdMeta;
@@ -80,7 +81,6 @@ public class SearchController {
 				admeta.setId(Long.toString(ad.getId()));
 				admeta.setName(ad.getTitle());
 				admeta.setPrice(Integer.toString(ad.getPrice()));
-				
 				
 				adResults.add(admeta);
 			}

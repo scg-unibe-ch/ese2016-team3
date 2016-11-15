@@ -14,6 +14,7 @@ public class AdMeta {
 	private String zipcode;
 	private String id;
 	private String price;
+	private String picture;
 	
 	
 	public String getName() {
@@ -51,6 +52,12 @@ public class AdMeta {
 	}
 	public void setPrice(String price) {
 		this.price = price;
+	}
+	public String getPicture() {
+		return picture;
+	}
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}
 	
 }
