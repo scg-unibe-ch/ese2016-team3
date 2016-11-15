@@ -110,69 +110,36 @@
 			zoom : 7
 		});
 
-		//  infowindow = new google.maps.InfoWindow();
-		myhome = "Chaumontweg 2 Spiegel";
-		codeAddress(myhome);
-		// myhome="Bahnhofstrasse 20, Zürich";
-		codeAddress("Bahnhofstrasse 20, Zürich");
-
-		//  myhome ="Via Antonio Riva 5, 6900 Lugano";
-		codeAddress("Via Antonio Riva 5, 6900 Lugano");
-
 		for (var i = 0; i < addresses.length; i++) {
 			var ad = addresses[i];
 			codeAddress(ad);
 		}
 	}
-
-	function callback(results, status) {
-		if (status === google.maps.places.PlacesServiceStatus.OK) {
-			for (var i = 0; i < results.length; i++) {
-				createMarker(results[i]);
-			}
-		}
-	}
-
-	function createMarker(place) {
-		var placeLoc = place.geometry.location;
-		var marker = new google.maps.Marker({
-			map : map,
-			position : place.geometry.location
-		});
-
-		google.maps.event.addListener(marker, 'click', function() {
-			infowindow.setContent(place.name);
-			infowindow.open(map, this);
-		});
-	}
-
+	
 	function codeAddress(ad) {
 		var address = ad.street + " " + ad.zipcode + " " + ad.city;
 		geocoder.geocode({
 			'address' : address
 		}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
-				//   map.setCenter(results[0].geometry.location);
 				var marker = new google.maps.Marker({
 					map : map,
 					position : results[0].geometry.location
 				});
+				
 				contentString ='<div id="content">'+
 							   '<h5>'+ad.name +'</h5>'+
-							  '<div id="bodyContent">'+
+							   '<div id="bodyContent">'+
 							  
-							  
-					"<a href=\"./ad?id=" + ad.id + "\">" +  results[0].formatted_address + "</a>"
-							+'</div>'
-							+'</div>';
-				
-				
-				
-				
+							   '<img width="160" class="img-responsive" src='+ ad.picture+ '/>'+
+							   
+							   "<a href=\"./ad?id=" + ad.id + "\">" +  results[0].formatted_address + "</a>"+
+							   '</div>'+
+							   '</div>';
 				
 				infowindow = new google.maps.InfoWindow({
 					content : contentString,
-					maxWidth : 200
+					maxWidth : 170
 				});
 				google.maps.event.addListener(marker, 'click', (function(marker,content,infowindow){ 
 				    return function() {
@@ -314,11 +281,9 @@
 						</div>
 					</div>
 
-
 					<div class="form-group row ">
 						<label for="field-NumberOfBathMin" class="col-md-6">Nr. of
 							Bath between</label>
-
 						<div class="col-md-6 form-inline">
 							<form:input type="number" step="1" id="field-NumberOfBathMin"
 								path="numberOfBathMin" cssClass="form-control input60 " />
@@ -327,13 +292,9 @@
 							<form:input type="number" cssClass="form-control input60"
 								path="numberOfBathMax" id="field-NumberOfBathMax" />
 						</div>
-
 					</div>
 
-
-
 					<div class="form-group row">
-
 						<label class="col-md-6" for="field-NumberOfRoomsMin">Nr.
 							of Rooms between</label>
 						<div class="col-md-6 form-inline">
@@ -346,8 +307,6 @@
 							<%-- muss man <form_error/> auch noch hinzufügen? --%>
 						</div>
 					</div>
-
-
 
 					<div class="form-group row">
 						<label class="col-md-6" for="field-BuildYearMin">Build
@@ -362,7 +321,6 @@
 
 					</div>
 
-
 					<div class="form-group row">
 						<label class="col-md-6" for="field-RenovationYearMin">Renovation
 							year between</label>
@@ -375,7 +333,6 @@
 								path="renovationYearMax" id="field-RenovationYearMax" />
 						</div>
 					</div>
-
 
 					<div class="form-group row">
 						<label class="col-md-6" for="field-DistanceSchoolMin">Distance
@@ -393,11 +350,7 @@
 						</div>
 					</div>
 
-
-
-
 					<div class="form-group row">
-
 						<label class="col-md-6" for="field-DistanceShoppingMin">Distance
 							to shopping from</label>
 						<div class="col-md-6 form-inline">
@@ -427,13 +380,8 @@
 							<form:input id="field-DistancePublicTransportMax" type="number"
 								min="0" path="distancePublicTransportMax" placeholder="0"
 								step="100" cssClass="form-control input60" />
-
 						</div>
 					</div>
-
-
-
-
 				</div>
 			</div>
 			<div class="form-group pull-right">
@@ -441,8 +389,6 @@
 				<button type="submit" class="btn btn-primary">Filter</button>
 			</div>
 		</form:form>
-
-
 	</div>
 	
 	<div class="col-xs-12 col-sm-12 col-md-8 col-ls-8">
