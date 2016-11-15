@@ -99,6 +99,7 @@
 	var contentString;
 
 	function initMap() {
+		infowindow = new google.maps.InfoWindow({maxWidth : 170});
 		geocoder = new google.maps.Geocoder();
 		var swiss = {
 			lat : 47,
@@ -112,11 +113,11 @@
 
 		for (var i = 0; i < addresses.length; i++) {
 			var ad = addresses[i];
-			codeAddress(ad);
+			codeAddress(ad, infowindow);
 		}
 	}
 	
-	function codeAddress(ad) {
+	function codeAddress(ad, infowindow) {
 		var address = ad.street + " " + ad.zipcode + " " + ad.city;
 		geocoder.geocode({
 			'address' : address
@@ -136,15 +137,13 @@
 							   "<a href=\"./ad?id=" + ad.id + "\">" +  results[0].formatted_address + "</a>"+
 							   '</div>'+
 							   '</div>';
-				
-				infowindow = new google.maps.InfoWindow({
-					content : contentString,
-					maxWidth : 170
-				});
+			  
 				google.maps.event.addListener(marker, 'click', (function(marker,content,infowindow){ 
 				    return function() {
+				    	
 				        infowindow.setContent(content);
 				        infowindow.open(map,marker);
+				        
 				    };
 				})(marker,contentString,infowindow));
 
