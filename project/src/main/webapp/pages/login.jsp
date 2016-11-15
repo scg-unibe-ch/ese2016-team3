@@ -75,4 +75,67 @@
 		</ul>
 
 
+<div>
+	<form:form id="googleForm" type="hidden" class="form-horizontal" method="post"
+		modelAttribute="googleForm" action="./googlelogin">
+		<div class="panel panel-default">
+			<div class="panel-body">
+
+			<spring:bind path="firstName">
+				<div class="form-group ${status.error ? 'has-error' : '' }">
+					<label class="col-sm-2 control-label" for="field-firstName">First
+						Name</label>
+					<div class="col-sm-6">
+						<form:input path="firstName" cssClass="form-control"
+							id="field-firstName" />
+						<form:errors path="firstName" cssClass="text-danger" />
+					</div>
+				</div>
+			</spring:bind>
+
+			<spring:bind path="lastName">
+				<div class="form-group ${status.error ? 'has-error' : '' }">
+					<label class="col-sm-2 control-label" for="field-lastName">Last
+						Name</label>
+					<div class="col-sm-6">
+						<form:input path="lastName" id="field-lastName"
+							cssClass="form-control" />
+						<form:errors path="lastName" cssClass="text-danger" />
+					</div>
+				</div>
+			</spring:bind>
+
+			<spring:bind path="email">
+				<div class="form-group ${status.error ? 'has-error' : '' }">
+					<label class="col-sm-2 control-label" for="field-email">Email</label>
+					<div class="col-sm-6">
+						<form:input path="email" id="field-email"
+							cssClass="form-control" />
+						<form:errors path="email" cssClass="text-danger" />
+					</div>
+				</div>
+			</spring:bind>
+
+			</div>
+		</div>
+		<div class="form-group pull-right">
+			<div class="col-sm-12">
+				<button type="submit" class="btn btn-primary" value="signup" id="googleButton"
+				>Sign up</button>
+			</div>
+		</div>
+	</form:form>
+</div>
+
+<script>
+	function onSignIn(googleUser) {
+	 	var profile = googleUser.getBasicProfile();
+		$("#field-firstName").val(profile.getGivenName());
+		$("#field-lastName").val(profile.getFamilyName());
+		$("#field-email").val(profile.getEmail());
+		$("#googleButton").click();
+		
+	}
+</script>
+
 <c:import url="template/footer.jsp" />
