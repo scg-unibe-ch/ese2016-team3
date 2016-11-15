@@ -1,6 +1,7 @@
 package ch.unibe.ese.team3.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -65,7 +66,7 @@ public class SearchController {
 			model.addObject("types", Type.values());
 			model.addObject("infrastructureTypes", InfrastructureType.values());
 			
-			List<Ad>adResults = new LinkedList<>();
+			List<Ad> adResults = new ArrayList<>();
 			Iterable<Ad> iter = adService.queryResults(searchForm, BuyMode.fromPageMode(pageMode));
 			Iterator<Ad> iterator = iter.iterator();
 
@@ -92,7 +93,24 @@ public class SearchController {
 //			}
 //			jsonResponse += "}";
 			
-			model.addObject("resultsInJonsen", jsonResponse);
+			
+			
+			
+/*
+ * For maven:
+ * <dependencies>
+    <!--  Gson: Java to Json conversion -->
+    <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>2.2.2</version>
+        <scope>compile</scope>
+    </dependency>
+</dependencies>			
+ */
+			//String json = new Gson().toJson(adResults );
+			
+			model.addObject("resultsInJson", jsonResponse);
 			
 			String loggedInUserEmail = (principal == null) ? "" : principal.getName();
 			model.addObject("loggedInUserEmail", loggedInUserEmail);

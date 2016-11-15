@@ -125,11 +125,10 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </script>
     
 <script>
-var results =$(resultsInJonsen)	;	// funktioniert das?
-var obj = JSON.parse(results);
-var ad;
+//<script type="application/json"> ??
+var results =$(resultsInJson)	;	// funktioniert das?
+var obj = JSON.parse(results); //??
 var addresses=[];
-var adr;
 
 for(ad in results){
 	addresses[ad] = $(ad.street) + " "+$( ad.zipcode) +" " +$(ad.city); // funktioniert das?
@@ -138,24 +137,30 @@ for(ad in results){
 
 var map;
 var infowindow;
+var myhome;
+var contentString;
 
 function initMap() {
 	geocoder = new google.maps.Geocoder();
-  var pyrmont = {lat: -33.867, lng: 151.195};
+  var swiss = {lat: 47, lng: 9};
 
   map = new google.maps.Map(document.getElementById('map'), {
-    center: pyrmont,
-    zoom: 15
+    center: swiss,
+    zoom: 7
   });
 
-  infowindow = new google.maps.InfoWindow();
+//  infowindow = new google.maps.InfoWindow();
+   myhome = "Chaumontweg 2 Spiegel";
+   codeAddress(myhome);
+  // myhome="Bahnhofstrasse 20, Zürich";
+   codeAddress("Bahnhofstrasse 20, Zürich");
   
-for(ad in addresses){
-	adr="Chaumontweg 2 Spiegel";
-	codeAddress(adr);
-}
-
-  
+ //  myhome ="Via Antonio Riva 5, 6900 Lugano";
+   codeAddress("Via Antonio Riva 5, 6900 Lugano");
+   
+ //for(ad in addresses){
+//	codeAddress(ad);
+//	}
 }
 
 
@@ -185,16 +190,29 @@ function codeAddress(adr) {
     var address = adr;
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        map.setCenter(results[0].geometry.location);
+     //   map.setCenter(results[0].geometry.location);
         var marker = new google.maps.Marker({
             map: map,
             position: results[0].geometry.location
         });
-      } else {
+        contentString = adr;		// funkioniert noch nicht ganz
+       	infowindow = new google.maps.InfoWindow({
+  		    content: contentString,
+  		    maxWidth: 200
+  		  });
+  	  marker.addListener('click', function() {
+  		    infowindow.open(map, marker);
+  		  });
+ 
+       
+      } 
+      else {
         alert("Geocode was not successful for the following reason: " + status);
       }
     });
   }
+  
+
     </script>
     
 <div class="row">
