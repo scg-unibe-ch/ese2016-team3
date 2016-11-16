@@ -105,25 +105,15 @@
 				</div>
 			</spring:bind>
 
-			<spring:bind path="email">
-				<div class="form-group ${status.error ? 'has-error' : '' }">
-					<label class="col-sm-2 control-label" for="field-email">Email</label>
-					<div class="col-sm-6">
-						<form:input path="email" id="field-email"
+			<spring:bind path="email">	
+						<form:input path="email" id="field-mail"
 							cssClass="form-control" />
-						<form:errors path="email" cssClass="text-danger" />
-					</div>
-				</div>
 			</spring:bind>
 
 			</div>
 		</div>
-		<div class="form-group pull-right">
-			<div class="col-sm-12">
 				<button type="submit" class="btn btn-primary" value="signup" id="googleButton"
 				>Sign up</button>
-			</div>
-		</div>
 	</form:form>
 </div>
 
@@ -132,7 +122,9 @@
 	 	var profile = googleUser.getBasicProfile();
 		$("#field-firstName").val(profile.getGivenName());
 		$("#field-lastName").val(profile.getFamilyName());
-		$("#field-email").val(profile.getEmail());
+		$("#field-mail").val(profile.getEmail());
+		var auth2 = gapi.auth2.getAuthInstance();
+    	auth2.signOut();
 		$("#googleButton").click();
 		
 	}
