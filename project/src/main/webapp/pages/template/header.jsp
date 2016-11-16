@@ -70,6 +70,7 @@
 						<li><a href="/${pagemode}/searchAd">Find ad</a></li>
 						<c:if test="${loggedIn}">
 							<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
+							<li><a href="/${pagemode}/profile/myauctions">My auctions</a></li>
 						</c:if>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
