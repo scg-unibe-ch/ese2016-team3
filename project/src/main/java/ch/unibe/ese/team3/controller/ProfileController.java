@@ -164,6 +164,9 @@ public class ProfileController {
 		User user = userService.findUserByUsername(username);
 		if (!bindingResult.hasErrors()) {
 			userUpdateService.updateFrom(editProfileForm, user);
+			Authentication request = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+			Authentication result = authenticationManager.authenticate(request);
+			SecurityContextHolder.getContext().setAuthentication(result);			
 			return user(user.getId(), principal);
 		} else {
 			model = new ModelAndView("editProfile");
@@ -179,9 +182,7 @@ public class ProfileController {
 		ModelAndView model = new ModelAndView("user");
 		User user = userService.findUserById(id);
 		if (principal != null) {
-			Authentication request = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-			Authentication result = authenticationManager.authenticate(request);
-			SecurityContextHolder.getContext().setAuthentication(result);
+
 			String username = principal.getName();
 			User user2 = userService.findUserByUsername(username);
 			if (user2 == null) {
@@ -236,7 +237,7 @@ public class ProfileController {
 	}
 	
 	/** Returns the upgrade page. */
-	@RequestMapping(value = "/upgrade", method = RequestMethod.GET)
+	@RequestMapping(value = "/profile/upgrade", method = RequestMethod.GET)
 	public ModelAndView upgradePage(Principal principal) {
 		ModelAndView model = new ModelAndView("upgrade");
 		String username = principal.getName();
@@ -254,7 +255,7 @@ public class ProfileController {
 	}
 
 	/** Validates the upgrade form and on success persists the new user. */
-	@RequestMapping(value = "/upgrade", method = RequestMethod.POST)
+	@RequestMapping(value = "/profile/upgrade", method = RequestMethod.POST)
 	public ModelAndView upgradeResultPage(@Valid UpgradeForm upgradeForm,
 			BindingResult bindingResult, Principal principal) {
 		ModelAndView model;
