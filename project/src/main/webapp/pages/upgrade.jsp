@@ -158,8 +158,8 @@
 
 					<div class="form-group pull-right">
 						<div class="col-sm-12">
-							<form:button href="/user?id=${currentUser.id}"
-								class="btn btn-default">Cancel</form:button>
+							<a href="/${pagemode}/user?id=${currentUser.id}"
+								class="btn btn-default">Cancel</a>
 							<form:button type="submit" class="btn btn-primary" value="update">Upgrade Now</form:button>
 						</div>
 					</div>
