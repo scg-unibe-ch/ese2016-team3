@@ -22,9 +22,11 @@ import ch.unibe.ese.team3.controller.pojos.forms.MessageForm;
 import ch.unibe.ese.team3.controller.pojos.forms.SignupForm;
 import ch.unibe.ese.team3.controller.pojos.forms.GoogleSignupForm;
 import ch.unibe.ese.team3.controller.pojos.forms.UpgradeForm;
+import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.controller.service.SignupService;
 import ch.unibe.ese.team3.controller.service.GoogleSignupService;
+import ch.unibe.ese.team3.controller.service.GoogleLoginService;
 import ch.unibe.ese.team3.controller.service.UpgradeService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.controller.service.UserUpdateService;
@@ -52,6 +54,9 @@ public class ProfileController {
 	
 	@Autowired
 	private GoogleSignupService googleSignupService;
+	
+	@Autowired
+	private GoogleLoginService googleLoginService;
 
 	@Autowired
 	private UserService userService;
@@ -81,14 +86,15 @@ public class ProfileController {
 	
 	/** Handles Google sign in. */
 	@RequestMapping(value = "/googlelogin", method = RequestMethod.POST)
-	public ModelAndView googleLogin(GoogleSignupForm googleForm,
-			@RequestAttribute("pageMode") PageMode pageMode) {
-		ModelAndView model = new ModelAndView("about");
+	public ModelAndView googleLogin(GoogleSignupForm googleForm) {
+		ModelAndView model = new ModelAndView("index");
 		if(!googleSignupService.doesUserWithUsernameExist(googleForm.getEmail())){
 			googleSignupService.saveFrom(googleForm);
 		}
-		//model.addObject("newest", adService.getNewestAds(4, BuyMode.fromPageMode(pageMode)));
-		//model.addObject("types", Type.values());
+		googleLoginService.loginFrom(googleForm);
+		model.addObject("newest", adService.getNewestAds(4, BuyMode.BUY));
+		model.addObject("types", Type.values());
+		model.addObject("searchForm", new SearchForm());
 		return model;
 	}
 	

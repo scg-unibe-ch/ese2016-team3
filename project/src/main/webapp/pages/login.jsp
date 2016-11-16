@@ -78,31 +78,15 @@
 <div>
 	<form:form id="googleForm" type="hidden" class="form-horizontal" method="post"
 		modelAttribute="googleForm" action="./googlelogin">
-		<div class="panel panel-default">
-			<div class="panel-body">
 
 			<spring:bind path="firstName">
-				<div class="form-group ${status.error ? 'has-error' : '' }">
-					<label class="col-sm-2 control-label" for="field-firstName">First
-						Name</label>
-					<div class="col-sm-6">
 						<form:input path="firstName" cssClass="form-control"
 							id="field-firstName" />
-						<form:errors path="firstName" cssClass="text-danger" />
-					</div>
-				</div>
 			</spring:bind>
 
 			<spring:bind path="lastName">
-				<div class="form-group ${status.error ? 'has-error' : '' }">
-					<label class="col-sm-2 control-label" for="field-lastName">Last
-						Name</label>
-					<div class="col-sm-6">
 						<form:input path="lastName" id="field-lastName"
 							cssClass="form-control" />
-						<form:errors path="lastName" cssClass="text-danger" />
-					</div>
-				</div>
 			</spring:bind>
 
 			<spring:bind path="email">	
@@ -110,8 +94,6 @@
 							cssClass="form-control" />
 			</spring:bind>
 
-			</div>
-		</div>
 				<button type="submit" class="btn btn-primary" value="signup" id="googleButton"
 				>Sign up</button>
 	</form:form>
