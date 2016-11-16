@@ -275,7 +275,7 @@ public class AlertServiceTest {
 		for(AlertResult result : results) {
 		   size++;
 		}
-		assertEquals(sizeBefore+1, size);
+		assertTrue(sizeBefore < size);
 		
 		// assert alertMessageReceiver receives a message when alert triggers
 		Iterable<Message> messagesAfterAlert = messageDao.findByRecipient(alertMessageReceiver);
