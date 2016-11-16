@@ -2,6 +2,8 @@ package ch.unibe.ese.team3.controller.service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.security.SecureRandom;
+import java.math.BigInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,10 +33,15 @@ public class GoogleSignupService {
 		user.setEmail(googleForm.getEmail());
 		user.setFirstName(googleForm.getFirstName());
 		user.setLastName(googleForm.getLastName());
-		user.setPassword("123");
+		
+		final SecureRandom rndm = new SecureRandom();
+		String randomPassword = new BigInteger(130, rndm).toString(32);
+		user.setPassword(randomPassword); //sets a strong random password
+		
 		user.setEnabled(true);
 		user.setGender(Gender.OTHER);
-		
+		user.setIsGoogleUser(true);
+		user.setGooglePicture(googleForm.getGooglePicture());
 		
 		user.setAccountType(AccountType.BASIC);
 		user.setCreditCard("0000000000000000");

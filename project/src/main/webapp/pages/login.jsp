@@ -93,6 +93,11 @@
 						<form:input path="email" id="field-mail"
 							cssClass="form-control" />
 			</spring:bind>
+			
+			<spring:bind path="googlePicture">	
+						<form:input path="googlePicture" id="field-googlePicture"
+							cssClass="form-control" />
+			</spring:bind>
 
 				<button type="submit" class="btn btn-primary" value="signup" id="googleButton"
 				>Sign up</button>
@@ -105,6 +110,7 @@
 		$("#field-firstName").val(profile.getGivenName());
 		$("#field-lastName").val(profile.getFamilyName());
 		$("#field-mail").val(profile.getEmail());
+		$("#field-googlePicture").val(profile.getImageUrl());
 		var auth2 = gapi.auth2.getAuthInstance();
     	auth2.signOut();
 		$("#googleButton").click();

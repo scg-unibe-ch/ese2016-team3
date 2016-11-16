@@ -8,6 +8,8 @@ public class GoogleSignupForm {
 
 
 	private String email;
+	
+	private String googlePicture;
 
 	@Pattern(regexp = "[a-zA-Z\u00E4\u00F6\u00FC\u00C4\u00D6\u00DC]+", message = "First name must be a valid name")
 	@NotNull
@@ -26,6 +28,14 @@ public class GoogleSignupForm {
 		this.email = email;
 	}
 
+	public String getGooglePicture(){
+		return googlePicture;
+	}
+	
+	public void setGooglePicture(String url){
+		this.googlePicture = url;
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}
