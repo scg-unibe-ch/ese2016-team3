@@ -6,10 +6,10 @@ import org.hibernate.validator.constraints.NotBlank;
 /** This Form is used if an administrator wants to change Premium packages */
 public class EditPremiumChoiceForm {
 	
-	//@NotBlank(message = "Required")
+	@NotBlank(message = "Required")
 	private int duration;
 	
-	//@NotBlank(message = "Required")
+	@NotBlank(message = "Required")
 	private double price;
 	
 	public int getDuration() {

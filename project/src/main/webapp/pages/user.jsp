@@ -122,7 +122,7 @@
 						</c:if>
 						<c:choose>
 							<c:when test="${'ADMIN' eq user.gender && principalID eq user.id}">
-								<a id="manage" class="btn btn-primary" href="./adminManagement">Manage Website</a>
+								<a id="manage" class="btn btn-primary" href="./profile/adminManagement">Manage Website</a>
 							</c:when>
 						</c:choose>
 						<c:choose>
