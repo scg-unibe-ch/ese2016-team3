@@ -82,28 +82,29 @@
 		modelAttribute="googleForm" action="./googlelogin">
 
 			<spring:bind path="firstName">
-						<form:input path="firstName" cssClass="form-control"
+						<form:input type="hidden" path="firstName" cssClass="form-control"
 							id="field-firstName" />
 			</spring:bind>
 
 			<spring:bind path="lastName">
-						<form:input path="lastName" id="field-lastName"
+						<form:input type="hidden" path="lastName" id="field-lastName"
 							cssClass="form-control" />
 			</spring:bind>
 
 			<spring:bind path="email">	
-						<form:input path="email" id="field-mail"
+						<form:input type="hidden" path="email" id="field-mail"
 							cssClass="form-control" />
 			</spring:bind>
 			
 			<spring:bind path="googlePicture">	
-						<form:input path="googlePicture" id="field-googlePicture"
+						<form:input type="hidden" path="googlePicture" id="field-googlePicture"
 							cssClass="form-control" />
 			</spring:bind>
 
-				<button type="submit" class="btn btn-primary" value="signup" id="googleButton"
+				<button type="submit" style="visibility:hidden;" class="btn btn-primary" value="signup" id="googleButton"
 				>Sign up</button>
-	</form:form>
+				
+		</form:form>
 </div>
 
 <script>
