@@ -27,7 +27,7 @@ public class UserTestDataSaver {
 	public void saveTestData() throws Exception {
 		// system account
 		User system = createUser("System", "1234", "FlatFindr", "Admin",
-				"/img/test/system.jpg", Gender.ADMIN, AccountType.BASIC);
+				"/img/test/system.jpg", Gender.ADMIN, AccountType.PREMIUM);
 		system.setAboutMe("We keep you off the streets.");
 		userDao.save(system);
 

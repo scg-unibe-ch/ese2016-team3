@@ -13,7 +13,7 @@ import ch.unibe.ese.team3.model.Type;
 public class SearchForm {
 
 	@NotBlank(message = "Required")
-	@Pattern(regexp = "^[0-9]{4} - [-\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
+	@Pattern(regexp = "^[0-9]{4} - [-;\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
 	private String city;
 	
 	@NotNull(message = "Requires a number")
@@ -26,30 +26,6 @@ public class SearchForm {
 
 	private Type[] types;
 	
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public Integer getRadius() {
-		return radius;
-	}
-
-	public void setRadius(Integer radius) {
-		this.radius = radius;
-	}
-
-	public Integer getPrice() {
-		return price;
-	}
-
-	public void setPrice(Integer price) {
-		this.price = price;
-	}
-
 	private String earliestMoveInDate;
 	private String latestMoveInDate;
 	
@@ -319,6 +295,30 @@ public class SearchForm {
 
 	public void setInfrastructureType(InfrastructureType infrastructureType) {
 		this.infrastructureType = infrastructureType;
+	}
+	
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public Integer getRadius() {
+		return radius;
+	}
+
+	public void setRadius(Integer radius) {
+		this.radius = radius;
+	}
+
+	public Integer getPrice() {
+		return price;
+	}
+
+	public void setPrice(Integer price) {
+		this.price = price;
 	}
 
 }

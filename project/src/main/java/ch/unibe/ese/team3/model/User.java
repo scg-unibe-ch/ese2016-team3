@@ -52,6 +52,9 @@ public class User {
 	@Column(nullable = false)
 	private boolean enabled;
 	
+	@Column(nullable = true)
+	private boolean isGoogleUser;
+	
 	@Enumerated(EnumType.STRING)
 	private AccountType accountType;
 	
@@ -81,6 +84,9 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<UserRole> userRoles;
 
+	@Column(nullable = true)
+	private String googlePicture;
+	
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	private UserPicture picture;
@@ -136,6 +142,14 @@ public class User {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	public boolean getIsGoogleUser(){
+		return this.isGoogleUser;
+	}
+	
+	public void setIsGoogleUser(boolean googleUser){
+		this.isGoogleUser = googleUser;
 	}
 
 	public boolean isEnabled() {
@@ -225,6 +239,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getGooglePicture(){
+		return googlePicture;
+	}
+	
+	public void setGooglePicture(String url){
+		this.googlePicture = url;
 	}
 
 	public UserPicture getPicture() {
