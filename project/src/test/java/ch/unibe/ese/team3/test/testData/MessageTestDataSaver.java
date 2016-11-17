@@ -4,9 +4,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.User;
@@ -37,7 +39,7 @@ public class MessageTestDataSaver {
 		testerMuster = userDao.findByUsername("ese@unibe.ch");
 		jane = userDao.findByUsername("jane@doe.com");
 		oprah = userDao.findByUsername("oprah@winfrey.com");
-
+		
 		Message message;
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm dd.MM.yyyy");
 
@@ -125,6 +127,7 @@ public class MessageTestDataSaver {
 		message.setState(MessageState.UNREAD);
 		message.setDateSent(dateFormat.parse("11:30 24.02.2014"));
 		messageDao.save(message);
+		
 	}
 
 	private String getDummyText1() {

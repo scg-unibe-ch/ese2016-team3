@@ -8,6 +8,12 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -24,6 +30,7 @@ import ch.unibe.ese.team3.controller.pojos.forms.GoogleSignupForm;
 import ch.unibe.ese.team3.controller.pojos.forms.UpgradeForm;
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.controller.service.AdService;
+import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.controller.service.SignupService;
 import ch.unibe.ese.team3.controller.service.GoogleSignupService;
 import ch.unibe.ese.team3.controller.service.GoogleLoginService;
@@ -47,8 +54,13 @@ import ch.unibe.ese.team3.model.Type;
  * Handles all requests concerning user accounts and profiles.
  */
 @Controller
+@EnableScheduling
 public class ProfileController {
-
+	
+	@Autowired
+	@Qualifier("authenticationManager")
+	protected AuthenticationManager authenticationManager;
+	
 	@Autowired
 	private SignupService signupService;
 	
@@ -72,7 +84,7 @@ public class ProfileController {
 	
 	@Autowired
 	private UpgradeService upgradeService;
-	
+
 	@Autowired
 	private PremiumChoiceService premiumChoiceService;
 
@@ -155,6 +167,7 @@ public class ProfileController {
 			model.addObject("premiumChoices", allChoices);
 			model.addObject("durations", premiumChoiceService.getDurations());
 		}
+		
 		return model;
 	}
 
@@ -184,7 +197,10 @@ public class ProfileController {
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
 		if (!bindingResult.hasErrors()) {
-			userUpdateService.updateFrom(editProfileForm);
+			userUpdateService.updateFrom(editProfileForm, user);
+			Authentication request = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+			Authentication result = authenticationManager.authenticate(request);
+			SecurityContextHolder.getContext().setAuthentication(result);			
 			return user(user.getId(), principal);
 		} else {
 			model = new ModelAndView("editProfile");
@@ -200,8 +216,12 @@ public class ProfileController {
 		ModelAndView model = new ModelAndView("user");
 		User user = userService.findUserById(id);
 		if (principal != null) {
+
 			String username = principal.getName();
 			User user2 = userService.findUserByUsername(username);
+			if (user2 == null) {
+				user2 = user;
+			}
 			long principalID = user2.getId();
 			model.addObject("principalID", principalID);
 		}
@@ -251,7 +271,7 @@ public class ProfileController {
 	}
 	
 	/** Returns the upgrade page. */
-	@RequestMapping(value = "/upgrade", method = RequestMethod.GET)
+	@RequestMapping(value = "/profile/upgrade", method = RequestMethod.GET)
 	public ModelAndView upgradePage(Principal principal) {
 		ModelAndView model = new ModelAndView("upgrade");
 		String username = principal.getName();
@@ -269,7 +289,7 @@ public class ProfileController {
 	}
 
 	/** Validates the upgrade form and on success persists the new user. */
-	@RequestMapping(value = "/upgrade", method = RequestMethod.POST)
+	@RequestMapping(value = "/profile/upgrade", method = RequestMethod.POST)
 	public ModelAndView upgradeResultPage(@Valid UpgradeForm upgradeForm,
 			BindingResult bindingResult, Principal principal) {
 		ModelAndView model;

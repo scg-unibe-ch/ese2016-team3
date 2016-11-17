@@ -40,16 +40,27 @@ public class AlertController {
 	}
 
 	/**
-	 * Serves the page that allow the user to view their alerts afert validating
+	 * Serves the page that allow the user to view their alerts after validating
 	 * and persisting the new alert through the alert form.
 	 */
 	@RequestMapping(value = "/profile/alerts", method = RequestMethod.POST)
 	public ModelAndView savedAlert(Principal principal,
 			@Valid AlertForm alertForm, BindingResult result) {
+		String username = principal.getName();
+		User user = userService.findUserByUsername(username);
 		if (!result.hasErrors())
 			return prepareAlertPage(principal, true, alertForm);
-		else
-			return new ModelAndView("alerts");
+		else {
+			ModelAndView model = new ModelAndView("alerts");
+			Iterable<Alert> alerts = alertService.getAlertsByUser(user);
+			model.addObject("user", user);
+			model.addObject("alertForm", alertForm);
+			model.addObject("alerts", alerts);
+			model.addObject("types", Type.values());
+			model.addObject("buyModes", BuyMode.values());
+			return model;
+		}
+			
 	}
 
 	/** Deletes the alert with the given id */

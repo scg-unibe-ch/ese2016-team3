@@ -6,22 +6,33 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Properties;
+import javax.mail.*;
+import javax.mail.internet.*;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import ch.unibe.ese.team3.controller.pojos.forms.MessageForm;
+import ch.unibe.ese.team3.model.Ad;
+import ch.unibe.ese.team3.model.AlertResult;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.User;
+import ch.unibe.ese.team3.model.dao.AdDao;
+import ch.unibe.ese.team3.model.dao.AlertDao;
+import ch.unibe.ese.team3.model.dao.AlertResultDao;
 import ch.unibe.ese.team3.model.dao.MessageDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
+
 /** Handles all persistence operations concerning messaging. */
 @Service
+@Configuration
 public class MessageService {
 
 	@Autowired
@@ -29,6 +40,12 @@ public class MessageService {
 
 	@Autowired
 	private MessageDao messageDao;
+	
+	@Autowired 
+	private AdDao adDao;
+	
+	@Autowired
+	private AlertResultDao alertResultDao;
 
 	/** Gets all messages in the inbox of the given user, sorted newest to oldest */
 	@Transactional
@@ -116,6 +133,99 @@ public class MessageService {
 		
 		messageDao.save(message);
 	}
+	
+	/** Sends an e-mail to a certain user
+	 * 
+	 * @param recipient the user who will receive the e-mail
+	 * @param subject the subject of the message
+	 * @param text the text of the message
+	 */
+	public void sendEmail(User recipient, String subject, String text) {
+		
+		Properties properties = System.getProperties();
+		properties.setProperty("mail.smtp.host", "smtp.gmail.com");
+		properties.setProperty("mail.smtp.user", "ithacaserver@gmail.com");
+		properties.setProperty("mail.smtp.debug", "true");
+		properties.setProperty("mail.smtp.auth", "true");
+		properties.setProperty("mail.smtp.port", "587");
+		properties.setProperty("mail.smtp.starttls.enable", "true");
+
+		
+		Session session = Session.getInstance(properties, new Authenticator() { 
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication("ithacaserver@gmail.com", "flatfindr");
+		}
+		});
+		
+		/*properties.put("mail.smtp.auth", "false");
+		properties.put("mail.smtp.starttls.enable", "true");
+		properties.put("mail.smtp.host", "localhost");
+		properties.put("mail.smtp.port", "2525");
+		
+		Session session = Session.getDefaultInstance(properties);*/
+		
+		try {
+			MimeMessage message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("ithacaserver@gmail.com"));
+			message.addRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(recipient.getEmail(), false));
+			message.setSubject(subject);
+			message.setText(text);
+			
+			Transport.send(message);
+			System.out.println("Message sent successfully for " + recipient.getUsername());
+		}catch (MessagingException e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/** Sends the daily alert message for the basic users
+	 * it is scheduled to midnight of every day and contains exactly
+	 * the alerts that have been triggered for every user.
+	 * A message and an e-mail are sent.
+	 */
+	@Scheduled(cron = "0 59 23 * * *") // everyday at one minute before midnight
+	//@Scheduled(cron = "1 * * * * *") // every minute
+	public void alertMessageForBasicUser() {
+		
+		String subject = "Your daily alerts";
+		String text = "All ads that match your alerts: \n";
+		
+		Date now = new Date();
+		Date yesterday = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(now);
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		yesterday = calendar.getTime();
+		
+		Iterable<User> users = userDao.findAll();
+		
+		for (User user: users) {
+			if (!user.isPremium()){
+				for (AlertResult alertResult : alertResultDao.findByUser(user)) {
+					if(alertResult.getTriggerDate().after(yesterday) || alertResult.getNotified() == false) {
+						Ad ad = alertResult.getTriggerAd();
+						text += "</a><br><br> <a class=\"link\" href=/ad?id="
+								+ ad.getId() + ">" + ad.getTitle() + "</a><br><br>"
+								+ ad.getRoomDescription() + "\n";
+						alertResult.setNotified(true);
+					}
+					
+		
+				}			
+				if (text.equals("All ads that match your alerts: \n")) {
+						text = "There are no new Ads that match your alerts, but why"
+								+ " not have a look at the highlights on our page anyway?";
+				}
+				sendMessage(userDao.findByUsername("System"), user, subject, text);
+				sendEmail(user, subject, text);
+				
+				text = "All ads that match your alerts: \n";
+			}
+		}
+	}
+	
 
 	/**
 	 * Sets the MessageState of a given Message to "READ".

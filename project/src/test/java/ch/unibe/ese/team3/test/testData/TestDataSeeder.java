@@ -38,11 +38,15 @@ public class TestDataSeeder implements InitializingBean {
 	@Autowired 
 	private PremiumChoiceTestDataSaver choiceTestDataSaver;
 	
+	@Autowired
+	private AuctionTestDataSaver auctionDataSaver;
+	
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		// save test data in the correct order
 		userDataSaver.saveTestData();
 		adDataSaver.saveTestData();
+		auctionDataSaver.saveTestData();
 		messageDataSaver.saveTestData();
 		visitDataSaver.saveTestData();
 		visitEnquiryDataSaver.saveTestData();

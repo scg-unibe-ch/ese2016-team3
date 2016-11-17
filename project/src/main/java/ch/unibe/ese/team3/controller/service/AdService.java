@@ -144,7 +144,11 @@ public class AdService {
 			picture.setFilePath(filePath);
 			pictures.add(picture);
 		}
-		ad.setPictures(pictures);
+		
+		List<AdPicture> existingPictures = ad.getPictures();
+		
+		existingPictures.clear();
+		existingPictures.addAll(pictures);
 
 		// visits
 		List<Visit> visits = new LinkedList<>();
@@ -171,7 +175,7 @@ public class AdService {
 				visit.setAd(ad);
 				visits.add(visit);
 			}
-			ad.setVisits(visits);
+			ad.getVisits().addAll(visits);
 		}
 
 		ad.setUser(user);
@@ -180,6 +184,8 @@ public class AdService {
 
 		return ad;
 	}
+	
+
 
 	/**
 	 * Gets the ad that has the given id.
@@ -370,14 +376,24 @@ public class AdService {
 			Integer maxDistanceShopping = convertToNullableInt(searchForm.getDistanceShoppingMax());
 			Integer minDistancePublicTransport = convertToNullableInt(searchForm.getDistancePublicTransportMin());
 			Integer maxDistancePublicTransport = convertToNullableInt(searchForm.getDistancePublicTransportMax());
+			
+			Integer minBuildYear = convertToNullableInt(searchForm.getBuildYearMin());
+			Integer maxBuildYear = convertToNullableInt(searchForm.getBuildYearMax());
+			Integer minRenovationYear = convertToNullableInt(searchForm.getRenovationYearMin());
+			Integer maxRenovationYear = convertToNullableInt(searchForm.getRenovationYearMax());
 
 			if (!inRange(minBath, maxBath, ad.getNumberOfBath())
 					|| !inRange(minSquareFootage, maxSquareFootage, ad.getSquareFootage())
 					|| !inRange(minNumberOfRooms, maxNumberOfRooms, ad.getNumberOfRooms())
 					|| !inRange(minFloorLevel, maxFloorLevel, ad.getFloorLevel())
+					
+					|| !inRange(minBuildYear, maxBuildYear, ad.getBuildYear())
+					|| !inRange(minRenovationYear, maxRenovationYear, ad.getRenovationYear())
+					
 					|| !inRange(minDistanceSchool, maxDistanceSchool, ad.getDistanceSchool())
 					|| !inRange(minDistanceShopping, maxDistanceShopping, ad.getDistanceShopping())
-					|| !inRange(minDistancePublicTransport, maxDistancePublicTransport,	ad.getDistancePublicTransport())) {
+					|| !inRange(minDistancePublicTransport, maxDistancePublicTransport,	ad.getDistancePublicTransport()))
+					{
 				iterator.remove();
 			}
 		}

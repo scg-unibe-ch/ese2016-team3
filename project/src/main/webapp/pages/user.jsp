@@ -72,7 +72,7 @@
 </script>
 
 <ol class="breadcrumb">
-	<li><a href="./">Homepage</a></li>
+	<li><a href="/${pagemode}/">Homepage</a></li>
 	<li class="active">Profile</li>
 </ol>
 
@@ -131,7 +131,7 @@
 						</c:choose>
 						<c:choose>
 							<c:when test="${'BASIC' eq user.accountType && principalID eq user.id}">
-								<a type="button" href="./upgrade" class="btn btn-primary">Get Premium</a>
+								<a type="button" href="./profile/upgrade" class="btn btn-primary">Get Premium</a>
 							</c:when>
 							<c:otherwise></c:otherwise>
 						</c:choose>
