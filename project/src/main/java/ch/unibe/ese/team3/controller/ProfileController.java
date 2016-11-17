@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,22 +26,29 @@ import org.springframework.web.servlet.ModelAndView;
 import ch.unibe.ese.team3.controller.pojos.forms.EditProfileForm;
 import ch.unibe.ese.team3.controller.pojos.forms.MessageForm;
 import ch.unibe.ese.team3.controller.pojos.forms.SignupForm;
+import ch.unibe.ese.team3.controller.pojos.forms.GoogleSignupForm;
 import ch.unibe.ese.team3.controller.pojos.forms.UpgradeForm;
+import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.controller.service.SignupService;
+import ch.unibe.ese.team3.controller.service.GoogleSignupService;
+import ch.unibe.ese.team3.controller.service.GoogleLoginService;
 import ch.unibe.ese.team3.controller.service.UpgradeService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.controller.service.UserUpdateService;
 import ch.unibe.ese.team3.controller.service.VisitService;
+import ch.unibe.ese.team3.enums.PageMode;
 import ch.unibe.ese.team3.controller.service.PremiumChoiceService;
 import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.Ad;
+import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.CreditcardType;
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
 import ch.unibe.ese.team3.model.PremiumChoice;
+import ch.unibe.ese.team3.model.Type;
 
 /**
  * Handles all requests concerning user accounts and profiles.
@@ -55,6 +63,12 @@ public class ProfileController {
 	
 	@Autowired
 	private SignupService signupService;
+	
+	@Autowired
+	private GoogleSignupService googleSignupService;
+	
+	@Autowired
+	private GoogleLoginService googleLoginService;
 
 	@Autowired
 	private UserService userService;
@@ -78,8 +92,24 @@ public class ProfileController {
 	@RequestMapping(value = "/login")
 	public ModelAndView loginPage() {
 		ModelAndView model = new ModelAndView("login");
+		model.addObject("googleForm", new GoogleSignupForm());
 		return model;
 	}
+	
+	/** Handles Google sign in. */
+	@RequestMapping(value = "/googlelogin", method = RequestMethod.POST)
+	public ModelAndView googleLogin(GoogleSignupForm googleForm) {
+		ModelAndView model = new ModelAndView("index");
+		if(!googleSignupService.doesUserWithUsernameExist(googleForm.getEmail())){
+			googleSignupService.saveFrom(googleForm);
+		}
+		googleLoginService.loginFrom(googleForm);
+		model.addObject("newest", adService.getNewestAds(4, BuyMode.BUY));
+		model.addObject("types", Type.values());
+		model.addObject("searchForm", new SearchForm());
+		return model;
+	}
+	
 
 	/** Returns the signup page. */
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)

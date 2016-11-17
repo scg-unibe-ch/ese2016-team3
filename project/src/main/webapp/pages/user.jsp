@@ -85,6 +85,9 @@
 				<div class="row">
 					<div class="col-md-6">
 						<c:choose>
+							<c:when test="${user.isGoogleUser}">
+								<img src="${user.googlePicture}">
+							</c:when>
 							<c:when test="${user.picture.filePath != null}">
 								<img src="${user.picture.filePath}">
 							</c:when>
