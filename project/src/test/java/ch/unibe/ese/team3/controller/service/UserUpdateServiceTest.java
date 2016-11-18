@@ -31,7 +31,8 @@ public class UserUpdateServiceTest {
 	@Test
 	public void updateExistingUser(){
 		EditProfileForm form = new EditProfileForm();
-		String newUserName = "mark@knopfler.com";
+		User mark = userDao.findByUsername("mark@knopfler.com");
+		String newUserName = "hallo@knopfler.com";
 		String newFirstName = "Mark D.";
 		String newLastName = "Knopfler Jr.";
 		String newPassword = "sultans";
@@ -43,10 +44,10 @@ public class UserUpdateServiceTest {
 		form.setPassword(newPassword);
 		form.setAboutMe(newAboutMe);
 		
-		userUpdateService.updateFrom(form);
+		userUpdateService.updateFrom(form, mark);
 		
-		User mark = userDao.findByUsername(newUserName);
-		
+		mark = userDao.findByUsername(newUserName);
+
 		assertEquals(newUserName, mark.getUsername());
 		assertEquals(newFirstName, mark.getFirstName());
 		assertEquals(newLastName, mark.getLastName());
@@ -58,8 +59,8 @@ public class UserUpdateServiceTest {
 	public void updateNonExistingUser(){
 		EditProfileForm form = new EditProfileForm();
 		form.setUsername("nonexisting@user.com");
-		
-		userUpdateService.updateFrom(form);
+		User user = userDao.findByUsername("nonexisting@user.com");
+		userUpdateService.updateFrom(form, user);
 	}
 	
 }

@@ -107,11 +107,8 @@ public class EditAdService {
 			picture.setFilePath(filePath);
 			pictures.add(picture);
 		}
-		// add existing pictures
-		for (AdPicture picture : ad.getPictures()) {
-			pictures.add(picture);
-		}
-		ad.setPictures(pictures);
+		
+		ad.getPictures().addAll(pictures);
 
 		// visits
 		List<Visit> visits = new LinkedList<>();
@@ -143,7 +140,7 @@ public class EditAdService {
 			for (Visit visit : ad.getVisits()) {
 				visits.add(visit);
 			}
-			ad.setVisits(visits);
+			ad.getVisits().addAll(visits);
 		}
 
 		ad.setUser(user);
@@ -163,7 +160,6 @@ public class EditAdService {
 		List<AdPicture> pictures = ad.getPictures();
 		AdPicture picture = adPictureDao.findOne(pictureId);
 		pictures.remove(picture);
-		ad.setPictures(pictures);
 		adDao.save(ad);
 	}
 

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.team3.controller.pojos.forms.MessageForm;
 import ch.unibe.ese.team3.controller.service.AdService;
+import ch.unibe.ese.team3.controller.service.AuctionService;
 import ch.unibe.ese.team3.controller.service.BookmarkService;
 import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.controller.service.UserService;
@@ -35,7 +36,7 @@ public class AdController {
 
 	@Autowired
 	private AdService adService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -48,21 +49,32 @@ public class AdController {
 	@Autowired
 	private VisitService visitService;
 
+	@Autowired
+	private AuctionService auctionService;
+
 	/** Gets the ad description page for the ad with the given id. */
 	@RequestMapping(value = "/ad", method = RequestMethod.GET)
 	public ModelAndView ad(@RequestParam("id") long id, Principal principal) {
 		ModelAndView model = new ModelAndView("adDescription");
+
 		Ad ad = adService.getAdById(id);
-		
-		if (ad == null){
+
+		User user = principal != null 
+				? userService.findUserByUsername(principal.getName()) 
+				: null;
+
+		if (ad == null) {
 			throw new ResourceNotFoundException();
 		}
-		
+		if (ad.isAuction() && user != null) {
+			boolean userSentBuyRequest = auctionService.hasUserSentBuyRequest(ad, user);
+			model.addObject("sentBuyRequest", userSentBuyRequest);
+		}
+
 		model.addObject("shownAd", ad);
 		model.addObject("messageForm", new MessageForm());
 
-		String loggedInUserEmail = (principal == null) ? "" : principal
-				.getName();
+		String loggedInUserEmail = (principal == null) ? "" : principal.getName();
 		model.addObject("loggedInUserEmail", loggedInUserEmail);
 
 		model.addObject("visits", visitService.getVisitsByAd(ad));
@@ -75,8 +87,8 @@ public class AdController {
 	 * validates and persists the message passed as post data.
 	 */
 	@RequestMapping(value = "/ad", method = RequestMethod.POST)
-	public ModelAndView messageSent(@RequestParam("id") long id,
-			@Valid MessageForm messageForm, BindingResult bindingResult) {
+	public ModelAndView messageSent(@RequestParam("id") long id, @Valid MessageForm messageForm,
+			BindingResult bindingResult) {
 
 		ModelAndView model = new ModelAndView("adDescription");
 		Ad ad = adService.getAdById(id);
@@ -90,10 +102,10 @@ public class AdController {
 	}
 
 	/**
-	 * Checks if the adID passed as post parameter is already inside user's
-	 * List bookmarkedAds. In case it is present, true is returned changing
-	 * the "Bookmark Ad" button to "Bookmarked". If it is not present it is
-	 * added to the List bookmarkedAds.
+	 * Checks if the adID passed as post parameter is already inside user's List
+	 * bookmarkedAds. In case it is present, true is returned changing the
+	 * "Bookmark Ad" button to "Bookmarked". If it is not present it is added to
+	 * the List bookmarkedAds.
 	 * 
 	 * @return 0 and 1 for errors; 3 to update the button to bookmarked 3 and 2
 	 *         for bookmarking or undo bookmarking respectively 4 for removing
@@ -102,8 +114,7 @@ public class AdController {
 	@RequestMapping(value = "/bookmark", method = RequestMethod.POST)
 	@Transactional
 	@ResponseBody
-	public int isBookmarked(@RequestParam("id") long id,
-			@RequestParam("screening") boolean screening,
+	public int isBookmarked(@RequestParam("id") long id, @RequestParam("screening") boolean screening,
 			@RequestParam("bookmarked") boolean bookmarked, Principal principal) {
 		// should never happen since no bookmark button when not logged in
 		if (principal == null) {
@@ -134,7 +145,7 @@ public class AdController {
 
 		return bookmarkService.getBookmarkStatus(ad, bookmarked, user);
 	}
-	
+
 	/**
 	 * Fetches information about bookmarked rooms and own ads and attaches this
 	 * information to the myRooms page in order to be displayed.

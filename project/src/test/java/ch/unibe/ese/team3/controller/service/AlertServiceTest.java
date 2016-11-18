@@ -19,8 +19,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Alert;
+import ch.unibe.ese.team3.model.AlertResult;
 import ch.unibe.ese.team3.model.AlertType;
 import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Gender;
@@ -31,6 +33,7 @@ import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.AdDao;
 import ch.unibe.ese.team3.model.dao.AlertDao;
+import ch.unibe.ese.team3.model.dao.AlertResultDao;
 import ch.unibe.ese.team3.model.dao.MessageDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
@@ -58,6 +61,9 @@ public class AlertServiceTest {
 
 	@Autowired
 	AlertService alertService;
+	
+	@Autowired
+	AlertResultDao alertResultDao;
 
 	@Test
 	public void createAlerts() {
@@ -83,7 +89,7 @@ public class AlertServiceTest {
 		alertTypes2.add(typeLoft2);
 		
 		// Create user Adolf Ogi
-		User adolfOgi = createUser("adolf@ogi.ch", "password", "Adolf", "Ogi", Gender.MALE);
+		User adolfOgi = createUser("adolf@ogi.ch", "password", "Adolf", "Ogi", Gender.MALE, AccountType.BASIC);
 		adolfOgi.setAboutMe("Wallis rocks");
 		userDao.save(adolfOgi);
 
@@ -125,7 +131,7 @@ public class AlertServiceTest {
 	public void mismatchChecks() {
 		ArrayList<Alert> alertList = new ArrayList<Alert>();
 
-		User thomyF = createUser("thomy@f.ch", "password", "Thomy", "F", Gender.MALE);
+		User thomyF = createUser("thomy@f.ch", "password", "Thomy", "F", Gender.MALE, AccountType.BASIC);
 		thomyF.setAboutMe("Supreme hustler");
 		userDao.save(thomyF);
 
@@ -207,10 +213,10 @@ public class AlertServiceTest {
 	
 	@Test
 	public void triggerAlertMessageToUser() {
-		User alertMessageReceiver = createUser("alertMessageTest@f.ch", "password", "alertMessageReceiver", "F", Gender.MALE);
+		User alertMessageReceiver = createUser("alertMessageTest@f.ch", "password", "alertMessageReceiver", "F", Gender.MALE, AccountType.PREMIUM);
 		userDao.save(alertMessageReceiver);
 		
-		User adCreator = createUser("adCreator@f.ch", "password", "adCreator", "F", Gender.MALE);
+		User adCreator = createUser("adCreator@f.ch", "password", "adCreator", "F", Gender.MALE, AccountType.BASIC);
 		userDao.save(adCreator);
 		
 		// create list of AlertTypes
@@ -257,12 +263,25 @@ public class AlertServiceTest {
 
 		assertEquals(countIterable(messagesBeforeAlert), 0);
 		
+		Iterable<AlertResult> resultsBefore = alertResultDao.findAll();
+		
+		int sizeBefore = 0;
+		for(AlertResult result : resultsBefore) {
+		   sizeBefore++;
+		}
 		// trigger alert
 		alertService.triggerAlerts(oltenResidence);
+		Iterable<AlertResult> results = alertResultDao.findAll();
+		
+		int size = 0;
+		for(AlertResult result : results) {
+		   size++;
+		}
+		assertTrue(sizeBefore < size);
 		
 		// assert alertMessageReceiver receives a message when alert triggers
 		Iterable<Message> messagesAfterAlert = messageDao.findByRecipient(alertMessageReceiver);
-		assertEquals(countIterable(messagesAfterAlert), 1);
+		assertEquals(1, countIterable(messagesAfterAlert));
 	}
 	
 	@Test
@@ -274,7 +293,7 @@ public class AlertServiceTest {
 		alertTypes.add(typeLoft);
 		
 		// create user
-		User userNoTrigger = createUser("userNoTrigger@f.ch", "password", "userNoTrigger", "F", Gender.MALE);
+		User userNoTrigger = createUser("userNoTrigger@f.ch", "password", "userNoTrigger", "F", Gender.MALE, AccountType.PREMIUM);
 		userDao.save(userNoTrigger);
 		
 		// create Alert
@@ -328,7 +347,7 @@ public class AlertServiceTest {
 	}
 	
 	// Lean user creating method
-	User createUser(String email, String password, String firstName, String lastName, Gender gender) {
+	User createUser(String email, String password, String firstName, String lastName, Gender gender, AccountType accountType) {
 		User user = new User();
 		user.setUsername(email);
 		user.setPassword(password);
@@ -337,6 +356,7 @@ public class AlertServiceTest {
 		user.setLastName(lastName);
 		user.setEnabled(true);
 		user.setGender(gender);
+		user.setAccountType(accountType);
 		Set<UserRole> userRoles = new HashSet<>();
 		UserRole role = new UserRole();
 		role.setRole("ROLE_USER");
@@ -351,13 +371,13 @@ public class AlertServiceTest {
 		// create list of AlertTypes	
 					
 				// create user
-				User userExtendedAlert1 = createUser("userExtendedAlert1@f.ch", "password", "userExtendedAlert1", "F", Gender.MALE);
+				User userExtendedAlert1 = createUser("userExtendedAlert1@f.ch", "password", "userExtendedAlert1", "F", Gender.MALE, AccountType.BASIC);
 				userDao.save(userExtendedAlert1);
 				
-				User userExtendedAlert2 = createUser("userExtendedAlert2@f.ch", "password", "userExtendedAlert2", "F", Gender.MALE);
+				User userExtendedAlert2 = createUser("userExtendedAlert2@f.ch", "password", "userExtendedAlert2", "F", Gender.MALE, AccountType.BASIC);
 				userDao.save(userExtendedAlert2);
 				
-				User userAdCreator = createUser("userAdCreator@f.ch", "password", "userAdCreator", "F", Gender.MALE);
+				User userAdCreator = createUser("userAdCreator@f.ch", "password", "userAdCreator", "F", Gender.MALE, AccountType.BASIC);
 				userDao.save(userAdCreator);
 				
 				//-----------------
