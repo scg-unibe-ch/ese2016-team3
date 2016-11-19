@@ -232,7 +232,7 @@ public class AdTestDataSaver {
 		adOlten.setRoomDescription(studioDescription4);
 		adOlten.setUser(ese);
 		adOlten.setNumberOfBath(1);
-		adOlten.setTitle("Roommate wanted in Olten City");
+		adOlten.setTitle("Loft in Olten City");
 		adOlten.setStreet("Zehnderweg 5");
 		adOlten.setCity("Olten");
 
@@ -515,7 +515,7 @@ public class AdTestDataSaver {
 		// adDavos.setStudio(false);
 		adDavos.setRoomDescription(studioDescription10);
 		adDavos.setUser(oprah);
-		adDavos.setTitle("Free room in Davos City");
+		adDavos.setTitle("Apartment with beautiful view in Davos City");
 	//	adDavos.setStreet("Kathrinerweg 5");
 		adDavos.setStreet("Rossweidstrasse 9");
 		adDavos.setCity("Davos");

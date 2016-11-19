@@ -162,13 +162,13 @@
 						<div class="row">
 							<!-- emtpy col -->
 							<div class="col-sm-1"></div>
-													
+
 							<div class="form-group col-sm-4">
 								<label for="earliestMoveInDate">Earliest move-in date</label>
 								<form:input type="text" id="field-earliestMoveInDate"
 									path="earliestMoveInDate" cssClass="form-control" />
 							</div>
-						
+
 							<div class="col-sm-2"></div>
 							<div class="form-group col-sm-4">
 								<label for="latestMoveInDate">Latest move-in date</label>
@@ -374,20 +374,17 @@
 					</div>
 					<!-- empty column -->
 					<div class="col-md-1"></div>
+
+
+					<div class="form-group pull-right">
+						<div class="col-sm-12">
+							<button type="reset" class="btn btn-default">Cancel</button>
+							<button type="submit" class="btn btn-primary">Subscribe</button>
+
+						</div>
+					</div>
+				</form:form>
 			</div>
-
-			<div class="form-group pull-right">
-				<div class="col-sm-12">
-					<button type="reset" class="btn btn-default">Cancel</button>
-					<button type="submit" class="btn btn-primary">Subscribe</button>
-
-				</div>
-			</div>
-			</form:form>
-
-
-
-			<br> <br /> <br> <br />
 
 			<h4>Your active alerts</h4>
 			<form:form method="post" modelAttribute="alertForm"
@@ -568,10 +565,8 @@
 																data-dismiss="modal">Close</button>
 														</div>
 													</div>
-
 												</div>
 											</div>
-
 										</c:forEach>
 									</table>
 								</c:otherwise>
@@ -583,6 +578,6 @@
 		</div>
 	</div>
 </div>
-</div>
+
 
 <c:import url="template/footer.jsp" />
