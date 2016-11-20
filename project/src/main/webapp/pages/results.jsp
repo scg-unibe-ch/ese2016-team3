@@ -113,7 +113,9 @@
 
 		for (var i = 0; i < addresses.length; i++) {
 			var ad = addresses[i];
-			codeAddress(ad, infowindow);
+			
+			setInterval(codeAddress(ad, infowindow), 1000);
+			// codeAddress(ad, infowindow);
 		}
 	}
 	
@@ -147,7 +149,14 @@
 				    };
 				})(marker,contentString,infowindow));
 
-			} else {
+			} 
+			else
+				if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT)
+			{      
+			    setTimeout(100);
+			    (results, status);
+			} 
+			else {
 				alert("Geocode was not successful for the following reason: "
 						+ status);
 			}
