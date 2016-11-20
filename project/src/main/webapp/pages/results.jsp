@@ -14,8 +14,9 @@
 </ol>
 
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPcQNoMGcp8Oe9l6uY8jLFlMR4pyecFIU&callback=initMap&libraries=places"
-    async defer></script>
+<script
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPcQNoMGcp8Oe9l6uY8jLFlMR4pyecFIU&callback=initMap&libraries=places"
+	async defer></script>
 
 <script>
 	/*
@@ -90,115 +91,80 @@
 </script>
 
 
-
-
-
 <script>
-      function initMap() {
-        // Create a map object and specify the DOM element for display.
-        var map = new google.maps.Map(document.getElementById('map0'), {
-          center: {lat: 47, lng: 8},
-          scrollwheel: false,
-          zoom: 8
-        });
-      }
-      google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
- <script>
+	var addresses = ${resultsInJson};
+	var map;
+	var infowindow;
+	var myhome;
+	var contentString;
 
-function initMap() {
-  var myLatLng = {lat: 47, lng: 8};
+	function initMap() {
+		infowindow = new google.maps.InfoWindow({maxWidth : 170});
+		geocoder = new google.maps.Geocoder();
+		var swiss = {
+			lat : 47,
+			lng : 9
+		};
 
-  var map = new google.maps.Map(document.getElementById('map0'), {
-    zoom: 8,
-    center: myLatLng
-  });
+		map = new google.maps.Map(document.getElementById('map'), {
+			center : swiss,
+			zoom : 7
+		});
 
-  var marker = new google.maps.Marker({
-    position: {lat: 46.947980, lng: 7.450944},
-    map: map,
-    title: 'Hello World!'
-  });
-  
-}
-google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
-    
-<script>
-var results =$(resultsInJonsen)	;	// funktioniert das?
-var obj = JSON.parse(results);
-var ad;
-var addresses=[];
-var adr;
-
-for(ad in results){
-	addresses[ad] = $(ad.street) + " "+$( ad.zipcode) +" " +$(ad.city); // funktioniert das?
+		for (var i = 0; i < addresses.length; i++) {
+			var ad = addresses[i];
+			
+			setInterval(codeAddress(ad, infowindow), 1000);
+			// codeAddress(ad, infowindow);
+		}
+	}
 	
-}
+	function codeAddress(ad, infowindow) {
+		var address = ad.street + " " + ad.zipcode + " " + ad.city;
+		geocoder.geocode({
+			'address' : address
+		}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				var marker = new google.maps.Marker({
+					map : map,
+					position : results[0].geometry.location
+				});
+				
+				contentString ='<div id="content">'+
+							   '<h5>'+ad.name +'</h5>'+
+							   '<div id="bodyContent">'+
+							  
+							   '<img width="160" class="img-responsive" src='+ ad.picture+ '/>'+
+							   
+							   "<a href=\"./ad?id=" + ad.id + "\">" +  results[0].formatted_address + "</a>"+
+							   '</div>'+
+							   '</div>';
+			  
+				google.maps.event.addListener(marker, 'click', (function(marker,content,infowindow){ 
+				    return function() {
+				    	
+				        infowindow.setContent(content);
+				        infowindow.open(map,marker);
+				        
+				    };
+				})(marker,contentString,infowindow));
 
-var map;
-var infowindow;
+			} 
+			else
+				if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT)
+			{      
+			    setTimeout(100);
+			    (results, status);
+			} 
+			else {
+				alert("Geocode was not successful for the following reason: "
+						+ status);
+			}
+		});
+	}
+</script>
 
-function initMap() {
-	geocoder = new google.maps.Geocoder();
-  var pyrmont = {lat: -33.867, lng: 151.195};
-
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: pyrmont,
-    zoom: 15
-  });
-
-  infowindow = new google.maps.InfoWindow();
-  
-for(ad in addresses){
-	adr="Chaumontweg 2 Spiegel";
-	codeAddress(adr);
-}
-
-  
-}
-
-
-
-function callback(results, status) {
-  if (status === google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      createMarker(results[i]);
-    }
-  }
-}
-
-function createMarker(place) {
-  var placeLoc = place.geometry.location;
-  var marker = new google.maps.Marker({
-    map: map,
-    position: place.geometry.location
-  });
-
-  google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.name);
-    infowindow.open(map, this);
-  });
-}
-
-function codeAddress(adr) {
-    var address = adr;
-    geocoder.geocode( { 'address': address}, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        map.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry.location
-        });
-      } else {
-        alert("Geocode was not successful for the following reason: " + status);
-      }
-    });
-  }
-    </script>
-    
 <div class="row">
-
 	<div class="col-xs-12 col-sm-12 col-md-4 col-ls-4">
 		<h4>Filter results</h4>
 		<div class="panel panel-default form-inline">
@@ -323,11 +289,9 @@ function codeAddress(adr) {
 						</div>
 					</div>
 
-
 					<div class="form-group row ">
 						<label for="field-NumberOfBathMin" class="col-md-6">Nr. of
 							Bath between</label>
-
 						<div class="col-md-6 form-inline">
 							<form:input type="number" step="1" id="field-NumberOfBathMin"
 								path="numberOfBathMin" cssClass="form-control input60 " />
@@ -336,13 +300,9 @@ function codeAddress(adr) {
 							<form:input type="number" cssClass="form-control input60"
 								path="numberOfBathMax" id="field-NumberOfBathMax" />
 						</div>
-
 					</div>
 
-
-
 					<div class="form-group row">
-
 						<label class="col-md-6" for="field-NumberOfRoomsMin">Nr.
 							of Rooms between</label>
 						<div class="col-md-6 form-inline">
@@ -355,8 +315,6 @@ function codeAddress(adr) {
 							<%-- muss man <form_error/> auch noch hinzufügen? --%>
 						</div>
 					</div>
-
-
 
 					<div class="form-group row">
 						<label class="col-md-6" for="field-BuildYearMin">Build
@@ -371,7 +329,6 @@ function codeAddress(adr) {
 
 					</div>
 
-
 					<div class="form-group row">
 						<label class="col-md-6" for="field-RenovationYearMin">Renovation
 							year between</label>
@@ -384,7 +341,6 @@ function codeAddress(adr) {
 								path="renovationYearMax" id="field-RenovationYearMax" />
 						</div>
 					</div>
-
 
 					<div class="form-group row">
 						<label class="col-md-6" for="field-DistanceSchoolMin">Distance
@@ -402,11 +358,7 @@ function codeAddress(adr) {
 						</div>
 					</div>
 
-
-
-
 					<div class="form-group row">
-
 						<label class="col-md-6" for="field-DistanceShoppingMin">Distance
 							to shopping from</label>
 						<div class="col-md-6 form-inline">
@@ -436,13 +388,8 @@ function codeAddress(adr) {
 							<form:input id="field-DistancePublicTransportMax" type="number"
 								min="0" path="distancePublicTransportMax" placeholder="0"
 								step="100" cssClass="form-control input60" />
-
 						</div>
 					</div>
-
-
-
-
 				</div>
 			</div>
 			<div class="form-group pull-right">
@@ -450,16 +397,12 @@ function codeAddress(adr) {
 				<button type="submit" class="btn btn-primary">Filter</button>
 			</div>
 		</form:form>
-		
-		
 	</div>
-<div class="col-xs-12 col-sm-12 col-md-8 col-ls-8" id="map" style="width:760px;height:400px">
-
-
-
-</div>
+	
 	<div class="col-xs-12 col-sm-12 col-md-8 col-ls-8">
 		<h4>Results</h4>
+		<div  class ="ad-wide-preview-outer" id="map"
+		style="width: 750px; height: 400px"></div>
 		<c:choose>
 			<c:when test="${empty results}">
 				<p>No results found!
@@ -478,8 +421,8 @@ function codeAddress(adr) {
 				<!-- 				</div> -->
 				<div class="row" id="resultsDiv">
 					<c:forEach var="ad" items="${results}">
-						<div data-price="${ad.price}"
-							data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}"
+						<div data-price="${ad.price}" data-moveIn="${ad.moveInDate}"
+							data-age="${ad.moveInDate}"
 							class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ad-wide-preview-outer resultAd ${ad.isPremiumAd() ? 'premiumAd' : '' }">
 							<div class="col-md-12 ad-wide-preview-inner">
 								<div class="row">
@@ -504,7 +447,8 @@ function codeAddress(adr) {
 										<p>Move-in date: ${formattedMoveInDate }</p>
 									</div>
 
-									<c:if test="${ad.auction  && ad.isAuctionRunning() && loggedInUserEmail != ad.user.username }">
+									<c:if
+										test="${ad.auction  && ad.isAuctionRunning() && loggedInUserEmail != ad.user.username }">
 
 										<div class="col-sm-4 col-md-4 auction-Column">
 											<p>
