@@ -1,6 +1,5 @@
 package ch.unibe.ese.team3.controller.service;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +13,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,10 +38,8 @@ import ch.unibe.ese.team3.util.PremiumAdComparator;
 
 /** Handles all persistence operations concerning ad placement and retrieval. */
 @Service
-public class AdService {
+public class AdService extends BaseService {
 
-	private static final Logger logger = Logger.getLogger("Ithaca logger");
-	
 	@Autowired
 	private AdDao adDao;
 
@@ -79,16 +75,14 @@ public class AdService {
 		String zip = placeAdForm.getCity().substring(0, 4);
 		ad.setZipcode(Integer.parseInt(zip));
 		ad.setCity(placeAdForm.getCity().substring(7));
-		
-		try {
-			LatLng coordinates = getCoordinates(String.format("%s %s %s", placeAdForm.getStreet(), zip, placeAdForm.getCity().substring(7)));
+		String addressString = String.format("%s %s %s", placeAdForm.getStreet(), zip,
+				placeAdForm.getCity().substring(7));
+
+		LatLng coordinates = getCoordinates(addressString);
+		if (coordinates != null) {
 			ad.setLatitude(coordinates.getLat());
 			ad.setLongitude(coordinates.getLng());
-		} catch (IOException e1) {
-			
 		}
-		
-	
 
 		Calendar calendar = Calendar.getInstance();
 		// java.util.Calendar uses a month range of 0-11 instead of the
@@ -497,19 +491,29 @@ public class AdService {
 		return false;
 	}
 
-	private LatLng getCoordinates(String address) throws IOException {
-		final Geocoder geocoder = new Geocoder();
-		GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(address).setLanguage("en")
-				.getGeocoderRequest();
-		GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
-		
-		logger.info(geocoderResponse.toString());
-		
-		List<GeocoderResult> results = geocoderResponse.getResults();
-		if (results != null && !results.isEmpty()){
-			GeocoderResult result = results.get(0);
-			return result.getGeometry().getLocation();
+	private LatLng getCoordinates(String address) {
+		try {
+			final Geocoder geocoder = new Geocoder();
+			GeocoderRequest geocoderRequest =
+					new GeocoderRequestBuilder()
+					.setAddress(address)
+					.setLanguage("en")
+					.getGeocoderRequest();
+			
+			GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
+
+			List<GeocoderResult> results = geocoderResponse.getResults();
+			if (results != null && !results.isEmpty()) {
+				GeocoderResult result = results.get(0);
+				if (!result.isPartialMatch()) {
+					return result.getGeometry().getLocation();
+				}
+			}
+		} catch (Exception ex) {
+			logger.error(String.format("Failed to connect to GoogleService. Exception: %s", ex.getMessage()));
 		}
+
+		logger.warn(String.format("Failed to get coordinates from Service. Address: %s", address));
 		return null;
 	}
 }

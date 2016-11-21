@@ -3,7 +3,6 @@ package ch.unibe.ese.team3.controller;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,17 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ch.unibe.ese.team3.controller.pojos.PictureUploader;
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.dto.AdMeta;
-import ch.unibe.ese.team3.dto.PictureMeta;
 import ch.unibe.ese.team3.enums.PageMode;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.BuyMode;
@@ -38,7 +34,7 @@ public class SearchController {
 
 	@Autowired
 	private AdService adService;
-	
+
 	private ObjectMapper objectMapper;
 
 	/**
@@ -67,7 +63,7 @@ public class SearchController {
 			model.addObject("results", adService.queryResults(searchForm, BuyMode.fromPageMode(pageMode)));
 			model.addObject("types", Type.values());
 			model.addObject("infrastructureTypes", InfrastructureType.values());
-			
+
 			List<AdMeta> adResults = new ArrayList<>();
 			Iterable<Ad> iter = adService.queryResults(searchForm, BuyMode.fromPageMode(pageMode));
 			Iterator<Ad> iterator = iter.iterator();
@@ -82,16 +78,14 @@ public class SearchController {
 				admeta.setName(ad.getTitle());
 				admeta.setPrice(Integer.toString(ad.getPrice()));
 				admeta.setPicture(ad.getPictures().get(0).getFilePath());
-				//admeta.setLat(Double.toString(ad.getLatitude()));
-				//admeta.setLng(Double.toString(ad.getLongitude()));
-				
-				
-				
+				admeta.setLat(ad.getLatitude());
+				admeta.setLng(ad.getLongitude());
+
 				adResults.add(admeta);
 			}
 
 			objectMapper = new ObjectMapper();
-			String jsonResponse="";
+			String jsonResponse = "";
 			try {
 				jsonResponse += objectMapper.writeValueAsString(adResults);
 			} catch (JsonProcessingException e) {
@@ -99,9 +93,9 @@ public class SearchController {
 				e.printStackTrace();
 			}
 			jsonResponse += "";
-			
+
 			model.addObject("resultsInJson", jsonResponse);
-			
+
 			String loggedInUserEmail = (principal == null) ? "" : principal.getName();
 			model.addObject("loggedInUserEmail", loggedInUserEmail);
 			return model;

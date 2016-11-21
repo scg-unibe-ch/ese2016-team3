@@ -12,7 +12,6 @@ import java.util.TreeSet;
 
 import javax.transaction.Transactional;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +24,7 @@ import ch.unibe.ese.team3.model.dao.BidDao;
 import ch.unibe.ese.team3.model.dao.PurchaseRequestDao;
 
 @Service
-public class AuctionService {
-
-	private static final Logger logger = Logger.getLogger("Ithaca logger");
+public class AuctionService extends BaseService {
 
 	@Autowired
 	private BidDao bidDao;

@@ -28,7 +28,7 @@ public class GeoDataService {
 	 * Returns a list of all locations in the database.
 	 */
 	public List<Location> getAllLocations() {
-		return executeQuery("SELECT zip.zip , zip.location, zip.lat, zip.lon FROM `zipcodes` zip");
+		return executeQuery("SELECT zip.zip , zip.location, zip.lat, zip.lon, zip.department FROM `zipcodes` zip");
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class GeoDataService {
 		if (city.contains("\'")) {
 			city = "";
 		}
-		return executeQuery("SELECT zip.zip , zip.location, zip.lat, zip.lon FROM `zipcodes` zip WHERE location = '"
+		return executeQuery("SELECT zip.zip , zip.location, zip.lat, zip.lon, zip.department FROM `zipcodes` zip WHERE location = '"
 				+ city + "' ORDER BY zip ASC;");
 
 	}
@@ -56,7 +56,7 @@ public class GeoDataService {
 	 * @return a list of all locations that match
 	 */
 	public List<Location> getLocationsByZipcode(int zipcode) {
-		return executeQuery("SELECT zip.zip, zip.location, zip.lat, zip.lon FROM `zipcodes` zip WHERE zip = "
+		return executeQuery("SELECT zip.zip, zip.location, zip.lat, zip.lon, zip.department FROM `zipcodes` zip WHERE zip = "
 				+ zipcode + ";");
 	}
 
@@ -101,12 +101,14 @@ public class GeoDataService {
 			String city = resultSet.getString("location");
 			double latitude = resultSet.getDouble("lat");
 			double longitude = resultSet.getDouble("lon");
+			String department = resultSet.getString("department");
 
 			Location location = new Location();
 			location.setZip(zip);
 			location.setCity(city);
 			location.setLatitude(latitude);
 			location.setLongitude(longitude);
+			location.setDepartment(department);
 
 			locationList.add(location);
 		}

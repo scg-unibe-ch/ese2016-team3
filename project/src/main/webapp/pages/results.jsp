@@ -15,7 +15,7 @@
 
 
 <script
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPcQNoMGcp8Oe9l6uY8jLFlMR4pyecFIU&callback=initMap&libraries=places"
+	src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDPcQNoMGcp8Oe9l6uY8jLFlMR4pyecFIU&callback=initMap&libraries=places"
 	async defer></script>
 
 <script>
@@ -111,47 +111,28 @@
 			zoom : 7
 		});
 		
-		//neu
-		//for(var i = 0; i < addresses.length; i++){
-		//	var ad = addresses[i];
-		//	makeMarker(ad.infowindow);
-		//}
-		
-		var count= 0;
-		
-		for (var i = 0; i < addresses.length; i++) {
+		for(var i = 0; i < addresses.length; i++){
 			var ad = addresses[i];
-			setInterval(codeAddress(ad, infowindow), 1000);
-	//		
-		//	if(count == 10){
-		//		setTimeout(codeAddress(ad, infowindow), 1000);
-		//		count = 0;
-		//	}
-		//	else {
-		//		codeAddress(ad, infowindow);
-		//	}
-		//	count++;
-			//setInterval(codeAddress(ad, infowindow), 1000);
-			// codeAddress(ad, infowindow);
+			makeMarker(ad, infowindow);
 		}
 	}
+	
 	function makeMarker(ad, infowindow){
-		//var myLatLng = {lat: -25.363, lng: 131.044};
-		var myLatLng = {lat: ad.latitude, lng: ad.longitude};
+		var myLatLng = {lat: ad.lat, lng: ad.lng};
 		var contentString = '<div id="content">'+
 		   '<h5>'+ad.name +'</h5>'+
 		   '<div id="bodyContent">'+
 		  
 		   '<img width="160" class="img-responsive" src='+ ad.picture+ '/>'+
 		   
-		   "<a href=\"./ad?id=" + ad.id + "\">" +  results[0].formatted_address + "</a>"+
+		   "<a href=\"./ad?id=" + ad.id + "\">" +  ad.street + ", " + ad.zipcode + " " + ad.city + "</a>"+
 		   '</div>'+
 		   '</div>';
 		   
 		var marker = new google.maps.Marker({
 		    position: myLatLng,
 		    map: map,
-		  //  title: contentString
+		    title: ad.name
 		  });
 		google.maps.event.addListener(marker, 'click', (function(marker,content,infowindow){ 
 		    return function() {
@@ -162,50 +143,6 @@
 		    };
 		})(marker,contentString,infowindow));
 		
-	}
-	
-	function codeAddress(ad, infowindow) {
-		var address = ad.street + " " + ad.zipcode + " " + ad.city;
-		geocoder.geocode({
-			'address' : address
-		}, function(results, status) {
-			if (status == google.maps.GeocoderStatus.OK) {
-				var marker = new google.maps.Marker({
-					map : map,
-					position : results[0].geometry.location
-				});
-				
-				contentString ='<div id="content">'+
-							   '<h5>'+ad.name +'</h5>'+
-							   '<div id="bodyContent">'+
-							  
-							   '<img width="160" class="img-responsive" src='+ ad.picture+ '/>'+
-							   
-							   "<a href=\"./ad?id=" + ad.id + "\">" +  results[0].formatted_address + "</a>"+
-							   '</div>'+
-							   '</div>';
-			  
-				google.maps.event.addListener(marker, 'click', (function(marker,content,infowindow){ 
-				    return function() {
-				    	
-				        infowindow.setContent(content);
-				        infowindow.open(map,marker);
-				        
-				    };
-				})(marker,contentString,infowindow));
-
-			} 
-			else
-				if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT)
-			{      
-			    setTimeout(100);
-			    (results, status);
-			} 
-			else {
-				alert("Geocode was not successful for the following reason: "
-						+ status);
-			}
-		});
 	}
 </script>
 
@@ -499,9 +436,9 @@
 											<p>
 												<strong>Auction</strong>
 											</p>
-											<fmt:formatDate value="${ad.startDate}"
-												var="formattedStartDate" type="date" pattern="dd.MM.yyyy" />
-											<p>Running until: ${formattedStartDate}</p>
+											<fmt:formatDate value="${ad.endDate}"
+												var="formattedEndDate" type="date" pattern="dd.MM.yyyy" />
+											<p>Running until: ${formattedEndDate}</p>
 
 											<p>
 												Current price: <strong>${ad.currentAuctionPrice - ad.increaseBidPrice}
@@ -510,45 +447,6 @@
 											<p>
 												<a href="./ad?id=${ad.id}">Bid</a>
 											</p>
-											<%-- 	
-											<form:form method="post" modelAttribute="placeAdForm"
-												action="./results" id="bidForm" autocomplete="off">
-												<div class="form-group">
-													<label class="sr-only" for="bid">Amount</label>
-													<!-- for="bid" stimmt wahrscheinlich nicht -->
-													<div class="input-group">
-														<div class="input-group-addon">CHF</div>
-														<!--<input type="number" class="form-controll" placeholder="Amount" name="bid"> es fehlt: id = und value= -->
-														<!-- fehlt noch: if not logged in-> you can not bid, und wirst zur Login Seite umgeleitet beim Klicken auf bid -->
-														<input class="form-control" id="disabledInput" type="text"
-															placeholder=${ad.bidPriceForUser } disabled> <span
-															class="input-group-btn">
-															<button type="button" class="btn btn-success">Bid</button>
-														</span>
-
-													</div>
-												</div>
-											</form:form>
-
-											<form:form method="post" modelAttribute="placeAdForm"
-												action="./results" id="buyForm" autocomplete="off">
-												<div class="form-group">
-													<label class="sr-only" for="exampleInputAmount">Buy
-														now Price in CHF</label>
-													<!-- for stimmt wahrscheinlich nicht -->
-													<!-- fehlt noch: if not logged in-> you can not bid, und wirst zur Login Seite umgeleitet beim Klicken auf bid -->
-													<div class="input-group">
-														<div class="input-group-addon">CHF</div>
-														<input class="form-control" id="disabledInput" type="text"
-															placeholder=${ad.buyItNowPrice } disabled> <span
-															class="input-group-btn">
-															<button type="button" class="btn btn-success">Buy
-															</button>
-														</span>
-													</div>
-												</div>
-											</form:form>
-											--%>
 										</div>
 									</c:if>
 								</div>

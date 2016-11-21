@@ -34,9 +34,9 @@ public class Ad {
 	private String city;
 
 	@Column
-	private double longitude;
+	private Double longitude;
 	@Column
-	private double latitude;
+	private Double latitude;
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
@@ -551,7 +551,7 @@ public class Ad {
 		this.longitude = longitude.doubleValue();
 	}
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 
@@ -563,7 +563,7 @@ public class Ad {
 		this.latitude = latitude.doubleValue();
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 

@@ -10,6 +10,7 @@ public class Location {
 	private String city;
 	private double latitude;
 	private double longitude;
+	private String department;
 
 	public int getZip() {
 		return zip;
@@ -41,6 +42,14 @@ public class Location {
 
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
+	}
+	
+	public String getDepartment(){
+		return this.department;
+	}
+	
+	public void setDepartment(String department){
+		this.department = department;
 	}
 
 }
