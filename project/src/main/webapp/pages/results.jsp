@@ -110,13 +110,58 @@
 			center : swiss,
 			zoom : 7
 		});
-
+		
+		//neu
+		//for(var i = 0; i < addresses.length; i++){
+		//	var ad = addresses[i];
+		//	makeMarker(ad.infowindow);
+		//}
+		
+		var count= 0;
+		
 		for (var i = 0; i < addresses.length; i++) {
 			var ad = addresses[i];
-			
 			setInterval(codeAddress(ad, infowindow), 1000);
+	//		
+		//	if(count == 10){
+		//		setTimeout(codeAddress(ad, infowindow), 1000);
+		//		count = 0;
+		//	}
+		//	else {
+		//		codeAddress(ad, infowindow);
+		//	}
+		//	count++;
+			//setInterval(codeAddress(ad, infowindow), 1000);
 			// codeAddress(ad, infowindow);
 		}
+	}
+	function makeMarker(ad, infowindow){
+		//var myLatLng = {lat: -25.363, lng: 131.044};
+		var myLatLng = {lat: ad.latitude, lng: ad.longitude};
+		var contentString = '<div id="content">'+
+		   '<h5>'+ad.name +'</h5>'+
+		   '<div id="bodyContent">'+
+		  
+		   '<img width="160" class="img-responsive" src='+ ad.picture+ '/>'+
+		   
+		   "<a href=\"./ad?id=" + ad.id + "\">" +  results[0].formatted_address + "</a>"+
+		   '</div>'+
+		   '</div>';
+		   
+		var marker = new google.maps.Marker({
+		    position: myLatLng,
+		    map: map,
+		  //  title: contentString
+		  });
+		google.maps.event.addListener(marker, 'click', (function(marker,content,infowindow){ 
+		    return function() {
+		    	
+		        infowindow.setContent(content);
+		        infowindow.open(map,marker);
+		        
+		    };
+		})(marker,contentString,infowindow));
+		
 	}
 	
 	function codeAddress(ad, infowindow) {

@@ -82,6 +82,9 @@ public class SearchController {
 				admeta.setName(ad.getTitle());
 				admeta.setPrice(Integer.toString(ad.getPrice()));
 				admeta.setPicture(ad.getPictures().get(0).getFilePath());
+				//admeta.setLat(Double.toString(ad.getLatitude()));
+				//admeta.setLng(Double.toString(ad.getLongitude()));
+				
 				
 				
 				adResults.add(admeta);

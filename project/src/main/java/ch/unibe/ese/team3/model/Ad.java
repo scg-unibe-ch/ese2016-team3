@@ -1,5 +1,6 @@
 package ch.unibe.ese.team3.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +31,12 @@ public class Ad {
 
 	@Column(nullable = false)
 	private String city;
+	
+	@Column
+	private double longitude;
+	@Column
+	private double latitude;
+	
 	
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
@@ -522,5 +529,23 @@ public class Ad {
 	public boolean isAuctionNotYetRunning() {
 		Date now = new Date();
 		return !auctionCompleted && availableForAuction && now.before(startDate);
+	}
+	public double getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(BigDecimal longitude){
+		this.longitude = longitude.doubleValue();
+	}
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+	public double getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(BigDecimal latitude){
+		this.latitude = latitude.doubleValue();
+	}
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
 	}
 }
