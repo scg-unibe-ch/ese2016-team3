@@ -101,6 +101,12 @@
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
+		<!-- Java Mail API -->
+		<dependency>
+	 		<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+	 		<version>1.4.7</version>
+    		</dependency>
 	</dependencies>
 
 	<profiles>

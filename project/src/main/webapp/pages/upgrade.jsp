@@ -7,6 +7,7 @@
 
 <c:import url="template/header.jsp" />
 
+
 <script>
 	$(document).ready(function() {
 		$("field-creditcardType").val('null');
@@ -18,6 +19,7 @@
 		$(currentUser.isPremium()).val('true');
 	})
 </script>
+
 <ol class="breadcrumb">
 	<li><a href="/${pagemode}/">Homepage</a></li>
 	<li><a href="/user?id=${currentUser.id}">Profile</a></li>
@@ -154,11 +156,10 @@
 						</div>
 					</spring:bind>
 
-
 					<div class="form-group pull-right">
 						<div class="col-sm-12">
-							<form:button href="/user?id=${currentUser.id}"
-								class="btn btn-default">Cancel</form:button>
+							<a href="/${pagemode}/user?id=${currentUser.id}"
+								class="btn btn-default">Cancel</a>
 							<form:button type="submit" class="btn btn-primary" value="update">Upgrade Now</form:button>
 						</div>
 					</div>
