@@ -26,8 +26,20 @@
 
 <c:forEach var="auction" items="${myauctions}">
 	<div class="panel panel-default">
-		<div class="panel-heading">${auction.key.title }</div>
-		<div class="panel-body"></div>
+		<div class="panel-heading"><a href="/${auction.key.buyMode.name}/ad?id=${auction.key.id}">${auction.key.title }</a></div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-sm-12">
+					<p>
+						Auction is running from <strong>${auction.key.startDate}</strong>
+						to <strong>${auction.key.endDate}</strong>.
+					</p>
+					<p>
+						Current auction status: <i>${auction.key.getAuctionStatus().name}</i>
+					</p>
+				</div>
+			</div>
+		</div>
 		<table class="table">
 			<thead>
 				<tr>
