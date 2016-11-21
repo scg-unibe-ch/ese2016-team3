@@ -9,6 +9,7 @@ import javax.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import ch.unibe.ese.team3.enums.AuctionStatus;
 import ch.unibe.ese.team3.enums.Distance;
 
 /** Describes an advertisement that users can place and search for. */
@@ -522,5 +523,25 @@ public class Ad {
 	public boolean isAuctionNotYetRunning() {
 		Date now = new Date();
 		return !auctionCompleted && availableForAuction && now.before(startDate);
+	}
+	
+	public AuctionStatus getAuctionStatus(){
+		if (isAuctionStopped()){
+			return AuctionStatus.Stopped;
+		}
+		if (hasAuctionExpired()){
+			return AuctionStatus.Expired;
+		}
+		if (isAuctionRunning()){
+			return AuctionStatus.Running;
+		}
+		if (isAuctionNotYetRunning()){
+			return AuctionStatus.NotYetRunning;
+		}
+		if (isAuctionCompleted()){
+			return AuctionStatus.Completed;
+		}
+		
+		return AuctionStatus.NoAuction;
 	}
 }
