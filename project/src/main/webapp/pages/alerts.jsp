@@ -130,7 +130,7 @@
 								<label class="col-sm-2 control-label">Extended Alert</label>
 								<div class="col-sm-4">
 									<div class="checkbox">
-										<label> <form:checkbox id="#field-extendedAlert"
+										<label> <form:checkbox id="field-extendedAlert"
 												path="extendedAlert" value="1" /> Yes
 										</label>
 									</div>
@@ -141,237 +141,289 @@
 						</div>
 					</div>
 
-					<!-- this should only be displayed, if alert criteria is true  -->
-					<div class="panel panel-default" id=extended-alert>
-						<div class="row">
-							<!-- emtpy col -->
-							<div class="col-sm-1"></div>
-							<spring:bind path="infrastructureType">
-								<div
-									class="form-group ${status.error ? 'has-error' : '' } col-sm-4">
-									<label class="control-label" for="infrastructureType-room">InfrastructureType</label>
-									<form:select id="infrastructureType" path="infrastructureType"
-										cssClass="form-control">
-										<option value=""></option>
-										<form:options items="${infrastructureTypes}" itemLabel="name" />
-									</form:select>
+
+
+					<div class="panel panel-default" id="extended-alert">
+						<div class="panel-body">
+
+							<div class="row">
+								<div class="col-sm-6">
+									<spring:bind path="price">
+										<div class="form-group ${status.error ? 'has-error' : '' }">
+											<label class="col-sm-4 control-label" for="price">Price
+												(max.)</label>
+											<div class="col-sm-8">
+												<div class="input-group">
+													<span class="input-group-addon">Fr.</span>
+													<form:input id="priceInput" type="number" path="price"
+														placeholdr="e.g. 5" step="50" cssClass="form-control" />
+												</div>
+												<form:errors path="price" cssClass="validationErrorText" />
+											</div>
+										</div>
+									</spring:bind>
 								</div>
-							</spring:bind>
-							<div class="col-sm-1"></div>
-						</div>
-						<div class="row">
-							<!-- emtpy col -->
-							<div class="col-sm-1"></div>
+								<div class="col-sm-6">
+									<spring:bind path="price">
+										<div class="form-group ${status.error ? 'has-error' : '' }">
+											<label class="col-sm-4 control-label" for="price">Price
+												(max.)</label>
+											<div class="col-sm-8">
+												<div class="input-group">
 
-							<div class="form-group col-sm-4">
-								<label for="earliestMoveInDate">Earliest move-in date</label>
-								<form:input type="text" id="field-earliestMoveInDate"
-									path="earliestMoveInDate" cssClass="form-control" />
-							</div>
-
-							<div class="col-sm-2"></div>
-							<div class="form-group col-sm-4">
-								<label for="latestMoveInDate">Latest move-in date</label>
-								<form:input type="text" id="field-latestMoveInDate"
-									path="latestMoveInDate" cssClass="form-control" />
-							</div>
-
-							<div class="col-sm-1"></div>
-						</div>
-
-						<div class="row">
-							<!-- emtpy col -->
-							<div class="col-sm-1"></div>
-
-							<div class="col-sm-10">
-								<div class="checkbox">
-									<label><form:checkbox id="field-balcony" path="balcony"
-											value="1" />Balcony or Patio</label>
-								</div>
-								<div class="checkbox">
-									<label><form:checkbox id="field-garage" path="garage"
-											value="1" />Garage</label>
-								</div>
-								<div class="checkbox">
-									<label><form:checkbox id="field-parking" path="parking"
-											value="1" />Parking</label>
-								</div>
-
-								<div class="checkbox">
-									<label><form:checkbox id="field-elevator"
-											path="elevator" value="1" />Elevator</label>
-								</div>
-
-								<div class="checkbox">
-									<label><form:checkbox id="field-dishwasher"
-											path="dishwasher" value="1" />Dishwasher</label>
+													<form:input id="priceInput" type="number" path="price"
+														placeholdr="e.g. 5" step="50" cssClass="form-control" />
+												</div>
+												<form:errors path="price" cssClass="validationErrorText" />
+											</div>
+										</div>
+									</spring:bind>
 								</div>
 							</div>
-
-							<div class="col-sm-1"></div>
-						</div>
-
-						<div class="row">
-							<!-- emtpy col -->
-							<div class="col-sm-1"></div>
-
-							<div class="col-sm-4">
-								<div class="form-group row">
-									<label for="field-floorLevelMin">Floor level between</label>
-									<div class="form-inline">
-										<form:input type="number" step="1" id="field-floorLevelMin"
-											path="floorLevelMin" cssClass="form-control input60" />
-										<label for="field-floorLevelMax" class="betweenLabel">
-											- </label>
-										<form:input type="number" step="1" id="field-floorLevelMax"
-											path="floorLevelMax" cssClass="form-control input60" />
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-2"></div>
-							<div class="col-sm-4">
-								<div class="form-group row ">
-									<label for="field-NumberOfBathMin">Nr. of Bath between</label>
-									<div class="form-inline">
-										<form:input type="number" step="1" id="field-NumberOfBathMin"
-											path="numberOfBathMin" cssClass="form-control input60 " />
-										<label for="field-NumberOfBathMax" class="betweenLabel">
-											- </label>
-										<form:input type="number" cssClass="form-control input60"
-											path="numberOfBathMax" id="field-NumberOfBathMax" />
-									</div>
-
-								</div>
-							</div>
-
-							<div class="col-sm-1"></div>
-						</div>
-
-						<div class="row">
-							<!-- emtpy col -->
-							<div class="col-sm-1"></div>
-
-							<div class="col-sm-4">
-								<div class="form-group row">
-									<label for="field-BuildYearMin">Build year between</label>
-									<div class="form-inline">
-										<form:input type="number" cssClass="form-control input60"
-											path="buildYearMin" id="field-BuildYearMin" />
-										<label for="field-BuildYearMax" class="betweenLabel">
-											- </label>
-										<form:input type="number" cssClass="form-control input60"
-											path="buildYearMax" id="field-BuildYearMax" />
-									</div>
-
-								</div>
-							</div>
-							<div class="col-sm-2"></div>
-
-							<div class="col-sm-4">
-								<div class="form-group row">
-									<label for="field-RenovationYearMin">Renovation year
-										between</label>
-									<div class="form-inline">
-										<form:input type="number" cssClass="form-control input60"
-											path="renovationYearMin" id="field-RenovationYearMin" />
-										<label for="field-RenovationYearMax" class="betweenLabel">
-											- </label>
-										<form:input type="number" cssClass="form-control input60"
-											path="renovationYearMax" id="field-RenovationYearMax" />
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-1"></div>
-						</div>
-
-						<div class="row">
-							<!-- emtpy col -->
-							<div class="col-sm-1"></div>
-
-							<div class="col-sm-4">
-								<div class="form-group row">
-									<label for="field-NumberOfRoomsMin">Nr. of Rooms
-										between</label>
-									<div class="form-inline">
-										<form:input type="number" cssClass="form-control input60"
-											path="numberOfRoomsMin" id="field-NumberOfRoomsMin" />
-										<label for="field-NumberOfRoomsMax" class="betweenLabel">
-											- </label>
-										<form:input type="number" cssClass="form-control input60"
-											path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
-										<%-- muss man <form_error/> auch noch hinzufügen? --%>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-sm-2"></div>
-
-							<div class="col-sm-4">
-								<div class="form-group row">
-									<label for="field-DistanceSchoolMin">Distance to school
-										from</label>
-									<div class="form-inline">
-										<form:input id="field-DistanceSchoolMin" type="number" min="0"
-											path="distanceSchoolMin" placeholder="0" step="100"
-											cssClass="form-control input60" />
-										<label for="field-DistanceSchoolMax" class="betweenLabel">
-											- </label>
-
-										<form:input id="field-DistanceSchoolMax" type="number" min="0"
-											path="distanceSchoolMax" placeholder="0" step="100"
-											cssClass="form-control input60" />
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-1"></div>
-						</div>
-
-						<div class="row">
-							<!-- emtpy col -->
-							<div class="col-sm-1"></div>
-
-							<div class="col-sm-4">
-								<div class="form-group row">
-
-									<label for="field-DistanceShoppingMin">Distance to
-										shopping from</label>
-									<div class="form-inline">
-										<form:input id="field-DistanceShoppingMin" type="number"
-											min="0" path="distanceShoppingMin" placeholder="0" step="100"
-											cssClass="form-control input60" />
-
-										<label for="field-DistanceShoppingMax" class="betweenLabel">
-											- </label>
-										<form:input id="field-DistanceShoppingMax" type="number"
-											min="0" path="distanceShoppingMax" placeholder="0" step="100"
-											cssClass="form-control input60" />
-									</div>
-								</div>
-							</div>
-
-							<div class="col-sm-2"></div>
-
-							<div class="col-sm-4">
-								<div class="form-group row">
-									<label for="field-DistancePublicTransportMin">Distance
-										to public transport from</label>
-									<div class="form-inline">
-										<form:input id="field-DistancePublicTransportMin"
-											type="number" min="0" path="distancePublicTransportMin"
-											placeholder="0" step="100" cssClass="form-control input60" />
-
-										<label for="field-DistancePublicTransportMax"
-											class="betweenLabel"> - </label>
-
-										<form:input id="field-DistancePublicTransportMax"
-											type="number" min="0" path="distancePublicTransportMax"
-											placeholder="0" step="100" cssClass="form-control input60" />
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-1"></div>
 						</div>
 					</div>
+
+
+
+
+					<%-- 
+					<!-- this should only be displayed, if alert criteria is true  -->
+
+
+					<div class="panel panel-default" id=extended-alert>
+						<div class="panel-body">
+							<div class="row">
+								<!-- emtpy col -->
+								<div class="col-sm-1"></div>
+								<spring:bind path="infrastructureType">
+									<div
+										class="form-group ${status.error ? 'has-error' : '' } col-sm-4">
+										<label class="control-label" for="infrastructureType-room">InfrastructureType</label>
+										<form:select id="infrastructureType" path="infrastructureType"
+											cssClass="form-control">
+											<option value=""></option>
+											<form:options items="${infrastructureTypes}" itemLabel="name" />
+										</form:select>
+									</div>
+								</spring:bind>
+								<div class="col-sm-1"></div>
+							</div>
+							<div class="row">
+								<!-- emtpy col -->
+								<div class="col-sm-1"></div>
+
+								<div class="form-group col-sm-4">
+									<label for="earliestMoveInDate">Earliest move-in date</label>
+									<form:input type="text" id="field-earliestMoveInDate"
+										path="earliestMoveInDate" cssClass="form-control" />
+								</div>
+
+								<div class="col-sm-2"></div>
+								<div class="form-group col-sm-4">
+									<label for="latestMoveInDate">Latest move-in date</label>
+									<form:input type="text" id="field-latestMoveInDate"
+										path="latestMoveInDate" cssClass="form-control" />
+								</div>
+
+								<div class="col-sm-1"></div>
+							</div>
+
+							<div class="form-group form-inline">
+								<div class="col-sm-2">
+									<div class="checkbox">
+										<label><form:checkbox id="field-balcony"
+												path="balcony" value="1" />Balcony or Patio</label>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="checkbox">
+										<label><form:checkbox id="field-garage" path="garage"
+												value="1" />Garage</label>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="checkbox">
+										<label><form:checkbox id="field-parking"
+												path="parking" value="1" />Parking</label>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="checkbox">
+										<label><form:checkbox id="field-elevator"
+												path="elevator" value="1" />Elevator</label>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="checkbox">
+										<label><form:checkbox id="field-dishwasher"
+												path="dishwasher" value="1" />Dishwasher</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<!-- emtpy col -->
+								<div class="col-sm-1"></div>
+
+								<div class="col-sm-5">
+									<div class="form-group row">
+										<label for="field-floorLevelMin" class="col-sm-6">Floor
+											level between</label>
+										<div class="form-inline">
+											<form:input type="number" step="1" id="field-floorLevelMin"
+												path="floorLevelMin" cssClass="form-control input60" />
+											<label for="field-floorLevelMax" class="betweenLabel">
+												- </label>
+											<form:input type="number" step="1" id="field-floorLevelMax"
+												path="floorLevelMax" cssClass="form-control input60" />
+										</div>
+									</div>
+								</div>
+
+								<div class="col-sm-5">
+									<div class="form-group row">
+										<label for="field-NumberOfBathMin" class="col-sm-6">Nr.
+											of Bath between</label>
+										<div class="form-inline">
+											<form:input type="number" step="1" id="field-NumberOfBathMin"
+												path="numberOfBathMin" cssClass="form-control input60 " />
+											<label for="field-NumberOfBathMax" class="betweenLabel">
+												- </label>
+											<form:input type="number" cssClass="form-control input60"
+												path="numberOfBathMax" id="field-NumberOfBathMax" />
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-1"></div>
+							</div>
+
+							<div class="row">
+								<!-- emtpy col -->
+								<div class="col-sm-1"></div>
+
+								<div class="col-sm-4">
+									<div class="form-group row">
+										<label for="field-BuildYearMin">Build year between</label>
+										<div class="form-inline">
+											<form:input type="number" cssClass="form-control input60"
+												path="buildYearMin" id="field-BuildYearMin" />
+											<label for="field-BuildYearMax" class="betweenLabel">
+												- </label>
+											<form:input type="number" cssClass="form-control input60"
+												path="buildYearMax" id="field-BuildYearMax" />
+										</div>
+
+									</div>
+								</div>
+								<div class="col-sm-2"></div>
+
+								<div class="col-sm-4">
+									<div class="form-group row">
+										<label for="field-RenovationYearMin">Renovation year
+											between</label>
+										<div class="form-inline">
+											<form:input type="number" cssClass="form-control input60"
+												path="renovationYearMin" id="field-RenovationYearMin" />
+											<label for="field-RenovationYearMax" class="betweenLabel">
+												- </label>
+											<form:input type="number" cssClass="form-control input60"
+												path="renovationYearMax" id="field-RenovationYearMax" />
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-1"></div>
+							</div>
+
+							<div class="row">
+								<!-- emtpy col -->
+								<div class="col-sm-1"></div>
+
+								<div class="col-sm-4">
+									<div class="form-group row">
+										<label for="field-NumberOfRoomsMin">Nr. of Rooms
+											between</label>
+										<div class="form-inline">
+											<form:input type="number" cssClass="form-control input60"
+												path="numberOfRoomsMin" id="field-NumberOfRoomsMin" />
+											<label for="field-NumberOfRoomsMax" class="betweenLabel">
+												- </label>
+											<form:input type="number" cssClass="form-control input60"
+												path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
+										
+										</div>
+									</div>
+								</div>
+
+								<div class="col-sm-2"></div>
+
+								<div class="col-sm-4">
+									<div class="form-group row">
+										<label for="field-DistanceSchoolMin">Distance to
+											school from</label>
+										<div class="form-inline">
+											<form:input id="field-DistanceSchoolMin" type="number"
+												min="0" path="distanceSchoolMin" placeholder="0" step="100"
+												cssClass="form-control input60" />
+											<label for="field-DistanceSchoolMax" class="betweenLabel">
+												- </label>
+
+											<form:input id="field-DistanceSchoolMax" type="number"
+												min="0" path="distanceSchoolMax" placeholder="0" step="100"
+												cssClass="form-control input60" />
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-1"></div>
+							</div>
+
+							<div class="row">
+								<!-- emtpy col -->
+								<div class="col-sm-1"></div>
+
+								<div class="col-sm-4">
+									<div class="form-group row">
+
+										<label for="field-DistanceShoppingMin">Distance to
+											shopping from</label>
+										<div class="form-inline">
+											<form:input id="field-DistanceShoppingMin" type="number"
+												min="0" path="distanceShoppingMin" placeholder="0"
+												step="100" cssClass="form-control input60" />
+
+											<label for="field-DistanceShoppingMax" class="betweenLabel">
+												- </label>
+											<form:input id="field-DistanceShoppingMax" type="number"
+												min="0" path="distanceShoppingMax" placeholder="0"
+												step="100" cssClass="form-control input60" />
+										</div>
+									</div>
+								</div>
+
+								<div class="col-sm-2"></div>
+
+								<div class="col-sm-4">
+									<div class="form-group row">
+										<label for="field-DistancePublicTransportMin">Distance
+											to public transport from</label>
+										<div class="form-inline">
+											<form:input id="field-DistancePublicTransportMin"
+												type="number" min="0" path="distancePublicTransportMin"
+												placeholder="0" step="100" cssClass="form-control input60" />
+
+											<label for="field-DistancePublicTransportMax"
+												class="betweenLabel"> - </label>
+
+											<form:input id="field-DistancePublicTransportMax"
+												type="number" min="0" path="distancePublicTransportMax"
+												placeholder="0" step="100" cssClass="form-control input60" />
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-1"></div>
+							</div>
+						</div>
+					</div>
+					--%>
 					<!-- empty column -->
 					<div class="col-md-1"></div>
 
@@ -428,145 +480,192 @@
 													<c:if test="${alert.extendedAlert == true}">
 														<button type="button" class="btn btn-default"
 															data-id="${alert.id}" data-toggle="modal"
-															data-target="#myModal">Details</button>
-													</c:if></td>
-											</tr>
+															data-target="#alert-details-${alert.id}">Details</button>
 
-											<!-- Modal: appears only if button "Details" is clicked.  -->
-											<div id="myModal" class="modal fade" role="dialog">
-												<div class="modal-dialog">
+														<!-- Modal: appears only if button "Details" is clicked.  -->
+														<div id="alert-details-${alert.id}"
+															class="modal fade bs-example-modal-lg" role="dialog">
+															<div class="modal-dialog modal-lg">
 
-													<!-- Modal content-->
-													<div class="modal-content">
-														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal">&times;</button>
-															<h4 class="modal-title">Extended alert criteria</h4>
-														</div>
-														<div class="modal-body">
-															<div class="row">
-																<!-- add infrastructureType -->
-																<div class="col-md-4">
-																	<p>
-																		<b>elevator</b>
-																	</p>
-																	<p>
-																		<b>parking</b>
-																	</p>
-																	<p>
-																		<b>balcony</b>
-																	</p>
-																	<p>
-																		<b>garage</b>
-																	</p>
-																	<p>
-																		<b>dishwasher</b>
-																	</p>
+																<!-- Modal content-->
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button type="button" class="close"
+																			data-dismiss="modal">&times;</button>
+																		<h4 class="modal-title">Extended alert criteria</h4>
+																	</div>
+																	<div class="modal-body">
+																		<div class="panel panel-default">
+																			<div class="panel-body">
 
-																	<p>
-																		<b>squareFootageMin</b>
-																	</p>
-																	<p>
-																		<b>squareFootageMax</b>
-																	</p>
-																	<p>
-																		<b>buildYearMin</b>
-																	</p>
-																	<p>
-																		<b>buildYearMax</b>
-																	</p>
-																	<p>
-																		<b>renovationYearMin</b>
-																	</p>
-																	<p>
-																		<b>renovationYearMax</b>
-																	</p>
-																	<p>
-																		<b>numberOfRoomsMin</b>
-																	</p>
-																	<p>
-																		<b>numberOfRoomsMax</b>
-																	</p>
-																	<p>
-																		<b>numberOfBathMin</b>
-																	</p>
-																	<p>
-																		<b>numberOfBathMax</b>
-																	</p>
+																				<div class="row">
+																					<div class="col-sm-6">
+																						<table class="table">
+																							<tr>
+																								<th>Sender</th>
+																								<th>Ad</th>
+																																				</tr>
 
-																	<p>
-																		<b>distanceSchoolMin</b>
-																	</p>
-																	<p>
-																		<b>distanceSchoolMax</b>
-																	</p>
-																	<p>
-																		<b>distanceShoppingMin</b>
-																	</p>
-																	<p>
-																		<b>distanceShoppingMax</b>
-																	</p>
-																	<p>
-																		<b>distancePublicTransportMin</b>
-																	</p>
-																	<p>
-																		<b>distancePublicTransportMax</b>
-																	</p>
-																	<p>
-																		<b>floorLevelMin</b>
-																	</p>
-																	<p>
-																		<b>floorLevelMax</b>
-																	</p>
-
-																	<p>
-																		<b>earliest move-in date</b>
-																	</p>
-																	<p>
-																		<b>latest move-in date</b>
-																	</p>
-
-																</div>
-																<div class="col-md-4 col-md-offset-2">
-																	<p>${alert.elevator}</p>
-																	<p>${alert.parking}</p>
-																	<p>${alert.balcony}</p>
-																	<p>${alert.garage}</p>
-																	<p>${alert.dishwasher}</p>
-
-																	<p>${alert.squareFootageMin}</p>
-																	<p>${alert.squareFootageMax}</p>
-																	<p>${alert.buildYearMin}</p>
-																	<p>${alert.buildYearMax}</p>
-																	<p>${alert.renovationYearMin}</p>
-																	<p>${alert.renovationYearMax}</p>
-																	<p>${alert.numberOfRoomsMin}</p>
-																	<p>${alert.numberOfRoomsMax}</p>
-																	<p>${alert.numberOfBathMin}</p>
-																	<p>${alert.numberOfBathMax}</p>
-																	<p>${alert.distanceSchoolMin}</p>
-																	<p>${alert.distanceSchoolMax}</p>
-																	<p>${alert.distanceShoppingMin}</p>
-																	<p>${alert.distanceShoppingMax}</p>
-																	<p>${alert.distancePublicTransportMin}</p>
-																	<p>${alert.distancePublicTransportMax}</p>
-																	<p>${alert.floorLevelMin}</p>
-																	<p>${alert.floorLevelMax}</p>
-
-																	<p>${alert.earliestMoveInDate}</p>
-																	<p>${alert.latestMoveInDate}</p>
+																							<tr>
+																								<td><b>elevator</b></td>
+																								<td>Ad</td>
+																							
+																							</tr>
 
 
+																						</table>
+																					</div>
+																					<div class="col-sm-6">
+																						<table class="table">
+																							<tr>
+																								<th>Sender</th>
+																								<th>Ad</th>
+																					
+																							</tr>
 
+																							<tr>
+																								<td><b>elevator</b></td>
+																								<td>Ad</td>
+																							
+																							</tr>
+
+
+																						</table>
+																					</div>
+																				</div>
+
+																				<div class="row">
+																					<!-- add infrastructureType -->
+																					<div class="col-md-4">
+																						<p>
+																							<b>elevator</b>
+																						</p>
+																						<p>
+																							<b>parking</b>
+																						</p>
+																						<p>
+																							<b>balcony</b>
+																						</p>
+																						<p>
+																							<b>garage</b>
+																						</p>
+																						<p>
+																							<b>dishwasher</b>
+																						</p>
+
+																						<p>
+																							<b>squareFootageMin</b>
+																						</p>
+																						<p>
+																							<b>squareFootageMax</b>
+																						</p>
+																						<p>
+																							<b>buildYearMin</b>
+																						</p>
+																						<p>
+																							<b>buildYearMax</b>
+																						</p>
+																						<p>
+																							<b>renovationYearMin</b>
+																						</p>
+																						<p>
+																							<b>renovationYearMax</b>
+																						</p>
+																						<p>
+																							<b>numberOfRoomsMin</b>
+																						</p>
+																						<p>
+																							<b>numberOfRoomsMax</b>
+																						</p>
+																						<p>
+																							<b>numberOfBathMin</b>
+																						</p>
+																						<p>
+																							<b>numberOfBathMax</b>
+																						</p>
+
+																						<p>
+																							<b>distanceSchoolMin</b>
+																						</p>
+																						<p>
+																							<b>distanceSchoolMax</b>
+																						</p>
+																						<p>
+																							<b>distanceShoppingMin</b>
+																						</p>
+																						<p>
+																							<b>distanceShoppingMax</b>
+																						</p>
+																						<p>
+																							<b>distancePublicTransportMin</b>
+																						</p>
+																						<p>
+																							<b>distancePublicTransportMax</b>
+																						</p>
+																						<p>
+																							<b>floorLevelMin</b>
+																						</p>
+																						<p>
+																							<b>floorLevelMax</b>
+																						</p>
+
+																						<p>
+																							<b>earliest move-in date</b>
+																						</p>
+																						<p>
+																							<b>latest move-in date</b>
+																						</p>
+																						<p>
+																							<b>InfrastructureType</b>
+																						</p>
+
+																					</div>
+																					<div class="col-md-4 col-md-offset-2">
+																						<p>${alert.elevator}</p>
+																						<p>${alert.parking}</p>
+																						<p>${alert.balcony}</p>
+																						<p>${alert.garage}</p>
+																						<p>${alert.dishwasher}</p>
+
+																						<p>${alert.squareFootageMin}</p>
+																						<p>${alert.squareFootageMax}</p>
+																						<p>${alert.buildYearMin}</p>
+																						<p>${alert.buildYearMax}</p>
+																						<p>${alert.renovationYearMin}</p>
+																						<p>${alert.renovationYearMax}</p>
+																						<p>${alert.numberOfRoomsMin}</p>
+																						<p>${alert.numberOfRoomsMax}</p>
+																						<p>${alert.numberOfBathMin}</p>
+																						<p>${alert.numberOfBathMax}</p>
+																						<p>${alert.distanceSchoolMin}</p>
+																						<p>${alert.distanceSchoolMax}</p>
+																						<p>${alert.distanceShoppingMin}</p>
+																						<p>${alert.distanceShoppingMax}</p>
+																						<p>${alert.distancePublicTransportMin}</p>
+																						<p>${alert.distancePublicTransportMax}</p>
+																						<p>${alert.floorLevelMin}</p>
+																						<p>${alert.floorLevelMax}</p>
+
+																						<p>${alert.earliestMoveInDate}</p>
+																						<p>${alert.latestMoveInDate}</p>
+																						<p>${alert.infrastructureType.name}</p>
+
+
+
+																					</div>
+																				</div>
+																			</div>
+																			<div class="modal-footer">
+																				<button type="button" class="btn btn-default"
+																					data-dismiss="modal">Close</button>
+																			</div>
+																		</div>
+																	</div>
 																</div>
 															</div>
 														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-default"
-																data-dismiss="modal">Close</button>
-														</div>
-													</div>
-												</div>
-											</div>
+													</c:if></td>
+											</tr>
 										</c:forEach>
 									</table>
 								</c:otherwise>

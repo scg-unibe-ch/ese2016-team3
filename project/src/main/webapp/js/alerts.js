@@ -30,5 +30,5 @@ $(document).ready(function() {
 		setPanelVisibility();
 	});
 
-	//setPanelVisibility();
+	setPanelVisibility();
 });
