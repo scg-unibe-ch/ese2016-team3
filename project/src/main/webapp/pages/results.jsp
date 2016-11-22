@@ -384,7 +384,7 @@
 	<div class="col-xs-12 col-sm-12 col-md-8 col-ls-8">
 		<h4>Results</h4>
 		<div  class ="ad-wide-preview-outer" id="map"
-		style="width: 750px; height: 400px"></div>
+		style=" height: 400px"></div>
 		<c:choose>
 			<c:when test="${empty results}">
 				<p>No results found!
