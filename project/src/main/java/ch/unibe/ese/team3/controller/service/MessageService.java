@@ -7,8 +7,14 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-import javax.mail.*;
-import javax.mail.internet.*;
+
+import javax.mail.Authenticator;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +29,10 @@ import ch.unibe.ese.team3.model.AlertResult;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.User;
-import ch.unibe.ese.team3.model.dao.AdDao;
-import ch.unibe.ese.team3.model.dao.AlertDao;
 import ch.unibe.ese.team3.model.dao.AlertResultDao;
 import ch.unibe.ese.team3.model.dao.MessageDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
+import ch.unibe.ese.team3.util.ConfigReader;
 
 
 /** Handles all persistence operations concerning messaging. */
@@ -40,9 +45,6 @@ public class MessageService {
 
 	@Autowired
 	private MessageDao messageDao;
-	
-	@Autowired 
-	private AdDao adDao;
 	
 	@Autowired
 	private AlertResultDao alertResultDao;
@@ -141,10 +143,12 @@ public class MessageService {
 	 * @param text the text of the message
 	 */
 	public void sendEmail(User recipient, String subject, String text) {
+		String mailAccount = ConfigReader.getInstance().getConfigValue("mailaccount");
+		String mailPassword = ConfigReader.getInstance().getConfigValue("mailpassword");
 		
 		Properties properties = System.getProperties();
 		properties.setProperty("mail.smtp.host", "smtp.gmail.com");
-		properties.setProperty("mail.smtp.user", "ithacaserver@gmail.com");
+		properties.setProperty("mail.smtp.user", mailAccount);
 		properties.setProperty("mail.smtp.debug", "true");
 		properties.setProperty("mail.smtp.auth", "true");
 		properties.setProperty("mail.smtp.port", "587");
@@ -153,7 +157,7 @@ public class MessageService {
 		
 		Session session = Session.getInstance(properties, new Authenticator() { 
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("ithacaserver@gmail.com", "flatfindr");
+				return new PasswordAuthentication(mailAccount, mailPassword);
 		}
 		});
 		

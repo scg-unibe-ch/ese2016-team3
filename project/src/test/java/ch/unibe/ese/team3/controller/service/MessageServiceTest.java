@@ -89,7 +89,7 @@ public class MessageServiceTest {
 		messageService.sendMessage(sender, recipient, subject, text);	
 		assertEquals(2, messageDao.findByRecipient(recipient).spliterator().getExactSizeIfKnown());
 		
-		ArrayList<Message> messageList = new ArrayList();
+		ArrayList<Message> messageList = new ArrayList<Message>();
 		Iterable<Message> messages = messageService.getInboxForUser(recipient);
 		for(Message inboxMessage: messages)
 			messageList.add(inboxMessage);
