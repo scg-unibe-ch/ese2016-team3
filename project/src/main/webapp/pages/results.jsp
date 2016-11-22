@@ -14,9 +14,7 @@
 </ol>
 
 
-<script
-	src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDPcQNoMGcp8Oe9l6uY8jLFlMR4pyecFIU&callback=initMap&libraries=places"
-	async defer></script>
+<script	src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDPcQNoMGcp8Oe9l6uY8jLFlMR4pyecFIU&libraries=places"></script>
 
 <script>
 	/*
@@ -87,18 +85,21 @@
 		$("#field-latestMoveInDate").datepicker({
 			dateFormat : 'dd-mm-yy'
 		});
+		
+		initMap();
 	});
 </script>
 
 
 <script>
-	var addresses = ${resultsInJson};
 	var map;
-	var infowindow;
-	var myhome;
-	var contentString;
 
 	function initMap() {
+		var addresses = ${resultsInJson};
+		var infowindow;
+		var myhome;
+		var contentString;
+		
 		infowindow = new google.maps.InfoWindow({maxWidth : 170});
 		geocoder = new google.maps.Geocoder();
 		var swiss = {
