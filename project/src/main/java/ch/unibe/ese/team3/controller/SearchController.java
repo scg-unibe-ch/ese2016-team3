@@ -96,32 +96,6 @@ public class SearchController {
 				e.printStackTrace();
 			}
 			jsonResponse += "";
-					
-//			String jsonResponse = "{\"files\": ";
-//			try {
-//				jsonResponse += objectMapper
-//						.writeValueAsString(adResults);
-//			} catch (JsonProcessingException e) {
-//				e.printStackTrace();
-//			}
-//			jsonResponse += "}";
-			
-			
-			
-			
-/*
- * For maven:
- * <dependencies>
-    <!--  Gson: Java to Json conversion -->
-    <dependency>
-        <groupId>com.google.code.gson</groupId>
-        <artifactId>gson</artifactId>
-        <version>2.2.2</version>
-        <scope>compile</scope>
-    </dependency>
-</dependencies>			
- */
-			//String json = new Gson().toJson(adResults );
 			
 			model.addObject("resultsInJson", jsonResponse);
 			
