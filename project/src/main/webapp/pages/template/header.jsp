@@ -90,7 +90,9 @@
 										<li><a href="/${pagemode}/profile/myRooms"> <span
 												class="glyphicon glyphicon-home"></span> My Ads
 										</a></li>
-										<li><a href="/${pagemode}/profile/auctions"> <span
+
+										<li><a href="/buy/profile/auctions"> <span
+
 												class="glyphicon glyphicon-th-list"></span> Manage auctions
 										</a></li>
 										<li><a href="/${pagemode}/profile/messages"> <span

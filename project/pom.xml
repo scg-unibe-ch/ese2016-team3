@@ -103,10 +103,16 @@
 		</dependency>
 		<!-- Java Mail API -->
 		<dependency>
-	 		<groupId>javax.mail</groupId>
+			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
-	 		<version>1.4.7</version>
-    		</dependency>
+			<version>1.4.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.geocoder-java</groupId>
+			<artifactId>geocoder-java</artifactId>
+			<version>0.16</version>
+		</dependency>
+
 	</dependencies>
 
 	<profiles>
@@ -126,9 +132,9 @@
 							<stopPort>9999</stopPort>
 							<useTestClasspath>true</useTestClasspath>
 							<contextPath>/</contextPath>
-						<webApp>
-							<tempDirectory>${basedir}/temp</tempDirectory>
-						</webApp>
+							<webApp>
+								<tempDirectory>${basedir}/temp</tempDirectory>
+							</webApp>
 						</configuration>
 						<executions>
 							<execution>
@@ -195,7 +201,7 @@
 									<onError>continue</onError>
 								</configuration>
 							</execution>
-						
+
 							<execution>
 								<id>drop-zipcodes-table</id>
 								<phase>process-test-resources</phase>
@@ -207,7 +213,7 @@
 									<onError>continue</onError>
 								</configuration>
 							</execution>
-							
+
 							<execution>
 								<id>insert-zipcode-data</id>
 								<phase>process-test-resources</phase>

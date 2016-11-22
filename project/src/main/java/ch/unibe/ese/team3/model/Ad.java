@@ -1,5 +1,7 @@
 package ch.unibe.ese.team3.model;
 
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,19 +11,20 @@ import javax.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import ch.unibe.ese.team3.enums.AuctionStatus;
 import ch.unibe.ese.team3.enums.Distance;
 
 /** Describes an advertisement that users can place and search for. */
 @Entity
 public class Ad {
-	
+
 	@Id
 	@GeneratedValue
 	private long id;
 
 	@Column(nullable = false)
 	private String title;
-	
+
 	@Column(nullable = false)
 	private String street;
 
@@ -30,7 +33,12 @@ public class Ad {
 
 	@Column(nullable = false)
 	private String city;
-	
+
+	@Column
+	private Double longitude;
+	@Column
+	private Double latitude;
+
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date creationDate;
@@ -44,27 +52,27 @@ public class Ad {
 
 	@Column(nullable = false)
 	private int squareFootage;
-	
-	//new
+
+	// new
 	@Column(nullable = false)
 	private int numberOfRooms;
-	
+
 	@Column(nullable = false)
 	private int numberOfBath;
-	
+
 	@Column(nullable = false)
 	private int buildYear;
-	
+
 	@Column(nullable = false)
 	private int renovationYear;
-	
-	//new
+
+	// new
 	@Column(nullable = false)
 	private int distanceSchool;
-	
+
 	@Column(nullable = false)
 	private int distanceShopping;
-	
+
 	@Column(nullable = false)
 	private int distancePublicTransport;
 
@@ -72,13 +80,13 @@ public class Ad {
 	@Lob
 	private String roomDescription;
 
-	//new
+	// new
 	@Column(nullable = false)
 	private boolean elevator;
-	
+
 	@Enumerated(EnumType.STRING)
 	private InfrastructureType infrastructureType;
-	
+
 	@Column(nullable = false)
 	private boolean parking;
 
@@ -87,38 +95,41 @@ public class Ad {
 
 	@Column(nullable = false)
 	private boolean garage;
-	
+
 	@Column(nullable = false)
 	private boolean dishwasher;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Type type;
-	
+
 	@Enumerated(EnumType.STRING)
 	private BuyMode buyMode;
 
 	@Fetch(FetchMode.SELECT)
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<AdPicture> pictures;
-	
+
 	@Fetch(FetchMode.SELECT)
-	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval=true, fetch = FetchType.EAGER)	
+	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Bid> bids;
-		
+
 	public List<Bid> getBids() {
 		return bids;
 	}
+
 	public void setBids(List<Bid> bids) {
 		this.bids = bids;
 	}
-	
+
 	@Fetch(FetchMode.SELECT)
-	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval=true, fetch = FetchType.EAGER)	
+	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<PurchaseRequest> purchaseRequests;
-	
+
 	public List<PurchaseRequest> getPurchaseRequests() {
 		return purchaseRequests;
 	}
+
+
 	public void setPurchaseRequests(List<PurchaseRequest> purchaseRequests) {
 		this.purchaseRequests = purchaseRequests;
 	}
@@ -128,50 +139,50 @@ public class Ad {
 
 	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Visit> visits;
-	
+
 	@Column(nullable = false)
 	private int floorLevel;
-	
+
 	// auction specific attributes
-	
+
 	@Column(nullable = true)
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
-	
+
 	@Column(nullable = true)
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
-	
+
 	@Column(nullable = true)
 	private int startPrice;
 
 	@Column(nullable = true)
 	private int increaseBidPrice;
-	
-	@Column(nullable=true)
+
+	@Column(nullable = true)
 	private int currentAuctionPrice;
-	
+
 	@Column(nullable = false)
 	private boolean auction;
-	
+
 	@Column(nullable = true)
 	private boolean availableForAuction;
-	
+
 	@Column(nullable = true)
 	private boolean auctionCompleted;
-	
+
 	public boolean isAuction() {
 		return auction;
 	}
-	
+
 	public void setAuction(boolean auction) {
 		this.auction = auction;
 	}
-	
+
 	public boolean isAvailableForAuction() {
 		return availableForAuction;
 	}
-	
+
 	public void setAvailableForAuction(boolean available) {
 		this.availableForAuction = available;
 	}
@@ -179,44 +190,55 @@ public class Ad {
 	public boolean isAuctionCompleted() {
 		return auctionCompleted;
 	}
-	
+
 	public void setAuctionCompleted(boolean auctionCompleted) {
 		this.auctionCompleted = auctionCompleted;
 	}
-	public int getCurrentAuctionPrice(){
+
+	public int getCurrentAuctionPrice() {
 		return this.currentAuctionPrice;
 	}
-	public void setcurrentAuctionPrice(int Price){
-		this.currentAuctionPrice=Price;
+
+	public void setcurrentAuctionPrice(int Price) {
+		this.currentAuctionPrice = Price;
 	}
-	
+
 	public Date getStartDate() {
 		return startDate;
 	}
+
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
+
 	public Date getEndDate() {
 		return endDate;
 	}
+
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+
 	public int getStartPrice() {
 		return startPrice;
 	}
+
 	public void setStartPrice(int startPrice) {
 		this.startPrice = startPrice;
 	}
+
 	public int getIncreaseBidPrice() {
 		return increaseBidPrice;
 	}
+
 	public void setIncreaseBidPrice(int increaseBidPrice) {
 		this.increaseBidPrice = increaseBidPrice;
 	}
+
 	public void setFloorLevel(int floorLevel) {
 		this.floorLevel = floorLevel;
 	}
+
 	public int getFloorLevel() {
 		return this.floorLevel;
 	}
@@ -232,8 +254,6 @@ public class Ad {
 	public void setDistancePublicTransport(int distancePublicTransport) {
 		this.distancePublicTransport = distancePublicTransport;
 	}
-
-
 
 	public int getNumberOfRooms() {
 		return numberOfRooms;
@@ -282,29 +302,31 @@ public class Ad {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
-	
-	public Type getType(){
+
+	public Type getType() {
 		return type;
 	}
-	public void setType(Type type){
+
+	public void setType(Type type) {
 		this.type = type;
 	}
-	
+
 	public BuyMode getBuyMode() {
 		return buyMode;
 	}
+
 	public void setBuyMode(BuyMode buyMode) {
 		this.buyMode = buyMode;
 	}
-	
-	//new
-	public boolean getElevator(){
+
+	// new
+	public boolean getElevator() {
 		return elevator;
 	}
-	public void setElevator(boolean withElevator){
+
+	public void setElevator(boolean withElevator) {
 		this.elevator = withElevator;
 	}
-	
 
 	public boolean getBalcony() {
 		return balcony;
@@ -361,45 +383,45 @@ public class Ad {
 	public void setSquareFootage(int squareFootage) {
 		this.squareFootage = squareFootage;
 	}
-	
-	//new
-	public int getDistanceSchool(){
+
+	// new
+	public int getDistanceSchool() {
 		return distanceSchool;
 	}
-	
-	public void setDistanceSchool(int distanceToSchool){
+
+	public void setDistanceSchool(int distanceToSchool) {
 		this.distanceSchool = distanceToSchool;
 	}
-	
-	public Distance getDistanceSchoolAsEnum(){
+
+	public Distance getDistanceSchoolAsEnum() {
 		return Distance.fromInt(distanceSchool);
 	}
-	
-	public int getDistanceShopping(){
+
+	public int getDistanceShopping() {
 		return distanceShopping;
 	}
-	
-	public Distance getDistanceShoppingAsEnum(){
+
+	public Distance getDistanceShoppingAsEnum() {
 		return Distance.fromInt(distanceShopping);
 	}
-	
-	public void setDistanceShopping(int distanceShopping){
+
+	public void setDistanceShopping(int distanceShopping) {
 		this.distanceShopping = distanceShopping;
 	}
-	
-	public Distance getDistancePublicTransportAsEnum(){
+
+	public Distance getDistancePublicTransportAsEnum() {
 		return Distance.fromInt(distancePublicTransport);
 	}
-	
-	public int getDistancePublicTransport(){
+
+	public int getDistancePublicTransport() {
 		return distancePublicTransport;
 	}
-			
+
 	public String getRoomDescription() {
 		return roomDescription;
 	}
-	
-	public String getRoomDescriptionWithLineBreaks(){
+
+	public String getRoomDescriptionWithLineBreaks() {
 		return roomDescription.replaceAll("\\r\\n?|\\n", "<br/>");
 	}
 
@@ -454,7 +476,7 @@ public class Ad {
 	public void setVisits(List<Visit> visits) {
 		this.visits = visits;
 	}
-	
+
 	public boolean getDishwasher() {
 		return dishwasher;
 	}
@@ -463,7 +485,6 @@ public class Ad {
 		this.dishwasher = dishwasher;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -486,15 +507,15 @@ public class Ad {
 			return false;
 		return true;
 	}
-	
+
 	public boolean isPremiumAd() {
-		if (this.user != null){
+		if (this.user != null) {
 			return this.user.isPremium();
 		}
 		return false;
 	}
-	
-	public Ad(){
+
+	public Ad() {
 		this.bids = new ArrayList<Bid>();
 		this.purchaseRequests = new ArrayList<PurchaseRequest>();
 		this.visits = new ArrayList<Visit>();
@@ -503,24 +524,68 @@ public class Ad {
 		this.auctionCompleted = false;
 		this.availableForAuction = true;
 	}
-	
+
 	public boolean isAuctionStopped() {
 		Date now = new Date();
 		return !auctionCompleted && !availableForAuction && now.after(startDate) && now.before(endDate);
 	}
-	
+
 	public boolean hasAuctionExpired() {
 		Date now = new Date();
 		return !auctionCompleted && availableForAuction && now.after(endDate);
 	}
-	
-	public boolean isAuctionRunning(){
+
+	public boolean isAuctionRunning() {
 		Date now = new Date();
 		return !auctionCompleted && availableForAuction && now.after(startDate) && now.before(endDate);
 	}
-	
+
 	public boolean isAuctionNotYetRunning() {
 		Date now = new Date();
 		return !auctionCompleted && availableForAuction && now.before(startDate);
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(BigDecimal longitude) {
+		this.longitude = longitude.doubleValue();
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(BigDecimal latitude) {
+		this.latitude = latitude.doubleValue();
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public AuctionStatus getAuctionStatus() {
+		if (isAuctionStopped()) {
+			return AuctionStatus.Stopped;
+		}
+		if (hasAuctionExpired()) {
+			return AuctionStatus.Expired;
+		}
+		if (isAuctionRunning()) {
+			return AuctionStatus.Running;
+		}
+		if (isAuctionNotYetRunning()) {
+			return AuctionStatus.NotYetRunning;
+		}
+		if (isAuctionCompleted()) {
+			return AuctionStatus.Completed;
+		}
+
+		return AuctionStatus.NoAuction;
 	}
 }

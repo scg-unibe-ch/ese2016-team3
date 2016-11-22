@@ -17,6 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderRequest;
+import com.google.code.geocoder.model.GeocoderResult;
+import com.google.code.geocoder.model.LatLng;
+
 import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.dto.Location;
@@ -31,7 +38,7 @@ import ch.unibe.ese.team3.util.PremiumAdComparator;
 
 /** Handles all persistence operations concerning ad placement and retrieval. */
 @Service
-public class AdService {
+public class AdService extends BaseService {
 
 	@Autowired
 	private AdDao adDao;
@@ -68,6 +75,14 @@ public class AdService {
 		String zip = placeAdForm.getCity().substring(0, 4);
 		ad.setZipcode(Integer.parseInt(zip));
 		ad.setCity(placeAdForm.getCity().substring(7));
+		String addressString = String.format("%s %s %s", placeAdForm.getStreet(), zip,
+				placeAdForm.getCity().substring(7));
+
+		LatLng coordinates = getCoordinates(addressString);
+		if (coordinates != null) {
+			ad.setLatitude(coordinates.getLat());
+			ad.setLongitude(coordinates.getLng());
+		}
 
 		Calendar calendar = Calendar.getInstance();
 		// java.util.Calendar uses a month range of 0-11 instead of the
@@ -144,9 +159,9 @@ public class AdService {
 			picture.setFilePath(filePath);
 			pictures.add(picture);
 		}
-		
+
 		List<AdPicture> existingPictures = ad.getPictures();
-		
+
 		existingPictures.clear();
 		existingPictures.addAll(pictures);
 
@@ -212,8 +227,8 @@ public class AdService {
 	public Iterable<Ad> getNewestAds(int newest, BuyMode buyMode) {
 		Iterable<Ad> allAds = adDao.findAll();
 		List<Ad> ads = new ArrayList<Ad>();
-		for (Ad ad : allAds){
-			if (ad.getBuyMode() == buyMode){
+		for (Ad ad : allAds) {
+			if (ad.getBuyMode() == buyMode) {
 				ads.add(ad);
 			}
 		}
@@ -224,9 +239,9 @@ public class AdService {
 			}
 		});
 		List<Ad> fourNewest = new ArrayList<Ad>();
-		
+
 		int limit = newest <= ads.size() ? newest : ads.size();
-		
+
 		for (int i = 0; i < limit; i++)
 			fourNewest.add(ads.get(i));
 		return fourNewest;
@@ -244,9 +259,9 @@ public class AdService {
 	public Iterable<Ad> queryResults(SearchForm searchForm, BuyMode buyMode) {
 		Iterable<Ad> results = null;
 		if (searchForm.getTypes() != null && searchForm.getTypes().length > 0) {
-			results = adDao.findByPriceLessThanAndTypeInAndBuyMode(searchForm.getPrice() + 1, searchForm.getTypes(), buyMode);
-		}
-		else {
+			results = adDao.findByPriceLessThanAndTypeInAndBuyMode(searchForm.getPrice() + 1, searchForm.getTypes(),
+					buyMode);
+		} else {
 			results = adDao.findByPriceLessThanAndBuyMode(searchForm.getPrice() + 1, buyMode);
 		}
 
@@ -340,13 +355,13 @@ public class AdService {
 					iterator.remove();
 			}
 		}
-		
+
 		InfrastructureType infraType = searchForm.getInfrastructureType();
-		if (infraType != null){
+		if (infraType != null) {
 			Iterator<Ad> iterator = locatedResults.iterator();
 			while (iterator.hasNext()) {
 				Ad ad = iterator.next();
-				if (!ad.getInfrastructureType().equals(searchForm.getInfrastructureType())){
+				if (!ad.getInfrastructureType().equals(searchForm.getInfrastructureType())) {
 					iterator.remove();
 				}
 			}
@@ -376,7 +391,7 @@ public class AdService {
 			Integer maxDistanceShopping = convertToNullableInt(searchForm.getDistanceShoppingMax());
 			Integer minDistancePublicTransport = convertToNullableInt(searchForm.getDistancePublicTransportMin());
 			Integer maxDistancePublicTransport = convertToNullableInt(searchForm.getDistancePublicTransportMax());
-			
+
 			Integer minBuildYear = convertToNullableInt(searchForm.getBuildYearMin());
 			Integer maxBuildYear = convertToNullableInt(searchForm.getBuildYearMax());
 			Integer minRenovationYear = convertToNullableInt(searchForm.getRenovationYearMin());
@@ -386,14 +401,14 @@ public class AdService {
 					|| !inRange(minSquareFootage, maxSquareFootage, ad.getSquareFootage())
 					|| !inRange(minNumberOfRooms, maxNumberOfRooms, ad.getNumberOfRooms())
 					|| !inRange(minFloorLevel, maxFloorLevel, ad.getFloorLevel())
-					
+
 					|| !inRange(minBuildYear, maxBuildYear, ad.getBuildYear())
 					|| !inRange(minRenovationYear, maxRenovationYear, ad.getRenovationYear())
-					
+
 					|| !inRange(minDistanceSchool, maxDistanceSchool, ad.getDistanceSchool())
 					|| !inRange(minDistanceShopping, maxDistanceShopping, ad.getDistanceShopping())
-					|| !inRange(minDistancePublicTransport, maxDistancePublicTransport,	ad.getDistancePublicTransport()))
-					{
+					|| !inRange(minDistancePublicTransport, maxDistancePublicTransport,
+							ad.getDistancePublicTransport())) {
 				iterator.remove();
 			}
 		}
@@ -476,5 +491,31 @@ public class AdService {
 			}
 		}
 		return false;
+	}
+
+	private LatLng getCoordinates(String address) {
+		try {
+			final Geocoder geocoder = new Geocoder();
+			GeocoderRequest geocoderRequest =
+					new GeocoderRequestBuilder()
+					.setAddress(address)
+					.setLanguage("en")
+					.getGeocoderRequest();
+			
+			GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
+
+			List<GeocoderResult> results = geocoderResponse.getResults();
+			if (results != null && !results.isEmpty()) {
+				GeocoderResult result = results.get(0);
+				if (!result.isPartialMatch()) {
+					return result.getGeometry().getLocation();
+				}
+			}
+		} catch (Exception ex) {
+			logger.error(String.format("Failed to connect to GoogleService. Exception: %s", ex.getMessage()));
+		}
+
+		logger.warn(String.format("Failed to get coordinates from Service. Address: %s", address));
+		return null;
 	}
 }

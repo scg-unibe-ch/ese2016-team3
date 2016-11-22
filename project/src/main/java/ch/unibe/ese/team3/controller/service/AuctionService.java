@@ -1,13 +1,18 @@
 package ch.unibe.ese.team3.controller.service;
 
 import java.util.ArrayList;
+
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.transaction.Transactional;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +25,7 @@ import ch.unibe.ese.team3.model.dao.BidDao;
 import ch.unibe.ese.team3.model.dao.PurchaseRequestDao;
 
 @Service
-public class AuctionService {
-
-	private static final Logger logger = Logger.getLogger("Ithaca logger");
+public class AuctionService extends BaseService {
 
 	@Autowired
 	private BidDao bidDao;
@@ -113,8 +116,8 @@ public class AuctionService {
 		ad.setAvailableForAuction(false);
 		adDao.save(ad);
 	}
-	
-	public void completeAuction(Ad ad){
+
+	public void completeAuction(Ad ad) {
 		ad.setAuctionCompleted(true);
 		ad.setAvailableForAuction(false);
 		adDao.save(ad);
@@ -200,6 +203,34 @@ public class AuctionService {
 
 	public List<PurchaseRequest> getPurchaseRequestForAd(Ad ad) {
 		return convertToList(purchaseRequestDao.findByAdOrderByCreatedAsc(ad));
+	}
+
+	public Map<Ad, SortedSet<Bid>> getBidsByUser(User bidder) {
+		List<Bid> bidsByUser = convertToList(bidDao.findByBidder(bidder));
+		Map<Ad, SortedSet<Bid>> bidsByAd = new HashMap<Ad, SortedSet<Bid>>();
+		for (Bid bid : bidsByUser) {
+			Ad ad = bid.getAd();
+			if (!bidsByAd.containsKey(ad)) {
+				bidsByAd.put(ad, new TreeSet<Bid>(new BidComparator()));
+			}
+			bidsByAd.get(ad).add(bid);
+		}
+		return bidsByAd;
+	}
+
+	private class BidComparator implements Comparator<Bid> {
+
+		@Override
+		public int compare(Bid o1, Bid o2) {
+			if (o1.getAmount() < o2.getAmount()) {
+				return 1;
+			} else if (o1.getAmount() == o2.getAmount()) {
+				return 0;
+			} else {
+				return -1;
+			}
+		}
+
 	}
 
 	private <T> List<T> convertToList(Iterable<T> iterable) {

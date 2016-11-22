@@ -15,7 +15,9 @@ public class AdMeta {
 	private String id;
 	private String price;
 	private String picture;
-	
+
+	private double lng;
+	private double lat;
 	
 	public String getName() {
 		return name;
@@ -59,5 +61,16 @@ public class AdMeta {
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
-	
+	public double getLng() {
+		return lng;
+	}
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
+	public double getLat() {
+		return lat;
+	}
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
 }

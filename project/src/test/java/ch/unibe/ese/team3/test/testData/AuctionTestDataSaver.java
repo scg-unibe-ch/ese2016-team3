@@ -72,6 +72,7 @@ public class AuctionTestDataSaver {
 		addBidsForAd(bidders, auctionAd3, 21, LocalDateTime.of(2016, 11, 4, 7, 13, 45));
 		addBidsForAd(bidders, auctionAd4, 14, LocalDateTime.of(2016, 10, 10, 8, 44, 31));
 		addBidsForAd(bidders, auctionAd5, 3, LocalDateTime.of(2016, 10, 10, 19, 6, 12));
+		addPurchasersForAd(purchasers, auctionAd2, 1, LocalDateTime.of(2016, 11, 2, 13, 14, 23));
 		addPurchasersForAd(purchasers, auctionAd3, 2, LocalDateTime.of(2016, 11, 12, 10, 54, 45));
 		addPurchasersForAd(purchasers, auctionAd5, 1, LocalDateTime.of(2016, 11, 9, 16, 33, 28));
 	}

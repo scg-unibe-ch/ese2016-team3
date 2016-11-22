@@ -82,6 +82,8 @@ public class AdTestDataSaver {
 		adBern.setTitle("Roommate wanted in Bern");
 		adBern.setStreet("Kramgasse 22");
 		adBern.setCity("Bern");
+		adBern.setLatitude(46.9479804);
+		adBern.setLongitude(7.4509437);
 
 		adBern.setBalcony(true);
 		adBern.setGarage(true);
@@ -138,6 +140,8 @@ public class AdTestDataSaver {
 		adBern2.setTitle("Cheap studio in Bern!");
 		adBern2.setStreet("Längassstr. 40");
 		adBern2.setCity("Bern");
+		adBern2.setLatitude(46.9540149);
+		adBern2.setLongitude(7.4315253);
 		adBern2.setInfrastructureType(InfrastructureType.FOC);
 
 		adBern2.setBalcony(false);
@@ -188,6 +192,8 @@ public class AdTestDataSaver {
 		adBasel.setTitle("Nice, bright studio in the center of Basel");
 		adBasel.setStreet("Bruderholzstrasse 32");
 		adBasel.setCity("Basel");
+		adBasel.setLatitude(47.5436664);
+		adBasel.setLongitude(7.5940167);
 
 		adBasel.setBalcony(false);
 		adBasel.setGarage(false);
@@ -235,6 +241,8 @@ public class AdTestDataSaver {
 		adOlten.setTitle("Loft in Olten City");
 		adOlten.setStreet("Zehnderweg 5");
 		adOlten.setCity("Olten");
+		adOlten.setLatitude(47.3526466);
+		adOlten.setLongitude(7.899488);
 
 		adOlten.setBalcony(false);
 		adOlten.setGarage(false);
@@ -280,6 +288,9 @@ public class AdTestDataSaver {
 		adNeuchâtel.setStreet("Rue de l'Hôpital 11");
 		adNeuchâtel.setCity("Neuchâtel");
 
+		adNeuchâtel.setLatitude(46.9917168);
+		adNeuchâtel.setLongitude(6.9297439);
+
 		adNeuchâtel.setBalcony(true);
 		adNeuchâtel.setGarage(false);
 		adNeuchâtel.setDishwasher(true);
@@ -322,6 +333,8 @@ public class AdTestDataSaver {
 		adBiel.setTitle("Nice studio");
 		adBiel.setStreet("Oberer Quai 12");
 		adBiel.setCity("Biel/Bienne");
+		adBiel.setLatitude(47.1372995);
+		adBiel.setLongitude(7.247914);
 
 		adBiel.setBalcony(true);
 		adBiel.setGarage(false);
@@ -368,6 +381,8 @@ public class AdTestDataSaver {
 		//adZurich.setStreet("Hauptstrasse 61");
 		adZurich.setStreet("Ankerstrasse 108");
 		adZurich.setCity("Zürich");
+		adZurich.setLatitude(47.3760101);
+		adZurich.setLongitude(8.5277654);
 		adZurich.setNumberOfBath(2);
 
 		adZurich.setBalcony(true);
@@ -419,6 +434,8 @@ public class AdTestDataSaver {
 		adLuzern.setTitle("Elegant Studio in Lucerne");
 		adLuzern.setStreet("Schwanenplatz 61");
 		adLuzern.setCity("Luzern");
+		adLuzern.setLatitude(47.053668);
+		adLuzern.setLongitude(8.30871659);
 		adLuzern.setBalcony(true);
 		adLuzern.setGarage(false);
 		adLuzern.setDishwasher(true);
@@ -461,13 +478,14 @@ public class AdTestDataSaver {
 		adAarau.setCreationDate(creationDate8);
 		adAarau.setPrice(1500);
 		adAarau.setSquareFootage(26);
-		// adAarau.setStudio(true);
+
 		adAarau.setRoomDescription(studioDescription9);
 		adAarau.setUser(oprah);
 		adAarau.setTitle("Beautiful studio in Aarau");
-	//	adAarau.setStreet("Bruderholzstrasse 32");
 		adAarau.setStreet("Herzbergstrasse 31");
 		adAarau.setCity("Aarau");
+		adAarau.setLatitude(47.3998157);
+		adAarau.setLongitude(8.0451638);
 		adAarau.setNumberOfBath(1);
 
 		adAarau.setBalcony(true);
@@ -512,13 +530,15 @@ public class AdTestDataSaver {
 		adDavos.setCreationDate(creationDate4);
 		adDavos.setPrice(1100);
 		adDavos.setSquareFootage(74);
-		// adDavos.setStudio(false);
+
 		adDavos.setRoomDescription(studioDescription10);
 		adDavos.setUser(oprah);
-		adDavos.setTitle("Apartment with beautiful view in Davos City");
-	//	adDavos.setStreet("Kathrinerweg 5");
+		adDavos.setTitle("Free room in Davos City");
+
 		adDavos.setStreet("Rossweidstrasse 9");
 		adDavos.setCity("Davos");
+		adDavos.setLatitude(46.8033266);
+		adDavos.setLongitude(9.8339639);
 		adDavos.setBalcony(false);
 		adDavos.setGarage(false);
 		adDavos.setDishwasher(false);
@@ -562,6 +582,8 @@ public class AdTestDataSaver {
 		adLausanne.setTitle("Studio extrèmement bon marché à Lausanne");
 		adLausanne.setStreet("Rue de l'Eglise 26");
 		adLausanne.setCity("Lausanne");
+		adLausanne.setLatitude(46.5944014);
+		adLausanne.setLongitude(6.5669777);
 		adLausanne.setNumberOfBath(1);
 
 		adLausanne.setBalcony(false);
@@ -606,6 +628,8 @@ public class AdTestDataSaver {
 		//adLocarno.setStreet("Kirchweg 12");
 		adLocarno.setStreet("Via Serafino Balestra 36");
 		adLocarno.setCity("Locarno");
+		adLocarno.setLatitude(46.1626373);
+		adLocarno.setLongitude(8.797786);
 		adLocarno.setNumberOfBath(1);
 
 		adLocarno.setBalcony(true);
@@ -634,244 +658,254 @@ public class AdTestDataSaver {
 		// Auction Ad
 		String roomDescription13 = "This is a beautiful Villa near the Sea";
 
-		Ad auctionAd1 = new Ad();
-		auctionAd1.setZipcode(6600);
-		auctionAd1.setType(Type.VILLA);
-		auctionAd1.setBuyMode(BuyMode.BUY);
-		auctionAd1.setMoveInDate(moveInDate9);
-		auctionAd1.setCreationDate(creationDate9);
-		auctionAd1.setPrice(5000);
-		auctionAd1.setSquareFootage(100);
-		auctionAd1.setRoomDescription(roomDescription13);
-		auctionAd1.setUser(jane);
-		auctionAd1.setTitle("Vintage Villa");
-		auctionAd1.setStreet("Spühlibachweg 10");
-		auctionAd1.setCity("Interlaken");
-		auctionAd1.setNumberOfBath(5);
+		Ad adInterlaken = new Ad();
+		adInterlaken.setZipcode(6600);
+		adInterlaken.setType(Type.VILLA);
+		adInterlaken.setBuyMode(BuyMode.BUY);
+		adInterlaken.setMoveInDate(moveInDate9);
+		adInterlaken.setCreationDate(creationDate9);
+		adInterlaken.setPrice(5000);
+		adInterlaken.setSquareFootage(100);
+		adInterlaken.setRoomDescription(roomDescription13);
+		adInterlaken.setUser(jane);
+		adInterlaken.setTitle("Vintage Villa");
+		adInterlaken.setStreet("Spühlibachweg 10");
+		adInterlaken.setCity("Interlaken");
+		adInterlaken.setLatitude(46.68638);
+		adInterlaken.setLongitude(7.8729456);
+		adInterlaken.setNumberOfBath(5);
 
-		auctionAd1.setBalcony(true);
-		auctionAd1.setGarage(true);
-		auctionAd1.setDishwasher(true);
-		auctionAd1.setElevator(false);
-		auctionAd1.setGarage(true);
-		auctionAd1.setBuildYear(1999);
-		auctionAd1.setRenovationYear(2015);
-		auctionAd1.setDistancePublicTransport(1000);
-		auctionAd1.setDistanceSchool(2000);
-		auctionAd1.setDistanceShopping(800);
-		auctionAd1.setFloorLevel(1);
-		auctionAd1.setNumberOfRooms(10);
-		auctionAd1.setInfrastructureType(InfrastructureType.CABLE);
+		adInterlaken.setBalcony(true);
+		adInterlaken.setGarage(true);
+		adInterlaken.setDishwasher(true);
+		adInterlaken.setElevator(false);
+		adInterlaken.setGarage(true);
+		adInterlaken.setBuildYear(1999);
+		adInterlaken.setRenovationYear(2015);
+		adInterlaken.setDistancePublicTransport(1000);
+		adInterlaken.setDistanceSchool(2000);
+		adInterlaken.setDistanceShopping(800);
+		adInterlaken.setFloorLevel(1);
+		adInterlaken.setNumberOfRooms(10);
+		adInterlaken.setInfrastructureType(InfrastructureType.CABLE);
 
-		auctionAd1.setAuction(true);
-		auctionAd1.setStartPrice(1500);
-		auctionAd1.setIncreaseBidPrice(100);
-		auctionAd1.setcurrentAuctionPrice(auctionAd1.getStartPrice() + auctionAd1.getIncreaseBidPrice());
-		auctionAd1.setStartDate(startAuctionDate1);
-		auctionAd1.setEndDate(endAuctionDate1);
+		adInterlaken.setAuction(true);
+		adInterlaken.setStartPrice(1500);
+		adInterlaken.setIncreaseBidPrice(100);
+		adInterlaken.setcurrentAuctionPrice(adInterlaken.getStartPrice() + adInterlaken.getIncreaseBidPrice());
+		adInterlaken.setStartDate(startAuctionDate1);
+		adInterlaken.setEndDate(endAuctionDate1);
 
 		pictures = new ArrayList<>();
-		pictures.add(createPicture(auctionAd1, "/img/test/HouseAuction.jpg"));
+		pictures.add(createPicture(adInterlaken, "/img/test/HouseAuction.jpg"));
 
-		auctionAd1.getPictures().addAll(pictures);
-		adDao.save(auctionAd1);
+		adInterlaken.getPictures().addAll(pictures);
+		adDao.save(adInterlaken);
 
 		// Auction Ad 2
 
 		String roomDescription14 = "This is a beautiful house near the town center with a beautiful view to the alps.";
 
-		Ad auctionAd2 = new Ad();
-		auctionAd2.setZipcode(3506);
-		auctionAd2.setType(Type.HOUSE);
-		auctionAd2.setBuyMode(BuyMode.BUY);
-		auctionAd2.setMoveInDate(moveInDate9);
-		auctionAd2.setCreationDate(creationDate9);
-		auctionAd2.setPrice(1200000);
-		auctionAd2.setSquareFootage(120);
-		auctionAd2.setRoomDescription(roomDescription14);
-		auctionAd2.setUser(jane);
-		auctionAd2.setTitle("Nice house very close to town center");
-		auctionAd2.setStreet("Sonnmattstrasse 12");
-		auctionAd2.setCity("Grosshöchstetten");
-		auctionAd2.setNumberOfBath(3);
+		Ad adGrosshoechstetten = new Ad();
+		adGrosshoechstetten.setZipcode(3506);
+		adGrosshoechstetten.setType(Type.HOUSE);
+		adGrosshoechstetten.setBuyMode(BuyMode.BUY);
+		adGrosshoechstetten.setMoveInDate(moveInDate9);
+		adGrosshoechstetten.setCreationDate(creationDate9);
+		adGrosshoechstetten.setPrice(1200000);
+		adGrosshoechstetten.setSquareFootage(120);
+		adGrosshoechstetten.setRoomDescription(roomDescription14);
+		adGrosshoechstetten.setUser(jane);
+		adGrosshoechstetten.setTitle("Nice house very close to town center");
+		adGrosshoechstetten.setStreet("Sonnmattstrasse 16");
+		adGrosshoechstetten.setCity("Grosshöchstetten");
+		adGrosshoechstetten.setLatitude(46.9043114);
+		adGrosshoechstetten.setLongitude(7.6403862);
+		adGrosshoechstetten.setNumberOfBath(3);
 
-		auctionAd2.setBalcony(true);
-		auctionAd2.setGarage(true);
-		auctionAd2.setDishwasher(true);
-		auctionAd2.setElevator(false);
-		auctionAd2.setParking(false);
-		auctionAd2.setBuildYear(1980);
-		auctionAd2.setRenovationYear(2015);
-		auctionAd2.setDistancePublicTransport(2000);
-		auctionAd2.setDistanceSchool(300);
-		auctionAd2.setDistanceShopping(800);
-		auctionAd2.setFloorLevel(2);
-		auctionAd2.setNumberOfRooms(7);
-		auctionAd2.setInfrastructureType(InfrastructureType.CABLE);
+		adGrosshoechstetten.setBalcony(true);
+		adGrosshoechstetten.setGarage(true);
+		adGrosshoechstetten.setDishwasher(true);
+		adGrosshoechstetten.setElevator(false);
+		adGrosshoechstetten.setParking(false);
+		adGrosshoechstetten.setBuildYear(1980);
+		adGrosshoechstetten.setRenovationYear(2015);
+		adGrosshoechstetten.setDistancePublicTransport(2000);
+		adGrosshoechstetten.setDistanceSchool(300);
+		adGrosshoechstetten.setDistanceShopping(800);
+		adGrosshoechstetten.setFloorLevel(2);
+		adGrosshoechstetten.setNumberOfRooms(7);
+		adGrosshoechstetten.setInfrastructureType(InfrastructureType.CABLE);
 
-		auctionAd2.setAuction(true);
-		auctionAd2.setStartPrice(900000);
-		auctionAd2.setIncreaseBidPrice(1000);
-		auctionAd2.setcurrentAuctionPrice(auctionAd2.getStartPrice() + auctionAd2.getIncreaseBidPrice());
-		auctionAd2.setStartDate(startAuctionDate1);
-		auctionAd2.setEndDate(endAuctionDate1);
+		adGrosshoechstetten.setAuction(true);
+		adGrosshoechstetten.setStartPrice(900000);
+		adGrosshoechstetten.setIncreaseBidPrice(1000);
+		adGrosshoechstetten.setcurrentAuctionPrice(adGrosshoechstetten.getStartPrice() + adGrosshoechstetten.getIncreaseBidPrice());
+		adGrosshoechstetten.setStartDate(startAuctionDate1);
+		adGrosshoechstetten.setEndDate(endAuctionDate1);
 
 		pictures = new ArrayList<>();
-		pictures.add(createPicture(auctionAd2, "/img/test/HouseAuction2.jpg"));
+		pictures.add(createPicture(adGrosshoechstetten, "/img/test/HouseAuction2.jpg"));
 
-		auctionAd2.getPictures().addAll(pictures);
-		adDao.save(auctionAd2);
+		adGrosshoechstetten.getPictures().addAll(pictures);
+		adDao.save(adGrosshoechstetten);
 
 		// Auction Ad 3 is a paused auction
 
 		String roomDescription15 = "A lovely apartment near the lake of Thun. The \"Strämu\" is just a five minutes walk away!";
 
-		Ad auctionAd3 = new Ad();
-		auctionAd3.setZipcode(3600);
-		auctionAd3.setType(Type.APARTMENT);
-		auctionAd3.setBuyMode(BuyMode.BUY);
-		auctionAd3.setMoveInDate(moveInDate9);
-		auctionAd3.setCreationDate(creationDate9);
-		auctionAd3.setPrice(450000);
-		auctionAd3.setSquareFootage(80);
-		auctionAd3.setRoomDescription(roomDescription15);
-		auctionAd3.setUser(jane);
-		auctionAd3.setTitle("Lovely flat near the lake of Thun");
-		auctionAd3.setStreet("Strandbadweg 4");
-		auctionAd3.setCity("Thun");
-		auctionAd3.setNumberOfBath(2);
+		Ad adThun = new Ad();
+		adThun.setZipcode(3600);
+		adThun.setType(Type.APARTMENT);
+		adThun.setBuyMode(BuyMode.BUY);
+		adThun.setMoveInDate(moveInDate9);
+		adThun.setCreationDate(creationDate9);
+		adThun.setPrice(450000);
+		adThun.setSquareFootage(80);
+		adThun.setRoomDescription(roomDescription15);
+		adThun.setUser(jane);
+		adThun.setTitle("Lovely flat near the lake of Thun");
+		adThun.setStreet("Strandbadweg 4");
+		adThun.setCity("Thun");
+		adThun.setLatitude(46.7400189);
+		adThun.setLongitude(7.6308307);
+		adThun.setNumberOfBath(2);
 
-		auctionAd3.setBalcony(true);
-		auctionAd3.setGarage(false);
-		auctionAd3.setDishwasher(true);
-		auctionAd3.setElevator(true);
-		auctionAd3.setParking(true);
-		auctionAd3.setBuildYear(1996);
-		auctionAd3.setRenovationYear(2010);
-		auctionAd3.setDistancePublicTransport(2000);
-		auctionAd3.setDistanceSchool(600);
-		auctionAd3.setDistanceShopping(700);
-		auctionAd3.setFloorLevel(2);
-		auctionAd3.setNumberOfRooms(3);
-		auctionAd3.setInfrastructureType(InfrastructureType.FOC);
+		adThun.setBalcony(true);
+		adThun.setGarage(false);
+		adThun.setDishwasher(true);
+		adThun.setElevator(true);
+		adThun.setParking(true);
+		adThun.setBuildYear(1996);
+		adThun.setRenovationYear(2010);
+		adThun.setDistancePublicTransport(2000);
+		adThun.setDistanceSchool(600);
+		adThun.setDistanceShopping(700);
+		adThun.setFloorLevel(2);
+		adThun.setNumberOfRooms(3);
+		adThun.setInfrastructureType(InfrastructureType.FOC);
 
-		auctionAd3.setAuction(true);
-		auctionAd3.setAvailableForAuction(false);
-		auctionAd3.setStartPrice(300000);
-		auctionAd3.setIncreaseBidPrice(1000);
-		auctionAd3.setcurrentAuctionPrice(auctionAd3.getStartPrice() + auctionAd3.getIncreaseBidPrice());
-		auctionAd3.setStartDate(startAuctionDate1);
-		auctionAd3.setEndDate(endAuctionDate1);
+		adThun.setAuction(true);
+		adThun.setAvailableForAuction(false);
+		adThun.setStartPrice(300000);
+		adThun.setIncreaseBidPrice(1000);
+		adThun.setcurrentAuctionPrice(adThun.getStartPrice() + adThun.getIncreaseBidPrice());
+		adThun.setStartDate(startAuctionDate1);
+		adThun.setEndDate(endAuctionDate1);
 
 		pictures = new ArrayList<>();
-		pictures.add(createPicture(auctionAd3, "/img/test/HouseAuction3.jpg"));
+		pictures.add(createPicture(adThun, "/img/test/HouseAuction3.jpg"));
 
-		auctionAd3.getPictures().addAll(pictures);
-		adDao.save(auctionAd3);
+		adThun.getPictures().addAll(pictures);
+		adDao.save(adThun);
 
 		// Auction Ad 4 is an expired auction
 
 		String roomDescription16 = "A small lovely studio in the old town of Bern. Shopping possibilities, "
 				+ "public transport and schools/university just few minutes away.";
 
-		Ad auctionAd4 = new Ad();
-		auctionAd4.setZipcode(3000);
-		auctionAd4.setType(Type.STUDIO);
-		auctionAd4.setBuyMode(BuyMode.BUY);
-		auctionAd4.setMoveInDate(moveInDate9);
-		auctionAd4.setCreationDate(creationDate9);
-		auctionAd4.setPrice(800000);
-		auctionAd4.setSquareFootage(50);
-		auctionAd4.setRoomDescription(roomDescription16);
-		auctionAd4.setUser(jane);
-		auctionAd4.setTitle("Lovely studio in the old town of Bern");
-		auctionAd4.setStreet("Kramgasse 10");
-		auctionAd4.setCity("Bern");
-		auctionAd4.setNumberOfBath(1);
+		Ad adBern3 = new Ad();
+		adBern3.setZipcode(3000);
+		adBern3.setType(Type.STUDIO);
+		adBern3.setBuyMode(BuyMode.BUY);
+		adBern3.setMoveInDate(moveInDate9);
+		adBern3.setCreationDate(creationDate9);
+		adBern3.setPrice(800000);
+		adBern3.setSquareFootage(50);
+		adBern3.setRoomDescription(roomDescription16);
+		adBern3.setUser(jane);
+		adBern3.setTitle("Lovely studio in the old town of Bern");
+		adBern3.setStreet("Kramgasse 10");
+		adBern3.setCity("Bern");
+		adBern3.setLatitude(46.9481317);
+		adBern3.setLongitude(7.4517285);
+		adBern3.setNumberOfBath(1);
 
-		auctionAd4.setBalcony(true);
-		auctionAd4.setGarage(false);
-		auctionAd4.setDishwasher(false);
-		auctionAd4.setElevator(false);
-		auctionAd4.setParking(false);
-		auctionAd4.setBuildYear(1810);
-		auctionAd4.setRenovationYear(2005);
-		auctionAd4.setDistancePublicTransport(300);
-		auctionAd4.setDistanceSchool(600);
-		auctionAd4.setDistanceShopping(100);
-		auctionAd4.setFloorLevel(5);
-		auctionAd4.setNumberOfRooms(2);
-		auctionAd4.setInfrastructureType(InfrastructureType.SATELLITE);
+		adBern3.setBalcony(true);
+		adBern3.setGarage(false);
+		adBern3.setDishwasher(false);
+		adBern3.setElevator(false);
+		adBern3.setParking(false);
+		adBern3.setBuildYear(1810);
+		adBern3.setRenovationYear(2005);
+		adBern3.setDistancePublicTransport(300);
+		adBern3.setDistanceSchool(600);
+		adBern3.setDistanceShopping(100);
+		adBern3.setFloorLevel(5);
+		adBern3.setNumberOfRooms(2);
+		adBern3.setInfrastructureType(InfrastructureType.SATELLITE);
 
-		auctionAd4.setAuction(true);
-		auctionAd4.setStartPrice(650000);
-		auctionAd4.setIncreaseBidPrice(5000);
-		auctionAd4.setcurrentAuctionPrice(auctionAd4.getStartPrice() + auctionAd4.getIncreaseBidPrice());
+		adBern3.setAuction(true);
+		adBern3.setStartPrice(650000);
+		adBern3.setIncreaseBidPrice(5000);
+		adBern3.setcurrentAuctionPrice(adBern3.getStartPrice() + adBern3.getIncreaseBidPrice());
 
 		Date startAuctionDateExpired = formatter.parse("10.10.2016");
 		Date endAuctionDateExpired = formatter.parse("30.10.2016");
 
-		auctionAd4.setStartDate(startAuctionDateExpired);
-		auctionAd4.setEndDate(endAuctionDateExpired);
+		adBern3.setStartDate(startAuctionDateExpired);
+		adBern3.setEndDate(endAuctionDateExpired);
 
 		pictures = new ArrayList<>();
-		pictures.add(createPicture(auctionAd4, "/img/test/HouseAuction4.jpg"));
+		pictures.add(createPicture(adBern3, "/img/test/HouseAuction4.jpg"));
 
-		auctionAd4.getPictures().addAll(pictures);
-		adDao.save(auctionAd4);
+		adBern3.getPictures().addAll(pictures);
+		adDao.save(adBern3);
 
 		// Auction Ad 5 is a completed auction
 
 		String roomDescription17 = "A large old farm house in the hills of the Emmental. Some surroundings and part of a forest "
 				+ "belong to the house.";
 
-		Ad auctionAd5 = new Ad();
-		auctionAd5.setZipcode(3537);
-		auctionAd5.setType(Type.HOUSE);
-		auctionAd5.setBuyMode(BuyMode.BUY);
-		auctionAd5.setMoveInDate(moveInDate9);
-		auctionAd5.setCreationDate(creationDate9);
-		auctionAd5.setPrice(2400000);
-		auctionAd5.setSquareFootage(300);
-		auctionAd5.setRoomDescription(roomDescription17);
-		auctionAd5.setUser(jane);
-		auctionAd5.setTitle("Old farm house in the Emmental");
-		auctionAd5.setStreet("Inner Zimmerzei 688");
-		auctionAd5.setCity("Eggiwil");
-		auctionAd5.setNumberOfBath(4);
+		Ad adEggiwil = new Ad();
+		adEggiwil.setZipcode(3537);
+		adEggiwil.setType(Type.HOUSE);
+		adEggiwil.setBuyMode(BuyMode.BUY);
+		adEggiwil.setMoveInDate(moveInDate9);
+		adEggiwil.setCreationDate(creationDate9);
+		adEggiwil.setPrice(2400000);
+		adEggiwil.setSquareFootage(300);
+		adEggiwil.setRoomDescription(roomDescription17);
+		adEggiwil.setUser(jane);
+		adEggiwil.setTitle("Old farm house in the Emmental");
+		adEggiwil.setStreet("Inner Zimmerzei 688");
+		adEggiwil.setCity("Eggiwil");
+		adEggiwil.setLatitude(46.8941994);
+		adEggiwil.setLongitude(7.7774038);
+		adEggiwil.setNumberOfBath(4);
 
-		auctionAd5.setBalcony(true);
-		auctionAd5.setGarage(true);
-		auctionAd5.setDishwasher(true);
-		auctionAd5.setElevator(false);
-		auctionAd5.setParking(true);
-		auctionAd5.setBuildYear(1750);
-		auctionAd5.setRenovationYear(2012);
-		auctionAd5.setDistancePublicTransport(2000);
-		auctionAd5.setDistanceSchool(2000);
-		auctionAd5.setDistanceShopping(2000);
-		auctionAd5.setFloorLevel(3);
-		auctionAd5.setNumberOfRooms(8);
-		auctionAd5.setInfrastructureType(InfrastructureType.CABLE);
+		adEggiwil.setBalcony(true);
+		adEggiwil.setGarage(true);
+		adEggiwil.setDishwasher(true);
+		adEggiwil.setElevator(false);
+		adEggiwil.setParking(true);
+		adEggiwil.setBuildYear(1750);
+		adEggiwil.setRenovationYear(2012);
+		adEggiwil.setDistancePublicTransport(2000);
+		adEggiwil.setDistanceSchool(2000);
+		adEggiwil.setDistanceShopping(2000);
+		adEggiwil.setFloorLevel(3);
+		adEggiwil.setNumberOfRooms(8);
+		adEggiwil.setInfrastructureType(InfrastructureType.CABLE);
 
-		auctionAd5.setAuction(true);
-		auctionAd5.setAuctionCompleted(true);
-		auctionAd5.setAvailableForAuction(false);
-		auctionAd5.setStartPrice(1800000);
-		auctionAd5.setIncreaseBidPrice(10000);
-		auctionAd5.setcurrentAuctionPrice(auctionAd5.getStartPrice() + auctionAd5.getIncreaseBidPrice());
+		adEggiwil.setAuction(true);
+		adEggiwil.setAuctionCompleted(true);
+		adEggiwil.setAvailableForAuction(false);
+		adEggiwil.setStartPrice(1800000);
+		adEggiwil.setIncreaseBidPrice(10000);
+		adEggiwil.setcurrentAuctionPrice(adEggiwil.getStartPrice() + adEggiwil.getIncreaseBidPrice());
 
 		Date startAuctionDateExpired2 = formatter.parse("10.10.2016");
 		Date endAuctionDateExpired2 = formatter.parse("10.11.2016");
 
-		auctionAd5.setStartDate(startAuctionDateExpired2);
-		auctionAd5.setEndDate(endAuctionDateExpired2);
+		adEggiwil.setStartDate(startAuctionDateExpired2);
+		adEggiwil.setEndDate(endAuctionDateExpired2);
 
 		pictures = new ArrayList<>();
-		pictures.add(createPicture(auctionAd5, "/img/test/HouseAuction5.jpg"));
+		pictures.add(createPicture(adEggiwil, "/img/test/HouseAuction5.jpg"));
 
-		auctionAd5.getPictures().addAll(pictures);
-		adDao.save(auctionAd5);
+		adEggiwil.getPictures().addAll(pictures);
+		adDao.save(adEggiwil);
 
 	}
 
