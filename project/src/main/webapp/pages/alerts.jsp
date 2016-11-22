@@ -148,303 +148,256 @@
 
 							<div class="row">
 								<div class="col-sm-6">
-									<spring:bind path="price">
+									<spring:bind path="infrastructureType">
 										<div class="form-group ${status.error ? 'has-error' : '' }">
-											<label class="col-sm-4 control-label" for="price">Price
-												(max.)</label>
+											<label class="control-label col-sm-4"
+												for="infrastructureType-room">Infrastructure type</label>
+
 											<div class="col-sm-8">
 												<div class="input-group">
-													<span class="input-group-addon">Fr.</span>
-													<form:input id="priceInput" type="number" path="price"
-														placeholdr="e.g. 5" step="50" cssClass="form-control" />
+													<form:select id="infrastructureType"
+														path="infrastructureType" cssClass="form-control">
+														<option value=""></option>
+														<form:options items="${infrastructureTypes}"
+															itemLabel="name" />
+													</form:select>
 												</div>
-												<form:errors path="price" cssClass="validationErrorText" />
 											</div>
 										</div>
 									</spring:bind>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label for="earliestMoveInDate" class="control-label col-sm-4">Earliest
+											move-in date</label>
+										<div class="col-sm-8">
+											<div class="input-group">
+
+												<form:input type="text" id="field-earliestMoveInDate"
+													path="earliestMoveInDate" cssClass="form-control" />
+											</div>
+										</div>
+									</div>
 								</div>
 								<div class="col-sm-6">
-									<spring:bind path="price">
-										<div class="form-group ${status.error ? 'has-error' : '' }">
-											<label class="col-sm-4 control-label" for="price">Price
-												(max.)</label>
-											<div class="col-sm-8">
-												<div class="input-group">
-
-													<form:input id="priceInput" type="number" path="price"
-														placeholdr="e.g. 5" step="50" cssClass="form-control" />
-												</div>
-												<form:errors path="price" cssClass="validationErrorText" />
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label for="latestMoveInDate" class="control-label col-sm-4">Latest
+											move-in date</label>
+										<div class="col-sm-8">
+											<div class="input-group">
+												<form:input type="text" id="field-latestMoveInDate"
+													path="latestMoveInDate" cssClass="form-control" />
 											</div>
 										</div>
-									</spring:bind>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label for="field-floorLevelMin"
+											class="control-label col-sm-4">Floor level between </label>
+										<div class="col-sm-8">
+											<div class="form-inline">
+													<form:input type="number" step="1" id="field-floorLevelMin"
+														path="floorLevelMin" cssClass="form-control input60" />
+													<label for="field-floorLevelMax" class="betweenLabel">
+														- </label>
+													<form:input type="number" step="1" id="field-floorLevelMax"
+														path="floorLevelMax" cssClass="form-control input60" />
+												</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label for="field-NumberOfBathMin"
+											class="control-label col-sm-4">Nr. of Baths between</label>
+										<div class="col-sm-8">
+											<div class="form-inline">
+													<form:input type="number" step="1"
+														id="field-NumberOfBathMin" path="numberOfBathMin"
+														cssClass="form-control input60 " />
+													<label for="field-NumberOfBathMax" class="betweenLabel">
+														- </label>
+													<form:input type="number" cssClass="form-control input60"
+														path="numberOfBathMax" id="field-NumberOfBathMax" />
+												</div>
+										</div>
+									</div>
+								</div>
+							</div><div class="row">
+								<div class="col-sm-6">
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label for="field-BuildYearMin"
+											class="control-label col-sm-4">Build year between
+										</label>
+										<div class="col-sm-8">
+											<div class="form-inline">
+													<form:input type="number" cssClass="form-control input60"
+														path="buildYearMin" id="field-BuildYearMin" />
+													<label for="field-BuildYearMax" class="betweenLabel">
+														- </label>
+													<form:input type="number" cssClass="form-control input60"
+														path="buildYearMax" id="field-BuildYearMax" />
+												</div>
+										</div>
+									</div>
+								</div>
+																
+								<div class="col-sm-6">
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label for="field-RenovationYearMin"
+											class="control-label col-sm-4">Renovation year between
+										</label>
+										<div class="col-sm-8">
+											<div class="form-inline">
+												<form:input type="number" cssClass="form-control input60"
+													path="renovationYearMin" id="field-RenovationYearMin" />
+												<label for="field-RenovationYearMax" class="betweenLabel">
+													- </label>
+												<form:input type="number" cssClass="form-control input60"
+													path="renovationYearMax" id="field-RenovationYearMax" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							
+							<!--  -->
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label for="field-NumberOfRoomsMin"
+											class="control-label col-sm-4">Nr. of Rooms between </label>
+										<div class="col-sm-8">
+											<div class="form-inline">
+												<form:input type="number" cssClass="form-control input60"
+													path="numberOfRoomsMin" id="field-NumberOfRoomsMin" />
+												<label for="field-NumberOfRoomsMax" class="betweenLabel">
+													- </label>
+												<form:input type="number" cssClass="form-control input60"
+													path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
+
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label for="field-DistanceSchoolMin"
+											class="control-label col-sm-4">Distance to school
+											from</label>
+										<div class="col-sm-8">
+											<div class="form-inline">
+												<form:input id="field-DistanceSchoolMin" type="number"
+													min="0" path="distanceSchoolMin" placeholder="0" step="100"
+													cssClass="form-control input60" />
+												<label for="field-DistanceSchoolMax" class="betweenLabel">
+													- </label>
+
+												<form:input id="field-DistanceSchoolMax" type="number"
+													min="0" path="distanceSchoolMax" placeholder="0" step="100"
+													cssClass="form-control input60" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label for="field-DistanceShoppingMin"
+											class="control-label col-sm-4">Distance to shopping
+											from </label>
+										<div class="col-sm-8">
+											<div class="form-inline">
+												<form:input id="field-DistanceShoppingMin" type="number"
+													min="0" path="distanceShoppingMin" placeholder="0"
+													step="100" cssClass="form-control input60" />
+
+												<label for="field-DistanceShoppingMax" class="betweenLabel">
+													- </label>
+												<form:input id="field-DistanceShoppingMax" type="number"
+													min="0" path="distanceShoppingMax" placeholder="0"
+													step="100" cssClass="form-control input60" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label for="field-DistancePublicTransportMin"
+											class="control-label col-sm-4">Distance to public
+											transport from</label>
+										<div class="col-sm-8">
+											<div class="form-inline">
+												<form:input id="field-DistancePublicTransportMin"
+													type="number" min="0" path="distancePublicTransportMin"
+													placeholder="0" step="100" cssClass="form-control input60" />
+
+												<label for="field-DistancePublicTransportMax"
+													class="betweenLabel"> - </label>
+
+												<form:input id="field-DistancePublicTransportMax"
+													type="number" min="0" path="distancePublicTransportMax"
+													placeholder="0" step="100" cssClass="form-control input60" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label class="control-label col-sm-2">Details</label>
+										<div class="col-sm-10">
+											<div class="checkbox-inline">
+												<label><form:checkbox id="field-balcony"
+														path="balcony" value="1" />Balcony or Patio</label>
+											</div>
+											<div class="checkbox-inline">
+												<label><form:checkbox id="field-garage"
+														path="garage" value="1" />Garage</label>
+											</div>
+											<div class="checkbox-inline">
+												<label><form:checkbox id="field-parking"
+														path="parking" value="1" />Parking</label>
+											</div>
+											<div class="checkbox-inline">
+												<label><form:checkbox id="field-elevator"
+														path="elevator" value="1" />Elevator</label>
+											</div>
+											<div class="checkbox-inline">
+												<label><form:checkbox id="field-dishwasher"
+														path="dishwasher" value="1" />Dishwasher</label>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 
-
-
-
-					<%-- 
-					<!-- this should only be displayed, if alert criteria is true  -->
-
-
-					<div class="panel panel-default" id=extended-alert>
-						<div class="panel-body">
-							<div class="row">
-								<!-- emtpy col -->
-								<div class="col-sm-1"></div>
-								<spring:bind path="infrastructureType">
-									<div
-										class="form-group ${status.error ? 'has-error' : '' } col-sm-4">
-										<label class="control-label" for="infrastructureType-room">InfrastructureType</label>
-										<form:select id="infrastructureType" path="infrastructureType"
-											cssClass="form-control">
-											<option value=""></option>
-											<form:options items="${infrastructureTypes}" itemLabel="name" />
-										</form:select>
-									</div>
-								</spring:bind>
-								<div class="col-sm-1"></div>
-							</div>
-							<div class="row">
-								<!-- emtpy col -->
-								<div class="col-sm-1"></div>
-
-								<div class="form-group col-sm-4">
-									<label for="earliestMoveInDate">Earliest move-in date</label>
-									<form:input type="text" id="field-earliestMoveInDate"
-										path="earliestMoveInDate" cssClass="form-control" />
-								</div>
-
-								<div class="col-sm-2"></div>
-								<div class="form-group col-sm-4">
-									<label for="latestMoveInDate">Latest move-in date</label>
-									<form:input type="text" id="field-latestMoveInDate"
-										path="latestMoveInDate" cssClass="form-control" />
-								</div>
-
-								<div class="col-sm-1"></div>
-							</div>
-
-							<div class="form-group form-inline">
-								<div class="col-sm-2">
-									<div class="checkbox">
-										<label><form:checkbox id="field-balcony"
-												path="balcony" value="1" />Balcony or Patio</label>
-									</div>
-								</div>
-								<div class="col-sm-2">
-									<div class="checkbox">
-										<label><form:checkbox id="field-garage" path="garage"
-												value="1" />Garage</label>
-									</div>
-								</div>
-								<div class="col-sm-2">
-									<div class="checkbox">
-										<label><form:checkbox id="field-parking"
-												path="parking" value="1" />Parking</label>
-									</div>
-								</div>
-								<div class="col-sm-2">
-									<div class="checkbox">
-										<label><form:checkbox id="field-elevator"
-												path="elevator" value="1" />Elevator</label>
-									</div>
-								</div>
-								<div class="col-sm-2">
-									<div class="checkbox">
-										<label><form:checkbox id="field-dishwasher"
-												path="dishwasher" value="1" />Dishwasher</label>
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<!-- emtpy col -->
-								<div class="col-sm-1"></div>
-
-								<div class="col-sm-5">
-									<div class="form-group row">
-										<label for="field-floorLevelMin" class="col-sm-6">Floor
-											level between</label>
-										<div class="form-inline">
-											<form:input type="number" step="1" id="field-floorLevelMin"
-												path="floorLevelMin" cssClass="form-control input60" />
-											<label for="field-floorLevelMax" class="betweenLabel">
-												- </label>
-											<form:input type="number" step="1" id="field-floorLevelMax"
-												path="floorLevelMax" cssClass="form-control input60" />
-										</div>
-									</div>
-								</div>
-
-								<div class="col-sm-5">
-									<div class="form-group row">
-										<label for="field-NumberOfBathMin" class="col-sm-6">Nr.
-											of Bath between</label>
-										<div class="form-inline">
-											<form:input type="number" step="1" id="field-NumberOfBathMin"
-												path="numberOfBathMin" cssClass="form-control input60 " />
-											<label for="field-NumberOfBathMax" class="betweenLabel">
-												- </label>
-											<form:input type="number" cssClass="form-control input60"
-												path="numberOfBathMax" id="field-NumberOfBathMax" />
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-1"></div>
-							</div>
-
-							<div class="row">
-								<!-- emtpy col -->
-								<div class="col-sm-1"></div>
-
-								<div class="col-sm-4">
-									<div class="form-group row">
-										<label for="field-BuildYearMin">Build year between</label>
-										<div class="form-inline">
-											<form:input type="number" cssClass="form-control input60"
-												path="buildYearMin" id="field-BuildYearMin" />
-											<label for="field-BuildYearMax" class="betweenLabel">
-												- </label>
-											<form:input type="number" cssClass="form-control input60"
-												path="buildYearMax" id="field-BuildYearMax" />
-										</div>
-
-									</div>
-								</div>
-								<div class="col-sm-2"></div>
-
-								<div class="col-sm-4">
-									<div class="form-group row">
-										<label for="field-RenovationYearMin">Renovation year
-											between</label>
-										<div class="form-inline">
-											<form:input type="number" cssClass="form-control input60"
-												path="renovationYearMin" id="field-RenovationYearMin" />
-											<label for="field-RenovationYearMax" class="betweenLabel">
-												- </label>
-											<form:input type="number" cssClass="form-control input60"
-												path="renovationYearMax" id="field-RenovationYearMax" />
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-1"></div>
-							</div>
-
-							<div class="row">
-								<!-- emtpy col -->
-								<div class="col-sm-1"></div>
-
-								<div class="col-sm-4">
-									<div class="form-group row">
-										<label for="field-NumberOfRoomsMin">Nr. of Rooms
-											between</label>
-										<div class="form-inline">
-											<form:input type="number" cssClass="form-control input60"
-												path="numberOfRoomsMin" id="field-NumberOfRoomsMin" />
-											<label for="field-NumberOfRoomsMax" class="betweenLabel">
-												- </label>
-											<form:input type="number" cssClass="form-control input60"
-												path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
-										
-										</div>
-									</div>
-								</div>
-
-								<div class="col-sm-2"></div>
-
-								<div class="col-sm-4">
-									<div class="form-group row">
-										<label for="field-DistanceSchoolMin">Distance to
-											school from</label>
-										<div class="form-inline">
-											<form:input id="field-DistanceSchoolMin" type="number"
-												min="0" path="distanceSchoolMin" placeholder="0" step="100"
-												cssClass="form-control input60" />
-											<label for="field-DistanceSchoolMax" class="betweenLabel">
-												- </label>
-
-											<form:input id="field-DistanceSchoolMax" type="number"
-												min="0" path="distanceSchoolMax" placeholder="0" step="100"
-												cssClass="form-control input60" />
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-1"></div>
-							</div>
-
-							<div class="row">
-								<!-- emtpy col -->
-								<div class="col-sm-1"></div>
-
-								<div class="col-sm-4">
-									<div class="form-group row">
-
-										<label for="field-DistanceShoppingMin">Distance to
-											shopping from</label>
-										<div class="form-inline">
-											<form:input id="field-DistanceShoppingMin" type="number"
-												min="0" path="distanceShoppingMin" placeholder="0"
-												step="100" cssClass="form-control input60" />
-
-											<label for="field-DistanceShoppingMax" class="betweenLabel">
-												- </label>
-											<form:input id="field-DistanceShoppingMax" type="number"
-												min="0" path="distanceShoppingMax" placeholder="0"
-												step="100" cssClass="form-control input60" />
-										</div>
-									</div>
-								</div>
-
-								<div class="col-sm-2"></div>
-
-								<div class="col-sm-4">
-									<div class="form-group row">
-										<label for="field-DistancePublicTransportMin">Distance
-											to public transport from</label>
-										<div class="form-inline">
-											<form:input id="field-DistancePublicTransportMin"
-												type="number" min="0" path="distancePublicTransportMin"
-												placeholder="0" step="100" cssClass="form-control input60" />
-
-											<label for="field-DistancePublicTransportMax"
-												class="betweenLabel"> - </label>
-
-											<form:input id="field-DistancePublicTransportMax"
-												type="number" min="0" path="distancePublicTransportMax"
-												placeholder="0" step="100" cssClass="form-control input60" />
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-1"></div>
+						<div class="form-group pull-right">
+							<div class="col-sm-12">
+								<button type="reset" class="btn btn-default">Cancel</button>
+								<button type="submit" class="btn btn-primary">Subscribe</button>
 							</div>
 						</div>
-					</div>
-					--%>
-					<!-- empty column -->
-					<div class="col-md-1"></div>
-
-
-					<div class="form-group pull-right">
-						<div class="col-sm-12">
-							<button type="reset" class="btn btn-default">Cancel</button>
-							<button type="submit" class="btn btn-primary">Subscribe</button>
-
-						</div>
-					</div>
 				</form:form>
 			</div>
-
+			
 			<h4>Your active alerts</h4>
 			<form:form method="post" modelAttribute="alertForm"
 				action="/profile/alerts" id="alertForm" autocomplete="off"
 				class="form-horizontal">
 				<div class="panel panel-default">
 					<div class="panel-body">
-
 						<div id="alertsDiv" class="alertsDiv">
 							<c:choose>
 								<c:when test="${empty alerts}">
@@ -502,156 +455,82 @@
 																					<div class="col-sm-6">
 																						<table class="table">
 																							<tr>
-																								<th>Sender</th>
-																								<th>Ad</th>
-																																				</tr>
-
-																							<tr>
-																								<td><b>elevator</b></td>
-																								<td>Ad</td>
-																							
+																								<td><b>Earliest move-in date</b></td>
+																								<td>${alert.earliestMoveInDate}</td>
 																							</tr>
-
-
+																							<tr>
+																								<td><b>Latest move-in date</b></td>
+																								<td>${alert.latestMoveInDate}</td>
+																							</tr>
+																							<tr>
+																								<td><b>Infrastructure Type</b></td>
+																								<td>${alert.infrastructureType.name}</td>
+																							</tr>
+																							
+																							<tr>
+																								<td><b>Square footage</b></td>
+																								<td>${alert.squareFootageMin} - ${alert.squareFootageMin}</td>
+																							</tr>
+																							
+																							<tr>
+																								<td><b>Build year</b></td>
+																								<td>${alert.buildYearMin} - ${alert.buildYearMax}</td>
+																							</tr>
+																							<tr>
+																								<td><b>Renovation Year</b></td>
+																								<td>${alert.renovationYearMin} - ${alert.renovationYearMax}</td>
+																							</tr>
+																							<tr>
+																								<td><b>Number of Rooms</b></td>
+																								<td>${alert.numberOfRoomsMin} - ${alert.numberOfRoomsMax}</td>
+																							</tr>
+																							<tr>
+																								<td><b>Number of Baths</b></td>
+																								<td>${alert.numberOfBathMin} - ${alert.numberOfBathMax}</td>
+																							</tr>
 																						</table>
+																		
 																					</div>
 																					<div class="col-sm-6">
 																						<table class="table">
-																							<tr>
-																								<th>Sender</th>
-																								<th>Ad</th>
-																					
+																									<tr>
+																								<td><b>Distance School</b></td>
+																								<td>${alert.distanceSchoolMin} - ${alert.distanceSchoolMax}</td>
 																							</tr>
-
 																							<tr>
-																								<td><b>elevator</b></td>
-																								<td>Ad</td>
+																								<td><b>Distance Shopping</b></td>
+																								<td>${alert.distanceShoppingMin} - ${alert.distanceShoppingMax}</td>
+																							</tr>
+																							<tr>
+																								<td><b>Distance public transport</b></td>
+																								<td>${alert.distancePublicTransportMin} - ${alert.distancePublicTransportMax}</td>
+																							</tr>
+																							<tr>
+																								<td><b>Floor level</b></td>
+																								<td>${alert.floorLevelMin} - ${alert.floorLevelMax}</td>
+																							</tr>
 																							
+																							<tr>
+																								<td><b>Elevator</b></td>
+																								<td>${alert.elevator}</td>
 																							</tr>
-
-
+																							<tr>
+																								<td><b>parking</b></td>
+																								<td>${alert.parking}</td>
+																							</tr>
+																							<tr>
+																								<td><b>Balcony</b></td>
+																								<td>${alert.balcony}</td>
+																							</tr>
+																							<tr>
+																								<td><b>Garage</b></td>
+																								<td>${alert.garage}</td>
+																							</tr>
+																							<tr>
+																								<td><b>Dishwasher</b></td>
+																								<td>${alert.dishwasher}</td>
+																							</tr>
 																						</table>
-																					</div>
-																				</div>
-
-																				<div class="row">
-																					<!-- add infrastructureType -->
-																					<div class="col-md-4">
-																						<p>
-																							<b>elevator</b>
-																						</p>
-																						<p>
-																							<b>parking</b>
-																						</p>
-																						<p>
-																							<b>balcony</b>
-																						</p>
-																						<p>
-																							<b>garage</b>
-																						</p>
-																						<p>
-																							<b>dishwasher</b>
-																						</p>
-
-																						<p>
-																							<b>squareFootageMin</b>
-																						</p>
-																						<p>
-																							<b>squareFootageMax</b>
-																						</p>
-																						<p>
-																							<b>buildYearMin</b>
-																						</p>
-																						<p>
-																							<b>buildYearMax</b>
-																						</p>
-																						<p>
-																							<b>renovationYearMin</b>
-																						</p>
-																						<p>
-																							<b>renovationYearMax</b>
-																						</p>
-																						<p>
-																							<b>numberOfRoomsMin</b>
-																						</p>
-																						<p>
-																							<b>numberOfRoomsMax</b>
-																						</p>
-																						<p>
-																							<b>numberOfBathMin</b>
-																						</p>
-																						<p>
-																							<b>numberOfBathMax</b>
-																						</p>
-
-																						<p>
-																							<b>distanceSchoolMin</b>
-																						</p>
-																						<p>
-																							<b>distanceSchoolMax</b>
-																						</p>
-																						<p>
-																							<b>distanceShoppingMin</b>
-																						</p>
-																						<p>
-																							<b>distanceShoppingMax</b>
-																						</p>
-																						<p>
-																							<b>distancePublicTransportMin</b>
-																						</p>
-																						<p>
-																							<b>distancePublicTransportMax</b>
-																						</p>
-																						<p>
-																							<b>floorLevelMin</b>
-																						</p>
-																						<p>
-																							<b>floorLevelMax</b>
-																						</p>
-
-																						<p>
-																							<b>earliest move-in date</b>
-																						</p>
-																						<p>
-																							<b>latest move-in date</b>
-																						</p>
-																						<p>
-																							<b>InfrastructureType</b>
-																						</p>
-
-																					</div>
-																					<div class="col-md-4 col-md-offset-2">
-																						<p>${alert.elevator}</p>
-																						<p>${alert.parking}</p>
-																						<p>${alert.balcony}</p>
-																						<p>${alert.garage}</p>
-																						<p>${alert.dishwasher}</p>
-
-																						<p>${alert.squareFootageMin}</p>
-																						<p>${alert.squareFootageMax}</p>
-																						<p>${alert.buildYearMin}</p>
-																						<p>${alert.buildYearMax}</p>
-																						<p>${alert.renovationYearMin}</p>
-																						<p>${alert.renovationYearMax}</p>
-																						<p>${alert.numberOfRoomsMin}</p>
-																						<p>${alert.numberOfRoomsMax}</p>
-																						<p>${alert.numberOfBathMin}</p>
-																						<p>${alert.numberOfBathMax}</p>
-																						<p>${alert.distanceSchoolMin}</p>
-																						<p>${alert.distanceSchoolMax}</p>
-																						<p>${alert.distanceShoppingMin}</p>
-																						<p>${alert.distanceShoppingMax}</p>
-																						<p>${alert.distancePublicTransportMin}</p>
-																						<p>${alert.distancePublicTransportMax}</p>
-																						<p>${alert.floorLevelMin}</p>
-																						<p>${alert.floorLevelMax}</p>
-
-																						<p>${alert.earliestMoveInDate}</p>
-																						<p>${alert.latestMoveInDate}</p>
-																						<p>${alert.infrastructureType.name}</p>
-
-
-
 																					</div>
 																				</div>
 																			</div>
