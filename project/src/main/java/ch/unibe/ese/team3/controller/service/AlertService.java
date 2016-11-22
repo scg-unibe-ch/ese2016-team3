@@ -43,13 +43,13 @@ public class AlertService {
 
 	@Autowired
 	MessageDao messageDao;
-	
+
 	@Autowired
 	AlertResultDao alertResultDao;
 
 	@Autowired
 	private GeoDataService geoDataService;
-	
+
 	@Autowired
 	private MessageService messageService;
 
@@ -74,15 +74,23 @@ public class AlertService {
 
 		alert.setRadius(alertForm.getRadius());
 
+		int countAlertTypes = 0;
 		List<AlertType> alertTypes = new ArrayList<AlertType>();
 		for (Type type : alertForm.getTypes()) {
 			AlertType alertType = new AlertType();
 			alertType.setType(type);
 			alertType.setAlert(alert);
 			alertTypes.add(alertType);
+			countAlertTypes++;
 		}
 
-		alert.setAlertTypes(alertTypes);
+		// if there are no alertTypes specified in the form, the alert searches for all alertTypes
+		if (countAlertTypes == 0) {
+			setAllAlertTypes(alert);
+		} else {
+			alert.setAlertTypes(alertTypes);
+		}
+
 		alert.setUser(user);
 
 		// Add extended Alert criteria only if extendedAlert = true
@@ -128,6 +136,8 @@ public class AlertService {
 		}
 		alertDao.save(alert);
 	}
+	
+	
 
 	private Date convertStringToDate(String date) {
 		try {
@@ -192,8 +202,7 @@ public class AlertService {
 			AlertResult alertResult = new AlertResult();
 			if (user.isPremium()) {
 				alertResult.setNotified(true);
-			}
-			else {
+			} else {
 				alertResult.setNotified(false);
 			}
 			alertResult.setTriggerAd(ad);
@@ -443,7 +452,29 @@ public class AlertService {
 			}
 		}
 	}
+	
+	/**
+	 * Adds all AlertTypes to an alert.
+	 * @param alert
+	 */
+	private void setAllAlertTypes(Alert alert) {
+		List<Type> allTypes = new ArrayList<Type>();
+		allTypes.add(Type.APARTMENT);
+		allTypes.add(Type.LOFT);
+		allTypes.add(Type.STUDIO);
+		allTypes.add(Type.VILLA);
+		allTypes.add(Type.HOUSE);
 
+		List<AlertType> listAllAlertTypes = new ArrayList<AlertType>();
+		for (Type type : allTypes) {
+			AlertType alertType = new AlertType();
+			alertType.setType(type);
+			alertType.setAlert(alert);
+			listAllAlertTypes.add(alertType);
+		}
+		alert.setAlertTypes(listAllAlertTypes);
+	}
+	
 	// for testing
 	public boolean radiusMismatch(Ad ad, Alert alert) {
 		return radiusMismatchWith(ad, alert);

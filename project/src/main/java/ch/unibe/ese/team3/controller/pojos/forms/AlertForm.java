@@ -47,6 +47,7 @@ public class AlertForm {
 	private boolean extendedAlert;
 
 	private InfrastructureType infrastructureType;
+	
 	private int squareFootageMin;
 	private int squareFootageMax;
 	private int buildYearMin;

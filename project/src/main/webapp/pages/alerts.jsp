@@ -4,8 +4,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-
-
 <c:import url="template/header.jsp" />
 
 <!-- loads functions from placeAd.js -->
@@ -194,7 +192,7 @@
 									</div>
 								</div>
 							</div>
-							
+
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
@@ -202,13 +200,13 @@
 											class="control-label col-sm-4">Floor level between </label>
 										<div class="col-sm-8">
 											<div class="form-inline">
-													<form:input type="number" step="1" id="field-floorLevelMin"
-														path="floorLevelMin" cssClass="form-control input60" />
-													<label for="field-floorLevelMax" class="betweenLabel">
-														- </label>
-													<form:input type="number" step="1" id="field-floorLevelMax"
-														path="floorLevelMax" cssClass="form-control input60" />
-												</div>
+												<form:input type="number" step="1" id="field-floorLevelMin"
+													path="floorLevelMin" cssClass="form-control input60" />
+												<label for="field-floorLevelMax" class="betweenLabel">
+													- </label>
+												<form:input type="number" step="1" id="field-floorLevelMax"
+													path="floorLevelMax" cssClass="form-control input60" />
+											</div>
 										</div>
 									</div>
 								</div>
@@ -218,41 +216,41 @@
 											class="control-label col-sm-4">Nr. of Baths between</label>
 										<div class="col-sm-8">
 											<div class="form-inline">
-													<form:input type="number" step="1"
-														id="field-NumberOfBathMin" path="numberOfBathMin"
-														cssClass="form-control input60 " />
-													<label for="field-NumberOfBathMax" class="betweenLabel">
-														- </label>
-													<form:input type="number" cssClass="form-control input60"
-														path="numberOfBathMax" id="field-NumberOfBathMax" />
-												</div>
+												<form:input type="number" step="1"
+													id="field-NumberOfBathMin" path="numberOfBathMin"
+													cssClass="form-control input60 " />
+												<label for="field-NumberOfBathMax" class="betweenLabel">
+													- </label>
+												<form:input type="number" cssClass="form-control input60"
+													path="numberOfBathMax" id="field-NumberOfBathMax" />
+											</div>
 										</div>
 									</div>
 								</div>
-							</div><div class="row">
+							</div>
+							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
-										<label for="field-BuildYearMin"
-											class="control-label col-sm-4">Build year between
-										</label>
+										<label for="field-BuildYearMin" class="control-label col-sm-4">Build
+											year between </label>
 										<div class="col-sm-8">
 											<div class="form-inline">
-													<form:input type="number" cssClass="form-control input60"
-														path="buildYearMin" id="field-BuildYearMin" />
-													<label for="field-BuildYearMax" class="betweenLabel">
-														- </label>
-													<form:input type="number" cssClass="form-control input60"
-														path="buildYearMax" id="field-BuildYearMax" />
-												</div>
+												<form:input type="number" cssClass="form-control input60"
+													path="buildYearMin" id="field-BuildYearMin" />
+												<label for="field-BuildYearMax" class="betweenLabel">
+													- </label>
+												<form:input type="number" cssClass="form-control input60"
+													path="buildYearMax" id="field-BuildYearMax" />
+											</div>
 										</div>
 									</div>
 								</div>
-																
+
 								<div class="col-sm-6">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-RenovationYearMin"
-											class="control-label col-sm-4">Renovation year between
-										</label>
+											class="control-label col-sm-4">Renovation year
+											between </label>
 										<div class="col-sm-8">
 											<div class="form-inline">
 												<form:input type="number" cssClass="form-control input60"
@@ -266,8 +264,8 @@
 									</div>
 								</div>
 							</div>
-							
-							
+
+
 							<!--  -->
 							<div class="row">
 								<div class="col-sm-6">
@@ -382,16 +380,16 @@
 								</div>
 							</div>
 						</div>
-
-						<div class="form-group pull-right">
-							<div class="col-sm-12">
-								<button type="reset" class="btn btn-default">Cancel</button>
-								<button type="submit" class="btn btn-primary">Subscribe</button>
-							</div>
+					</div>
+					<div class="form-group pull-right">
+						<div class="col-sm-12">
+							<button type="reset" class="btn btn-default">Cancel</button>
+							<button type="submit" class="btn btn-primary">Subscribe</button>
 						</div>
+					</div>
 				</form:form>
 			</div>
-			
+
 			<h4>Your active alerts</h4>
 			<form:form method="post" modelAttribute="alertForm"
 				action="/profile/alerts" id="alertForm" autocomplete="off"
@@ -466,50 +464,59 @@
 																								<td><b>Infrastructure Type</b></td>
 																								<td>${alert.infrastructureType.name}</td>
 																							</tr>
-																							
+
 																							<tr>
 																								<td><b>Square footage</b></td>
-																								<td>${alert.squareFootageMin} - ${alert.squareFootageMin}</td>
+																								<td>${alert.squareFootageMin}-
+																									${alert.squareFootageMin}</td>
 																							</tr>
-																							
+
 																							<tr>
 																								<td><b>Build year</b></td>
-																								<td>${alert.buildYearMin} - ${alert.buildYearMax}</td>
+																								<td>${alert.buildYearMin}-
+																									${alert.buildYearMax}</td>
 																							</tr>
 																							<tr>
 																								<td><b>Renovation Year</b></td>
-																								<td>${alert.renovationYearMin} - ${alert.renovationYearMax}</td>
+																								<td>${alert.renovationYearMin}-
+																									${alert.renovationYearMax}</td>
 																							</tr>
 																							<tr>
 																								<td><b>Number of Rooms</b></td>
-																								<td>${alert.numberOfRoomsMin} - ${alert.numberOfRoomsMax}</td>
+																								<td>${alert.numberOfRoomsMin}-
+																									${alert.numberOfRoomsMax}</td>
 																							</tr>
 																							<tr>
 																								<td><b>Number of Baths</b></td>
-																								<td>${alert.numberOfBathMin} - ${alert.numberOfBathMax}</td>
+																								<td>${alert.numberOfBathMin}-
+																									${alert.numberOfBathMax}</td>
 																							</tr>
 																						</table>
-																		
+
 																					</div>
 																					<div class="col-sm-6">
 																						<table class="table">
-																									<tr>
+																							<tr>
 																								<td><b>Distance School</b></td>
-																								<td>${alert.distanceSchoolMin} - ${alert.distanceSchoolMax}</td>
+																								<td>${alert.distanceSchoolMin}-
+																									${alert.distanceSchoolMax}</td>
 																							</tr>
 																							<tr>
 																								<td><b>Distance Shopping</b></td>
-																								<td>${alert.distanceShoppingMin} - ${alert.distanceShoppingMax}</td>
+																								<td>${alert.distanceShoppingMin}-
+																									${alert.distanceShoppingMax}</td>
 																							</tr>
 																							<tr>
 																								<td><b>Distance public transport</b></td>
-																								<td>${alert.distancePublicTransportMin} - ${alert.distancePublicTransportMax}</td>
+																								<td>${alert.distancePublicTransportMin}-
+																									${alert.distancePublicTransportMax}</td>
 																							</tr>
 																							<tr>
 																								<td><b>Floor level</b></td>
-																								<td>${alert.floorLevelMin} - ${alert.floorLevelMax}</td>
+																								<td>${alert.floorLevelMin}-
+																									${alert.floorLevelMax}</td>
 																							</tr>
-																							
+
 																							<tr>
 																								<td><b>Elevator</b></td>
 																								<td>${alert.elevator}</td>
