@@ -59,7 +59,6 @@
 					class="form-horizontal">
 					<div class="panel panel-default">
 						<div class="panel-body">
-
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Type</label>
 								<div class="col-sm-6">
@@ -70,7 +69,6 @@
 									</c:forEach>
 								</div>
 							</div>
-
 							<spring:bind path="buyMode">
 								<div class="form-group">
 									<label class="col-sm-2 control-label" for="buyMode">For</label>
@@ -81,7 +79,6 @@
 									</div>
 								</div>
 							</spring:bind>
-
 							<spring:bind path="city">
 								<div class="form-group">
 									<label class="col-sm-2 control-label" for="city">City /
@@ -133,24 +130,23 @@
 										</label>
 									</div>
 								</div>
+								
+								<!-- only appears when a negative value is set in the extended alert form -->
+								<!-- 
+								<label id="negativeAlertWarning" >Extended Alert</label>  -->
+
 							</div>
-
-
 						</div>
 					</div>
 
-
-
 					<div class="panel panel-default" id="extended-alert">
 						<div class="panel-body">
-
-							<div class="row">
+							<div class="row panel">
 								<div class="col-sm-6">
 									<spring:bind path="infrastructureType">
 										<div class="form-group ${status.error ? 'has-error' : '' }">
 											<label class="control-label col-sm-4"
 												for="infrastructureType-room">Infrastructure type</label>
-
 											<div class="col-sm-8">
 												<div class="input-group">
 													<form:select id="infrastructureType"
@@ -163,10 +159,6 @@
 											</div>
 										</div>
 									</spring:bind>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-6">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="earliestMoveInDate" class="control-label col-sm-4">Earliest
 											move-in date</label>
@@ -178,8 +170,6 @@
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-sm-6">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="latestMoveInDate" class="control-label col-sm-4">Latest
 											move-in date</label>
@@ -191,8 +181,36 @@
 										</div>
 									</div>
 								</div>
-							</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<div class="col-sm-offset-4 col-sm-10">
+											<div class="checkbox">
+												<label><form:checkbox id="field-garage"
+														path="garage" /> Garage</label>
+											</div>
+											<div class="checkbox">
+												<label><form:checkbox id="field-balcony"
+														path="balcony" /> Balcony or Patio</label>
+											</div>
 
+											<div class="checkbox">
+												<label><form:checkbox id="field-parking"
+														path="parking" /> Parking</label>
+											</div>
+
+											<div class="checkbox">
+												<label><form:checkbox id="field-elevator"
+														path="elevator" /> Elevator</label>
+											</div>
+
+											<div class="checkbox">
+												<label><form:checkbox id="field-dishwasher"
+														path="dishwasher" /> Dishwasher</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
@@ -206,6 +224,8 @@
 													- </label>
 												<form:input type="number" step="1" id="field-floorLevelMax"
 													path="floorLevelMax" cssClass="form-control input60" />
+												<form:errors path="floorLevelMax" cssClass="text-danger" />
+												<form:errors path="floorLevelMin" cssClass="text-danger" />
 											</div>
 										</div>
 									</div>
@@ -223,6 +243,8 @@
 													- </label>
 												<form:input type="number" cssClass="form-control input60"
 													path="numberOfBathMax" id="field-NumberOfBathMax" />
+												<form:errors path="numberOfBathMin" cssClass="text-danger" />
+												<form:errors path="numberOfBathMax" cssClass="text-danger" />
 											</div>
 										</div>
 									</div>
@@ -241,6 +263,8 @@
 													- </label>
 												<form:input type="number" cssClass="form-control input60"
 													path="buildYearMax" id="field-BuildYearMax" />
+												<form:errors path="buildYearMax" cssClass="text-danger" />
+												<form:errors path="buildYearMin" cssClass="text-danger" />
 											</div>
 										</div>
 									</div>
@@ -249,8 +273,7 @@
 								<div class="col-sm-6">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-RenovationYearMin"
-											class="control-label col-sm-4">Renovation year
-											between </label>
+											class="control-label col-sm-4">Renovation year btwn </label>
 										<div class="col-sm-8">
 											<div class="form-inline">
 												<form:input type="number" cssClass="form-control input60"
@@ -259,6 +282,8 @@
 													- </label>
 												<form:input type="number" cssClass="form-control input60"
 													path="renovationYearMax" id="field-RenovationYearMax" />
+												<form:errors path="renovationYearMin" cssClass="text-danger" />
+												<form:errors path="renovationYearMax" cssClass="text-danger" />
 											</div>
 										</div>
 									</div>
@@ -280,7 +305,8 @@
 													- </label>
 												<form:input type="number" cssClass="form-control input60"
 													path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
-
+												<form:errors path="numberOfRoomsMin" cssClass="text-danger" />
+												<form:errors path="numberOfRoomsMax" cssClass="text-danger" />
 											</div>
 										</div>
 									</div>
@@ -297,10 +323,11 @@
 													cssClass="form-control input60" />
 												<label for="field-DistanceSchoolMax" class="betweenLabel">
 													- </label>
-
 												<form:input id="field-DistanceSchoolMax" type="number"
 													min="0" path="distanceSchoolMax" placeholder="0" step="100"
 													cssClass="form-control input60" />
+												<form:errors path="distanceSchoolMin" cssClass="text-danger" />
+												<form:errors path="distanceSchoolMax" cssClass="text-danger" />
 											</div>
 										</div>
 									</div>
@@ -323,6 +350,10 @@
 												<form:input id="field-DistanceShoppingMax" type="number"
 													min="0" path="distanceShoppingMax" placeholder="0"
 													step="100" cssClass="form-control input60" />
+												<form:errors path="distanceShoppingMin"
+													cssClass="text-danger" />
+												<form:errors path="distanceShoppingMax"
+													cssClass="text-danger" />
 											</div>
 										</div>
 									</div>
@@ -344,36 +375,10 @@
 												<form:input id="field-DistancePublicTransportMax"
 													type="number" min="0" path="distancePublicTransportMax"
 													placeholder="0" step="100" cssClass="form-control input60" />
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="form-group ${status.error ? 'has-error' : '' }">
-										<label class="control-label col-sm-2">Details</label>
-										<div class="col-sm-10">
-											<div class="checkbox-inline">
-												<label><form:checkbox id="field-balcony"
-														path="balcony" value="1" />Balcony or Patio</label>
-											</div>
-											<div class="checkbox-inline">
-												<label><form:checkbox id="field-garage"
-														path="garage" value="1" />Garage</label>
-											</div>
-											<div class="checkbox-inline">
-												<label><form:checkbox id="field-parking"
-														path="parking" value="1" />Parking</label>
-											</div>
-											<div class="checkbox-inline">
-												<label><form:checkbox id="field-elevator"
-														path="elevator" value="1" />Elevator</label>
-											</div>
-											<div class="checkbox-inline">
-												<label><form:checkbox id="field-dishwasher"
-														path="dishwasher" value="1" />Dishwasher</label>
+												<form:errors path="distancePublicTransportMin"
+													cssClass="text-danger" />
+												<form:errors path="distancePublicTransportMax"
+													cssClass="text-danger" />
 											</div>
 										</div>
 									</div>
@@ -454,88 +459,148 @@
 																						<table class="table">
 																							<tr>
 																								<td><b>Earliest move-in date</b></td>
-																								<td>${alert.earliestMoveInDate}</td>
+																								<c:choose>
+																									<c:when
+																										test="${alert.earliestMoveInDate == null}">
+																										<td>no date</td>
+																									</c:when>
+																									<c:otherwise>
+																										<td>${alert.earliestMoveInDate}</td>
+																									</c:otherwise>
+																								</c:choose>
 																							</tr>
 																							<tr>
 																								<td><b>Latest move-in date</b></td>
-																								<td>${alert.latestMoveInDate}</td>
+																								<c:choose>
+																									<c:when
+																										test="${alert.latestMoveInDate == null}">
+																										<td>no date</td>
+																									</c:when>
+																									<c:otherwise>
+																										<td>${alert.latestMoveInDate}</td>
+																									</c:otherwise>
+																								</c:choose>
+
 																							</tr>
 																							<tr>
 																								<td><b>Infrastructure Type</b></td>
-																								<td>${alert.infrastructureType.name}</td>
+																								<c:choose>
+																									<c:when
+																										test="${alert.infrastructureType.name == null}">
+																										<td>no type</td>
+																									</c:when>
+																									<c:otherwise>
+																										<td>${alert.infrastructureType.name}</td>
+																									</c:otherwise>
+																								</c:choose>
+
+																							</tr>
+																							<tr>
+																								<td><b>Elevator</b></td>
+																								<c:choose>
+																									<c:when test="${alert.elevator}">
+																										<td>available</td>
+																									</c:when>
+																									<c:otherwise>
+																										<td>not available</td>
+																									</c:otherwise>
+																								</c:choose>
+																							</tr>
+																							<tr>
+																								<td><b>Parking</b></td>
+																								<c:choose>
+																									<c:when test="${alert.parking}">
+																										<td>available</td>
+																									</c:when>
+																									<c:otherwise>
+																										<td>not available</td>
+																									</c:otherwise>
+																								</c:choose>
+																							</tr>
+																							<tr>
+																								<td><b>Balcony</b></td>
+																								<c:choose>
+																									<c:when test="${alert.balcony}">
+																										<td>available</td>
+																									</c:when>
+																									<c:otherwise>
+																										<td>not available</td>
+																									</c:otherwise>
+																								</c:choose>
+																							</tr>
+																							<tr>
+																								<td><b>Garage</b></td>
+																								<c:choose>
+																									<c:when test="${alert.garage}">
+																										<td>available</td>
+																									</c:when>
+																									<c:otherwise>
+																										<td>not available</td>
+																									</c:otherwise>
+																								</c:choose>
+																							</tr>
+																							<tr>
+																								<td><b>Dishwasher</b></td>
+																								<c:choose>
+																									<c:when test="${alert.dishwasher}">
+																										<td>available</td>
+																									</c:when>
+																									<c:otherwise>
+																										<td>not available</td>
+																									</c:otherwise>
+																								</c:choose>
 																							</tr>
 
-																							<tr>
-																								<td><b>Square footage</b></td>
-																								<td>${alert.squareFootageMin}-
-																									${alert.squareFootageMin}</td>
-																							</tr>
 
-																							<tr>
-																								<td><b>Build year</b></td>
-																								<td>${alert.buildYearMin}-
-																									${alert.buildYearMax}</td>
-																							</tr>
-																							<tr>
-																								<td><b>Renovation Year</b></td>
-																								<td>${alert.renovationYearMin}-
-																									${alert.renovationYearMax}</td>
-																							</tr>
-																							<tr>
-																								<td><b>Number of Rooms</b></td>
-																								<td>${alert.numberOfRoomsMin}-
-																									${alert.numberOfRoomsMax}</td>
-																							</tr>
-																							<tr>
-																								<td><b>Number of Baths</b></td>
-																								<td>${alert.numberOfBathMin}-
-																									${alert.numberOfBathMax}</td>
-																							</tr>
 																						</table>
 
 																					</div>
 																					<div class="col-sm-6">
 																						<table class="table">
 																							<tr>
-																								<td><b>Distance School</b></td>
+																								<td><b>Square footage between</b></td>
+																								<td>${alert.squareFootageMin}-
+																									${alert.squareFootageMin}</td>
+																							</tr>
+																							<tr>
+																								<td><b>Floor level between</b></td>
+																								<td>${alert.floorLevelMin}-
+																									${alert.floorLevelMax}</td>
+																							</tr>
+																							<tr>
+																								<td><b>Build year between</b></td>
+																								<td>${alert.buildYearMin}-
+																									${alert.buildYearMax}</td>
+																							</tr>
+																							<tr>
+																								<td><b>Renovation Year between</b></td>
+																								<td>${alert.renovationYearMin}-
+																									${alert.renovationYearMax}</td>
+																							</tr>
+																							<tr>
+																								<td><b>Number of Rooms between</b></td>
+																								<td>${alert.numberOfRoomsMin}-
+																									${alert.numberOfRoomsMax}</td>
+																							</tr>
+																							<tr>
+																								<td><b>Number of Baths between</b></td>
+																								<td>${alert.numberOfBathMin}-
+																									${alert.numberOfBathMax}</td>
+																							</tr>
+																							<tr>
+																								<td><b>Distance School from</b></td>
 																								<td>${alert.distanceSchoolMin}-
 																									${alert.distanceSchoolMax}</td>
 																							</tr>
 																							<tr>
-																								<td><b>Distance Shopping</b></td>
+																								<td><b>Distance Shopping from</b></td>
 																								<td>${alert.distanceShoppingMin}-
 																									${alert.distanceShoppingMax}</td>
 																							</tr>
 																							<tr>
-																								<td><b>Distance public transport</b></td>
+																								<td><b>Distance public transport from</b></td>
 																								<td>${alert.distancePublicTransportMin}-
 																									${alert.distancePublicTransportMax}</td>
-																							</tr>
-																							<tr>
-																								<td><b>Floor level</b></td>
-																								<td>${alert.floorLevelMin}-
-																									${alert.floorLevelMax}</td>
-																							</tr>
-
-																							<tr>
-																								<td><b>Elevator</b></td>
-																								<td>${alert.elevator}</td>
-																							</tr>
-																							<tr>
-																								<td><b>parking</b></td>
-																								<td>${alert.parking}</td>
-																							</tr>
-																							<tr>
-																								<td><b>Balcony</b></td>
-																								<td>${alert.balcony}</td>
-																							</tr>
-																							<tr>
-																								<td><b>Garage</b></td>
-																								<td>${alert.garage}</td>
-																							</tr>
-																							<tr>
-																								<td><b>Dishwasher</b></td>
-																								<td>${alert.dishwasher}</td>
 																							</tr>
 																						</table>
 																					</div>

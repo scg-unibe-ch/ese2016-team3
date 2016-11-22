@@ -23,12 +23,26 @@ $(document).ready(function() {
 			panelExtendedAlert.hide();
 		}
 	}
-
+	
+	var showMessageWhenBelowZero = function() {
+		var message = $("#negativeAlertWarning");
+		var floorLevelMin = $("#field-floorLevelMin");
+		
+		if (floorLevelMin > 0) {
+			message.show();
+		}
+		else {
+			message.hide();
+		}
+	}
+	
 	// when field with Id field-auction is checked, call function
 	// setPanelVisibility
 	$("#field-extendedAlert").change(function() {
 		setPanelVisibility();
+		//showMessageWhenBelowZero();
 	});
 
 	setPanelVisibility();
+	//showMessageWhenBelowZero();
 });
