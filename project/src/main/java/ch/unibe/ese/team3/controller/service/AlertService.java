@@ -196,7 +196,7 @@ public class AlertService {
 			}
 		}
 		
-		/*
+		
 		// save triggered alerts into database
 		for (User user : users) {
 			Date now = new Date();
@@ -211,7 +211,7 @@ public class AlertService {
 			alertResult.setUser(user);
 			alertResultDao.save(alertResult);
 		}
-		*/
+		
 		// send messages to all users with matching alerts
 		for (User user : users) {
 			if (user.isPremium()) {
