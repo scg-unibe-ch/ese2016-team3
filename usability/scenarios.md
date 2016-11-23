@@ -117,4 +117,17 @@ Some time ago you have taken part in four different auctions for properties and 
 Your username is `ese@unibe.ch` and the password `ese`.
 
 
+## Sign up new user
 
+### Scenario 1
+
+#### Description
+
+You want to sign up a new user on Ithaca with a premium membership lasting for 30 days. Your name is `Hans Muster`, your email `hans@muster.com`, password `password`, and you are `male`. 
+
+Verify that the user has a premium membership by logging in and showing your profile.
+
+#### Details
+
+You have a `Mastercard` in your name with the card number:
+`1111222233334444`, security number `123` and expiry date `10/2018`.

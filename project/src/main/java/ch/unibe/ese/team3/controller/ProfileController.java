@@ -153,6 +153,7 @@ public class ProfileController {
 		if (!bindingResult.hasErrors()) {
 			signupService.saveFrom(signupForm);
 			model = new ModelAndView("login");
+			model.addObject("googleForm", new GoogleSignupForm());
 			model.addObject("confirmationMessage", "Signup complete!");
 		} else {
 			model = new ModelAndView("signup");
