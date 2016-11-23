@@ -4,11 +4,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.User;

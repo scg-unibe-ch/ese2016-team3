@@ -9,7 +9,7 @@ public enum AccountType {
 		this.accountTypeName = accountTypeName;
 	}
 	
-	private String getAccountTypeName(){
+	public String getAccountTypeName(){
 		return this.accountTypeName;
 	}
 }

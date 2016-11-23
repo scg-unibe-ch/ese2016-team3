@@ -19,11 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ch.unibe.ese.team3.controller.pojos.PictureUploader;
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.dto.AdMeta;
-
 import ch.unibe.ese.team3.enums.PageMode;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.BuyMode;

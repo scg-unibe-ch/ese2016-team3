@@ -21,9 +21,6 @@ public class UserUpdateService {
 	@Autowired
 	private UserDao userDao;
 
-	@Autowired
-	private UserService userService;
-
 	/** Handles updating an existing user in the database. */
 	@Transactional
 	public void updateFrom(EditProfileForm editProfileForm, User user) {

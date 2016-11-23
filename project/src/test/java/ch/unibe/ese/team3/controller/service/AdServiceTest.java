@@ -160,16 +160,11 @@ public class AdServiceTest {
 
 	@Test
 	public void getAllAds() {
-		// return all Ads in DB
-		int maxInt = 2147483647; // all ads should be cheaper than that value
 		Iterable<Ad> adsInDB = adDao.findByPriceLessThanAndBuyMode(2147483647, BuyMode.BUY);
 		int acctualAdNumber = countIterable(adsInDB);
 		
 		Iterable<Ad> ads = adService.getAllAds();
 		int countReturnedAds = countIterable(ads);
-		// convert to List
-		ArrayList<Ad> adList = (ArrayList) ads;
-
 		// assert number of returned ads equals number in DB
 		assertEquals(countReturnedAds, acctualAdNumber);
 	}
@@ -183,7 +178,7 @@ public class AdServiceTest {
 		Type[] types = { Type.APARTMENT };
 		searchForm.setTypes(types);
 		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
-		ArrayList<Ad> adList = (ArrayList) queryedAds;
+		ArrayList<Ad> adList = (ArrayList<Ad>) queryedAds;
 		
 		searchForm.setBalcony(false);
 		searchForm.setGarage(true);
@@ -213,10 +208,10 @@ public class AdServiceTest {
 		searchForm2.setTypes(types);
 				
 		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
-		ArrayList<Ad> adList = (ArrayList) queryedAds;
+		ArrayList<Ad> adList = (ArrayList<Ad>) queryedAds;
 		
 		Iterable<Ad> queryedAds2 = adService.queryResults(searchForm2, BuyMode.BUY);
-		ArrayList<Ad> adList2 = (ArrayList) queryedAds2;
+		ArrayList<Ad> adList2 = (ArrayList<Ad>) queryedAds2;
 
 		assertNotEquals(adList.get(0).getId(), adList2.get(0).getId());
 	}
@@ -268,8 +263,6 @@ public class AdServiceTest {
 		searchForm.setRenovationYearMin(1960);
 		
 		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
-		int adsQuerried = countIterable(queryedAds);
-		
 		// iterate over each returned ad and check if the search criteria are fulfilled
 		for (Ad ad: queryedAds) {
 			assertTrue(ad.getPrice()<1000000);
@@ -296,7 +289,7 @@ public class AdServiceTest {
 	@Test
 	public void getNewestAds() {
 		Iterable<Ad> newestdAds = adService.getNewestAds(3, BuyMode.BUY);
-		ArrayList<Ad> listNewestAds = (ArrayList) newestdAds;
+		ArrayList<Ad> listNewestAds = (ArrayList<Ad>) newestdAds;
 
 		assertEquals(listNewestAds.size(), 3);
 
@@ -326,10 +319,10 @@ public class AdServiceTest {
 		User user = userDao.findByUsername("ese@unibe.ch");
 
 		Iterable<Ad> adsFromService = adService.getAdsByUser(user);
-		ArrayList<Ad> listFromService = (ArrayList) adsFromService;
+		ArrayList<Ad> listFromService = (ArrayList<Ad>) adsFromService;
 
 		Iterable<Ad> adsFromDB = adDao.findByUser(user);
-		ArrayList<Ad> listFromDB = (ArrayList) adsFromDB;
+		ArrayList<Ad> listFromDB = (ArrayList<Ad>) adsFromDB;
 
 		// make sure same number of elements are returned
 		assertEquals(listFromService.size(), listFromDB.size());
