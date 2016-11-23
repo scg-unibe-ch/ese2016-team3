@@ -173,6 +173,17 @@ public class AlertService {
 		BuyMode buyMode = ad.getBuyMode();
 		Iterable<Alert> alerts = alertDao.findByPriceGreaterThanAndBuyMode(adPrice - 1, buyMode);
 
+		filterWithBasicCriteria(ad, alerts);
+		filterWithExtendedCriteria(ad, alerts);
+
+		List<User> alertReceivers = getDistinctAlertReceivers(alerts);		
+		saveAlertResults(ad, alertReceivers);
+		sendAlertMessages(ad, alertReceivers);
+	}
+
+
+
+	private void filterWithBasicCriteria(Ad ad, Iterable<Alert> alerts) {
 		// loop through all ads with matching city and price range, throw out
 		// mismatches
 		Iterator<Alert> alertIterator = alerts.iterator();
@@ -182,9 +193,9 @@ public class AlertService {
 				alertIterator.remove(); // this also changes the number of
 										// elements in "alerts"
 		}
+	}
 
-		filterWithExtendedCriteria(ad, alerts);
-
+	private List<User> getDistinctAlertReceivers(Iterable<Alert> alerts) {
 		// send only one message per user, no matter how many alerts were
 		// triggered
 		List<User> users = new ArrayList<User>();
@@ -195,23 +206,10 @@ public class AlertService {
 				users.add(user);
 			}
 		}
-		
-		/*
-		// save triggered alerts into database
-		for (User user : users) {
-			Date now = new Date();
-			AlertResult alertResult = new AlertResult();
-			if (user.isPremium()) {
-				alertResult.setNotified(true);
-			} else {
-				alertResult.setNotified(false);
-			}
-			alertResult.setTriggerAd(ad);
-			alertResult.setTriggerDate(now);
-			alertResult.setUser(user);
-			alertResultDao.save(alertResult);
-		}
-		*/
+		return users;
+	}
+
+	private void sendAlertMessages(Ad ad, List<User> users) {
 		// send messages to all users with matching alerts
 		for (User user : users) {
 			if (user.isPremium()) {
@@ -226,6 +224,23 @@ public class AlertService {
 				messageDao.save(message);
 				messageService.sendEmail(user, "It's a match!", getAlertText(ad));
 			}
+		}
+	}
+
+	private void saveAlertResults(Ad ad, List<User> users) {
+		// save triggered alerts into database
+		for (User user : users) {
+			Date now = new Date();
+			AlertResult alertResult = new AlertResult();
+			if (user.isPremium()) {
+				alertResult.setNotified(true);
+			} else {
+				alertResult.setNotified(false);
+			}
+			alertResult.setTriggerAd(ad);
+			alertResult.setTriggerDate(now);
+			alertResult.setUser(user);
+			alertResultDao.save(alertResult);
 		}
 	}
 
