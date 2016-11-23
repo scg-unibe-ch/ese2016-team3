@@ -30,7 +30,9 @@ Your username is `jane@doe.com` and the password `password`.
 ## Place an ad
 
 ### Scenario 1
+
 #### Description
+
 You have inherited an house and want to sell it by auction.
 The title of the would be : `Modern House`
 The address of the house is:`Birkenweg 9 3014 Bern`.
@@ -61,3 +63,32 @@ And you don't have a picture to upload.
 #### Details
 
 Your username is `ese@unibe.ch` and the password `ese`.
+
+## Bidding
+
+### Scenario 1
+
+#### Description
+
+You've heard that life in `Interlaken` is quite lovely and want to see if there is something in your price range to be found in that city. You are willing to pay up to `5000` CHF for a small house.
+
+The result `Vintage Villa` strikes you as absolutely perfect and you see that you could have it for even less if you bid for it, instead of buying it directly, so you do decide to `bid` by adding `100` CHF to the current price.
+
+Now of course you want to check if your bid has been registered successfully.
+
+#### Details
+
+Your username is `eric@clapton.com` and the password `guitar`.
+
+### Scenario 2
+
+#### Description
+
+Some time ago you have taken part in four different auctions for properties and you would like to check whether they are still running and whether you are still the top bidder in any of them.
+
+#### Details
+
+Your username is `ese@unibe.ch` and the password `ese`.
+
+
+

@@ -659,7 +659,7 @@ public class AdTestDataSaver {
 		String roomDescription13 = "This is a beautiful Villa near the Sea";
 
 		Ad adInterlaken = new Ad();
-		adInterlaken.setZipcode(6600);
+		adInterlaken.setZipcode(3800);
 		adInterlaken.setType(Type.VILLA);
 		adInterlaken.setBuyMode(BuyMode.BUY);
 		adInterlaken.setMoveInDate(moveInDate9);
