@@ -112,6 +112,10 @@ public class Ad {
 	@Fetch(FetchMode.SELECT)
 	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Bid> bids;
+	
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "triggerAd", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private List<AlertResult> alertResults;
 
 	public List<Bid> getBids() {
 		return bids;
@@ -520,6 +524,7 @@ public class Ad {
 		this.purchaseRequests = new ArrayList<PurchaseRequest>();
 		this.visits = new ArrayList<Visit>();
 		this.pictures = new ArrayList<AdPicture>();
+		this.alertResults = new ArrayList<AlertResult>();
 		this.auction = false;
 		this.auctionCompleted = false;
 		this.availableForAuction = true;
@@ -587,5 +592,9 @@ public class Ad {
 		}
 
 		return AuctionStatus.NoAuction;
+	}
+
+	public List<AlertResult> getAlertResults() {
+		return this.alertResults;
 	}
 }

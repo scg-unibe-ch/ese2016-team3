@@ -208,7 +208,9 @@ public class AlertServiceTest {
 		assertFalse("Olten no type mismatch fist alert",
 		alertService.typeMismatch(oltenResidence, alertList.get(0))); 
 		assertTrue("Olten type mismatch second alert",
-		alertService.typeMismatch(oltenResidence, alertList.get(1))); // is true as 2nd alert does not contain alert type "appartment" 
+		alertService.typeMismatch(oltenResidence, alertList.get(1))); // is true as 2nd alert does not contain alert type "appartment"
+		
+		adDao.delete(oltenResidence);
 	}
 	
 	@Test
@@ -258,6 +260,8 @@ public class AlertServiceTest {
 		oltenResidence.setBalcony(false);
 		oltenResidence.setGarage(false);
 		
+		adDao.save(oltenResidence);
+		
 		// inbox of alertMessageReceiver is empty
 		Iterable<Message> messagesBeforeAlert = messageDao.findByRecipient(alertMessageReceiver);
 
@@ -282,6 +286,8 @@ public class AlertServiceTest {
 		// assert alertMessageReceiver receives a message when alert triggers
 		Iterable<Message> messagesAfterAlert = messageDao.findByRecipient(alertMessageReceiver);
 		assertEquals(1, countIterable(messagesAfterAlert));
+		
+		adDao.delete(oltenResidence);
 	}
 	
 	@Test
@@ -344,6 +350,8 @@ public class AlertServiceTest {
 		
 		Iterable<Message> messagesAfter = messageDao.findByRecipient(userNoTrigger);
 		assertEquals(countIterable(messagesAfter), 0);
+		
+		adDao.delete(ad);
 	}
 	
 	// Lean user creating method
@@ -546,6 +554,8 @@ public class AlertServiceTest {
 				
 				ad.setInfrastructureType(InfrastructureType.SATELLITE);
 				
+				adDao.save(ad);
+				
 				assertEquals(countIterable(messageDao.findByRecipient(userExtendedAlert1)), 0);
 				assertEquals(countIterable(messageDao.findByRecipient(userExtendedAlert2)), 0);
 				
@@ -559,7 +569,7 @@ public class AlertServiceTest {
 				messagesAfter = messageDao.findByRecipient(userExtendedAlert2);
 				assertEquals(countIterable(messagesAfter), 0);
 				
-				
+				adDao.delete(ad);
 				
 	}
 	

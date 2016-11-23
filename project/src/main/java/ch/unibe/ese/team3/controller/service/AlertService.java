@@ -240,6 +240,7 @@ public class AlertService {
 			alertResult.setTriggerAd(ad);
 			alertResult.setTriggerDate(now);
 			alertResult.setUser(user);
+			ad.getAlertResults().add(alertResult);
 			alertResultDao.save(alertResult);
 		}
 	}
