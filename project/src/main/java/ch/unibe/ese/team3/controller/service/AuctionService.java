@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ch.unibe.ese.team3.base.BaseService;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Bid;
 import ch.unibe.ese.team3.model.PurchaseRequest;
