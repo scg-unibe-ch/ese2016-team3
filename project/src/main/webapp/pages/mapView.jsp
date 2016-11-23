@@ -41,3 +41,85 @@
     </script>
   </body>
 </html>
+
+<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label for="field-floorLevelMin"
+											class="control-label col-sm-4">Floor level between</label>
+										<div class="col-sm-8">
+											<div class="input-group">
+												<div class="form-inline">
+													<form:input type="number" step="1" id="field-floorLevelMin"
+														path="floorLevelMin" cssClass="form-control input60" />
+													<label for="field-floorLevelMax" class="betweenLabel">
+														- </label>
+													<form:input type="number" step="1" id="field-floorLevelMax"
+														path="floorLevelMax" cssClass="form-control input60" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label for="field-NumberOfBathMin"
+											class="control-label col-sm-4">Nr. of Baths between</label>
+										<div class="col-sm-8">
+											<div class="input-group">
+												<div class="form-inline">
+													<form:input type="number" step="1"
+														id="field-NumberOfBathMin" path="numberOfBathMin"
+														cssClass="form-control input60 " />
+													<label for="field-NumberOfBathMax" class="betweenLabel">
+														- </label>
+													<form:input type="number" cssClass="form-control input60"
+														path="numberOfBathMax" id="field-NumberOfBathMax" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label for="field-BuildYearMin" class="control-label col-sm-4">Build
+											year between</label>
+										<div class="col-sm-8">
+											<div class="input-group">
+												<div class="form-inline">
+													<form:input type="number" cssClass="form-control input60"
+														path="buildYearMin" id="field-BuildYearMin" />
+													<label for="field-BuildYearMax" class="betweenLabel">
+														- </label>
+													<form:input type="number" cssClass="form-control input60"
+														path="buildYearMax" id="field-BuildYearMax" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group ${status.error ? 'has-error' : '' }">
+										<label for="field-RenovationYearMin"
+											class="control-label col-sm-4">Renovation year
+											between</label>
+										<div class="col-sm-8">
+											<div class="input-group">
+												<div class="form-inline">
+													<form:input type="number" cssClass="form-control input60"
+														path="renovationYearMin" id="field-RenovationYearMin" />
+													<label for="field-RenovationYearMax" class="betweenLabel">
+														- </label>
+													<form:input type="number" cssClass="form-control input60"
+														path="renovationYearMax" id="field-RenovationYearMax" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+

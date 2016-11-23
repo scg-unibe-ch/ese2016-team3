@@ -15,10 +15,9 @@ public class AdMeta {
 	private String id;
 	private String price;
 	private String picture;
+
 	private double lng;
 	private double lat;
-	
-	
 	
 	public String getName() {
 		return name;
@@ -74,5 +73,4 @@ public class AdMeta {
 	public void setLat(double lat) {
 		this.lat = lat;
 	}
-	
 }

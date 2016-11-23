@@ -178,16 +178,21 @@ public class AdServiceTest {
 	public void queryResults() {
 		SearchForm searchForm = new SearchForm();
 		searchForm.setCity("3001 - Bern");
-		searchForm.setPrice(500);
+		searchForm.setPrice(700);
 		searchForm.setRadius(5);
-		searchForm.setBalcony(true);
 		Type[] types = { Type.APARTMENT };
 		searchForm.setTypes(types);
 		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
 		ArrayList<Ad> adList = (ArrayList) queryedAds;
+		
+		searchForm.setBalcony(false);
+		searchForm.setGarage(true);
+		searchForm.setDishwasher(true);
+		searchForm.setElevator(true);
+		searchForm.setGarage(false);
 
 		assertEquals(1, adList.size());
-		assertEquals(1, adList.get(0).getId());
+		assertEquals("Cheap studio in Bern!", adList.get(0).getTitle());
 	}
 	
 	@Test
@@ -295,7 +300,7 @@ public class AdServiceTest {
 
 		assertEquals(listNewestAds.size(), 3);
 
-		
+		assertEquals("Malibu-style Beachhouse", listNewestAds.get(0).getTitle());
 		// Note: 
 		assertTrue("Unexpected value for listNewestAds.get(0): " + listNewestAds.get(0),
 				listNewestAds.get(0).getTitle().equals("Nice studio") ||
@@ -313,7 +318,7 @@ public class AdServiceTest {
 				listNewestAds.get(2).getTitle().equals("Olten Residence") ||
 				listNewestAds.get(2).getTitle().equals("Malibu-style Beachhouse"));
 		
-		//assertEquals("Malibu-style Beachhouse", listNewestAds.get(3).getTitle());
+		//
 	}
 
 	@Test

@@ -30,7 +30,9 @@ Your username is `jane@doe.com` and the password `password`.
 ## Place an ad
 
 ### Scenario 1
+
 #### Description
+
 You have inherited an house and want to sell it by auction.
 The title of the would be : `Modern House`
 The address of the house is:`Birkenweg 9 3014 Bern`.
@@ -61,3 +63,71 @@ And you don't have a picture to upload.
 #### Details
 
 Your username is `ese@unibe.ch` and the password `ese`.
+
+## Search an ad
+
+### Scenario 1
+
+#### Description
+
+You have earned some money working as a programmer and want to buy your own accommodation. You are looking for something smaller and cheaper relatively close to Bern. A `studio` or `apartment` would be perfect for you.
+
+It's important to you that you live relatively close to Bern (`50 km`). You are willing to pay up to `Fr. 900'000.-`.
+
+In addition your accommodation should have a balcony, it should have between `1` and `4` rooms, it should be newly renovated (`Renovation year after 2000`) and shopping centres should not be farther away than `1000 meters`. 
+
+Between 1st and the 13th December, you want to be able to move in.
+
+You want to have a closer look at the search results and use the map to have a look at the neighborhood. You open an ad based on the map view.
+
+You filter the returned results, so the most expansive ad appears on top. 
+
+You notice that it is very important to you to have `Fiber optic cable` as you like to have a decent internet connection. You modify the search accordingly.
+
+
+#### Details
+
+You are a normal visitor to the site, who is not logged in.
+
+
+## Bidding
+
+### Scenario 1
+
+#### Description
+
+You've heard that life in `Interlaken` is quite lovely and want to see if there is something in your price range to be found in that city. You are willing to pay up to `5000` CHF for a small house.
+
+The result `Vintage Villa` strikes you as absolutely perfect and you see that you could have it for even less if you bid for it, instead of buying it directly, so you do decide to `bid` by adding `100` CHF to the current price.
+
+Now of course you want to check if your bid has been registered successfully.
+
+#### Details
+
+Your username is `eric@clapton.com` and the password `guitar`.
+
+### Scenario 2
+
+#### Description
+
+Some time ago you have taken part in four different auctions for properties and you would like to check whether they are still running and whether you are still the top bidder in any of them.
+
+#### Details
+
+Your username is `ese@unibe.ch` and the password `ese`.
+
+
+## Sign up new user
+
+### Scenario 1
+
+#### Description
+
+You want to sign up a new user on Ithaca with a premium membership lasting for 30 days. Your name is `Hans Muster`, your email `hans@muster.com`, password `password`, and you are `male`. 
+
+Verify that the user has a premium membership by logging in and showing your profile.
+
+#### Details
+
+You have a `Mastercard` in your name with the card number:
+`1111222233334444`, security number `123` and expiry date `10/2018`.

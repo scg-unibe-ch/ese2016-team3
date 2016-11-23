@@ -199,6 +199,8 @@ public class AdService extends BaseService {
 
 		return ad;
 	}
+	
+
 
 	/**
 	 * Gets the ad that has the given id.

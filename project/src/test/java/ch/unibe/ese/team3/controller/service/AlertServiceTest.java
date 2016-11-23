@@ -247,6 +247,8 @@ public class AlertServiceTest {
 		oltenResidence.setCreationDate(date);
 		oltenResidence.setPrice(1200);
 		oltenResidence.setSquareFootage(42);
+		oltenResidence.setDistancePublicTransport(500);
+		oltenResidence.setInfrastructureType(InfrastructureType.FOC);
 		oltenResidence.setType(Type.LOFT);
 		oltenResidence.setRoomDescription("blah");
 		oltenResidence.setUser(adCreator);

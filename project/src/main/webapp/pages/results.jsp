@@ -143,7 +143,6 @@
 		        
 		    };
 		})(marker,contentString,infowindow));
-		
 	}
 </script>
 

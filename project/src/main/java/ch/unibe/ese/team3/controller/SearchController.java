@@ -19,9 +19,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ch.unibe.ese.team3.controller.pojos.PictureUploader;
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.dto.AdMeta;
+
 import ch.unibe.ese.team3.enums.PageMode;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.BuyMode;
@@ -78,6 +80,7 @@ public class SearchController {
 				admeta.setName(ad.getTitle());
 				admeta.setPrice(Integer.toString(ad.getPrice()));
 				admeta.setPicture(ad.getPictures().get(0).getFilePath());
+
 				admeta.setLat(ad.getLatitude());
 				admeta.setLng(ad.getLongitude());
 
@@ -86,6 +89,7 @@ public class SearchController {
 
 			objectMapper = new ObjectMapper();
 			String jsonResponse = "";
+			
 			try {
 				jsonResponse += objectMapper.writeValueAsString(adResults);
 			} catch (JsonProcessingException e) {
@@ -93,6 +97,7 @@ public class SearchController {
 				e.printStackTrace();
 			}
 			jsonResponse += "";
+
 
 			model.addObject("resultsInJson", jsonResponse);
 

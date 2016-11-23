@@ -238,7 +238,7 @@ public class AdTestDataSaver {
 		adOlten.setRoomDescription(studioDescription4);
 		adOlten.setUser(ese);
 		adOlten.setNumberOfBath(1);
-		adOlten.setTitle("Roommate wanted in Olten City");
+		adOlten.setTitle("Loft in Olten City");
 		adOlten.setStreet("Zehnderweg 5");
 		adOlten.setCity("Olten");
 		adOlten.setLatitude(47.3526466);
@@ -287,6 +287,7 @@ public class AdTestDataSaver {
 		adNeuchâtel.setTitle("Studio extrèmement bon marché à Neuchâtel");
 		adNeuchâtel.setStreet("Rue de l'Hôpital 11");
 		adNeuchâtel.setCity("Neuchâtel");
+
 		adNeuchâtel.setLatitude(46.9917168);
 		adNeuchâtel.setLongitude(6.9297439);
 
@@ -477,6 +478,7 @@ public class AdTestDataSaver {
 		adAarau.setCreationDate(creationDate8);
 		adAarau.setPrice(1500);
 		adAarau.setSquareFootage(26);
+
 		adAarau.setRoomDescription(studioDescription9);
 		adAarau.setUser(oprah);
 		adAarau.setTitle("Beautiful studio in Aarau");
@@ -528,9 +530,11 @@ public class AdTestDataSaver {
 		adDavos.setCreationDate(creationDate4);
 		adDavos.setPrice(1100);
 		adDavos.setSquareFootage(74);
+
 		adDavos.setRoomDescription(studioDescription10);
 		adDavos.setUser(oprah);
 		adDavos.setTitle("Free room in Davos City");
+
 		adDavos.setStreet("Rossweidstrasse 9");
 		adDavos.setCity("Davos");
 		adDavos.setLatitude(46.8033266);
@@ -655,7 +659,7 @@ public class AdTestDataSaver {
 		String roomDescription13 = "This is a beautiful Villa near the Sea";
 
 		Ad adInterlaken = new Ad();
-		adInterlaken.setZipcode(6600);
+		adInterlaken.setZipcode(3800);
 		adInterlaken.setType(Type.VILLA);
 		adInterlaken.setBuyMode(BuyMode.BUY);
 		adInterlaken.setMoveInDate(moveInDate9);
@@ -902,7 +906,6 @@ public class AdTestDataSaver {
 
 		adEggiwil.getPictures().addAll(pictures);
 		adDao.save(adEggiwil);
-
 	}
 
 	private AdPicture createPicture(Ad ad, String filePath) {

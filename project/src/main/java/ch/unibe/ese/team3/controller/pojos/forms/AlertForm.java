@@ -47,26 +47,45 @@ public class AlertForm {
 	private boolean extendedAlert;
 
 	private InfrastructureType infrastructureType;
+	
+	@Min(value = 0, message = "Has to be a positive number")
 	private int squareFootageMin;
+	@Min(value = 0, message = "Has to be a positive number")
 	private int squareFootageMax;
+	
+	@Min(value = 0, message = "Has to be a positive number")
 	private int buildYearMin;
+	@Min(value = 0, message = "Has to be a positive number")
 	private int buildYearMax;
+	@Min(value = 0, message = "Has to be a positive number")
 	private int renovationYearMin;
+	@Min(value = 0, message = "Has to be a positive number")
 	private int renovationYearMax;
+	@Min(value = 0, message = "Has to be a positive number")
 	private int numberOfRoomsMin;
+	@Min(value = 0, message = "Has to be a positive number")
 	private int numberOfRoomsMax;
+	@Min(value = 0, message = "Has to be a positive number")
    	private int numberOfBathMin;
+	@Min(value = 0, message = "Has to be a positive number")
    	private int numberOfBathMax;
 	
 	
-	//new
+	@Min(value = 0, message = "Has to be a positive number")
 	private int distanceSchoolMin;
+	@Min(value = 0, message = "Has to be a positive number")
 	private int distanceSchoolMax;
+	@Min(value = 0, message = "Has to be a positive number")
 	private int distanceShoppingMin;
+	@Min(value = 0, message = "Has to be a positive number")
 	private int distanceShoppingMax;
+	@Min(value = 0, message = "Has to be a positive number")
 	private int distancePublicTransportMin;
+	@Min(value = 0, message = "Has to be a positive number")
 	private int distancePublicTransportMax;
+	@Min(value = 0, message = "Has to be a positive number")
 	private int floorLevelMin;
+	@Min(value = 0, message = "Has to be a positive number")
 	private int floorLevelMax;
 	
 	

@@ -1,5 +1,6 @@
 package ch.unibe.ese.team3.model;
 
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -127,6 +128,7 @@ public class Ad {
 	public List<PurchaseRequest> getPurchaseRequests() {
 		return purchaseRequests;
 	}
+
 
 	public void setPurchaseRequests(List<PurchaseRequest> purchaseRequests) {
 		this.purchaseRequests = purchaseRequests;
