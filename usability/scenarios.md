@@ -64,6 +64,32 @@ And you don't have a picture to upload.
 
 Your username is `ese@unibe.ch` and the password `ese`.
 
+## Search an ad
+
+### Scenario 1
+
+#### Description
+
+You have earned some money working as a programmer and want to buy your own accommodation. You are looking for something smaller and cheaper relatively close to Bern. A `studio` or `apartment` would be perfect for you.
+
+It's important to you that you live relatively close to Bern (`50 km`). You are willing to pay up to `Fr. 900'000.-`.
+
+In addition your accommodation should have a balcony, it should have between `1` and `4` rooms, it should be newly renovated (`Renovation year after 2000`) and shopping centres should not be farther away than `1000 meters`. 
+
+Between 1st and the 13th December, you want to be able to move in.
+
+You want to have a closer look at the search results and use the map to have a look at the neighborhood. You open an ad based on the map view.
+
+You filter the returned results, so the most expansive ad appears on top. 
+
+You notice that it is very important to you to have `Fiber optic cable` as you like to have a decent internet connection. You modify the search accordingly.
+
+
+#### Details
+
+You are a normal visitor to the site, who is not logged in.
+
+
 ## Bidding
 
 ### Scenario 1

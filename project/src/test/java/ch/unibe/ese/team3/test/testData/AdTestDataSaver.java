@@ -906,7 +906,6 @@ public class AdTestDataSaver {
 
 		adEggiwil.getPictures().addAll(pictures);
 		adDao.save(adEggiwil);
-
 	}
 
 	private AdPicture createPicture(Ad ad, String filePath) {
