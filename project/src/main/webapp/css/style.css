@@ -128,3 +128,7 @@ h3 {
 .navbar {
 	min-height: 0;
 }
+
+#map {
+	border-radius: 4px;
+}

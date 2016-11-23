@@ -455,7 +455,7 @@
 						</div>
 					</div>
 					<div id="mapview" class="tab-pane fade in">
-						<div class="ad-wide-preview-outer" id="map" style="height: 400px"></div>
+						<div id="map" style="height: 400px"></div>
 					</div>
 				</div>
 			</c:otherwise>
