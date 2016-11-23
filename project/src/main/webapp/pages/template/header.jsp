@@ -70,6 +70,7 @@
 						<li><a href="/${pagemode}/searchAd">Find ad</a></li>
 						<c:if test="${loggedIn}">
 							<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
+							<li><a href="/buy/profile/mybids">My bids</a></li>
 						</c:if>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
@@ -90,9 +91,7 @@
 										<li><a href="/${pagemode}/profile/myRooms"> <span
 												class="glyphicon glyphicon-home"></span> My Ads
 										</a></li>
-
 										<li><a href="/buy/profile/auctions"> <span
-
 												class="glyphicon glyphicon-th-list"></span> Manage auctions
 										</a></li>
 										<li><a href="/${pagemode}/profile/messages"> <span

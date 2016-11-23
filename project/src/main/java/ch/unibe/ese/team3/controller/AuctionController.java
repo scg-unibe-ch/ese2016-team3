@@ -90,6 +90,16 @@ public class AuctionController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/profile/mybids", method = RequestMethod.GET)
+	public ModelAndView showMyAuctions(Principal principal){
+		User currentUser = userService.findUserByUsername(principal.getName());
+		
+		ModelAndView model = new ModelAndView("MyBids");
+		model.addObject("myauctions", auctionService.getBidsByUser(currentUser));
+		
+		return model;
+	}
+	
 	@RequestMapping(value ="/profile/auction", method = RequestMethod.GET)
 	public ModelAndView showAuctionDetails(Principal principal, @RequestParam("id") int id){
 		User owner = userService.findUserByUsername(principal.getName());
