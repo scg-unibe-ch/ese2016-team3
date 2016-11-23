@@ -46,7 +46,7 @@
 		<h1>
 			<img id="logo" src="/img/logoNew.png"> Ithaca
 		</h1>
-		<ul class="nav nav-tabs" role="tablist">
+		<ul class="nav nav-tabs header-tabs" role="tablist">
 			<c:choose>
 				<c:when test="${pagemode == 'buy'}">
 					<li class="active"><a href="/buy/">Buy</a></li>

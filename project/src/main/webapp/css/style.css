@@ -1,5 +1,9 @@
-ul.nav-tabs {
+ul.nav-tabs.header-tabs {
 	padding-left: 210px;
+}
+
+div.tab-pane {
+	padding-top: 15px;
 }
 
 #mainNav .navbar-inner {
@@ -99,4 +103,28 @@ tr.message-row {
 	.auction-Column {
 		border-left: 1px solid lightgray;
 	}
+}
+
+h1 {
+	margin-top: 0;
+}
+
+h3 {
+	margin-top: 10px;
+}
+
+.breadcrumb {
+	margin-bottom: 10px;
+}
+
+.navbar-nav > li > a {
+	padding: 7px 15px;
+}
+
+.nav > li > a {
+	padding: 7px 15px;
+}
+
+.navbar {
+	min-height: 0;
 }

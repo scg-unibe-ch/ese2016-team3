@@ -14,7 +14,8 @@
 </ol>
 
 
-<script	src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDPcQNoMGcp8Oe9l6uY8jLFlMR4pyecFIU&libraries=places"></script>
+<script
+	src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDPcQNoMGcp8Oe9l6uY8jLFlMR4pyecFIU&libraries=places"></script>
 
 <script>
 	/*
@@ -87,6 +88,10 @@
 		});
 		
 		initMap();
+		
+		 $('a[href="#mapview"]').on('shown.bs.tab', function(e){
+	        initMap();
+	    	});
 	});
 </script>
 
@@ -380,80 +385,78 @@
 			</div>
 		</form:form>
 	</div>
-	
+
 	<div class="col-xs-12 col-sm-12 col-md-8 col-ls-8">
 		<h4>Results</h4>
-		<div  class ="ad-wide-preview-outer" id="map"
-		style=" height: 400px"></div>
 		<c:choose>
 			<c:when test="${empty results}">
 				<p>No results found!
 			</c:when>
 			<c:otherwise>
-				<!-- 				<div class="row bottom15"> -->
-				<!-- 					<div class="col-xs-12"> -->
-				<!-- 						<div class="btn-group"> -->
-				<!-- 							<button type="button" class="btn btn-default">All</button> -->
-				<!-- 							<button type="button" class="btn btn-default">Buy -->
-				<!-- 								directly</button> -->
-				<!-- 							<button type="button" class="btn btn-default">Buy by -->
-				<!-- 								auction</button> -->
-				<!-- 						</div> -->
-				<!-- 					</div> -->
-				<!-- 				</div> -->
-				<div class="row" id="resultsDiv">
-					<c:forEach var="ad" items="${results}">
-						<div data-price="${ad.price}" data-moveIn="${ad.moveInDate}"
-							data-age="${ad.moveInDate}"
-							class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ad-wide-preview-outer resultAd ${ad.isPremiumAd() ? 'premiumAd' : '' }">
-							<div class="col-md-12 ad-wide-preview-inner">
-								<div class="row">
-									<div class="col-sm-4 col-md-4">
-										<a href="<c:url value='./ad?id=${ad.id}' />"> <img
-											class="img-responsive" src="${ad.pictures[0].filePath}" />
-										</a>
-									</div>
-									<div class="col-sm-4 col-md-4">
-										<p>
-											<strong> <a class="link"
-												href="<c:url value='./ad?id=${ad.id}' />">${ad.title}</a>
-											</strong>
-										</p>
-										<p>${ad.street},&nbsp;${ad.zipcode}&nbsp;${ad.city}</p>
-										<p>
-											<i>${ad.type.name}</i>
-										</p>
-										<strong>CHF ${ad.price }</strong>
-										<fmt:formatDate value="${ad.moveInDate}"
-											var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
-										<p>Move-in date: ${formattedMoveInDate }</p>
-									</div>
+				<ul class="nav nav-tabs">
+					<li class="active"><a data-toggle="tab" href="#listview"><span class="glyphicon glyphicon-list"></span> List</a></li>
+					<li><a data-toggle="tab" href="#mapview"><span class="glyphicon glyphicon-map-marker"></span> Map</a></li>
+				</ul>
+				<div class="tab-content">
+					<div id="listview" class="tab-pane fade in active">
+						<div id="resultsDiv">
+							<c:forEach var="ad" items="${results}">
+								<div data-price="${ad.price}" data-moveIn="${ad.moveInDate}"
+									data-age="${ad.moveInDate}"
+									class="ad-wide-preview-outer resultAd ${ad.isPremiumAd() ? 'premiumAd' : '' }">
+									<div class="col-md-12 ad-wide-preview-inner">
+										<div class="row">
+											<div class="col-sm-4 col-md-4">
+												<a href="<c:url value='./ad?id=${ad.id}' />"> <img
+													class="img-responsive" src="${ad.pictures[0].filePath}" />
+												</a>
+											</div>
+											<div class="col-sm-4 col-md-4">
+												<p>
+													<strong> <a class="link"
+														href="<c:url value='./ad?id=${ad.id}' />">${ad.title}</a>
+													</strong>
+												</p>
+												<p>${ad.street},&nbsp;${ad.zipcode}&nbsp;${ad.city}</p>
+												<p>
+													<i>${ad.type.name}</i>
+												</p>
+												<strong>CHF ${ad.price }</strong>
+												<fmt:formatDate value="${ad.moveInDate}"
+													var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+												<p>Move-in date: ${formattedMoveInDate }</p>
+											</div>
 
-									<c:if
-										test="${ad.auction  && ad.isAuctionRunning() && loggedInUserEmail != ad.user.username }">
+											<c:if
+												test="${ad.auction  && ad.isAuctionRunning() && loggedInUserEmail != ad.user.username }">
 
-										<div class="col-sm-4 col-md-4 auction-Column">
-											<p>
-												<strong>Auction</strong>
-											</p>
-											<fmt:formatDate value="${ad.endDate}"
-												var="formattedEndDate" type="date" pattern="dd.MM.yyyy" />
-											<p>Running until: ${formattedEndDate}</p>
+												<div class="col-sm-4 col-md-4 auction-Column">
+													<p>
+														<strong>Auction</strong>
+													</p>
+													<fmt:formatDate value="${ad.endDate}"
+														var="formattedEndDate" type="date" pattern="dd.MM.yyyy" />
+													<p>Running until: ${formattedEndDate}</p>
 
-											<p>
-												Current price: <strong>${ad.currentAuctionPrice - ad.increaseBidPrice}
-													CHF</strong>
-											</p>
-											<p>
-												<a href="./ad?id=${ad.id}">Bid</a>
-											</p>
+													<p>
+														Current price: <strong>${ad.currentAuctionPrice - ad.increaseBidPrice}
+															CHF</strong>
+													</p>
+													<p>
+														<a href="./ad?id=${ad.id}">Bid</a>
+													</p>
+												</div>
+											</c:if>
 										</div>
-									</c:if>
+									</div>
+									<div class="clearfix"></div>
 								</div>
-							</div>
-							<div class="clearfix"></div>
+							</c:forEach>
 						</div>
-					</c:forEach>
+					</div>
+					<div id="mapview" class="tab-pane fade in">
+						<div class="ad-wide-preview-outer" id="map" style="height: 400px"></div>
+					</div>
 				</div>
 			</c:otherwise>
 		</c:choose>
