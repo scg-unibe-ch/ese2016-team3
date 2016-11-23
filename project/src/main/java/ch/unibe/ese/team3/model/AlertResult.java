@@ -27,7 +27,7 @@ public class AlertResult {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date triggerDate;
 	
-	@ManyToOne (cascade = {CascadeType.ALL})
+	@ManyToOne 
 	private Ad triggerAd;
 	
 	@Column(nullable = false)

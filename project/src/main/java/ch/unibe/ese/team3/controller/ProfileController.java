@@ -201,8 +201,9 @@ public class ProfileController {
 			userUpdateService.updateFrom(editProfileForm, user);
 			Authentication request = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
 			Authentication result = authenticationManager.authenticate(request);
-			SecurityContextHolder.getContext().setAuthentication(result);			
-			return user(user.getId(), principal);
+			SecurityContextHolder.getContext().setAuthentication(result);
+			model = new ModelAndView("redirect:../user?id=" + user.getId());
+			return model;
 		} else {
 			model = new ModelAndView("editProfile");
 			model.addObject("editProfileForm", editProfileForm);
@@ -300,7 +301,8 @@ public class ProfileController {
 			PremiumChoice premiumChoice = premiumChoiceService.findPremiumChoiceByDuration(upgradeForm.getDuration());
 			upgradeService.upgradeFrom(upgradeForm, user, premiumChoice);
 			user = userService.findUserByUsername(username);
-			return user(user.getId(), principal);
+			model = new ModelAndView("redirect:../user?id=" + user.getId());
+			return model;
 		} else {
 			Iterable<PremiumChoice> allChoices = premiumChoiceService.findAll();
 			model = new ModelAndView("upgrade");

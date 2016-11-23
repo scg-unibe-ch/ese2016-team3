@@ -34,7 +34,7 @@ Your username is `jane@doe.com` and the password `password`.
 #### Description
 
 You have inherited an house and want to sell it by auction.
-The title of the would be : `Modern House`
+The title of the house would be : `Modern House`
 The address of the house is:`Birkenweg 9 3014 Bern`.
 The new owners of the house would be allowed to move in at the `1.Dez 2016`.
 Other facts about the house are:
