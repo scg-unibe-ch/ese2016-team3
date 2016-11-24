@@ -538,6 +538,7 @@ public class Ad {
 	public boolean hasAuctionExpired() {
 		Date now = new Date();
 		return !auctionCompleted && availableForAuction && now.after(endDate);
+		
 	}
 
 	public boolean isAuctionRunning() {
