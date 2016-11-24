@@ -234,7 +234,7 @@ public class AdService extends BaseService {
 			}
 		}
 		
-		removeExpiredAuctions(ads);
+		ads = removeExpiredAuctions(ads);
 		
 		Collections.sort(ads, new Comparator<Ad>() {
 			@Override
@@ -251,7 +251,7 @@ public class AdService extends BaseService {
 		return fourNewest;
 	}
 
-	private void removeExpiredAuctions(List<Ad> ads) {
+	private List<Ad> removeExpiredAuctions(List<Ad> ads) {
 		Iterator<Ad> itr = ads.iterator();
 		while (itr.hasNext()) {
 			Ad ad = itr.next();
@@ -262,7 +262,8 @@ public class AdService extends BaseService {
 					itr.remove();
 				
 			}
-		}		
+		}	
+		return ads;
 	}
 
 
@@ -434,7 +435,7 @@ public class AdService extends BaseService {
 		}
 
 		//removes all expired auctions
-		removeExpiredAuctions(locatedResults);
+		locatedResults = removeExpiredAuctions(locatedResults);
 		
 		locatedResults.sort(new PremiumAdComparator());
 
