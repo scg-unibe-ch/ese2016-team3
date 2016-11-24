@@ -1,6 +1,6 @@
 package ch.unibe.ese.team3.model;
 
-import ch.unibe.ese.team3.enums.PageMode;
+import ch.unibe.ese.team3.model.enums.PageMode;
 
 public enum BuyMode {
 	BUY("buy", "buying"), RENT("rent", "renting");

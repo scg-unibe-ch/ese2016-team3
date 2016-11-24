@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import ch.unibe.ese.team3.enums.PageMode;
+import ch.unibe.ese.team3.model.enums.PageMode;
 
 public class UriInterceptor extends HandlerInterceptorAdapter {
 	

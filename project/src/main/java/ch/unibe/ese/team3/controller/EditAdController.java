@@ -28,13 +28,13 @@ import ch.unibe.ese.team3.controller.service.AlertService;
 import ch.unibe.ese.team3.controller.service.EditAdService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.dto.PictureMeta;
-import ch.unibe.ese.team3.enums.Distance;
 import ch.unibe.ese.team3.exceptions.ForbiddenException;
 import ch.unibe.ese.team3.exceptions.ResourceNotFoundException;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
+import ch.unibe.ese.team3.model.enums.Distance;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import ch.unibe.ese.team3.enums.PageMode;
+import ch.unibe.ese.team3.model.enums.PageMode;
 
 @Controller
 public class MapController {

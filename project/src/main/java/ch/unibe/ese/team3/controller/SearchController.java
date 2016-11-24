@@ -22,11 +22,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.dto.AdMeta;
-import ch.unibe.ese.team3.enums.PageMode;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
+import ch.unibe.ese.team3.model.enums.PageMode;
 
 /** Handles all requests concerning the search for ads. */
 @Controller

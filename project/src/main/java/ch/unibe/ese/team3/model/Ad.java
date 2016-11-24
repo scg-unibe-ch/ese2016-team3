@@ -11,8 +11,8 @@ import javax.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import ch.unibe.ese.team3.enums.AuctionStatus;
-import ch.unibe.ese.team3.enums.Distance;
+import ch.unibe.ese.team3.model.enums.AuctionStatus;
+import ch.unibe.ese.team3.model.enums.Distance;
 
 /** Describes an advertisement that users can place and search for. */
 @Entity
