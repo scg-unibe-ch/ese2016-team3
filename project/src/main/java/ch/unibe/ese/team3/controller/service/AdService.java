@@ -229,10 +229,13 @@ public class AdService extends BaseService {
 		Iterable<Ad> allAds = adDao.findAll();
 		List<Ad> ads = new ArrayList<Ad>();
 		for (Ad ad : allAds) {
-			if (ad.getBuyMode() == buyMode) {
-				ads.add(ad);
+			if (ad.getBuyMode() == buyMode ) {
+					ads.add(ad);
 			}
 		}
+		
+		removeExpiredAuctions(ads);
+		
 		Collections.sort(ads, new Comparator<Ad>() {
 			@Override
 			public int compare(Ad ad1, Ad ad2) {
@@ -247,6 +250,22 @@ public class AdService extends BaseService {
 			fourNewest.add(ads.get(i));
 		return fourNewest;
 	}
+
+	private void removeExpiredAuctions(List<Ad> ads) {
+		Iterator<Ad> itr = ads.iterator();
+		while (itr.hasNext()) {
+			Ad ad = itr.next();
+			if(ad.isAuction()){
+				if(ad.isAuctionCompleted())
+					itr.remove();
+				if(ad.hasAuctionExpired())
+					itr.remove();
+				
+			}
+		}		
+	}
+
+
 
 	/**
 	 * Returns all ads that match the parameters given by the form. This list
@@ -414,6 +433,9 @@ public class AdService extends BaseService {
 			}
 		}
 
+		//removes all expired auctions
+		removeExpiredAuctions(locatedResults);
+		
 		locatedResults.sort(new PremiumAdComparator());
 
 		return locatedResults;
