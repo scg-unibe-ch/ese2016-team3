@@ -133,6 +133,14 @@
 	type="date" pattern="dd.MM.yyyy" />
 <fmt:formatDate value="${shownAd.creationDate}"
 	var="formattedCreationDate" type="date" pattern="dd.MM.yyyy" />
+
+<!-- format the numbers -->
+<fmt:formatNumber value="${shownAd.price}" var="formattedPrice"
+	pattern="###,### CHF" />
+
+<fmt:formatNumber
+	value="${shownAd.currentAuctionPrice  - shownAd.increaseBidPrice}"
+	var="formattedCurrentPrice" pattern="###,### CHF" />
 <%--- 
 <c:choose>
 	<c:when test="${empty shownAd.moveOutDate }">
@@ -195,7 +203,7 @@
 							</div>
 							<div class="col-sm-4">
 								<div class="pull-right">
-									<h3>${shownAd.price}&#32;CHF</h3>
+									<h3>${formattedPrice}</h3>
 								</div>
 							</div>
 						</div>
@@ -418,8 +426,7 @@
 									<p>Running until: ${formattedEndDate}</p>
 
 									<p>
-										Current price: <strong>${shownAd.currentAuctionPrice  - shownAd.increaseBidPrice}
-											CHF</strong>
+										Current price: <strong>${formattedCurrentPrice} CHF</strong>
 									</p>
 								</div>
 
@@ -483,8 +490,8 @@
 			</div>
 			<div class="modal-body">
 				<p>
-					Do you really want to bid <strong>CHF
-						${shownAd.currentAuctionPrice}.00</strong> for this ad?
+					Do you really want to bid <strong>${formattedCurrentPrice}</strong>
+					for this ad?
 				</p>
 			</div>
 			<div class="modal-footer">
@@ -513,8 +520,7 @@
 			</div>
 			<div class="modal-body">
 				<p>
-					Do you really want to buy this real estate for <strong>CHF
-						${shownAd.price}.00</strong>?
+					Do you really want to buy this real estate for <strong>	${formattedPrice}</strong>?
 				</p>
 			</div>
 			<div class="modal-footer">

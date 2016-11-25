@@ -569,8 +569,7 @@ public class AlertServiceTest {
 				messagesAfter = messageDao.findByRecipient(userExtendedAlert2);
 				assertEquals(countIterable(messagesAfter), 0);
 				
-				adDao.delete(ad);
-				
+				adDao.delete(ad);		
 	}
 	
 	

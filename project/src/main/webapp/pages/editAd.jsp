@@ -173,7 +173,7 @@
 							<spring:bind path="squareFootage">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label" for="field-SquareFootage">Square
-										Meters</label>
+										meters</label>
 									<div class="col-sm-5">
 										<form:input id="field-SquareFootage" type="number" min="0"
 											path="squareFootage" placeholder="Square footage" step="5"
@@ -319,7 +319,7 @@
 							<spring:bind path="infrastructureType">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label"
-										for="infrastructureType-room">InfrastructureType</label>
+										for="infrastructureType-room">Infrastructure type</label>
 									<div class="col-sm-5">
 										<form:select id="infrastructureType" path="infrastructureType"
 											cssClass="form-control">

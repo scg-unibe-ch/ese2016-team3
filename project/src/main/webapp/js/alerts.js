@@ -8,6 +8,7 @@ $(document).ready(function() {
 	});
 	
 	
+	
 	var setPanelVisibility = function() {
 		var me = $("#field-extendedAlert");
 
@@ -24,25 +25,20 @@ $(document).ready(function() {
 		}
 	}
 	
-	var showMessageWhenBelowZero = function() {
-		var message = $("#negativeAlertWarning");
-		var floorLevelMin = $("#field-floorLevelMin");
-		
-		if (floorLevelMin > 0) {
-			message.show();
-		}
-		else {
-			message.hide();
-		}
+	// resets the values of the extended alert fields
+	var deleteExtendedAlertValues = function() {
+		$("#field-floorLevelMin").val(0)
+		$("field-floorLevelMin").val(0)
+		$("#field-floorLevelMax").val(0)
+		$("field-floorLevelMax").val(0)
 	}
 	
 	// when field with Id field-auction is checked, call function
 	// setPanelVisibility
 	$("#field-extendedAlert").change(function() {
 		setPanelVisibility();
-		//showMessageWhenBelowZero();
+		deleteExtendedAlertValues();
 	});
 
 	setPanelVisibility();
-	//showMessageWhenBelowZero();
 });

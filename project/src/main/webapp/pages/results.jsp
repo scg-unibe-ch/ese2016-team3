@@ -254,7 +254,7 @@
 
 					<spring:bind path="infrastructureType">
 						<div class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="control-label" for="infrastructureType-room">InfrastructureType</label>
+							<label class="control-label" for="infrastructureType-room">Infrastructure type</label>
 							<form:select id="infrastructureType" path="infrastructureType"
 								cssClass="form-control">
 								<option value=""></option>

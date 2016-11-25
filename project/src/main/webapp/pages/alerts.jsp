@@ -130,11 +130,6 @@
 										</label>
 									</div>
 								</div>
-								
-								<!-- only appears when a negative value is set in the extended alert form -->
-								<!-- 
-								<label id="negativeAlertWarning" >Extended Alert</label>  -->
-
 							</div>
 						</div>
 					</div>
