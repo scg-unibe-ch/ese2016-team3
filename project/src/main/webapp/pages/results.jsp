@@ -85,6 +85,8 @@
 			
 			document.getElementById("infrastructureType").selectedIndex = 0;
 			
+			$("#field-squareFootageMin").val(0);
+			$("#field-squareFootageMax").val(0);
 			$("#field-floorLevelMin").val(0);
 			$("#field-floorLevelMax").val(0);
 			$("#field-NumberOfBathMin").val(0);
@@ -300,6 +302,19 @@
 							</form:select>
 						</div>
 					</spring:bind>
+					
+					<div class="form-group row ">
+						<label for="field-squareFootageMin" class="col-md-6">Square meters 
+							between</label>
+						<div class="col-md-6 form-inline">
+							<form:input type="number" step="1" min="0" id="field-squareFootageMin"
+								path="squareFootageMin" cssClass="form-control input60 " />
+							<label for="field-squareFootageMax" class="betweenLabel">
+								- </label>
+							<form:input type="number" min="0" cssClass="form-control input60"
+								path="squareFootageMax" id="field-squareFootageMax" />
+						</div>
+					</div>
 
 					<div class="form-group row">
 						<label for="field-floorLevelMin" class="col-md-6">Floor
