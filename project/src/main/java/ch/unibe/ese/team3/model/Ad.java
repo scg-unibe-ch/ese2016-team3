@@ -552,7 +552,7 @@ public class Ad {
 	public boolean hasAuctionExpired() {
 		Date now = new Date();
 		
-		//Calendar now = Calendar.getInstance();
+	//Calendar now = Calendar.getInstance();
 	//	int year = now.get(Calendar.YEAR);
 	//	int month = now.get(Calendar.MONTH) + 1; // Note: zero based!
 	//	int day = now.get(Calendar.DAY_OF_MONTH);
