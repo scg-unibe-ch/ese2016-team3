@@ -72,6 +72,41 @@
 </script>
 
 <script>
+	$(document).ready(function(){
+		$("#reset").click(function(){
+			$("#field-earliestMoveInDate").val("");
+			$("#field-latestMoveInDate").val("");
+			
+			document.getElementById("field-balcony").checked = false;
+			document.getElementById("field-garage").checked = false;
+			document.getElementById("field-parking").checked = false;
+			document.getElementById("field-elevator").checked = false;
+			document.getElementById("field-dishwasher").checked = false;
+			
+			document.getElementById("infrastructureType").selectedIndex = 0;
+			
+			$("#field-floorLevelMin").val(0);
+			$("#field-floorLevelMax").val(0);
+			$("#field-NumberOfBathMin").val(0);
+			$("#field-NumberOfBathMax").val(0);
+			$("#field-NumberOfRoomsMin").val(0);
+			$("#field-NumberOfRoomsMax").val(0);
+			$("#field-BuildYearMin").val(0);
+			$("#field-BuildYearMax").val(0);
+			$("#field-RenovationYearMin").val(0);
+			$("#field-RenovationYearMax").val(0);
+			$("#field-DistanceSchoolMin").val(0);
+			$("#field-DistanceSchoolMax").val(0);
+			$("#field-DistanceShoppingMin").val(0);
+			$("#field-DistanceShoppingMax").val(0);
+			$("#field-DistancePublicTransportMin").val(0);
+			$("#field-DistancePublicTransportMax").val(0);
+			
+		});
+	});
+</script>
+
+<script>
 	$(document).ready(function() {
 		$("#cityInput").autocomplete({
 			minLength : 2,
@@ -380,7 +415,7 @@
 				</div>
 			</div>
 			<div class="form-group pull-right">
-				<button type="reset" class="btn btn-default">Cancel</button>
+				<button id="reset" class="btn btn-default">Clear filters</button>
 				<button type="submit" class="btn btn-primary">Filter</button>
 			</div>
 		</form:form>
