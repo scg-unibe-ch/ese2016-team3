@@ -30,49 +30,39 @@
 </style>
 
 <style>
-/* Change color of top top tabs (for rent and buy) and define hover effect*/
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
-	{
-	background-color: #f5f5f5 !important;
-	color: fff;
+/* TABS: Change color of top top tabs (for rent and buy) and define hover effect*/
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover	{
+	background-color: #32CD32 !important;
+	color:#FFFFFF;
 }
 .nav-tabs>li>a:hover {
-	background-color: #D3D3D3 !important;
-	color:777;
+	background-color: #228B22 !important;
+	color:#FFFFFF;
 	/* fill	color #d9edf7 default f5f5f5 #337ab7 fff*/
 }
 
-/* Change color of navbar*/
-.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus
-	{
-	color: fff; /*Sets the text hover color on navbar*/
-	background-color: #D3D3D3;
+/* CONTAINER: set background color of container*/
+.container-fluid {
+	background-color: #32CD32;
 }
 
-/* color of navbar when active */
-.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover,
-	.navbar-default .navbar-nav>.active>a:focus {
-	color: #337ab7; /*BACKGROUND color for active*/
-	background-color: #337ab7;
+/* HOVER Change color of navbar and dropdown on Hover (Place Ad, find Ad etc)*/
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus
+	{
+	color: #FFFFFF; /*Sets the text hover color on navbar*/
+	background-color: #228B22;
 }
 
 .dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
-	color: #337ab7;
+	color: #FFFFFF;
 	text-decoration: none;
-	background-color: #337ab7; /*change color of links in drop down here*/
+	background-color: #32CD32; /*change color of links in drop down here*/
 }
 
-/*   -- default color of nav bar
 .navbar-default .navbar-nav>li>a {
-	color: #337ab7; 
-	background-color: #337ab7;
+	color: #FFFFFF;
 }
-*/
 
-/* set background color of container*/
-.container-fluid {
-	background-color: #f5f5f5;
-}
 
 </style>
 

@@ -92,9 +92,13 @@
 		 $('a[href="#mapview"]').on('shown.bs.tab', function(e){
 	        initMap();
 	    	});
+		 
+		 /* sorts results when "sort by" is changed */
+		 $("#form-sort").change(function() {
+				sort_div_attribute();
+		 });
 	});
 </script>
-
 
 <script>
 	var map;
@@ -153,27 +157,8 @@
 
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-4 col-ls-4">
-		<h4>Filter results</h4>
-		<div class="panel panel-default form-inline">
-			<div class="panel-body">
-				<div class="form-group">
-					<select id="modus" class="form-control">
-						<option value="">Sort by:</option>
-						<option value="price_asc">Price (ascending)</option>
-						<option value="price_desc">Price (descending)</option>
-						<option value="moveIn_desc">Move-in date (earliest to
-							latest)</option>
-						<option value="moveIn_asc">Move-in date (latest to
-							earliest)</option>
-						<option value="dateAge_asc">Date created (youngest to
-							oldest)</option>
-						<option value="dateAge_desc">Date created (oldest to
-							youngest)</option>
-					</select>
-					<button class="btn btn-default" onClick="sort_div_attribute()">Sort</button>
-				</div>
-			</div>
-		</div>
+		<h4>Filter results</h4> 
+		
 		<form:form method="post" modelAttribute="searchForm"
 			action="./results" id="filterForm" autocomplete="off">
 			<div class="panel panel-default">
@@ -387,7 +372,31 @@
 	</div>
 
 	<div class="col-xs-12 col-sm-12 col-md-8 col-ls-8">
-		<h4>Results</h4>
+		<div class="row">
+
+		<div class="col-sm-6"><h4>Results</h4></div> 
+		
+		<c:if
+												test="${ad.auction  && ad.isAuctionRunning() && loggedInUserEmail != ad.user.username }">
+			<div class="form-group form-inline pull-right col-sm-5" id="form-sort">
+				<label><b>Sort:</b> </label>
+				<select id="modus" class="form-control" data-style="btn-primary">
+					<option value="">Sort by:</option>
+					<option value="price_asc">Price (ascending)</option>
+					<option value="price_desc">Price (descending)</option>
+					<option value="moveIn_desc">Move-in date (earliest to
+						latest)</option>
+					<option value="moveIn_asc">Move-in date (latest to
+						earliest)</option>
+					<option value="dateAge_asc">Date created (youngest to
+						oldest)</option>
+					<option value="dateAge_desc">Date created (oldest to
+						youngest)</option>
+				</select>
+			</div>
+			</c:if>
+		</div>
+		
 		<c:choose>
 			<c:when test="${empty results}">
 				<p>No results found!
@@ -421,7 +430,9 @@
 												<p>
 													<i>${ad.type.name}</i>
 												</p>
-												<strong>CHF ${ad.price }</strong>
+												<strong>
+												<fmt:formatNumber value="${ad.price}"
+										      		var="formattedPrice" type="currency" pattern="###,### CHF" />${formattedPrice}</strong>
 												<fmt:formatDate value="${ad.moveInDate}"
 													var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 												<p>Move-in date: ${formattedMoveInDate }</p>
@@ -439,8 +450,11 @@
 													<p>Running until: ${formattedEndDate}</p>
 
 													<p>
-														Current price: <strong>${ad.currentAuctionPrice - ad.increaseBidPrice}
-															CHF</strong>
+														Current price: 
+														<strong>
+														<fmt:formatNumber value="${ad.currentAuctionPrice - ad.increaseBidPrice}"
+										      			var="formattedCurrentPrice" type="currency" pattern="###,### CHF" />${formattedCurrentPrice}
+														</strong>
 													</p>
 													<p>
 														<a href="./ad?id=${ad.id}">Bid</a>

@@ -144,6 +144,7 @@
 												for="infrastructureType-room">Infrastructure type</label>
 											<div class="col-sm-8">
 												<div class="input-group">
+													<span class="input-group-addon">Type</span>
 													<form:select id="infrastructureType"
 														path="infrastructureType" cssClass="form-control">
 														<option value=""></option>
@@ -154,12 +155,13 @@
 											</div>
 										</div>
 									</spring:bind>
+
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="earliestMoveInDate" class="control-label col-sm-4">Earliest
 											move-in date</label>
 										<div class="col-sm-8">
 											<div class="input-group">
-
+												<span class="input-group-addon">Date</span>
 												<form:input type="text" id="field-earliestMoveInDate"
 													path="earliestMoveInDate" cssClass="form-control" />
 											</div>
@@ -170,6 +172,7 @@
 											move-in date</label>
 										<div class="col-sm-8">
 											<div class="input-group">
+												<span class="input-group-addon">Date</span>
 												<form:input type="text" id="field-latestMoveInDate"
 													path="latestMoveInDate" cssClass="form-control" />
 											</div>
@@ -210,25 +213,28 @@
 								<div class="col-sm-6">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-floorLevelMin"
-											class="control-label col-sm-4">Floor level between </label>
-										<div class="col-sm-8">
-											<div class="form-inline">
+											class="control-label col-sm-4">Floor level</label>
+										<div class="col-sm-8 row form-inline">
+											<div class="col-sm-5 input-group">
+												<span class="input-group-addon">min</span>
 												<form:input type="number" step="1" id="field-floorLevelMin"
-													path="floorLevelMin" cssClass="form-control input60" />
-												<label for="field-floorLevelMax" class="betweenLabel">
-													- </label>
-												<form:input type="number" step="1" id="field-floorLevelMax"
-													path="floorLevelMax" cssClass="form-control input60" />
-												<form:errors path="floorLevelMax" cssClass="text-danger" />
-												<form:errors path="floorLevelMin" cssClass="text-danger" />
+													path="floorLevelMin" cssClass="form-control" />
 											</div>
+											<form:errors path="floorLevelMin" cssClass="text-danger" />
+											<div class="col-sm-5 input-group">
+												<span class="input-group-addon">max</span>
+												<form:input type="number" step="1" id="field-floorLevelMax"
+													path="floorLevelMax" cssClass="form-control" />
+											</div>
+											<form:errors path="floorLevelMax" cssClass="text-danger" />
+
 										</div>
 									</div>
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-NumberOfBathMin"
-											class="control-label col-sm-4">Nr. of Baths between</label>
+											class="control-label col-sm-4">Nr. of Baths</label>
 										<div class="col-sm-8">
 											<div class="form-inline">
 												<form:input type="number" step="1"
@@ -249,7 +255,7 @@
 								<div class="col-sm-6">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-BuildYearMin" class="control-label col-sm-4">Build
-											year between </label>
+											year</label>
 										<div class="col-sm-8">
 											<div class="form-inline">
 												<form:input type="number" cssClass="form-control input60"
@@ -268,7 +274,7 @@
 								<div class="col-sm-6">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-RenovationYearMin"
-											class="control-label col-sm-4">Renovation year btwn </label>
+											class="control-label col-sm-4">Renovation year</label>
 										<div class="col-sm-8">
 											<div class="form-inline">
 												<form:input type="number" cssClass="form-control input60"
@@ -291,7 +297,7 @@
 								<div class="col-sm-6">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-NumberOfRoomsMin"
-											class="control-label col-sm-4">Nr. of Rooms between </label>
+											class="control-label col-sm-4">Nr. of Rooms </label>
 										<div class="col-sm-8">
 											<div class="form-inline">
 												<form:input type="number" cssClass="form-control input60"
@@ -310,7 +316,7 @@
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-DistanceSchoolMin"
 											class="control-label col-sm-4">Distance to school
-											from</label>
+											(m)</label>
 										<div class="col-sm-8">
 											<div class="form-inline">
 												<form:input id="field-DistanceSchoolMin" type="number"
@@ -333,13 +339,12 @@
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-DistanceShoppingMin"
 											class="control-label col-sm-4">Distance to shopping
-											from </label>
+											(m) </label>
 										<div class="col-sm-8">
 											<div class="form-inline">
 												<form:input id="field-DistanceShoppingMin" type="number"
 													min="0" path="distanceShoppingMin" placeholder="0"
 													step="100" cssClass="form-control input60" />
-
 												<label for="field-DistanceShoppingMax" class="betweenLabel">
 													- </label>
 												<form:input id="field-DistanceShoppingMax" type="number"
@@ -357,7 +362,7 @@
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-DistancePublicTransportMin"
 											class="control-label col-sm-4">Distance to public
-											transport from</label>
+											transport (m)</label>
 										<div class="col-sm-8">
 											<div class="form-inline">
 												<form:input id="field-DistancePublicTransportMin"
