@@ -100,8 +100,7 @@
 			$("#field-DistanceShoppingMin").val(0);
 			$("#field-DistanceShoppingMax").val(0);
 			$("#field-DistancePublicTransportMin").val(0);
-			$("#field-DistancePublicTransportMax").val(0);
-			
+			$("#field-DistancePublicTransportMax").val(0);		
 		});
 	});
 </script>
@@ -213,6 +212,10 @@
 			action="./results" id="filterForm" autocomplete="off">
 			<div class="panel panel-default">
 				<div class="panel-body">
+					<div class="form-group pull-right">
+						<button id="reset" class="btn btn-default">Clear filters</button>
+						<button type="submit" class="btn btn-primary">Filter</button>
+					</div>
 					<div class="form-group">
 						<label>Type</label>
 						<c:forEach var="type" items="${types}">
