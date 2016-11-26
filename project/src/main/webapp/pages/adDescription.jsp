@@ -167,6 +167,11 @@
 						<c:otherwise>
 							<a class="btn btn-primary"
 								href="./profile/editAd?id=${shownAd.id}">Edit Ad</a>
+							<c:if test="${shownAd.auction}">
+								<a class="btn btn-default" href="/${shownAd.buyMode.name}/profile/auction?id=${shownAd.id}">
+									Auction details
+								</a>
+							</c:if>
 						</c:otherwise>
 					</c:choose>
 				</c:when>

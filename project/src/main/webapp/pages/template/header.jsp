@@ -42,11 +42,9 @@
 <security:authorize var="loggedIn" url="/profile" />
 
 <body>
-	<div class="container">
-		<h1>
-			<img id="logo" src="/img/logoNew.png"> Ithaca
-		</h1>
+	<div class="container" id="main-container">
 		<ul class="nav nav-tabs header-tabs" role="tablist">
+			<li id="ithaca-brand"><img id="logo" src="/img/logoNew.png">Ithaca</li>
 			<c:choose>
 				<c:when test="${pagemode == 'buy'}">
 					<li class="active"><a href="/buy/">Buy</a></li>
@@ -63,8 +61,15 @@
 			</c:choose>
 		</ul>
 		<nav class="navbar navbar-default" id="mainNav">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+			</div>
 			<div class="navbar-inner">
-				<div class="container-fluid">
+				<div class="container-fluid collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li><a href="/${pagemode}/">Homepage</a></li>
 						<li><a href="/${pagemode}/searchAd">Find ad</a></li>
@@ -80,8 +85,7 @@
 									<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 										<span class="glyphicon glyphicon-user"></span> <%
  	out.print(String.format("%s %s", realUser.getFirstName(), realUser.getLastName()));
- %>
-										<span class="caret"></span>
+ %> <span class="caret"></span>
 									</a>
 									<ul class="dropdown-menu">
 										<li><a

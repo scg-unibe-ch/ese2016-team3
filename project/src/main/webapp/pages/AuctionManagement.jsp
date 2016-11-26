@@ -6,6 +6,20 @@
 
 <c:import url="template/header.jsp" />
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#accordion').on('hidden.bs.collapse', toggleChevron);
+		$('#accordion').on('shown.bs.collapse', toggleChevron);
+	});
+	
+	toggleChevron = function(e){
+		$(e.target)
+        .prev('.panel-heading')
+        .find("span.indicator")
+        .toggleClass('glyphicon-chevron-down glyphicon-chevron-right');
+    }
+</script>
+
 <ol class="breadcrumb">
 	<li><a href="/${pagemode}/">Homepage</a></li>
 	<li class="active">Manage auctions</li>
@@ -24,8 +38,9 @@
 		<div class="panel-heading">
 			<h4 class="panel-title">
 				<a role="button" data-toggle="collapse" href="#collapseRunning"
-					aria-expanded="true" aria-controls="collapseRunning"> Running
+					aria-expanded="true" aria-controls="collapseRunning">Running
 					auctions</a>
+				<span class="pull-right indicator glyphicon glyphicon-chevron-down"></span>
 			</h4>
 		</div>
 		<div class="panel-collapse collapse in" id="collapseRunning">
@@ -75,6 +90,7 @@
 				<a role="button" data-toggle="collapse"
 					href="#collapseNotYetRunning" aria-expanded="true"
 					aria-controls="collapseNotYetRunning">Not yet started auctions</a>
+				<span class="pull-right indicator glyphicon glyphicon-chevron-right"></span>
 			</h4>
 		</div>
 		<div class="panel-collapse collapse" id="collapseNotYetRunning">
@@ -125,6 +141,7 @@
 				<a role="button" data-toggle="collapse" href="#collapseExpired"
 					aria-expanded="true" aria-controls="collapseExpired">Expired
 					auctions</a>
+				<span class="pull-right indicator glyphicon glyphicon-chevron-right"></span>
 			</h4>
 		</div>
 		<div class="panel-collapse collapse" id="collapseExpired">
@@ -176,6 +193,7 @@
 				<a role="button" data-toggle="collapse" href="#collapsePaused"
 					aria-expanded="true" aria-controls="collapsePaused">Paused
 					auctions</a>
+				<span class="pull-right indicator glyphicon glyphicon-chevron-right"></span>
 			</h4>
 		</div>
 		<div class="panel-collapse collapse" id="collapsePaused">
@@ -230,6 +248,7 @@
 				<a role="button" data-toggle="collapse" href="#collapseCompleted"
 					aria-expanded="true" aria-controls="collapseCompleted">Completed
 					auctions</a>
+				<span class="pull-right indicator glyphicon glyphicon-chevron-right"></span>
 			</h4>
 		</div>
 		<div class="panel-collapse collapse" id="collapseCompleted">
