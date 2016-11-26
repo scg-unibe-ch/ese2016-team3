@@ -3,6 +3,7 @@ package ch.unibe.ese.team3.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -218,9 +219,22 @@ public class Ad {
 	public Date getEndDate() {
 		return endDate;
 	}
-
+	//expireDate is the endDate at 23:59:59
+	Calendar expireDate = Calendar.getInstance();
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+		//
+		//expireDate.setTime(endDate);
+		//expireDate.set(endDate.getYear(), endDate.getMonth(), endDate., 23, 59);
+//		expireDate.add(Calendar.YEAR, endDate.getYear());
+//		expireDate.add(Calendar.MONTH, endDate.getMonth());
+//		expireDate.add(Calendar.DAY_OF_MONTH, endDate.getDate());
+//		expireDate.add(Calendar.HOUR_OF_DAY, 23);
+//		expireDate.add(Calendar.MINUTE, 59);
+//		expireDate.add(Calendar.SECOND, 59);
+//		expireDate.add(Calendar.MILLISECOND, 59);
+		
+		
 	}
 
 	public int getStartPrice() {
@@ -537,6 +551,17 @@ public class Ad {
 
 	public boolean hasAuctionExpired() {
 		Date now = new Date();
+		
+		//Calendar now = Calendar.getInstance();
+	//	int year = now.get(Calendar.YEAR);
+	//	int month = now.get(Calendar.MONTH) + 1; // Note: zero based!
+	//	int day = now.get(Calendar.DAY_OF_MONTH);
+	//	int hour = now.get(Calendar.HOUR_OF_DAY);
+	//	int minute = now.get(Calendar.MINUTE);
+	//	int second = now.get(Calendar.SECOND);
+		
+	//expireDate is the endDate at 23:59:59
+		//return !auctionCompleted && availableForAuction && now.after(expireDate);
 		return !auctionCompleted && availableForAuction && now.after(endDate);
 		
 	}
