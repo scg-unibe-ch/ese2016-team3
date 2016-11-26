@@ -441,8 +441,8 @@
 							<c:forEach var="ad" items="${results}">
 								<div data-price="${ad.price}" data-moveIn="${ad.moveInDate}"
 									data-age="${ad.moveInDate}"
-									class="ad-wide-preview-outer resultAd ${ad.isPremiumAd() ? 'premiumAd' : '' }">
-									<div class="col-md-12 ad-wide-preview-inner">
+									class="ad-wide-preview-outer resultAd">
+									<div class="col-md-12 ad-wide-preview-inner ${ad.isPremiumAd() ? 'premiumAd' : '' }">
 										<div class="row">
 											<div class="col-sm-4 col-md-4">
 												<a href="<c:url value='./ad?id=${ad.id}' />"> <img
@@ -451,8 +451,13 @@
 											</div>
 											<div class="col-sm-4 col-md-4">
 												<p>
-													<strong> <a class="link"
-														href="<c:url value='./ad?id=${ad.id}' />">${ad.title}</a>
+													<strong> <a class="link" title="${ad.isPremiumAd() ? 'Recommended ad' : ''}"
+														href="<c:url value='./ad?id=${ad.id}' />">
+															<c:if test="${ad.isPremiumAd()}">
+																<span class="glyphicon glyphicon-star"></span>
+															</c:if>
+															${ad.title}
+														</a>
 													</strong>
 												</p>
 												<p>${ad.street},&nbsp;${ad.zipcode}&nbsp;${ad.city}</p>

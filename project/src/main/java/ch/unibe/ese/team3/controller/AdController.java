@@ -72,6 +72,7 @@ public class AdController {
 		}
 
 		model.addObject("shownAd", ad);
+		model.addObject("bids", auctionService.getMostRecentBidsForAd(ad));
 		model.addObject("messageForm", new MessageForm());
 
 		String loggedInUserEmail = (principal == null) ? "" : principal.getName();

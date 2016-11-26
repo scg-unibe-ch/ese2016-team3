@@ -251,4 +251,8 @@ public class AuctionService extends BaseService {
 		return requests.iterator().hasNext();
 	}
 
+	public List<Bid> getMostRecentBidsForAd(Ad ad) {
+		return convertToList(bidDao.findTop10ByAdOrderByAmountDesc(ad));
+	}
+
 }

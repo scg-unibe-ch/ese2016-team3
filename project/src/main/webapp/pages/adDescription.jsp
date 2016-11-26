@@ -168,9 +168,9 @@
 							<a class="btn btn-primary"
 								href="./profile/editAd?id=${shownAd.id}">Edit Ad</a>
 							<c:if test="${shownAd.auction}">
-								<a class="btn btn-default" href="/${shownAd.buyMode.name}/profile/auction?id=${shownAd.id}">
-									Auction details
-								</a>
+								<a class="btn btn-default"
+									href="/${shownAd.buyMode.name}/profile/auction?id=${shownAd.id}">
+									Auction details </a>
 							</c:if>
 						</c:otherwise>
 					</c:choose>
@@ -182,7 +182,7 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<div class="row bottom15">
-							<div class="col-sm-8">
+							<div class="col-sm-7">
 								<div class="row">
 									<div class="col-sm-3">
 										<strong>Type</strong>
@@ -206,7 +206,7 @@
 									<div class="col-sm-9">${shownAd.numberOfRooms}</div>
 								</div>
 							</div>
-							<div class="col-sm-4">
+							<div class="col-sm-5">
 								<div class="pull-right">
 									<h3>${formattedPrice}</h3>
 								</div>
@@ -221,117 +221,159 @@
 					</div>
 				</div>
 
+				<c:if
+					test="${shownAd.auction  && shownAd.isAuctionRunning() && loggedInUserEmail != shownAd.user.username}">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-sm-12">
+									<h4>Auction</h4>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<fmt:formatDate value="${shownAd.endDate}"
+										var="formattedEndDate" type="date" pattern="dd.MM.yyyy" />
+									<p>Running until: ${formattedEndDate}</p>
 
-				<h4>Details</h4>
-				<table id="adDescTable" class="table table-striped">
-					<tr>
-						<th>Available from</th>
-						<td>${formattedMoveInDate}</td>
-					</tr>
+									<p>
+										Current price: <strong>${formattedCurrentPrice}</strong>
+									</p>
+									<button class="btn btn-default" data-toggle="modal"
+										data-target="#existingBidsModal">Show bids</button>
+								</div>
+
+								<div class="col-sm-6">
+									<div class="form-group">
+										<div class="input-group">
+											<div class="input-group-addon">CHF</div>
+											<input class="form-control" id="disabledInput" type="text"
+												placeholder="${shownAd.currentAuctionPrice }" disabled>
+											<span class="input-group-btn"> <c:choose>
+													<c:when test="${loggedIn }">
+														<button type="button" class="btn btn-primary"
+															data-toggle="modal" data-target="#bidModal">Bid</button>
+													</c:when>
+													<c:otherwise>
+														<a href="./login" class="btn btn-primary">Bid</a>
+													</c:otherwise>
+												</c:choose>
+											</span>
+										</div>
+									</div>
+
+									<c:if test="${sentBuyRequest eq false }">
+										<div class="form-group">
+											<div class="input-group">
+												<div class="input-group-addon">CHF</div>
+												<input class="form-control" id="disabledInput" type="text"
+													placeholder="${shownAd.price }" disabled> <span
+													class="input-group-btn"> <c:choose>
+														<c:when test="${loggedIn }">
+															<button type="button" class="btn btn-primary"
+																data-toggle="modal" data-target="#buyModal">Buy</button>
+														</c:when>
+														<c:otherwise>
+															<a href="./login" class="btn btn-primary">Buy</a>
+														</c:otherwise>
+													</c:choose>
+												</span>
+											</div>
+										</div>
+									</c:if>
+								</div>
+							</div>
+						</div>
+					</div>
+				</c:if>
+
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<h4>Details</h4>
+					</div>
+					<table id="adDescTable" class="table table-striped">
+						<tr>
+							<th>Available from</th>
+							<td>${formattedMoveInDate}</td>
+						</tr>
 
 
-					<tr>
-						<th>Square meters</th>
-						<td>${shownAd.squareFootage}&#32;m²</td>
-					</tr>
+						<tr>
+							<th>Square meters</th>
+							<td>${shownAd.squareFootage}&#32;m²</td>
+						</tr>
 
-					<tr>
-						<th>Number of bath rooms</th>
-						<td>${shownAd.numberOfBath}</td>
-					</tr>
+						<tr>
+							<th>Number of bath rooms</th>
+							<td>${shownAd.numberOfBath}</td>
+						</tr>
 
-					<tr>
-						<th>Internet/TV infrastructure</th>
-						<td>${shownAd.infrastructureType.name}</td>
-					</tr>
+						<tr>
+							<th>Internet/TV infrastructure</th>
+							<td>${shownAd.infrastructureType.name}</td>
+						</tr>
 
-					<tr>
-						<th>Distance to school</th>
-						<td>${shownAd.getDistanceSchoolAsEnum().name}</td>
-					</tr>
-					<tr>
-						<th>Distance to shopping center</th>
-						<td>${shownAd.getDistanceShoppingAsEnum().name}</td>
-					</tr>
-					<tr>
-						<th>Distance to public transport</th>
-						<td>${shownAd.getDistancePublicTransportAsEnum().name}</td>
-					</tr>
+						<tr>
+							<th>Distance to school</th>
+							<td>${shownAd.getDistanceSchoolAsEnum().name}</td>
+						</tr>
+						<tr>
+							<th>Distance to shopping center</th>
+							<td>${shownAd.getDistanceShoppingAsEnum().name}</td>
+						</tr>
+						<tr>
+							<th>Distance to public transport</th>
+							<td>${shownAd.getDistancePublicTransportAsEnum().name}</td>
+						</tr>
 
-					<tr>
-						<th>Year of construction</th>
-						<td>${shownAd.buildYear}</td>
-					</tr>
-					<tr>
-						<th>Year of renovation</th>
-						<td>${shownAd.renovationYear}</td>
-					</tr>
-					<tr>
-						<th>Floor level</th>
-						<td>${shownAd.floorLevel}</td>
-					</tr>
-				</table>
-				<h4>Additional information</h4>
-				<table class="table">
-					<tr>
-						<td><span
-							class="glyphicon glyphicon-${ shownAd.garage ? 'ok': 'remove' }"></span>
-							Garage</td>
-						<td><span
-							class="glyphicon glyphicon-${ shownAd.parking ? 'ok': 'remove' }"></span>
-							Parking</td>
-					</tr>
-					<tr>
-						<td><span
-							class="glyphicon glyphicon-${ shownAd.balcony ? 'ok': 'remove' }"></span>
-							Balcony</td>
-						<td><span
-							class="glyphicon glyphicon-${ shownAd.elevator ? 'ok': 'remove' }"></span>
-							Elevator</td>
-					</tr>
-					<tr>
-						<td><span
-							class="glyphicon glyphicon-${ shownAd.dishwasher ? 'ok': 'remove' }"></span>
-							Dishwasher</td>
-						<td></td>
-					</tr>
-				</table>
-				<p class="bottom15">
-					<span class="glyphicon glyphicon-ok"></span> = Available, <span
-						class="glyphicon glyphicon-remove"></span> = Not available
-				</p>
-				<h4>Visiting times</h4>
-				<c:choose>
-					<c:when test="${empty visits }">
-						<p>No visiting times available</p>
-					</c:when>
-					<c:otherwise>
-						<table class="table table-striped" id="visitList">
-							<c:forEach items="${visits }" var="visit">
-								<tr>
-									<td><fmt:formatDate value="${visit.startTimestamp}"
-											pattern="dd-MM-yyyy " /> &nbsp; from <fmt:formatDate
-											value="${visit.startTimestamp}" pattern=" HH:mm " /> until <fmt:formatDate
-											value="${visit.endTimestamp}" pattern=" HH:mm" /></td>
-									<td><c:choose>
-											<c:when test="${loggedIn}">
-												<c:if test="${loggedInUserEmail != shownAd.user.username}">
-													<button class="btn btn-primary" type="button"
-														data-id="${visit.id}" onclick="sendEnquiry(${visit.id});">Send
-														enquiry to advertiser</button>
-												</c:if>
-											</c:when>
-											<c:otherwise>
-												<a href="./login"><button class="btn btn-default"
-														type="button" data-id="${visit.id}">Login to send
-														enquiries</button></a>
-											</c:otherwise>
-										</c:choose></td>
-								</tr>
-							</c:forEach>
-						</table>
-					</c:otherwise>
-				</c:choose>
+						<tr>
+							<th>Year of construction</th>
+							<td>${shownAd.buildYear}</td>
+						</tr>
+						<tr>
+							<th>Year of renovation</th>
+							<td>${shownAd.renovationYear}</td>
+						</tr>
+						<tr>
+							<th>Floor level</th>
+							<td>${shownAd.floorLevel}</td>
+						</tr>
+					</table>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<h4>Additional information</h4>
+						<p class="bottom15">
+							<span class="glyphicon glyphicon-ok"></span> = Available, <span
+								class="glyphicon glyphicon-remove"></span> = Not available
+						</p>
+					</div>
+					<table class="table">
+						<tr>
+							<td><span
+								class="glyphicon glyphicon-${ shownAd.garage ? 'ok': 'remove' }"></span>
+								Garage</td>
+							<td><span
+								class="glyphicon glyphicon-${ shownAd.parking ? 'ok': 'remove' }"></span>
+								Parking</td>
+						</tr>
+						<tr>
+							<td><span
+								class="glyphicon glyphicon-${ shownAd.balcony ? 'ok': 'remove' }"></span>
+								Balcony</td>
+							<td><span
+								class="glyphicon glyphicon-${ shownAd.elevator ? 'ok': 'remove' }"></span>
+								Elevator</td>
+						</tr>
+						<tr>
+							<td><span
+								class="glyphicon glyphicon-${ shownAd.dishwasher ? 'ok': 'remove' }"></span>
+								Dishwasher</td>
+							<td></td>
+						</tr>
+					</table>
+				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<c:if test="${ not empty shownAd.pictures }">
@@ -414,70 +456,40 @@
 					</div>
 				</div>
 
-
-				<c:if
-					test="${shownAd.auction  && shownAd.isAuctionRunning() && loggedInUserEmail != shownAd.user.username}">
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-sm-12">
-									<h4>Auction</h4>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-4">
-									<fmt:formatDate value="${shownAd.endDate}"
-										var="formattedEndDate" type="date" pattern="dd.MM.yyyy" />
-									<p>Running until: ${formattedEndDate}</p>
-
-									<p>
-										Current price: <strong>${formattedCurrentPrice} CHF</strong>
-									</p>
-								</div>
-
-								<div class="col-sm-8">
-									<div class="form-group">
-										<div class="input-group">
-											<div class="input-group-addon">CHF</div>
-											<input class="form-control" id="disabledInput" type="text"
-												placeholder=${shownAd.currentAuctionPrice } disabled>
-											<span class="input-group-btn"> <c:choose>
-													<c:when test="${loggedIn }">
-														<button type="button" class="btn btn-primary"
-															data-toggle="modal" data-target="#bidModal">Bid</button>
-													</c:when>
-													<c:otherwise>
-														<a href="./login" class="btn btn-primary">Bid</a>
-													</c:otherwise>
-												</c:choose>
-											</span>
-										</div>
-									</div>
-
-									<c:if test="${sentBuyRequest eq false }">
-										<div class="form-group">
-											<div class="input-group">
-												<div class="input-group-addon">CHF</div>
-												<input class="form-control" id="disabledInput" type="text"
-													placeholder=${shownAd.price } disabled> <span
-													class="input-group-btn"> <c:choose>
-														<c:when test="${loggedIn }">
-															<button type="button" class="btn btn-primary"
-																data-toggle="modal" data-target="#buyModal">Buy</button>
-														</c:when>
-														<c:otherwise>
-															<a href="./login" class="btn btn-primary">Buy</a>
-														</c:otherwise>
-													</c:choose>
-												</span>
-											</div>
-										</div>
-									</c:if>
-								</div>
-							</div>
-						</div>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<h4>Visiting times</h4>
+						<c:if test="${empty visits }">
+							<p>No visiting times available</p>
+						</c:if>
 					</div>
-				</c:if>
+					<c:if test="${not empty visits }">
+						<table class="table table-striped" id="visitList">
+							<c:forEach items="${visits }" var="visit">
+								<tr>
+									<td><fmt:formatDate value="${visit.startTimestamp}"
+											pattern="dd-MM-yyyy " /> &nbsp; from <fmt:formatDate
+											value="${visit.startTimestamp}" pattern=" HH:mm " /> until <fmt:formatDate
+											value="${visit.endTimestamp}" pattern=" HH:mm" /></td>
+									<td><c:choose>
+											<c:when test="${loggedIn}">
+												<c:if test="${loggedInUserEmail != shownAd.user.username}">
+													<button class="btn btn-primary" type="button"
+														data-id="${visit.id}" onclick="sendEnquiry(${visit.id});">Send
+														enquiry to advertiser</button>
+												</c:if>
+											</c:when>
+											<c:otherwise>
+												<a href="./login"><button class="btn btn-default"
+														type="button" data-id="${visit.id}">Login to send
+														enquiries</button></a>
+											</c:otherwise>
+										</c:choose></td>
+								</tr>
+							</c:forEach>
+						</table>
+					</c:if>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -525,7 +537,8 @@
 			</div>
 			<div class="modal-body">
 				<p>
-					Do you really want to buy this real estate for <strong>	${formattedPrice}</strong>?
+					Do you really want to buy this real estate for <strong>
+						${formattedPrice}</strong>?
 				</p>
 			</div>
 			<div class="modal-footer">
@@ -568,6 +581,50 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 				<button type="button" class="btn btn-primary" id="messageSend">Send</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="existingBidsModal" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Bids for this ad</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					See the most recent bids for this ad below.
+				</p>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Bid</th>
+							<th>Bidder</th>
+							<th>Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${bids}" var="bid" varStatus="loop">
+							<fmt:formatNumber pattern="###,###,### CHF" value="${bid.amount}"
+								var="formattedBidAmount" />
+							<fmt:formatDate value="${bid.timeStamp}"
+								pattern="yyyy-MM-dd HH:mm:ss" var="formattedBidTimeStamp" />
+							<tr class="${loop.index == 0 ? 'text-success success' : '' }">
+								<td>${formattedBidAmount}</td>
+								<td>${bid.bidder.firstName}&nbsp;${bid.bidder.lastName}</td>
+								<td>${formattedBidTimeStamp}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
