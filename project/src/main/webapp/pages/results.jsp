@@ -280,11 +280,11 @@
 						<label for="field-NumberOfBathMin" class="col-md-6">Nr. of
 							Bath between</label>
 						<div class="col-md-6 form-inline">
-							<form:input type="number" step="1" id="field-NumberOfBathMin"
+							<form:input type="number" step="1" min="0" id="field-NumberOfBathMin"
 								path="numberOfBathMin" cssClass="form-control input60 " />
 							<label for="field-NumberOfBathMax" class="betweenLabel">
 								- </label>
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="numberOfBathMax" id="field-NumberOfBathMax" />
 						</div>
 					</div>
@@ -293,11 +293,11 @@
 						<label class="col-md-6" for="field-NumberOfRoomsMin">Nr.
 							of Rooms between</label>
 						<div class="col-md-6 form-inline">
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="numberOfRoomsMin" id="field-NumberOfRoomsMin" />
 							<label for="field-NumberOfRoomsMax" class="betweenLabel">
 								- </label>
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
 							<%-- muss man <form_error/> auch noch hinzufügen? --%>
 						</div>
@@ -307,10 +307,10 @@
 						<label class="col-md-6" for="field-BuildYearMin">Build
 							year between</label>
 						<div class="col-md-6 form-inline">
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="buildYearMin" id="field-BuildYearMin" />
 							<label for="field-BuildYearMax" class="betweenLabel"> - </label>
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="buildYearMax" id="field-BuildYearMax" />
 						</div>
 
@@ -320,11 +320,11 @@
 						<label class="col-md-6" for="field-RenovationYearMin">Renovation
 							year between</label>
 						<div class="col-md-6 form-inline">
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="renovationYearMin" id="field-RenovationYearMin" />
 							<label for="field-RenovationYearMax" class="betweenLabel">
 								- </label>
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="renovationYearMax" id="field-RenovationYearMax" />
 						</div>
 					</div>
