@@ -57,7 +57,8 @@
 						<c:forEach var="bid" items="${auction.value}">
 							<tr
 								class="${ bid.amount == auction.key.currentAuctionPrice - auction.key.increaseBidPrice ? 'success text-success' : '' }">
-								<td>${bid.amount}</td>
+								<td><fmt:formatNumber value="${bid.amount}"
+										var="formattedNumber" type="currency" pattern="###,### CHF" />${formattedNumber}
 								<td><fmt:formatDate value="${bid.timeStamp}"
 										var="formattedDate" type="date" pattern="yyyy-MM-dd HH:mm:ss" />${formattedDate}</td>
 							</tr>

@@ -29,13 +29,60 @@
 }
 </style>
 
+<style>
+/* Change color of top top tabs (for rent and buy) and define hover effect*/
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
+	{
+	background-color: #f5f5f5 !important;
+	color: fff;
+}
+.nav-tabs>li>a:hover {
+	background-color: #D3D3D3 !important;
+	color:777;
+	/* fill	color #d9edf7 default f5f5f5 #337ab7 fff*/
+}
+
+/* Change color of navbar*/
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus
+	{
+	color: fff; /*Sets the text hover color on navbar*/
+	background-color: #D3D3D3;
+}
+
+/* color of navbar when active */
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover,
+	.navbar-default .navbar-nav>.active>a:focus {
+	color: #337ab7; /*BACKGROUND color for active*/
+	background-color: #337ab7;
+}
+
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+	color: #337ab7;
+	text-decoration: none;
+	background-color: #337ab7; /*change color of links in drop down here*/
+}
+
+/*   -- default color of nav bar
+.navbar-default .navbar-nav>li>a {
+	color: #337ab7; 
+	background-color: #337ab7;
+}
+*/
+
+/* set background color of container*/
+.container-fluid {
+	background-color: #f5f5f5;
+}
+
+</style>
+
 <script type="text/javascript">
-			$(document).ready(function(){
-				unreadMessages(function(unread){
-					$('#navUnread').html(unread);
-				});
-			});
-		</script>
+	$(document).ready(function() {
+		unreadMessages(function(unread) {
+			$('#navUnread').html(unread);
+		});
+	});
+</script>
 </head>
 
 <!-- check if user is logged in -->
@@ -49,12 +96,12 @@
 		<ul class="nav nav-tabs header-tabs" role="tablist">
 			<c:choose>
 				<c:when test="${pagemode == 'buy'}">
-					<li class="active"><a href="/buy/">Buy</a></li>
+					<li class="active"><a href="/buy/"><b>Buy</b></a></li>
 					<li><a href="/rent/">Rent</a></li>
 				</c:when>
 				<c:when test="${pagemode == 'rent'}">
 					<li><a href="/buy/">Buy</a></li>
-					<li class="active"><a href="/rent/">Rent</a></li>
+					<li class="active"><a href="/rent/"><b>Rent</b></a></li>
 				</c:when>
 				<c:otherwise>
 					<li><a href="/buy/">Buy</a></li>
@@ -69,27 +116,36 @@
 						<li><a href="/${pagemode}/">Homepage</a></li>
 						<li><a href="/${pagemode}/searchAd">Find ad</a></li>
 						<c:if test="${loggedIn}">
-							<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
 							<li><a href="/buy/profile/mybids">My bids</a></li>
+							<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
 						</c:if>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
+						<c:if test="${loggedIn}">
+							<li><a href="/${pagemode}/profile/placeAd"><button
+										class="btn-xs btn-primary">Place ad</button></a></li>
+
+							<li><a href="/buy/profile/mybids"><button
+										class="btn-xs btn-primary">My bids</button></a></li>
+						</c:if>
 						<li class="navbar-right dropdown"><c:choose>
 								<c:when test="${loggedIn}">
 									<%@include file='/pages/getUserPicture.jsp'%>
 									<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 										<span class="glyphicon glyphicon-user"></span> <%
  	out.print(String.format("%s %s", realUser.getFirstName(), realUser.getLastName()));
- %>
-										<span class="caret"></span>
+ %> <span class="caret"></span>
 									</a>
 									<ul class="dropdown-menu">
 										<li><a
 											href="/${pagemode}/user?id=<%out.print(realUser.getId());%>">
 												<span class="glyphicon glyphicon-cog"></span> Show profile
 										</a></li>
-										<li><a href="/${pagemode}/profile/myRooms"> <span
+										<li><a href="/${pagemode}/profile/placeAd"> <span
 												class="glyphicon glyphicon-home"></span> My Ads
+										</a></li>
+										<li><a href="/${pagemode}/profile/myRooms"> <span
+												class="glyphicon glyphicon-pencil"></span> Place Ad
 										</a></li>
 										<li><a href="/buy/profile/auctions"> <span
 												class="glyphicon glyphicon-th-list"></span> Manage auctions
