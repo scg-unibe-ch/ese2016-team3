@@ -72,6 +72,40 @@
 </script>
 
 <script>
+	$(document).ready(function(){
+		$("#reset").click(function(){
+			$("#field-earliestMoveInDate").val("");
+			$("#field-latestMoveInDate").val("");
+			
+			document.getElementById("field-balcony").checked = false;
+			document.getElementById("field-garage").checked = false;
+			document.getElementById("field-parking").checked = false;
+			document.getElementById("field-elevator").checked = false;
+			document.getElementById("field-dishwasher").checked = false;
+			
+			document.getElementById("infrastructureType").selectedIndex = 0;
+			
+			$("#field-floorLevelMin").val(0);
+			$("#field-floorLevelMax").val(0);
+			$("#field-NumberOfBathMin").val(0);
+			$("#field-NumberOfBathMax").val(0);
+			$("#field-NumberOfRoomsMin").val(0);
+			$("#field-NumberOfRoomsMax").val(0);
+			$("#field-BuildYearMin").val(0);
+			$("#field-BuildYearMax").val(0);
+			$("#field-RenovationYearMin").val(0);
+			$("#field-RenovationYearMax").val(0);
+			$("#field-DistanceSchoolMin").val(0);
+			$("#field-DistanceSchoolMax").val(0);
+			$("#field-DistanceShoppingMin").val(0);
+			$("#field-DistanceShoppingMax").val(0);
+			$("#field-DistancePublicTransportMin").val(0);
+			$("#field-DistancePublicTransportMax").val(0);		
+		});
+	});
+</script>
+
+<script>
 	$(document).ready(function() {
 		$("#cityInput").autocomplete({
 			minLength : 2,
@@ -178,6 +212,10 @@
 			action="./results" id="filterForm" autocomplete="off">
 			<div class="panel panel-default">
 				<div class="panel-body">
+					<div class="form-group pull-right">
+						<button id="reset" class="btn btn-default">Clear filters</button>
+						<button type="submit" class="btn btn-primary">Filter</button>
+					</div>
 					<div class="form-group">
 						<label>Type</label>
 						<c:forEach var="type" items="${types}">
@@ -280,11 +318,11 @@
 						<label for="field-NumberOfBathMin" class="col-md-6">Nr. of
 							Bath between</label>
 						<div class="col-md-6 form-inline">
-							<form:input type="number" step="1" id="field-NumberOfBathMin"
+							<form:input type="number" step="1" min="0" id="field-NumberOfBathMin"
 								path="numberOfBathMin" cssClass="form-control input60 " />
 							<label for="field-NumberOfBathMax" class="betweenLabel">
 								- </label>
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="numberOfBathMax" id="field-NumberOfBathMax" />
 						</div>
 					</div>
@@ -293,11 +331,11 @@
 						<label class="col-md-6" for="field-NumberOfRoomsMin">Nr.
 							of Rooms between</label>
 						<div class="col-md-6 form-inline">
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="numberOfRoomsMin" id="field-NumberOfRoomsMin" />
 							<label for="field-NumberOfRoomsMax" class="betweenLabel">
 								- </label>
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
 							<%-- muss man <form_error/> auch noch hinzufügen? --%>
 						</div>
@@ -307,10 +345,10 @@
 						<label class="col-md-6" for="field-BuildYearMin">Build
 							year between</label>
 						<div class="col-md-6 form-inline">
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="buildYearMin" id="field-BuildYearMin" />
 							<label for="field-BuildYearMax" class="betweenLabel"> - </label>
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="buildYearMax" id="field-BuildYearMax" />
 						</div>
 
@@ -320,11 +358,11 @@
 						<label class="col-md-6" for="field-RenovationYearMin">Renovation
 							year between</label>
 						<div class="col-md-6 form-inline">
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="renovationYearMin" id="field-RenovationYearMin" />
 							<label for="field-RenovationYearMax" class="betweenLabel">
 								- </label>
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="renovationYearMax" id="field-RenovationYearMax" />
 						</div>
 					</div>
@@ -380,7 +418,7 @@
 				</div>
 			</div>
 			<div class="form-group pull-right">
-				<button type="reset" class="btn btn-default">Cancel</button>
+				<button id="reset" class="btn btn-default">Clear filters</button>
 				<button type="submit" class="btn btn-primary">Filter</button>
 			</div>
 		</form:form>
