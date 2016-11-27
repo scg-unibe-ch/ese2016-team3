@@ -30,27 +30,36 @@
 </style>
 
 <style>
-/* TABS: Change color of top top tabs (for rent and buy) and define hover effect*/
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover	{
+/* TABS: define css class "customTab" in orded to display the tabs of the header green (and define hover effects)*/
+
+.customTab>li.active>a, .customTab>li.active>a:focus, .customTab>li.active>a:hover	{
 	background-color: #32CD32 !important;
 	color:#FFFFFF;
 }
-.nav-tabs>li>a:hover {
+.customTab>li>a:hover {
 	background-color: #228B22 !important;
 	color:#FFFFFF;
 	/* fill	color #d9edf7 default f5f5f5 #337ab7 fff*/
 }
 
-/* CONTAINER: set background color of container*/
-.container-fluid {
+/* .nav-pills > .active > a, .nav-pills > .active > a:hover {
+    background-color: #FFFFFF !important;
+} */
+
+
+/* CONTAINER: define new class to handle the background color of the container */
+.custom-Container {
 	background-color: #32CD32;
 }
 
-/* HOVER Change color of navbar and dropdown on Hover (Place Ad, find Ad etc)*/
-.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus
-	{
+/* NAVBAR set color of writing and define hover effect.*/
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
 	color: #FFFFFF; /*Sets the text hover color on navbar*/
 	background-color: #228B22;
+}
+/* set writing color */
+.navbar-default .navbar-nav>li>a{
+	color: #FFFFFF; 
 }
 
 .dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
@@ -59,8 +68,9 @@
 	background-color: #32CD32; /*change color of links in drop down here*/
 }
 
-.navbar-default .navbar-nav>li>a {
-	color: #FFFFFF;
+.dropdown-toggle:active, .open .dropdown-toggle {
+	background:#32CD32 !important; 
+	color:#FFFFFF !important;
 }
 
 
@@ -83,7 +93,7 @@
 		<h1>
 			<img id="logo" src="/img/logoNew.png"> Ithaca
 		</h1>
-		<ul class="nav nav-tabs header-tabs" role="tablist">
+		<ul class="nav nav-tabs header-tabs customTab" role="tablist">
 			<c:choose>
 				<c:when test="${pagemode == 'buy'}">
 					<li class="active"><a href="/buy/"><b>Buy</b></a></li>
@@ -101,7 +111,7 @@
 		</ul>
 		<nav class="navbar navbar-default" id="mainNav">
 			<div class="navbar-inner">
-				<div class="container-fluid">
+				<div class="container-fluid custom-Container">
 					<ul class="nav navbar-nav">
 						<li><a href="/${pagemode}/">Homepage</a></li>
 						<li><a href="/${pagemode}/searchAd">Find ad</a></li>
@@ -111,13 +121,6 @@
 						</c:if>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<c:if test="${loggedIn}">
-							<li><a href="/${pagemode}/profile/placeAd"><button
-										class="btn-xs btn-primary">Place ad</button></a></li>
-
-							<li><a href="/buy/profile/mybids"><button
-										class="btn-xs btn-primary">My bids</button></a></li>
-						</c:if>
 						<li class="navbar-right dropdown"><c:choose>
 								<c:when test="${loggedIn}">
 									<%@include file='/pages/getUserPicture.jsp'%>

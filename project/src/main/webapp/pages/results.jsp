@@ -13,7 +13,6 @@
 	<li class="active">Results</li>
 </ol>
 
-
 <script
 	src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDPcQNoMGcp8Oe9l6uY8jLFlMR4pyecFIU&libraries=places"></script>
 
@@ -375,9 +374,6 @@
 		<div class="row">
 
 		<div class="col-sm-6"><h4>Results</h4></div> 
-		
-		<c:if
-												test="${ad.auction  && ad.isAuctionRunning() && loggedInUserEmail != ad.user.username }">
 			<div class="form-group form-inline pull-right col-sm-5" id="form-sort">
 				<label><b>Sort:</b> </label>
 				<select id="modus" class="form-control" data-style="btn-primary">
@@ -394,9 +390,7 @@
 						youngest)</option>
 				</select>
 			</div>
-			</c:if>
 		</div>
-		
 		<c:choose>
 			<c:when test="${empty results}">
 				<p>No results found!
