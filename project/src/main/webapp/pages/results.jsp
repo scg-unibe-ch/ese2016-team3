@@ -258,6 +258,34 @@
 							</div>
 						</div>
 					</spring:bind>
+					
+					<div class="form-group row">
+						<label class="col-md-6" for="field-NumberOfRoomsMin">Nr.
+							of Rooms between</label>
+						<div class="col-md-6 form-inline">
+							<form:input type="number" min="0" cssClass="form-control input60"
+								path="numberOfRoomsMin" id="field-NumberOfRoomsMin" />
+							<label for="field-NumberOfRoomsMax" class="betweenLabel">
+								- </label>
+							<form:input type="number" min="0" cssClass="form-control input60"
+								path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
+							<%-- muss man <form_error/> auch noch hinzufügen? --%>
+						</div>
+					</div>
+					
+					<div class="form-group row ">
+						<label for="field-squareFootageMin" class="col-md-6">Square meters 
+							between</label>
+						<div class="col-md-6 form-inline">
+							<form:input type="number" step="1" min="0" id="field-squareFootageMin"
+								path="squareFootageMin" cssClass="form-control input60 " />
+							<label for="field-squareFootageMax" class="betweenLabel">
+								- </label>
+							<form:input type="number" min="0" cssClass="form-control input60"
+								path="squareFootageMax" id="field-squareFootageMax" />
+						</div>
+					</div>
+					
 					<div class="form-group">
 
 						<label for="earliestMoveInDate">Earliest move-in date</label>
@@ -302,32 +330,6 @@
 							</form:select>
 						</div>
 					</spring:bind>
-					
-					<div class="form-group row ">
-						<label for="field-squareFootageMin" class="col-md-6">Square meters 
-							between</label>
-						<div class="col-md-6 form-inline">
-							<form:input type="number" step="1" min="0" id="field-squareFootageMin"
-								path="squareFootageMin" cssClass="form-control input60 " />
-							<label for="field-squareFootageMax" class="betweenLabel">
-								- </label>
-							<form:input type="number" min="0" cssClass="form-control input60"
-								path="squareFootageMax" id="field-squareFootageMax" />
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="field-floorLevelMin" class="col-md-6">Floor
-							level between</label>
-						<div class="col-md-6 form-inline">
-							<form:input type="number" step="1" id="field-floorLevelMin"
-								path="floorLevelMin" cssClass="form-control input60" />
-							<label for="field-floorLevelMax" class="betweenLabel"> -
-							</label>
-							<form:input type="number" step="1" id="field-floorLevelMax"
-								path="floorLevelMax" cssClass="form-control input60" />
-						</div>
-					</div>
 
 					<div class="form-group row ">
 						<label for="field-NumberOfBathMin" class="col-md-6">Nr. of
@@ -341,18 +343,17 @@
 								path="numberOfBathMax" id="field-NumberOfBathMax" />
 						</div>
 					</div>
-
+					
 					<div class="form-group row">
-						<label class="col-md-6" for="field-NumberOfRoomsMin">Nr.
-							of Rooms between</label>
+						<label for="field-floorLevelMin" class="col-md-6">Floor
+							level between</label>
 						<div class="col-md-6 form-inline">
-							<form:input type="number" min="0" cssClass="form-control input60"
-								path="numberOfRoomsMin" id="field-NumberOfRoomsMin" />
-							<label for="field-NumberOfRoomsMax" class="betweenLabel">
-								- </label>
-							<form:input type="number" min="0" cssClass="form-control input60"
-								path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
-							<%-- muss man <form_error/> auch noch hinzufügen? --%>
+							<form:input type="number" step="1" id="field-floorLevelMin"
+								path="floorLevelMin" cssClass="form-control input60" />
+							<label for="field-floorLevelMax" class="betweenLabel"> -
+							</label>
+							<form:input type="number" step="1" id="field-floorLevelMax"
+								path="floorLevelMax" cssClass="form-control input60" />
 						</div>
 					</div>
 
@@ -379,6 +380,23 @@
 								- </label>
 							<form:input type="number" min="0" cssClass="form-control input60"
 								path="renovationYearMax" id="field-RenovationYearMax" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-md-6" for="field-DistancePublicTransportMin">Distance
+							to public transport from</label>
+						<div class="col-md-6 form-inline">
+							<form:input id="field-DistancePublicTransportMin" type="number"
+								min="0" path="distancePublicTransportMin" placeholder="0"
+								step="100" cssClass="form-control input60" />
+
+							<label for="field-DistancePublicTransportMax"
+								class="betweenLabel"> - </label>
+
+							<form:input id="field-DistancePublicTransportMax" type="number"
+								min="0" path="distancePublicTransportMax" placeholder="0"
+								step="100" cssClass="form-control input60" />
 						</div>
 					</div>
 
@@ -414,22 +432,6 @@
 						</div>
 					</div>
 
-					<div class="form-group row">
-						<label class="col-md-6" for="field-DistancePublicTransportMin">Distance
-							to public transport from</label>
-						<div class="col-md-6 form-inline">
-							<form:input id="field-DistancePublicTransportMin" type="number"
-								min="0" path="distancePublicTransportMin" placeholder="0"
-								step="100" cssClass="form-control input60" />
-
-							<label for="field-DistancePublicTransportMax"
-								class="betweenLabel"> - </label>
-
-							<form:input id="field-DistancePublicTransportMax" type="number"
-								min="0" path="distancePublicTransportMax" placeholder="0"
-								step="100" cssClass="form-control input60" />
-						</div>
-					</div>
 				</div>
 			</div>
 			<div class="form-group pull-right">
