@@ -286,6 +286,10 @@
 						</div>
 					</div>
 					
+					<button id="togglebutton" type="button" class="btn btn-info">Additional filters</button>
+					<p>
+					<div id="additional" style="display:none">
+					
 					<div class="form-group">
 
 						<label for="earliestMoveInDate">Earliest move-in date</label>
@@ -431,6 +435,8 @@
 								cssClass="form-control input60" />
 						</div>
 					</div>
+					
+					</div>
 
 				</div>
 			</div>
@@ -522,4 +528,14 @@
 		</c:choose>
 	</div>
 </div>
+
+
+<script>
+$("#togglebutton").click(function(){
+	$("#additional").toggle();	
+	 $("#togglebutton").toggleClass("active");
+});
+</script>
+
+
 <c:import url="template/footer.jsp" />
