@@ -110,9 +110,9 @@ public class SearchController {
 
 	@ModelAttribute
 	public SearchForm getSearchForm() {
-		if (searchForm == null) {
-			searchForm = new SearchForm();
-		}
-		return searchForm;
+		//if (searchForm == null) {
+		//	searchForm = new SearchForm();
+		//}
+		return new SearchForm();
 	}
 }
