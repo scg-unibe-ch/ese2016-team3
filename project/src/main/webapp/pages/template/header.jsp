@@ -29,13 +29,60 @@
 }
 </style>
 
+<style>
+/* TABS: define css class "customTab" in orded to display the tabs of the header green (and define hover effects)*/
+
+.customTab>li.active>a, .customTab>li.active>a:focus, .customTab>li.active>a:hover	{
+	background-color: #32CD32 !important;
+	color:#FFFFFF;
+}
+.customTab>li>a:hover {
+	background-color: #228B22 !important;
+	color:#FFFFFF;
+	/* fill	color #d9edf7 default f5f5f5 #337ab7 fff*/
+}
+
+/* .nav-pills > .active > a, .nav-pills > .active > a:hover {
+    background-color: #FFFFFF !important;
+} */
+
+
+/* CONTAINER: define new class to handle the background color of the container */
+.custom-Container {
+	background-color: #32CD32;
+}
+
+/* NAVBAR set color of writing and define hover effect.*/
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
+	color: #FFFFFF; /*Sets the text hover color on navbar*/
+	background-color: #228B22;
+}
+/* set writing color */
+.navbar-default .navbar-nav>li>a{
+	color: #FFFFFF; 
+}
+
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+	color: #FFFFFF;
+	text-decoration: none;
+	background-color: #32CD32; /*change color of links in drop down here*/
+}
+
+.dropdown-toggle:active, .open .dropdown-toggle {
+	background:#32CD32 !important; 
+	color:#FFFFFF !important;
+}
+
+
+</style>
+
 <script type="text/javascript">
-			$(document).ready(function(){
-				unreadMessages(function(unread){
-					$('#navUnread').html(unread);
-				});
-			});
-		</script>
+	$(document).ready(function() {
+		unreadMessages(function(unread) {
+			$('#navUnread').html(unread);
+		});
+	});
+</script>
 </head>
 
 <!-- check if user is logged in -->
@@ -43,16 +90,16 @@
 
 <body>
 	<div class="container" id="main-container">
-		<ul class="nav nav-tabs header-tabs" role="tablist">
+		<ul class="nav nav-tabs header-tabs customTab" role="tablist">
 			<li id="ithaca-brand"><img id="logo" src="/img/logoNew.png">Ithaca</li>
 			<c:choose>
 				<c:when test="${pagemode == 'buy'}">
-					<li class="active"><a href="/buy/">Buy</a></li>
+					<li class="active"><a href="/buy/"><b>Buy</b></a></li>
 					<li><a href="/rent/">Rent</a></li>
 				</c:when>
 				<c:when test="${pagemode == 'rent'}">
 					<li><a href="/buy/">Buy</a></li>
-					<li class="active"><a href="/rent/">Rent</a></li>
+					<li class="active"><a href="/rent/"><b>Rent</b></a></li>
 				</c:when>
 				<c:otherwise>
 					<li><a href="/buy/">Buy</a></li>
@@ -69,13 +116,13 @@
 				</button>
 			</div>
 			<div class="navbar-inner">
-				<div class="container-fluid collapse navbar-collapse">
+				<div class="container-fluid collapse navbar-collapse custom-Container">
 					<ul class="nav navbar-nav">
 						<li><a href="/${pagemode}/">Homepage</a></li>
 						<li><a href="/${pagemode}/searchAd">Find ad</a></li>
 						<c:if test="${loggedIn}">
-							<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
 							<li><a href="/buy/profile/mybids">My bids</a></li>
+							<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
 						</c:if>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
@@ -92,8 +139,11 @@
 											href="/${pagemode}/user?id=<%out.print(realUser.getId());%>">
 												<span class="glyphicon glyphicon-cog"></span> Show profile
 										</a></li>
-										<li><a href="/${pagemode}/profile/myRooms"> <span
+										<li><a href="/${pagemode}/profile/placeAd"> <span
 												class="glyphicon glyphicon-home"></span> My Ads
+										</a></li>
+										<li><a href="/${pagemode}/profile/myRooms"> <span
+												class="glyphicon glyphicon-pencil"></span> Place Ad
 										</a></li>
 										<li><a href="/buy/profile/auctions"> <span
 												class="glyphicon glyphicon-th-list"></span> Manage auctions

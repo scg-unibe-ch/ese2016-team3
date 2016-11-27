@@ -141,6 +141,9 @@
 <fmt:formatNumber
 	value="${shownAd.currentAuctionPrice  - shownAd.increaseBidPrice}"
 	var="formattedCurrentPrice" pattern="###,### CHF" />
+<fmt:formatNumber
+	value="${shownAd.currentAuctionPrice}"
+	var="formattedBidPrice" pattern="###,### CHF" />
 
 <fmt:formatNumber value="${shownAd.auctionPrice}" var="formattedAuctionPrice"
 	pattern="###,### CHF" />
@@ -530,7 +533,7 @@
 			</div>
 			<div class="modal-body">
 				<p>
-					Do you really want to bid <strong>${formattedCurrentPrice}</strong>
+					Do you really want to bid <strong>${formattedBidPrice}</strong>
 					for this ad?
 				</p>
 			</div>
