@@ -34,7 +34,7 @@ public class VisitEnquiryTestDataSaver {
 	private User bernerBaer; // = user@bern.com
 	private User testerMuster; // = ese@unibe.ch
 	private User jane; // = jane@doe.com
-	private User oprah; // = oprah@winfrey.com
+	private User oprah; // = oprah@ithaca.com
 
 	private Visit visit;
 
@@ -51,7 +51,7 @@ public class VisitEnquiryTestDataSaver {
 		bernerBaer = userDao.findByUsername("user@bern.com");
 		testerMuster = userDao.findByUsername("ese@unibe.ch");
 		jane = userDao.findByUsername("jane@doe.com");
-		oprah = userDao.findByUsername("oprah@winfrey.com");
+		oprah = userDao.findByUsername("oprah@ithaca.com");
 
 
 		// Add some open and declined Enquiries to play with

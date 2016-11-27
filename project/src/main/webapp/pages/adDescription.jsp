@@ -141,6 +141,9 @@
 <fmt:formatNumber
 	value="${shownAd.currentAuctionPrice  - shownAd.increaseBidPrice}"
 	var="formattedCurrentPrice" pattern="###,### CHF" />
+
+<fmt:formatNumber value="${shownAd.auctionPrice}" var="formattedAuctionPrice"
+	pattern="###,### CHF" />
 <%--- 
 <c:choose>
 	<c:when test="${empty shownAd.moveOutDate }">
@@ -208,7 +211,14 @@
 							</div>
 							<div class="col-sm-5">
 								<div class="pull-right">
+								<c:choose>
+								<c:when test="${shownAd.auction }">
+									<h3>${formattedAuctionPrice}</h3>
+								</c:when>
+								<c:otherwise>
 									<h3>${formattedPrice}</h3>
+								</c:otherwise>
+								</c:choose>
 								</div>
 							</div>
 						</div>
@@ -267,7 +277,7 @@
 											<div class="input-group">
 												<div class="input-group-addon">CHF</div>
 												<input class="form-control" id="disabledInput" type="text"
-													placeholder="${shownAd.price }" disabled> <span
+													placeholder="${shownAd.auctionPrice }" disabled> <span
 													class="input-group-btn"> <c:choose>
 														<c:when test="${loggedIn }">
 															<button type="button" class="btn btn-primary"
@@ -299,54 +309,67 @@
 
 
 						<tr>
-							<th>Square meters</th>
+							<th>Square Meters</th>
 							<td>${shownAd.squareFootage}&#32;m²</td>
 						</tr>
 
+						<c:if test="${shownAd.numberOfBath != 0}">
 						<tr>
-							<th>Number of bath rooms</th>
+							<th>Number of Bathrooms</th>
 							<td>${shownAd.numberOfBath}</td>
 						</tr>
+						</c:if>
 
 						<tr>
-							<th>Internet/TV infrastructure</th>
+							<th>Internet/TV Infrastructure</th>
 							<td>${shownAd.infrastructureType.name}</td>
 						</tr>
 
+						<c:if test="${shownAd.distanceSchool != 0}">
 						<tr>
-							<th>Distance to school</th>
+							<th>Distance to School</th>
 							<td>${shownAd.getDistanceSchoolAsEnum().name}</td>
 						</tr>
+						</c:if>
+						<c:if test="${shownAd.distanceShopping != 0}">	
 						<tr>
 							<th>Distance to shopping center</th>
 							<td>${shownAd.getDistanceShoppingAsEnum().name}</td>
 						</tr>
+						</c:if>
+						<c:if test="${shownAd.distancePublicTransport != 0}">
 						<tr>
-							<th>Distance to public transport</th>
+							<th>Distance to Public Transportation</th>
 							<td>${shownAd.getDistancePublicTransportAsEnum().name}</td>
 						</tr>
-
+						</c:if>
+						<c:if test="${shownAd.buildYear != 0}">
 						<tr>
-							<th>Year of construction</th>
+							<th>Year of Construction</th>
 							<td>${shownAd.buildYear}</td>
 						</tr>
+						</c:if>
+						<c:if test="${shownAd.renovationYear != 0}">
 						<tr>
-							<th>Year of renovation</th>
+							<th>Year of Renovation</th>
 							<td>${shownAd.renovationYear}</td>
 						</tr>
+						</c:if>
+						<c:if test="${shownAd.floorLevel != 0}">						
 						<tr>
-							<th>Floor level</th>
+							<th>Floor Level</th>
 							<td>${shownAd.floorLevel}</td>
 						</tr>
+						</c:if>
 					</table>
 				</div>
 
 				<div class="panel panel-default">
 					<div class="panel-body">
-						<h4>Additional information</h4>
+						<h4>Additional Information</h4>
 						<p class="bottom15">
 							<span class="glyphicon glyphicon-ok"></span> = Available, <span
-								class="glyphicon glyphicon-remove"></span> = Not available
+								class="glyphicon glyphicon-remove"></span> = Not Available
 						</p>
 					</div>
 					<table class="table">
@@ -427,12 +450,12 @@
 										<c:when test="${loggedIn}">
 											<a class="btn btn-default"
 												href="./user?id=${shownAd.user.id}"> <span
-												class="glyphicon glyphicon-user"></span> Visit profile
+												class="glyphicon glyphicon-user"></span> Visit Profile
 											</a>
 										</c:when>
 										<c:otherwise>
-											<a class="btn btn-default" href="./login">Login to visit
-												profile</a>
+											<a class="btn btn-default" href="./login">Login to Visit
+												Profile</a>
 										</c:otherwise>
 									</c:choose>
 									<c:choose>
@@ -447,7 +470,7 @@
 										</c:when>
 										<c:otherwise>
 											<a class="btn btn-default" href="./login">Login to
-												contact</a>
+												Contact</a>
 										</c:otherwise>
 									</c:choose>
 								</div>
@@ -460,7 +483,7 @@
 					<div class="panel-body">
 						<h4>Visiting times</h4>
 						<c:if test="${empty visits }">
-							<p>No visiting times available</p>
+							<p>No Visiting Times Available</p>
 						</c:if>
 					</div>
 					<c:if test="${not empty visits }">
@@ -476,13 +499,13 @@
 												<c:if test="${loggedInUserEmail != shownAd.user.username}">
 													<button class="btn btn-primary" type="button"
 														data-id="${visit.id}" onclick="sendEnquiry(${visit.id});">Send
-														enquiry to advertiser</button>
+														Enquiry to Advertiser</button>
 												</c:if>
 											</c:when>
 											<c:otherwise>
 												<a href="./login"><button class="btn btn-default"
-														type="button" data-id="${visit.id}">Login to send
-														enquiries</button></a>
+														type="button" data-id="${visit.id}">Login to Send
+														Enquiries</button></a>
 											</c:otherwise>
 										</c:choose></td>
 								</tr>

@@ -26,7 +26,7 @@ public class RatingTestDataSaver {
 		
 		User ese = userDao.findByUsername("ese@unibe.ch");
 		User jane = userDao.findByUsername("jane@doe.com");
-		User oprah = userDao.findByUsername("oprah@winfrey.com");
+		User oprah = userDao.findByUsername("oprah@ithaca.com");
 		User berner = userDao.findByUsername("user@bern.com");
 		
 		//Ese's ratings

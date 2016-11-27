@@ -59,7 +59,7 @@ public class UserTestDataSaver {
 		userDao.save(bernerBaer);
 		
 		// Another advertiser & searcher
-		User oprah = createUser("oprah@winfrey.com", "password", "Oprah", "Winfrey",
+		User oprah = createUser("oprah@ithaca.com", "password", "Oprah", "Winfrey",
 				"/img/test/oprah.jpg", Gender.FEMALE, AccountType.BASIC);
 		oprah.setAboutMe(getDummyText());
 		userDao.save(oprah);

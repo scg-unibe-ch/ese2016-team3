@@ -31,7 +31,7 @@ public class AdTestDataSaver {
 	public void saveTestData() throws Exception {
 		User bernerBaer = userDao.findByUsername("user@bern.com");
 		User ese = userDao.findByUsername("ese@unibe.ch");
-		User oprah = userDao.findByUsername("oprah@winfrey.com");
+		User oprah = userDao.findByUsername("oprah@ithaca.com");
 		User jane = userDao.findByUsername("jane@doe.com");
 
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
@@ -74,7 +74,6 @@ public class AdTestDataSaver {
 		adBern.setBuyMode(BuyMode.BUY);
 		adBern.setMoveInDate(moveInDate1);
 		adBern.setCreationDate(creationDate1);
-		adBern.setPrice(100000);
 		adBern.setSquareFootage(50);
 		adBern.setNumberOfBath(1);
 		adBern.setRoomDescription(roomDescription1);
@@ -84,6 +83,7 @@ public class AdTestDataSaver {
 		adBern.setCity("Bern");
 		adBern.setLatitude(46.9479804);
 		adBern.setLongitude(7.4509437);
+		adBern.setPrice(70000);
 
 		adBern.setBalcony(true);
 		adBern.setGarage(true);
@@ -98,7 +98,8 @@ public class AdTestDataSaver {
 		adBern.setFloorLevel(2);
 		adBern.setNumberOfRooms(2);
 
-		// set auction specific attributes
+		// set auction specific attributes		
+		adBern.setAuctionPrice(100000);
 		adBern.setAuction(true);
 		adBern.setStartDate(formatter.parse("03.11.2016")); // to houers !!
 		adBern.setEndDate(formatter.parse("03.12.2016"));
@@ -664,7 +665,6 @@ public class AdTestDataSaver {
 		adInterlaken.setBuyMode(BuyMode.BUY);
 		adInterlaken.setMoveInDate(moveInDate9);
 		adInterlaken.setCreationDate(creationDate9);
-		adInterlaken.setPrice(5000);
 		adInterlaken.setSquareFootage(100);
 		adInterlaken.setRoomDescription(roomDescription13);
 		adInterlaken.setUser(jane);
@@ -689,8 +689,10 @@ public class AdTestDataSaver {
 		adInterlaken.setNumberOfRooms(10);
 		adInterlaken.setInfrastructureType(InfrastructureType.CABLE);
 
+		adInterlaken.setAuctionPrice(500000);
 		adInterlaken.setAuction(true);
-		adInterlaken.setStartPrice(1500);
+		adInterlaken.setStartPrice(150000);
+		adInterlaken.setPrice(150000);
 		adInterlaken.setIncreaseBidPrice(100);
 		adInterlaken.setcurrentAuctionPrice(adInterlaken.getStartPrice() + adInterlaken.getIncreaseBidPrice());
 		adInterlaken.setStartDate(startAuctionDate1);
@@ -712,7 +714,7 @@ public class AdTestDataSaver {
 		adGrosshoechstetten.setBuyMode(BuyMode.BUY);
 		adGrosshoechstetten.setMoveInDate(moveInDate9);
 		adGrosshoechstetten.setCreationDate(creationDate9);
-		adGrosshoechstetten.setPrice(1200000);
+		adGrosshoechstetten.setAuctionPrice(1200000);
 		adGrosshoechstetten.setSquareFootage(120);
 		adGrosshoechstetten.setRoomDescription(roomDescription14);
 		adGrosshoechstetten.setUser(jane);
@@ -739,6 +741,7 @@ public class AdTestDataSaver {
 
 		adGrosshoechstetten.setAuction(true);
 		adGrosshoechstetten.setStartPrice(900000);
+		adGrosshoechstetten.setPrice(90000);
 		adGrosshoechstetten.setIncreaseBidPrice(1000);
 		adGrosshoechstetten.setcurrentAuctionPrice(adGrosshoechstetten.getStartPrice() + adGrosshoechstetten.getIncreaseBidPrice());
 		adGrosshoechstetten.setStartDate(startAuctionDate1);
@@ -760,7 +763,7 @@ public class AdTestDataSaver {
 		adThun.setBuyMode(BuyMode.BUY);
 		adThun.setMoveInDate(moveInDate9);
 		adThun.setCreationDate(creationDate9);
-		adThun.setPrice(450000);
+		adThun.setAuctionPrice(450000);
 		adThun.setSquareFootage(80);
 		adThun.setRoomDescription(roomDescription15);
 		adThun.setUser(jane);
@@ -788,6 +791,7 @@ public class AdTestDataSaver {
 		adThun.setAuction(true);
 		adThun.setAvailableForAuction(false);
 		adThun.setStartPrice(300000);
+		adThun.setPrice(300000);
 		adThun.setIncreaseBidPrice(1000);
 		adThun.setcurrentAuctionPrice(adThun.getStartPrice() + adThun.getIncreaseBidPrice());
 		adThun.setStartDate(startAuctionDate1);
@@ -810,7 +814,7 @@ public class AdTestDataSaver {
 		adBern3.setBuyMode(BuyMode.BUY);
 		adBern3.setMoveInDate(moveInDate9);
 		adBern3.setCreationDate(creationDate9);
-		adBern3.setPrice(800000);
+		adBern3.setAuctionPrice(800000);
 		adBern3.setSquareFootage(50);
 		adBern3.setRoomDescription(roomDescription16);
 		adBern3.setUser(jane);
@@ -837,6 +841,7 @@ public class AdTestDataSaver {
 
 		adBern3.setAuction(true);
 		adBern3.setStartPrice(650000);
+		adBern3.setPrice(650000);
 		adBern3.setIncreaseBidPrice(5000);
 		adBern3.setcurrentAuctionPrice(adBern3.getStartPrice() + adBern3.getIncreaseBidPrice());
 
@@ -863,7 +868,7 @@ public class AdTestDataSaver {
 		adEggiwil.setBuyMode(BuyMode.BUY);
 		adEggiwil.setMoveInDate(moveInDate9);
 		adEggiwil.setCreationDate(creationDate9);
-		adEggiwil.setPrice(2400000);
+		adEggiwil.setAuctionPrice(2400000);
 		adEggiwil.setSquareFootage(300);
 		adEggiwil.setRoomDescription(roomDescription17);
 		adEggiwil.setUser(jane);
@@ -892,6 +897,7 @@ public class AdTestDataSaver {
 		adEggiwil.setAuctionCompleted(true);
 		adEggiwil.setAvailableForAuction(false);
 		adEggiwil.setStartPrice(1800000);
+		adEggiwil.setPrice(1800000);
 		adEggiwil.setIncreaseBidPrice(10000);
 		adEggiwil.setcurrentAuctionPrice(adEggiwil.getStartPrice() + adEggiwil.getIncreaseBidPrice());
 
@@ -905,13 +911,144 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adEggiwil, "/img/test/HouseAuction5.jpg"));
 
 		adEggiwil.getPictures().addAll(pictures);
-		adDao.save(adEggiwil);
+		adDao.save(adEggiwil);		
+		
+		Ad adKreuzlingen = new Ad();
+		adKreuzlingen.setZipcode(8280);
+		adKreuzlingen.setType(Type.HOUSE);
+		adKreuzlingen.setBuyMode(BuyMode.RENT);
+		adKreuzlingen.setMoveInDate(moveInDate9);
+		adKreuzlingen.setCreationDate(creationDate9);
+		adKreuzlingen.setPrice(4800);
+		adKreuzlingen.setSquareFootage(120);
+		adKreuzlingen.setRoomDescription(roomDescription14);
+		adKreuzlingen.setUser(jane);
+		adKreuzlingen.setTitle("Nice house very close to town center");
+		adKreuzlingen.setStreet("Bergstrasse 43");
+		adKreuzlingen.setCity("Kreuzlingen");
+		adKreuzlingen.setLatitude(47.641743);
+		adKreuzlingen.setLongitude(9.167796);
+		adKreuzlingen.setNumberOfBath(4);
+
+		adKreuzlingen.setBalcony(true);
+		adKreuzlingen.setGarage(true);
+		adKreuzlingen.setDishwasher(true);
+		adKreuzlingen.setElevator(false);
+		adKreuzlingen.setParking(true);
+		adKreuzlingen.setBuildYear(1980);
+		adKreuzlingen.setRenovationYear(2015);
+		adKreuzlingen.setDistancePublicTransport(200);
+		adKreuzlingen.setDistanceSchool(1000);
+		adKreuzlingen.setDistanceShopping(800);
+		adKreuzlingen.setFloorLevel(2);
+		adKreuzlingen.setNumberOfRooms(9);
+		adKreuzlingen.setInfrastructureType(InfrastructureType.CABLE);
+		
+		adDao.save(adKreuzlingen);
+		
+		Ad adSion = new Ad();
+		adSion.setZipcode(1950);
+		adSion.setType(Type.VILLA);
+		adSion.setBuyMode(BuyMode.RENT);
+		adSion.setMoveInDate(moveInDate4);
+		adSion.setCreationDate(creationDate2);
+		adSion.setPrice(4000);
+		adSion.setSquareFootage(80);
+		adSion.setRoomDescription("Lovely villa perfect for your winter or summer holidays.");
+		adSion.setUser(bernerBaer);
+		adSion.setTitle("Nice villa far away from city life");
+		adSion.setStreet("Chemin des Amandiers 46C");
+		adSion.setCity("Sion");
+		adSion.setLatitude(46.231952);
+		adSion.setLongitude(7.347886);
+		adSion.setNumberOfBath(2);
+
+		adSion.setBalcony(true);
+		adSion.setGarage(true);
+		adSion.setDishwasher(true);
+		adSion.setElevator(false);
+		adSion.setParking(false);
+		adSion.setBuildYear(2000);
+		adSion.setDistancePublicTransport(1200);
+		adSion.setDistanceSchool(1800);
+		adSion.setDistanceShopping(1200);
+		adSion.setFloorLevel(2);
+		adSion.setNumberOfRooms(5);
+		adSion.setInfrastructureType(InfrastructureType.CABLE);
+		
+		adDao.save(adSion);
+		
+		Ad adMontreux = new Ad();
+		adMontreux.setZipcode(1820);
+		adMontreux.setType(Type.APARTMENT);
+		adMontreux.setBuyMode(BuyMode.RENT);
+		adMontreux.setMoveInDate(moveInDate4);
+		adMontreux.setCreationDate(creationDate2);
+		adMontreux.setPrice(1999);
+		adMontreux.setSquareFootage(40);
+		adMontreux.setRoomDescription("Lovely apartment perfect for your winter or summer holidays.");
+		adMontreux.setUser(ese);
+		adMontreux.setTitle("Great apartment in Montreux");
+		adMontreux.setStreet("Avenue des Alpes 146");
+		adMontreux.setCity("Montreux");
+		adMontreux.setLatitude(46.439832);
+		adMontreux.setLongitude(6.905418);
+		adMontreux.setNumberOfBath(1);
+
+		adMontreux.setBalcony(true);
+		adMontreux.setGarage(false);
+		adMontreux.setDishwasher(true);
+		adMontreux.setElevator(true);
+		adMontreux.setParking(true);
+		adMontreux.setBuildYear(2000);
+		adMontreux.setDistancePublicTransport(200);
+		adMontreux.setDistanceSchool(400);
+		adMontreux.setDistanceShopping(600);
+		adMontreux.setFloorLevel(1);
+		adMontreux.setNumberOfRooms(5);
+		adMontreux.setInfrastructureType(InfrastructureType.CABLE);
+		
+		adDao.save(adMontreux);
+		
+		Ad adStGallen = new Ad();
+		adStGallen.setZipcode(9000);
+		adStGallen.setType(Type.APARTMENT);
+		adStGallen.setBuyMode(BuyMode.RENT);
+		adStGallen.setMoveInDate(moveInDate9);
+		adStGallen.setCreationDate(creationDate9);
+		adStGallen.setPrice(800);
+		adStGallen.setSquareFootage(30);
+		adStGallen.setRoomDescription("hehe");
+		adStGallen.setUser(ese);
+		adStGallen.setTitle("St. Gallen apartment for if you love the rain");
+		adStGallen.setStreet("Brunneggstrasse 9");
+		adStGallen.setCity("St. Gallen");
+		adStGallen.setLatitude(47.424026);
+		adStGallen.setLongitude(9.372555);
+		adStGallen.setNumberOfBath(1);
+
+		adStGallen.setBalcony(false);
+		adStGallen.setGarage(false);
+		adStGallen.setDishwasher(true);
+		adStGallen.setElevator(true);
+		adStGallen.setParking(false);
+		adStGallen.setBuildYear(1900);
+		adStGallen.setDistancePublicTransport(100);
+		adStGallen.setDistanceSchool(400);
+		adStGallen.setDistanceShopping(200);
+		adStGallen.setFloorLevel(1);
+		adStGallen.setNumberOfRooms(3);
+		adStGallen.setInfrastructureType(InfrastructureType.SATELLITE);
+		
+		adDao.save(adStGallen);
 	}
 
 	private AdPicture createPicture(Ad ad, String filePath) {
 		AdPicture picture = new AdPicture();
 		picture.setFilePath(filePath);
 		return picture;
+		
+
 	}
 
 }

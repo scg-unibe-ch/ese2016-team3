@@ -187,6 +187,12 @@
 	}
 </script>
 
+<fmt:formatNumber value="${ad.price}" var="formattedPrice"
+	pattern="###,### CHF" />
+
+<fmt:formatNumber value="${ad.auctionPrice}" var="formattedAuctionPrice"
+	pattern="###,### CHF" />
+	
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-4 col-ls-4">
 		<h4>Filter results</h4>
@@ -479,6 +485,14 @@
 												<p>
 													<i>${ad.type.name}</i>
 												</p>
+												<c:choose>
+													<c:when test="${ad.auction}">
+														<strong>${formattedAuctionPrice}</strong>
+													</c:when>
+													<c:otherwise>
+														<strong>${formattedPrice}</strong>
+													</c:otherwise>
+												</c:choose>
 												<strong>CHF ${ad.price }</strong>
 												<fmt:formatDate value="${ad.moveInDate}"
 													var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />

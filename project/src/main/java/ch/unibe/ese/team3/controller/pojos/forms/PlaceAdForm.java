@@ -30,7 +30,7 @@ public class PlaceAdForm {
 	@Min(value = 1, message = "Has to be equal to 1 or more")
 	private int squareFootage;
 	//new
-	@Min(value=1700, message ="Has to be equal to 1700 or more")
+	@Min(value=0, message ="Has to be equal to 1700 or more")
 	private int buildYear;
 
 	@Min(value=0, message ="Has to be equal to 1900 or more")
@@ -39,17 +39,16 @@ public class PlaceAdForm {
     @Min(value=1, message ="Has to be equal to 1 or more")
 	private int numberOfRooms;
     
-    @Min(value=1, message ="Has to be equal to 1 or more")
+    @Min(value=0, message ="Has to be equal to 1 or more")
    	private int numberOfBath;
 	
 	//new
-	@Min(value = 1, message ="Required")
 	private int distanceSchool;
-	@Min(value = 1, message ="Required")
+	
 	private int distanceShopping;
-	@Min(value = 1, message ="Required")
+	
 	private int distancePublicTransport;
-	@Min(value = 0, message ="Has to be equal to 0 or more")
+	
 	private int floorLevel;
 	
 	// new
@@ -367,7 +366,7 @@ public class PlaceAdForm {
 	
 	public int getPriceForAd(){
 		if (auction){
-			return auctionPrice;
+			return this.startPrice;
 		}
 		return price;
 	}

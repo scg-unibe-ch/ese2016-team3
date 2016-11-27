@@ -129,9 +129,11 @@ public class AdService extends BaseService {
 		ad.setIncreaseBidPrice(placeAdForm.getIncreaseBidPrice());
 		ad.setcurrentAuctionPrice(placeAdForm.getStartPrice() + placeAdForm.getIncreaseBidPrice());
 		ad.setAuction(placeAdForm.getAuction());
-
+		ad.setAuctionPrice(placeAdForm.getAuctionPrice());
+		
 		ad.setPrice(placeAdForm.getPriceForAd());
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
+		
 		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
 		ad.setDistanceShopping(placeAdForm.getDistanceShopping());
 		ad.setDistancePublicTransport(placeAdForm.getDistancePublicTransport());

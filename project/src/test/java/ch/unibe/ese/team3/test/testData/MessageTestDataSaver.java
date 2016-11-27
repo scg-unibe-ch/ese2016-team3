@@ -36,7 +36,7 @@ public class MessageTestDataSaver {
 		bernerBaer = userDao.findByUsername("user@bern.com");
 		testerMuster = userDao.findByUsername("ese@unibe.ch");
 		jane = userDao.findByUsername("jane@doe.com");
-		oprah = userDao.findByUsername("oprah@winfrey.com");
+		oprah = userDao.findByUsername("oprah@ithaca.com");
 		
 		Message message;
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm dd.MM.yyyy");

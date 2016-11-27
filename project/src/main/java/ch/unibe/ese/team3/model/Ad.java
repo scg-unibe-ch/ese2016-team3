@@ -49,6 +49,9 @@ public class Ad {
 
 	@Column(nullable = false)
 	private int price;
+	
+	@Column(nullable = false)
+	private int auctionPrice;
 
 	@Column(nullable = false)
 	private int squareFootage;
@@ -237,6 +240,14 @@ public class Ad {
 
 	public void setIncreaseBidPrice(int increaseBidPrice) {
 		this.increaseBidPrice = increaseBidPrice;
+	}
+	
+	public int getAuctionPrice() {
+		return auctionPrice;
+	}
+	
+	public void setAuctionPrice(int price) {
+		this.auctionPrice = price;
 	}
 
 	public void setFloorLevel(int floorLevel) {

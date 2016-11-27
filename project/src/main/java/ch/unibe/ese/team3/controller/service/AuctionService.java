@@ -71,6 +71,7 @@ public class AuctionService extends BaseService {
 		ad.getBids().add(bid);
 		bidDao.save(bid);
 		incrementBidPrice(ad);
+		incrementPrice(ad);
 	}
 
 	private void buy(Ad ad, User purchaser) {
@@ -85,6 +86,11 @@ public class AuctionService extends BaseService {
 	private void incrementBidPrice(Ad ad) {
 
 		ad.setcurrentAuctionPrice(ad.getCurrentAuctionPrice() + ad.getIncreaseBidPrice());
+		adDao.save(ad);
+	}
+	
+	private void incrementPrice(Ad ad) {
+		ad.setPrice(ad.getCurrentAuctionPrice() - ad.getIncreaseBidPrice());
 		adDao.save(ad);
 	}
 
