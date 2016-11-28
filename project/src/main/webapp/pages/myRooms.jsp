@@ -110,14 +110,8 @@
 										<p>
 											<i>${ad.type.name}</i>
 										</p>
-<<<<<<< HEAD
-										<fmt:formatNumber value="${ad.price}" var="formattedPrice"
-											pattern="###,###,### CHF" />
-										<strong>${formattedPrice}</strong>
-=======
 										<strong><fmt:formatNumber value="${ad.price}"
 													var="formattedNumber" pattern="###,### CHF" />${formattedNumber}</strong>
->>>>>>> guiImprovements
 										<p>Move-in date: ${ad.moveInDate }</p>
 									</div>
 								</div>

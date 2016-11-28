@@ -504,7 +504,8 @@
 														<strong>${formattedPrice}</strong>
 													</c:otherwise>
 												</c:choose>
-												<strong>CHF ${ad.price }</strong>
+												<strong><fmt:formatNumber value="${ad.price}"
+										      			var="formattedPrice" type="currency" pattern="###,### CHF" />${formattedPrice}</strong>
 												<fmt:formatDate value="${ad.moveInDate}"
 													var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 												<p>Move-in date: ${formattedMoveInDate }</p>

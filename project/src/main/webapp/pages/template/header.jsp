@@ -31,21 +31,16 @@
 
 <style>
 /* TABS: define css class "customTab" in orded to display the tabs of the header green (and define hover effects)*/
-
-.customTab>li.active>a, .customTab>li.active>a:focus, .customTab>li.active>a:hover	{
+.customTab>li.active>a, .customTab>li.active>a:focus, .customTab>li.active>a:hover {
 	background-color: #32CD32 !important;
-	color:#FFFFFF;
+	color: #FFFFFF;
 }
+
 .customTab>li>a:hover {
 	background-color: #228B22 !important;
-	color:#FFFFFF;
+	color: #FFFFFF;
 	/* fill	color #d9edf7 default f5f5f5 #337ab7 fff*/
 }
-
-/* .nav-pills > .active > a, .nav-pills > .active > a:hover {
-    background-color: #FFFFFF !important;
-} */
-
 
 /* CONTAINER: define new class to handle the background color of the container */
 .custom-Container {
@@ -53,15 +48,17 @@
 }
 
 /* NAVBAR set color of writing and define hover effect.*/
-.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus
+	{
 	color: #FFFFFF; /*Sets the text hover color on navbar*/
 	background-color: #228B22;
 }
 /* set writing color */
-.navbar-default .navbar-nav>li>a{
-	color: #FFFFFF; 
+.navbar-default .navbar-nav>li>a {
+	color: #FFFFFF;
 }
 
+/*sets color of dropdown (user)*/
 .dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
 	color: #FFFFFF;
 	text-decoration: none;
@@ -69,11 +66,9 @@
 }
 
 .dropdown-toggle:active, .open .dropdown-toggle {
-	background:#32CD32 !important; 
-	color:#FFFFFF !important;
+	background: #32CD32 !important;
+	color: #FFFFFF !important;
 }
-
-
 </style>
 
 <script type="text/javascript">
@@ -116,33 +111,36 @@
 				</button>
 			</div>
 			<div class="navbar-inner">
-				<div class="container-fluid collapse navbar-collapse custom-Container">
+				<div
+					class="container-fluid collapse navbar-collapse custom-Container">
 					<ul class="nav navbar-nav">
 						<li><a href="/${pagemode}/">Homepage</a></li>
 						<li><a href="/${pagemode}/searchAd">Find ad</a></li>
 						<c:if test="${loggedIn}">
 							<li><a href="/buy/profile/mybids">My bids</a></li>
-							<li><a href="/${pagemode}/profile/placeAd">Place ad</a></li>
 						</c:if>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li class="navbar-right dropdown"><c:choose>
-								<c:when test="${loggedIn}">
-									<%@include file='/pages/getUserPicture.jsp'%>
-									<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-										<span class="glyphicon glyphicon-user"></span> <%
+						<c:choose>
+							<c:when test="${loggedIn}">
+								<li><a href="/${pagemode}/profile/placeAd"><span
+										class="glyphicon glyphicon-pencil"></span>Place ad</a></li>
+								<li class="navbar-right dropdown"><%@include
+										file='/pages/getUserPicture.jsp'%> <a
+									class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
+										class="glyphicon glyphicon-user"></span> <%
  	out.print(String.format("%s %s", realUser.getFirstName(), realUser.getLastName()));
  %> <span class="caret"></span>
-									</a>
+								</a>
 									<ul class="dropdown-menu">
 										<li><a
 											href="/${pagemode}/user?id=<%out.print(realUser.getId());%>">
 												<span class="glyphicon glyphicon-cog"></span> Show profile
 										</a></li>
-										<li><a href="/${pagemode}/profile/placeAd"> <span
+										<li><a href="/${pagemode}/profile/myRooms"> <span      
 												class="glyphicon glyphicon-home"></span> My Ads
 										</a></li>
-										<li><a href="/${pagemode}/profile/myRooms"> <span
+										<li><a href="/${pagemode}/profile/placeAd"> <span
 												class="glyphicon glyphicon-pencil"></span> Place Ad
 										</a></li>
 										<li><a href="/buy/profile/auctions"> <span
@@ -166,11 +164,12 @@
 												class="glyphicon glyphicon-log-out"></span> Logout
 										</a></li>
 									</ul>
-								</c:when>
-								<c:otherwise>
-									<li class="navbar-right"><a href="/${pagemode}/login">Login</a></li>
-								</c:otherwise>
-							</c:choose></li>
+							</c:when>
+							<c:otherwise>
+								<li class="navbar-right"><a href="/${pagemode}/login">Login</a></li>
+							</c:otherwise>
+						</c:choose>
+						</li>
 					</ul>
 				</div>
 			</div>
