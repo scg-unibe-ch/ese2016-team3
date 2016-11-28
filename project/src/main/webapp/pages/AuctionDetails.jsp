@@ -9,7 +9,7 @@
 
 <ol class="breadcrumb">
 	<li><a href="/${pagemode}/">Homepage</a></li>
-	<li><a href="/${pagemode}/profile/auctions">Manage auctions</a></li>
+	<li><a href="/${pagemode}/profile/auctions">Manage Auctions</a></li>
 	<li class="active">Auction</li>
 </ol>
 
@@ -33,34 +33,42 @@
 				</div>
 				<div class="row bottom15">
 					<div class="col-sm-3 col-xs-3">
-						<strong>Auction start</strong>
+						<strong>Auction Start</strong>
 					</div>
 					<div class="col-sm-3 col-xs-9">${ad.startDate}</div>
 					<div class="col-sm-3 col-xs-3">
-						<strong>Auction end</strong>
+						<strong>Auction End</strong>
 					</div>
 					<div class="col-sm-3 col-xs-9">${ad.endDate}</div>
 				</div>
 				<div class="row bottom15">
 					<div class="col-sm-3 col-xs-3">
-						<strong>Start price</strong>
+						<strong>Start Price</strong>
 					</div>
-					<div class="col-sm-3 col-xs-9">CHF ${ad.startPrice}.-</div>
+					<fmt:formatNumber value="${ad.startPrice }" var="formattedStartPrice"
+						pattern="###,### CHF" />
+					<div class="col-sm-3 col-xs-9">CHF ${formattedStartPrice}.-</div>
 					<div class="col-sm-3 col-xs-3">
-						<strong>Price increment</strong>
+						<strong>Price Increment</strong>
 					</div>
-					<div class="col-sm-3 col-xs-9">CHF ${ad.increaseBidPrice}.-</div>
+					<fmt:formatNumber value="${ad.increaseBidPrice }" var="formattedIncreaseBidPrice"
+						pattern="###,### CHF" />
+					<div class="col-sm-3 col-xs-9">CHF ${formattedIncreaseBidPrice}.-</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-3 col-xs-3">
-						<strong>Current auction price</strong>
+						<strong>Current Auction Price</strong>
 					</div>
+					<fmt:formatNumber value="${ad.currentAuctionPrice }" var="formattedCurrentAuctionPrice"
+						pattern="###,### CHF" />
 					<div class="col-sm-3 col-xs-9">CHF
-						${ad.currentAuctionPrice}.-</div>
+						${formattedCurrentAuctionPrice}.-</div>
 					<div class="col-sm-3 col-xs-3">
-						<strong>Price (buy directly)</strong>
+						<strong>Price (Buy Directly)</strong>
 					</div>
-					<div class="col-sm-3 col-xs-9">CHF ${ad.price}.-</div>
+					<fmt:formatNumber value="${ad.auctionPrice }" var="formattedAuctionPrice"
+						pattern="###,### CHF" />
+					<div class="col-sm-3 col-xs-9">CHF ${ad.auctionPrice}.-</div>
 				</div>
 			</div>
 		</div>
@@ -71,7 +79,7 @@
 				<input type="hidden" id="adIdComplete" name="adIdComplete"
 					value="${ad.id}" />
 				<button class="btn btn-success" type="submit">
-					<span class="glyphicon glyphicon-check"></span> Complete auction
+					<span class="glyphicon glyphicon-check"></span> Complete Auction
 				</button>
 			</form:form>
 		</c:if>
@@ -81,7 +89,7 @@
 				<input type="hidden" id="adIdResume" name="adIdResume"
 					value="${ad.id}" />
 				<button class="btn btn-default" type="submit">
-					<span class="glyphicon glyphicon-repeat"></span> Resume auction
+					<span class="glyphicon glyphicon-repeat"></span> Resume Auction
 				</button>
 			</form:form>
 		</c:if>
@@ -91,7 +99,7 @@
 				<input type="hidden" id="adIdPause" name="adIdPause"
 					value="${ad.id}" />
 				<button class="btn btn-default" type="submit">
-					<span class="glyphicon glyphicon-pause"></span> Pause auction
+					<span class="glyphicon glyphicon-pause"></span> Pause Auction
 				</button>
 			</form:form>
 		</c:if>
@@ -135,7 +143,7 @@
 		<h4>Purchase requests</h4>
 		<c:choose>
 			<c:when test="${empty purchaseRequests}">
-				<p>No purchase Requests</p>
+				<p>No Purchase Requests</p>
 			</c:when>
 			<c:otherwise>
 				<table class="table table-striped">
@@ -155,7 +163,7 @@
 									${formattedDate}</td>
 								<td>${request.purchaser.firstName}&nbsp;${request.purchaser.lastName}</td>
 								<td><a class="btn btn-default"
-									href="/${pagemode}/user?id=${bid.bidder.id}" target="_blank">Visit profile</a></td>
+									href="/${pagemode}/user?id=${bid.bidder.id}" target="_blank">Visit Profile</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>

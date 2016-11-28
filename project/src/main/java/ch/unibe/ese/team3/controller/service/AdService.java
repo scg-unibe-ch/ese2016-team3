@@ -419,26 +419,18 @@ public class AdService extends BaseService {
 			Integer minRenovationYear = convertToNullableInt(searchForm.getRenovationYearMin());
 			Integer maxRenovationYear = convertToNullableInt(searchForm.getRenovationYearMax());
 			
-			Integer adBath = convertToNullableInt(ad.getNumberOfBath());
-			Integer adFloorLevel = convertToNullableInt(ad.getFloorLevel());
-			Integer adBuildYear = convertToNullableInt(ad.getBuildYear());
-			Integer adRenovationYear = convertToNullableInt(ad.getRenovationYear());
-			Integer adDistanceSchool = convertToNullableInt(ad.getDistanceSchool());
-			Integer adDistanceShopping = convertToNullableInt(ad.getDistanceShopping());
-			Integer adDistancePublicTransport = convertToNullableInt(ad.getDistancePublicTransport());
-			
-			if (!inRange(minBath, maxBath, adBath)
+			if (!inRange(minBath, maxBath, ad.getNumberOfBath())
 					|| !inRange(minSquareFootage, maxSquareFootage, ad.getSquareFootage())
 					|| !inRange(minNumberOfRooms, maxNumberOfRooms, ad.getNumberOfRooms())
-					|| !inRange(minFloorLevel, maxFloorLevel, adFloorLevel)
+					|| !inRange(minFloorLevel, maxFloorLevel, ad.getFloorLevel())
 
-					|| !inRange(minBuildYear, maxBuildYear, adBuildYear)
-					|| !inRange(minRenovationYear, maxRenovationYear, adRenovationYear)
+					|| !inRange(minBuildYear, maxBuildYear, ad.getBuildYear())
+					|| !inRange(minRenovationYear, maxRenovationYear, ad.getRenovationYear())
 
-					|| !inRange(minDistanceSchool, maxDistanceSchool, adDistanceSchool)
-					|| !inRange(minDistanceShopping, maxDistanceShopping, adDistanceShopping)
+					|| !inRange(minDistanceSchool, maxDistanceSchool, ad.getDistanceSchool())
+					|| !inRange(minDistanceShopping, maxDistanceShopping, ad.getDistanceShopping())
 					|| !inRange(minDistancePublicTransport, maxDistancePublicTransport,
-							adDistancePublicTransport)) {
+							ad.getDistancePublicTransport())) {
 				iterator.remove();
 			}
 		}
@@ -493,11 +485,8 @@ public class AdService extends BaseService {
 		return ads;
 	}
 
-	private boolean inRange(Integer min, Integer max, Integer value) {
-		if (value == null) {
-			return true;
-		}
-		else return (min == null || value >= min) && (max == null || value <= max);
+	private boolean inRange(Integer min, Integer max, int value) {
+		return (min == null || value >= min) && (max == null || value <= max);
 	}
 
 	/** Returns all ads that were placed by the given user. */
