@@ -26,6 +26,17 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Check:
+ * http://testdrivendevelopment.ourownjava.com/spring-test/spring-mvc-rest-unit-testing-post-request/
+ * 
+ * and
+ * 
+ * https://www.petrikainulainen.net/programming/spring-framework/unit-testing-of-spring-mvc-controllers-rest-api/
+ * 
+ * @author sabineb
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/config/springMVC.xml",
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
