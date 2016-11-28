@@ -107,6 +107,12 @@ The following sections describe abbreviations and special terms used in this doc
 |uc29|Upgrade account|The user of the web application|Med|1|
 |uc30|Bid on property|The user of the web application|Med|1|
 |uc31|Buy property directly|The user of the web application|Med|1|
+|uc32|View bids|The user of the web application|Low|1|
+|uc33|View auctions|The manager of auctions|Med|1|
+|uc34|View auction details|The manager of auctions|Med|1|
+|uc35|Pause auction|The manager of auctions|Med|1|
+|uc36|Resume auction|The manager of auctions|Med|1|
+|uc37|Complete auction|The manager of auctions|Med|1|
 
 #### User management
 ![User management](images/User_Management2.0.png)
@@ -536,6 +542,8 @@ The following sections describe abbreviations and special terms used in this doc
 
 #### Auctions
 
+##### Bidding and purchase requests
+
 ![Auctions](images/Auction2.0.png)
 
 |Use case element|Description|
@@ -544,28 +552,105 @@ The following sections describe abbreviations and special terms used in this doc
 |**Name**|Bid on Property|
 |**Description**|The user bids the next bigger value in an open auction.|
 |**Primary actor**|The user of the web application|
-|**Precondition**|The user is logged into the application. The user is viewing an ad of a property that is being sold through an auction.|
+|**Precondition**|The user is logged into the application. The user is viewing an ad of a property that is being sold through an auction (`uc08`).|
 |**Trigger**|The user wants to buy a property through auction.|
 |**Normal flow**|1. The user views the description of the ad and sees how much has been bid for the property and how much increase he has to bid in order to partake in the auction.|
-||2. The user pushes the bid button and a message pops up that the bid was successful.| 
+||2. The user pushes the "Bid" button.| 
+||3. A confirmation dialog is shown.|
+||4. The user clicks the button "Bid" to complete the bid.|
+||5. A confirmation message is shown that the bid was successful.|
 |**Alternate flow**|If the auction ends during the time the user is viewing the ad and tries to bid, an error message is shown, that the auction has already ended.|
 
 |Use case element|Description|
 |:---|:---|
 |**ID**|`uc31`|
 |**Name**|Buy Property directly|
-|**Description**|The user buys a property in an open auction directly for a fixed price.|
+|**Description**|The user makes a purchase request to buy a property in an open auction directly for a fixed price.|
 |**Primary actor**|The user of the web application|
-|**Precondition**|The user is logged into the application. The user is viewing an ad of a property that is being sold through an auction.|
+|**Precondition**|The user is logged into the application. The user is viewing an ad of a property that is being sold through an auction (`uc08`).|
 |**Trigger**|The user wants to buy a property directly and not bid in the auction.|
 |**Normal flow**|1. The user views the description of the ad and checks what the fix buying price for the property is.|
-||2. The user pushes the buy button and a message pops up that the purchase was successful.|
-||3. The auction field disappears from the ad site.| 
+||2. The user pushes the "Buy" button.|
+||3. A confirmation dialog is shown.|
+||4. The user clicks the button "Buy" to complete the purchase request.|
+||5. The purchaser request is registered and a confirmation message is shown that the request was submitted successfuly.|
 |**Alternate flow**|If the auction ends during the time the user is viewing the ad and tries to bid, an error message is shown, that the auction has already ended.|
 
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc32`|
+|**Name**|View bids|
+|**Description**|The user checks the bids which have already been registered for an ad under auction.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application. The user is viewing an ad of a property that is being sold through an auction (`uc08`).|
+|**Trigger**|The user wants to buy a property directly and not bid in the auction.|
+|**Normal flow**|1. The user clicks on the button "Show bids"|
+||2. A popup containing a list of the 10 most recent bids is shown.|
+|**Alternate flow**|None|
 
+##### Auction management
 
-see [http://www.gatherspace.com/static/use_case_example.html](http://www.gatherspace.com/static/use_case_example.html)
+![AuctionManagement](images/AuctionManagement.png)
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc33`|
+|**Name**|View auctions|
+|**Description**|The user checks his auctions.|
+|**Primary actor**|The manager of auctions|
+|**Precondition**|The user is logged into the application and has placed some ads under auction.|
+|**Trigger**|The user wants to check the state of his auctions.|
+|**Normal flow**|1. The user clicks on the button "Manage Auctions" in the main user menu|
+||2. A page containing a list of all his auctions, grouped by auction state, is shown.|
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc34`|
+|**Name**|View auction details|
+|**Description**|The user checks the state of one specific auction.|
+|**Primary actor**|The manager of auctions|
+|**Precondition**|The user is logged into the application and has placed some ads under auction. The user is on the auction management page (`uc33`)|
+|**Trigger**|The user wants to check the state of a specific auction.|
+|**Normal flow**|1. The user clicks on the link "Auction details" near one of the listed auctions|
+||2. A page containing information about this auction (start date, end date, price, increment, registered bids and purchase requests) is shown.|
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc35`|
+|**Name**|Pause auction|
+|**Description**|The user pauses a running auction.|
+|**Primary actor**|The manager of auctions|
+|**Precondition**|The user is logged into the application and has placed some ads under auction. The user is on the details page of a running auction (`uc34`)|
+|**Trigger**|The user wants to pause an auction (e.g. for checking a purchase request).|
+|**Normal flow**|1. The user clicks on the button "Pause auction"|
+||2. A success message is shown and the auction is paused.|
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc36`|
+|**Name**|Resume auction|
+|**Description**|The user resumes a running auction.|
+|**Primary actor**|The manager of auctions|
+|**Precondition**|The user is logged into the application and has placed some ads under auction. The user is on the details page of a paused auction (`uc35`)|
+|**Trigger**|The user wants to resume a paused auction.|
+|**Normal flow**|1. The user clicks on the button "Resume auction"|
+||2. A success message is shown and the auction is running again.|
+|**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc37`|
+|**Name**|Complete auction|
+|**Description**|The user completes a running, paused or expired auction.|
+|**Primary actor**|The manager of auctions|
+|**Precondition**|The user is logged into the application and has placed some ads under auction. The user is on the details page of a running, paused or expired auction (`uc34`)|
+|**Trigger**|The user wants to complete an auction.|
+|**Normal flow**|1. The user clicks on the button "Complete auction"|
+||2. A success message is shown an the auction is completed.|
+|**Alternate flow**|None|
 
 ### Actor characteristics
 In general, the users of the Ithaca are expected to have little or no technical experience. However, they are expected to have some base knowledge of the general use of message services and internet applications.
@@ -656,8 +741,8 @@ A logged in user can:
 A logged in user can:
 
 - **Send messages** in two ways:
- + sending messages by visiting the advertiser Profile and clicking on the button "Message".Then he can enter the subject and his message and click on "Send" if the want to send the message or click on "Cancel" to exit the message form. If no subject is filled in, the message won't be sent. If the subject is entered but no message, then the message wont'be sent. Only if both( subject and message) are entered, the message will be sent.
- + the other way of sending messages is by going into "Messages" from the dropdown menu and there click "New message". For the new message he has to specify to whom he wants to send the email and give in the subject and write his message. Then he can click either "send"(for sending the message) or "cancel"(for leaving the message form).If the user puts in a invalid email address of the recipient then there will appear a box saying: "This user does not exist". Again all information (to, subject, and message) have to be filled in, if not, the message won't be sent.
+ + sending messages by visiting the advertiser Profile and clicking on the button "Message".Then he can enter the subject and his message and click on "Send" if the want to send the message or click on "Cancel" to exit the message form. If no subject is filled in, the message won't be sent. If the subject is entered but no message, then the message wont'be sent. Only if both (subject and message) are entered, the message will be sent.
+ + the other way of sending messages is by going into "Messages" from the dropdown menu and there click "New message". For the new message he has to specify to whom he wants to send the email and give in the subject and write his message. Then he can click either "send" (for sending the message) or "cancel" (for leaving the message form).If the user puts in a invalid email address of the recipient then there will appear a box saying: "This user does not exist". Again all information (to, subject, and message) have to be filled in, if not, the message won't be sent.
 
 - **view his sent messages**: He can see in a chart the subject, sender, recipient and the date sent from each message he has ever sent. By clicking on a line from this chart he gets a view of the sent message.
 
@@ -748,6 +833,18 @@ The advertiser can specify multiple possible *visiting times* for enquiries. A v
 #### Auctions
 
 When an ad is up for sale and the owner has chosen the *auction* option, users can bid on the property. There is also a "buy directly" price. Both startprice for bidding and bidding increment is specified by the property owner, as is the direct buy price. The auction has an end date when it is no longer possible to bid.
+
+Users can either bid for an auction or make a purchase request to buy the property directly. Users can bid multiple times for the same ad. But they can only make one purchase request per ad.
+
+Advertisers can manage their properties which are put under auction. Auctions can be in different states:
+
+- **Not yet started**: The start date of the auction lies in the future. Users can't bid for it until now.
+- **Running**: Users can bid for this auction or place a purchase request. The manager can look at the bids and purchase requests which entered so far and may pause or even complete the auction before it expires.
+- **Paused**: The auction is temporary suspended so no one can bid for it. The manager can resume or complete the auction.
+- **Expired**: The end date of the auction is in the past. No one can bid for it anymore. The manager can contact the winner of the auction and complete it afterwards.
+- **Completed**: The manager has contacted the winner of the auction and completed the auction.
+
+The ads of auctions, which expired aren't shown in the search anymore.
 
 #### User roles
 
