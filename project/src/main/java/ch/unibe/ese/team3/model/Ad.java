@@ -176,6 +176,16 @@ public class Ad {
 
 	@Column(nullable = true)
 	private boolean auctionCompleted;
+	
+	private boolean auctionMessageSent;
+
+	public boolean isAuctionMessageSent() {
+		return auctionMessageSent;
+	}
+
+	public void setAuctionMessageSent(boolean auctionMessageSent) {
+		this.auctionMessageSent = auctionMessageSent;
+	}
 
 	public boolean isAuction() {
 		return auction;

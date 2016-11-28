@@ -23,5 +23,7 @@ public interface AdDao extends CrudRepository<Ad, Long> {
 	
 	public Iterable<Ad> findByEndDate(Date date);
 	
+	public Iterable<Ad> findByEndDateLessThanAndAuctionMessageSent(Date date, boolean auctionMessageSent);
+	
 
 }

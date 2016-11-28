@@ -252,19 +252,26 @@ public class MessageService {
     public void checkForExpiredAuctions(){
     	
     	//Yesterday
-    	Date yesterday;
-    	Calendar cal = Calendar.getInstance();
-    	cal.add(Calendar.DATE, -1);
-    	yesterday = cal.getTime();
-    	Iterable<Ad> expiredAds = adDao.findByEndDate(yesterday);
+    //	Date yesterday;
+    //	Calendar cal = Calendar.getInstance();
+    //	cal.add(Calendar.DATE, -1);
+    //	yesterday = cal.getTime();
+    //	Iterable<Ad> expiredAds = adDao.findByEndDate(yesterday);
+    	
+    	
+    
+    	Iterable<Ad> expiredAds = adDao.findByEndDateLessThanAndAuctionMessageSent(new Date(),false);
+    	
     	
         for(Ad ad : expiredAds){
           //  ad.setAuctionCompleted(true);
            // ad.setAvailableForAuction(false);
           //  adDao.save(ad);
+        	ad.setAuctionMessageSent(true);
+        	adDao.save(ad);
         	
         	if(ad.getBids().isEmpty()){
-        		sendNoBidsMessage(ad);
+        		sendNoBidsMessageToOwner(ad);
         	}
         	else{
         		sendSuccessMessages(ad);
@@ -310,7 +317,7 @@ public class MessageService {
      * Sends message to user who placed the ad
      * @param ad Ad which auction has finished
      */
-	private void sendNoBidsMessage(Ad ad) {
+	private void sendNoBidsMessageToOwner(Ad ad) {
 
 		User user = userDao.findUserById(ad.getUser().getId());
     	String subject = "Auction Expired";
