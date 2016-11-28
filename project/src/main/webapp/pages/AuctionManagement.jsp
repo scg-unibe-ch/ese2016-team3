@@ -22,12 +22,12 @@
 
 <ol class="breadcrumb">
 	<li><a href="/${pagemode}/">Homepage</a></li>
-	<li class="active">Manage auctions</li>
+	<li class="active">Manage Auctions</li>
 </ol>
 
 <div class="row">
 	<div class="col-md-12 col-xs-12">
-		<h3>Manage auctions</h3>
+		<h3>Manage Auctions</h3>
 	</div>
 </div>
 
@@ -47,7 +47,7 @@
 			<div class="panel-body table-responsive">
 				<c:choose>
 					<c:when test="${empty runningAuctions}">
-						<p>No running auctions</p>
+						<p>No Running Auctions</p>
 					</c:when>
 					<c:otherwise>
 						<table class="table table-striped">
@@ -55,10 +55,10 @@
 								<tr>
 									<th>Ad</th>
 									<th>Address</th>
-									<th>Start date</th>
-									<th>End date</th>
+									<th>Start Date</th>
+									<th>End Date</th>
 									<th>Bids</th>
-									<th>Purchase requests</th>
+									<th>Purchase Requests</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -72,7 +72,7 @@
 										<td>${ad.bids.size() }</td>
 										<td>${ad.purchaseRequests.size() }</td>
 										<td><a href="/${pagemode}/profile/auction?id=${ad.id}">Auction
-												details</a></td>
+												Details</a></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -106,10 +106,10 @@
 								<tr>
 									<th>Ad</th>
 									<th>Address</th>
-									<th>Start date</th>
-									<th>End date</th>
+									<th>Start Date</th>
+									<th>End Date</th>
 									<th>Bids</th>
-									<th>Purchase requests</th>
+									<th>Purchase Requests</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -123,7 +123,7 @@
 										<td>${ad.bids.size() }</td>
 										<td>${ad.purchaseRequests.size() }</td>
 										<td><a href="/${pagemode}/profile/auction?id=${ad.id}">Auction
-												details</a></td>
+												Details</a></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -140,7 +140,7 @@
 			<h4 class="panel-title">
 				<a role="button" data-toggle="collapse" href="#collapseExpired"
 					aria-expanded="true" aria-controls="collapseExpired">Expired
-					auctions</a>
+					Auctions</a>
 				<span class="pull-right indicator glyphicon glyphicon-chevron-right"></span>
 			</h4>
 		</div>
@@ -158,10 +158,10 @@
 								<tr>
 									<th>Ad</th>
 									<th>Address</th>
-									<th>Start date</th>
-									<th>End date</th>
+									<th>Start Date</th>
+									<th>End Date</th>
 									<th>Bids</th>
-									<th>Purchase requests</th>
+									<th>Purchase Requests</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -175,7 +175,7 @@
 										<td>${ad.bids.size() }</td>
 										<td>${ad.purchaseRequests.size() }</td>
 										<td><a href="/${pagemode}/profile/auction?id=${ad.id}">Auction
-												details</a></td>
+												Details</a></td>
 									</tr>
 								</c:forEach>
 							</tbody>
