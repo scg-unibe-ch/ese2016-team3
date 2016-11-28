@@ -569,7 +569,13 @@ public class Ad {
 
 	public boolean isAuctionRunning() {
 		Date now = new Date();
-		return !auctionCompleted && availableForAuction && now.after(startDate) && now.before(endDate);
+		Calendar calNow = Calendar.getInstance();
+		Calendar expired = Calendar.getInstance();
+		expired.setTime(endDate);
+		expired.set(Calendar.HOUR_OF_DAY, 23);
+		expired.set(Calendar.MINUTE, 59);
+		expired.set(Calendar.SECOND, 59);
+		return !auctionCompleted && availableForAuction && now.after(startDate) && calNow.before(expired);
 	}
 
 	public boolean isAuctionNotYetRunning() {
