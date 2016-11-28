@@ -22,10 +22,10 @@ import ch.unibe.ese.team3.controller.service.BookmarkService;
 import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.controller.service.VisitService;
-import ch.unibe.ese.team3.enums.BookmarkStatus;
 import ch.unibe.ese.team3.exceptions.ResourceNotFoundException;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.User;
+import ch.unibe.ese.team3.model.enums.BookmarkStatus;
 
 /**
  * This controller handles all requests concerning displaying ads and
@@ -72,6 +72,7 @@ public class AdController {
 		}
 
 		model.addObject("shownAd", ad);
+		model.addObject("bids", auctionService.getMostRecentBidsForAd(ad));
 		model.addObject("messageForm", new MessageForm());
 
 		String loggedInUserEmail = (principal == null) ? "" : principal.getName();

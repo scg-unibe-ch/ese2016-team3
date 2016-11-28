@@ -37,7 +37,7 @@ public class AuctionTestDataSaver {
 	public void saveTestData() throws Exception {
 		User bernerBaer = userDao.findByUsername("user@bern.com");
 		User ese = userDao.findByUsername("ese@unibe.ch");
-		User oprah = userDao.findByUsername("oprah@winfrey.com");
+		User oprah = userDao.findByUsername("oprah@ithaca.com");
 		User jane = userDao.findByUsername("jane@doe.com");
 		
 		User[] bidders = new User[]{bernerBaer, ese, oprah};

@@ -34,10 +34,10 @@ import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.dto.PictureMeta;
-import ch.unibe.ese.team3.enums.Distance;
-import ch.unibe.ese.team3.enums.PageMode;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
+import ch.unibe.ese.team3.model.enums.Distance;
+import ch.unibe.ese.team3.model.enums.PageMode;
 
 /**
  * This controller handles all requests concerning placing ads.

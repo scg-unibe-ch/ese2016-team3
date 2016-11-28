@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ch.unibe.ese.team3.enums.BookmarkStatus;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.UserDao;
+import ch.unibe.ese.team3.model.enums.BookmarkStatus;
 
 /** Adds or removes bookmarked ads from the user and updates the user accordingly */
 @Service

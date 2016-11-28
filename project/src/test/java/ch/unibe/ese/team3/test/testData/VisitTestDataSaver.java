@@ -55,7 +55,7 @@ public class VisitTestDataSaver{
 		bernerBaer = userDao.findByUsername("user@bern.com");
 		testerMuster = userDao.findByUsername("ese@unibe.ch");
 		janeDoe = userDao.findByUsername("jane@doe.com");
-		oprah = userDao.findByUsername("oprah@winfrey.com");
+		oprah = userDao.findByUsername("oprah@ithaca.com");
 
 		// load ads
 		ad1 = adDao.findOne(1L);

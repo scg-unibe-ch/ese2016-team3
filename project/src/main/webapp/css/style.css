@@ -1,5 +1,15 @@
-ul.nav-tabs.header-tabs {
-	padding-left: 210px;
+#main-container {
+	padding-top: 15px;
+}
+
+#ithaca-brand {
+	font-weight: bold;
+	font-size: 20px;
+	margin-right: 15px;
+}
+
+#ithaca-brand > img {
+	margin-right: 5px;
 }
 
 div.tab-pane {
@@ -28,13 +38,8 @@ nav.navbar-default {
 	background-color: white;
 }
 
-h1 {
-	position: relative;
-	top: 40px;
-}
-
 #logo {
-	display: inline;
+	display: inline-block;
 	width: 80px;
 }
 
@@ -131,4 +136,8 @@ h3 {
 
 #map {
 	border-radius: 4px;
+}
+
+.premiumAd {
+	border-color: #3c763d;
 }

@@ -1,4 +1,4 @@
-package ch.unibe.ese.team3.enums;
+package ch.unibe.ese.team3.model.enums;
 
 public enum PageMode {
 	BUY("buy"), RENT("rent"), NONE("none");

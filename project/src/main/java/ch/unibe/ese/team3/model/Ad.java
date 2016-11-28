@@ -12,8 +12,8 @@ import javax.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import ch.unibe.ese.team3.enums.AuctionStatus;
-import ch.unibe.ese.team3.enums.Distance;
+import ch.unibe.ese.team3.model.enums.AuctionStatus;
+import ch.unibe.ese.team3.model.enums.Distance;
 
 /** Describes an advertisement that users can place and search for. */
 @Entity
@@ -50,6 +50,9 @@ public class Ad {
 
 	@Column(nullable = false)
 	private int price;
+	
+	@Column(nullable = false)
+	private int auctionPrice;
 
 	@Column(nullable = false)
 	private int squareFootage;
@@ -251,6 +254,14 @@ public class Ad {
 
 	public void setIncreaseBidPrice(int increaseBidPrice) {
 		this.increaseBidPrice = increaseBidPrice;
+	}
+	
+	public int getAuctionPrice() {
+		return auctionPrice;
+	}
+	
+	public void setAuctionPrice(int price) {
+		this.auctionPrice = price;
 	}
 
 	public void setFloorLevel(int floorLevel) {

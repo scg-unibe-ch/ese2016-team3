@@ -46,6 +46,7 @@
 <div class="row">
 	<div class="col-md-12 col-xs-12">
 		<h3>Edit profile</h3>
+		Fields marked with * are required. 
 		<form:form id="editProfileForm" class="form-horizontal" method="post"
 			modelAttribute="editProfileForm" action="./editProfile">
 			<div class="panel panel-default">
@@ -53,7 +54,7 @@
 
 					<spring:bind path="username">
 						<div class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="col-sm-2 control-label" for="field-username">Username
+							<label class="col-sm-2 control-label" for="field-username">E-mail*
 							</label>
 							<div class="col-sm-6">
 								<form:input path="username" cssClass="form-control"
@@ -67,7 +68,7 @@
 					
 					<spring:bind path="password">
 						<div class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="col-sm-2 control-label" for="field-password">Password</label>
+							<label class="col-sm-2 control-label" for="field-password">Password*</label>
 							<div class="col-sm-6">
 								<form:input path="password" id="field-password" type="password"
 									cssClass="form-control" />
@@ -81,7 +82,7 @@
 					<spring:bind path="firstName">
 						<div class="form-group ${status.error ? 'has-error' : '' }">
 							<label class="col-sm-2 control-label" for="field-firstName">First
-								Name</label>
+								Name*</label>
 							<div class="col-sm-6">
 								<form:input path="firstName" cssClass="form-control"
 									id="field-firstName" />
@@ -95,7 +96,7 @@
 					<spring:bind path="lastName">
 						<div class="form-group ${status.error ? 'has-error' : '' }">
 							<label class="col-sm-2 control-label" for="field-lastName">Last
-								Name</label>
+								Name*</label>
 							<div class="col-sm-6">
 								<form:input path="lastName" id="field-lastName"
 									cssClass="form-control" />
@@ -108,7 +109,7 @@
 					
 					<spring:bind path="aboutMe">
 						<div class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="col-sm-2 control-label" for="field-aboutMe">About me
+							<label class="col-sm-2 control-label" for="field-aboutMe">About Me
 							</label>
 							<div class="col-sm-6">
 								<form:textarea class="form-control" rows="5" path="aboutMe"

@@ -22,11 +22,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.dto.AdMeta;
-import ch.unibe.ese.team3.enums.PageMode;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
+import ch.unibe.ese.team3.model.enums.PageMode;
 
 /** Handles all requests concerning the search for ads. */
 @Controller
@@ -77,7 +77,9 @@ public class SearchController {
 				admeta.setId(Long.toString(ad.getId()));
 				admeta.setName(ad.getTitle());
 				admeta.setPrice(Integer.toString(ad.getPrice()));
-				admeta.setPicture(ad.getPictures().get(0).getFilePath());
+				if (!ad.getPictures().isEmpty()) {
+					admeta.setPicture(ad.getPictures().get(0).getFilePath());
+				}
 
 				admeta.setLat(ad.getLatitude());
 				admeta.setLng(ad.getLongitude());
@@ -110,9 +112,9 @@ public class SearchController {
 
 	@ModelAttribute
 	public SearchForm getSearchForm() {
-		if (searchForm == null) {
-			searchForm = new SearchForm();
-		}
-		return searchForm;
+		//if (searchForm == null) {
+		//	searchForm = new SearchForm();
+		//}
+		return new SearchForm();
 	}
 }

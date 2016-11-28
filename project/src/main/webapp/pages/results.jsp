@@ -13,7 +13,6 @@
 	<li class="active">Results</li>
 </ol>
 
-
 <script
 	src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDPcQNoMGcp8Oe9l6uY8jLFlMR4pyecFIU&libraries=places"></script>
 
@@ -72,6 +71,42 @@
 </script>
 
 <script>
+	$(document).ready(function(){
+		$("#reset").click(function(){
+			$("#field-earliestMoveInDate").val("");
+			$("#field-latestMoveInDate").val("");
+			
+			document.getElementById("field-balcony").checked = false;
+			document.getElementById("field-garage").checked = false;
+			document.getElementById("field-parking").checked = false;
+			document.getElementById("field-elevator").checked = false;
+			document.getElementById("field-dishwasher").checked = false;
+			
+			document.getElementById("infrastructureType").selectedIndex = 0;
+			
+			$("#field-squareFootageMin").val(0);
+			$("#field-squareFootageMax").val(0);
+			$("#field-floorLevelMin").val(0);
+			$("#field-floorLevelMax").val(0);
+			$("#field-NumberOfBathMin").val(0);
+			$("#field-NumberOfBathMax").val(0);
+			$("#field-NumberOfRoomsMin").val(0);
+			$("#field-NumberOfRoomsMax").val(0);
+			$("#field-BuildYearMin").val(0);
+			$("#field-BuildYearMax").val(0);
+			$("#field-RenovationYearMin").val(0);
+			$("#field-RenovationYearMax").val(0);
+			$("#field-DistanceSchoolMin").val(0);
+			$("#field-DistanceSchoolMax").val(0);
+			$("#field-DistanceShoppingMin").val(0);
+			$("#field-DistanceShoppingMax").val(0);
+			$("#field-DistancePublicTransportMin").val(0);
+			$("#field-DistancePublicTransportMax").val(0);		
+		});
+	});
+</script>
+
+<script>
 	$(document).ready(function() {
 		$("#cityInput").autocomplete({
 			minLength : 2,
@@ -92,9 +127,13 @@
 		 $('a[href="#mapview"]').on('shown.bs.tab', function(e){
 	        initMap();
 	    	});
+		 
+		 /* sorts results when "sort by" is changed */
+		 $("#form-sort").change(function() {
+				sort_div_attribute();
+		 });
 	});
 </script>
-
 
 <script>
 	var map;
@@ -151,33 +190,24 @@
 	}
 </script>
 
+<fmt:formatNumber value="${ad.price}" var="formattedPrice"
+	pattern="###,### CHF" />
+
+<fmt:formatNumber value="${ad.auctionPrice}" var="formattedAuctionPrice"
+	pattern="###,### CHF" />
+	
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-4 col-ls-4">
-		<h4>Filter results</h4>
-		<div class="panel panel-default form-inline">
-			<div class="panel-body">
-				<div class="form-group">
-					<select id="modus" class="form-control">
-						<option value="">Sort by:</option>
-						<option value="price_asc">Price (ascending)</option>
-						<option value="price_desc">Price (descending)</option>
-						<option value="moveIn_desc">Move-in date (earliest to
-							latest)</option>
-						<option value="moveIn_asc">Move-in date (latest to
-							earliest)</option>
-						<option value="dateAge_asc">Date created (youngest to
-							oldest)</option>
-						<option value="dateAge_desc">Date created (oldest to
-							youngest)</option>
-					</select>
-					<button class="btn btn-default" onClick="sort_div_attribute()">Sort</button>
-				</div>
-			</div>
-		</div>
+		<h4>Filter results</h4> 
+		
 		<form:form method="post" modelAttribute="searchForm"
 			action="./results" id="filterForm" autocomplete="off">
 			<div class="panel panel-default">
 				<div class="panel-body">
+					<div class="form-group pull-right">
+						<button id="reset" class="btn btn-default">Clear filters</button>
+						<button type="submit" class="btn btn-primary">Filter</button>
+					</div>
 					<div class="form-group">
 						<label>Type</label>
 						<c:forEach var="type" items="${types}">
@@ -218,6 +248,38 @@
 							</div>
 						</div>
 					</spring:bind>
+					
+					<div class="form-group row">
+						<label class="col-md-6" for="field-NumberOfRoomsMin">Nr.
+							of Rooms between</label>
+						<div class="col-md-6 form-inline">
+							<form:input type="number" min="0" cssClass="form-control input60"
+								path="numberOfRoomsMin" id="field-NumberOfRoomsMin" />
+							<label for="field-NumberOfRoomsMax" class="betweenLabel">
+								- </label>
+							<form:input type="number" min="0" cssClass="form-control input60"
+								path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
+							<%-- muss man <form_error/> auch noch hinzufügen? --%>
+						</div>
+					</div>
+					
+					<div class="form-group row ">
+						<label for="field-squareFootageMin" class="col-md-6">Square meters 
+							between</label>
+						<div class="col-md-6 form-inline">
+							<form:input type="number" step="1" min="0" id="field-squareFootageMin"
+								path="squareFootageMin" cssClass="form-control input60 " />
+							<label for="field-squareFootageMax" class="betweenLabel">
+								- </label>
+							<form:input type="number" min="0" cssClass="form-control input60"
+								path="squareFootageMax" id="field-squareFootageMax" />
+						</div>
+					</div>
+					
+					<button id="togglebutton" type="button" class="btn btn-info">Additional filters</button>
+					<p>
+					<div id="additional" style="display:none">
+					
 					<div class="form-group">
 
 						<label for="earliestMoveInDate">Earliest move-in date</label>
@@ -254,7 +316,7 @@
 
 					<spring:bind path="infrastructureType">
 						<div class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="control-label" for="infrastructureType-room">InfrastructureType</label>
+							<label class="control-label" for="infrastructureType-room">Infrastructure type</label>
 							<form:select id="infrastructureType" path="infrastructureType"
 								cssClass="form-control">
 								<option value=""></option>
@@ -263,6 +325,19 @@
 						</div>
 					</spring:bind>
 
+					<div class="form-group row ">
+						<label for="field-NumberOfBathMin" class="col-md-6">Nr. of
+							Bath between</label>
+						<div class="col-md-6 form-inline">
+							<form:input type="number" step="1" min="0" id="field-NumberOfBathMin"
+								path="numberOfBathMin" cssClass="form-control input60 " />
+							<label for="field-NumberOfBathMax" class="betweenLabel">
+								- </label>
+							<form:input type="number" min="0" cssClass="form-control input60"
+								path="numberOfBathMax" id="field-NumberOfBathMax" />
+						</div>
+					</div>
+					
 					<div class="form-group row">
 						<label for="field-floorLevelMin" class="col-md-6">Floor
 							level between</label>
@@ -276,41 +351,14 @@
 						</div>
 					</div>
 
-					<div class="form-group row ">
-						<label for="field-NumberOfBathMin" class="col-md-6">Nr. of
-							Bath between</label>
-						<div class="col-md-6 form-inline">
-							<form:input type="number" step="1" id="field-NumberOfBathMin"
-								path="numberOfBathMin" cssClass="form-control input60 " />
-							<label for="field-NumberOfBathMax" class="betweenLabel">
-								- </label>
-							<form:input type="number" cssClass="form-control input60"
-								path="numberOfBathMax" id="field-NumberOfBathMax" />
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label class="col-md-6" for="field-NumberOfRoomsMin">Nr.
-							of Rooms between</label>
-						<div class="col-md-6 form-inline">
-							<form:input type="number" cssClass="form-control input60"
-								path="numberOfRoomsMin" id="field-NumberOfRoomsMin" />
-							<label for="field-NumberOfRoomsMax" class="betweenLabel">
-								- </label>
-							<form:input type="number" cssClass="form-control input60"
-								path="numberOfRoomsMax" id="field-NumberOfRoomsMax" />
-							<%-- muss man <form_error/> auch noch hinzufügen? --%>
-						</div>
-					</div>
-
 					<div class="form-group row">
 						<label class="col-md-6" for="field-BuildYearMin">Build
 							year between</label>
 						<div class="col-md-6 form-inline">
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="buildYearMin" id="field-BuildYearMin" />
 							<label for="field-BuildYearMax" class="betweenLabel"> - </label>
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="buildYearMax" id="field-BuildYearMax" />
 						</div>
 
@@ -320,12 +368,29 @@
 						<label class="col-md-6" for="field-RenovationYearMin">Renovation
 							year between</label>
 						<div class="col-md-6 form-inline">
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="renovationYearMin" id="field-RenovationYearMin" />
 							<label for="field-RenovationYearMax" class="betweenLabel">
 								- </label>
-							<form:input type="number" cssClass="form-control input60"
+							<form:input type="number" min="0" cssClass="form-control input60"
 								path="renovationYearMax" id="field-RenovationYearMax" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-md-6" for="field-DistancePublicTransportMin">Distance
+							to public transport from</label>
+						<div class="col-md-6 form-inline">
+							<form:input id="field-DistancePublicTransportMin" type="number"
+								min="0" path="distancePublicTransportMin" placeholder="0"
+								step="100" cssClass="form-control input60" />
+
+							<label for="field-DistancePublicTransportMax"
+								class="betweenLabel"> - </label>
+
+							<form:input id="field-DistancePublicTransportMax" type="number"
+								min="0" path="distancePublicTransportMax" placeholder="0"
+								step="100" cssClass="form-control input60" />
 						</div>
 					</div>
 
@@ -360,34 +425,39 @@
 								cssClass="form-control input60" />
 						</div>
 					</div>
-
-					<div class="form-group row">
-						<label class="col-md-6" for="field-DistancePublicTransportMin">Distance
-							to public transport from</label>
-						<div class="col-md-6 form-inline">
-							<form:input id="field-DistancePublicTransportMin" type="number"
-								min="0" path="distancePublicTransportMin" placeholder="0"
-								step="100" cssClass="form-control input60" />
-
-							<label for="field-DistancePublicTransportMax"
-								class="betweenLabel"> - </label>
-
-							<form:input id="field-DistancePublicTransportMax" type="number"
-								min="0" path="distancePublicTransportMax" placeholder="0"
-								step="100" cssClass="form-control input60" />
-						</div>
+					
 					</div>
+
 				</div>
 			</div>
 			<div class="form-group pull-right">
-				<button type="reset" class="btn btn-default">Cancel</button>
+				<button id="reset" class="btn btn-default">Clear filters</button>
 				<button type="submit" class="btn btn-primary">Filter</button>
 			</div>
 		</form:form>
 	</div>
 
 	<div class="col-xs-12 col-sm-12 col-md-8 col-ls-8">
-		<h4>Results</h4>
+		<div class="row">
+
+		<div class="col-sm-6"><h4>Results</h4></div> 
+			<div class="form-group form-inline pull-right col-sm-5" id="form-sort">
+				<label><b>Sort:</b> </label>
+				<select id="modus" class="form-control" data-style="btn-primary">
+					<option value="">Sort by:</option>
+					<option value="price_asc">Price (ascending)</option>
+					<option value="price_desc">Price (descending)</option>
+					<option value="moveIn_desc">Move-in date (earliest to
+						latest)</option>
+					<option value="moveIn_asc">Move-in date (latest to
+						earliest)</option>
+					<option value="dateAge_asc">Date created (youngest to
+						oldest)</option>
+					<option value="dateAge_desc">Date created (oldest to
+						youngest)</option>
+				</select>
+			</div>
+		</div>
 		<c:choose>
 			<c:when test="${empty results}">
 				<p>No results found!
@@ -403,8 +473,8 @@
 							<c:forEach var="ad" items="${results}">
 								<div data-price="${ad.price}" data-moveIn="${ad.moveInDate}"
 									data-age="${ad.moveInDate}"
-									class="ad-wide-preview-outer resultAd ${ad.isPremiumAd() ? 'premiumAd' : '' }">
-									<div class="col-md-12 ad-wide-preview-inner">
+									class="ad-wide-preview-outer resultAd">
+									<div class="col-md-12 ad-wide-preview-inner ${ad.isPremiumAd() ? 'premiumAd' : '' }">
 										<div class="row">
 											<div class="col-sm-4 col-md-4">
 												<a href="<c:url value='./ad?id=${ad.id}' />"> <img
@@ -413,15 +483,29 @@
 											</div>
 											<div class="col-sm-4 col-md-4">
 												<p>
-													<strong> <a class="link"
-														href="<c:url value='./ad?id=${ad.id}' />">${ad.title}</a>
+													<strong> <a class="link" title="${ad.isPremiumAd() ? 'Recommended ad' : ''}"
+														href="<c:url value='./ad?id=${ad.id}' />">
+															<c:if test="${ad.isPremiumAd()}">
+																<span class="glyphicon glyphicon-star"></span>
+															</c:if>
+															${ad.title}
+														</a>
 													</strong>
 												</p>
 												<p>${ad.street},&nbsp;${ad.zipcode}&nbsp;${ad.city}</p>
 												<p>
 													<i>${ad.type.name}</i>
 												</p>
-												<strong>CHF ${ad.price }</strong>
+												<c:choose>
+													<c:when test="${ad.auction}">
+														<strong>${formattedAuctionPrice}</strong>
+													</c:when>
+													<c:otherwise>
+														<strong>${formattedPrice}</strong>
+													</c:otherwise>
+												</c:choose>
+												<strong><fmt:formatNumber value="${ad.price}"
+										      			var="formattedPrice" type="currency" pattern="###,### CHF" />${formattedPrice}</strong>
 												<fmt:formatDate value="${ad.moveInDate}"
 													var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 												<p>Move-in date: ${formattedMoveInDate }</p>
@@ -439,8 +523,11 @@
 													<p>Running until: ${formattedEndDate}</p>
 
 													<p>
-														Current price: <strong>${ad.currentAuctionPrice - ad.increaseBidPrice}
-															CHF</strong>
+														Current price: 
+														<strong>
+														<fmt:formatNumber value="${ad.currentAuctionPrice - ad.increaseBidPrice}"
+										      			var="formattedCurrentPrice" type="currency" pattern="###,### CHF" />${formattedCurrentPrice}
+														</strong>
 													</p>
 													<p>
 														<a href="./ad?id=${ad.id}">Bid</a>
@@ -462,4 +549,14 @@
 		</c:choose>
 	</div>
 </div>
+
+
+<script>
+$("#togglebutton").click(function(){
+	$("#additional").toggle();	
+	 $("#togglebutton").toggleClass("active");
+});
+</script>
+
+
 <c:import url="template/footer.jsp" />

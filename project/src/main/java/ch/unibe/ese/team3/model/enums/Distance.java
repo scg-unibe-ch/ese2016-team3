@@ -1,4 +1,4 @@
-package ch.unibe.ese.team3.enums;
+package ch.unibe.ese.team3.model.enums;
 
 public enum Distance {
 	OneHundred(100, "100 m"), 

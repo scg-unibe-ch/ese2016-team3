@@ -22,13 +22,14 @@
 </script>
 
 <ol class="breadcrumb">
-	<li><a href="./">Homepage</a></li>
+	<li><a href="/${pagemode}/">Homepage</a></li>
 	<li class="active">Sign up</li>
 </ol>
 
 <div class="row">
 	<div class="col-md-12 col-xs-12">
 		<h3>Sign up</h3>
+		Fields marked with * are required. 
 		<form:form id="signupForm" class="form-horizontal" method="post"
 			modelAttribute="signupForm" action="./signup">
 			<div class="panel panel-default">
@@ -37,7 +38,7 @@
 					<spring:bind path="firstName">
 						<div class="form-group ${status.error ? 'has-error' : '' }">
 							<label class="col-sm-2 control-label" for="field-firstName">First
-								Name</label>
+								Name*</label>
 							<div class="col-sm-6">
 								<form:input path="firstName" cssClass="form-control"
 									id="field-firstName" />
@@ -51,7 +52,7 @@
 					<spring:bind path="lastName">
 						<div class="form-group ${status.error ? 'has-error' : '' }">
 							<label class="col-sm-2 control-label" for="field-lastName">Last
-								Name</label>
+								Name*</label>
 							<div class="col-sm-6">
 								<form:input path="lastName" id="field-lastName"
 									cssClass="form-control" />
@@ -64,7 +65,7 @@
 
 					<spring:bind path="email">
 						<div class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="col-sm-2 control-label" for="field-email">Email</label>
+							<label class="col-sm-2 control-label" for="field-email">E-mail*</label>
 							<div class="col-sm-6">
 								<form:input path="email" id="field-email"
 									cssClass="form-control" />
@@ -77,7 +78,7 @@
 
 					<spring:bind path="password">
 						<div class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="col-sm-2 control-label" for="field-password">Password</label>
+							<label class="col-sm-2 control-label" for="field-password">Password*</label>
 							<div class="col-sm-6">
 								<form:input path="password" id="field-password" type="password"
 									cssClass="form-control" />
@@ -90,9 +91,10 @@
 
 					<spring:bind path="gender">
 						<div class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="col-sm-2 control-label" for="field-gender">Gender</label>
+							<label class="col-sm-2 control-label" for="field-gender">Gender*</label>
 							<div class="col-sm-6">
 								<form:select path="gender" class="form-control">
+									<option value="0"></option>
 									<form:options items="${genders}" itemLabel="genderName" />
 								</form:select>
 							</div>
@@ -130,7 +132,7 @@
 							<div id="form-duration"
 								class="form-group ${status.error ? 'has-error' : '' }">
 								<label class="col-sm-2 control-label"
-									for="field-duration">Duration in days</label>
+									for="field-duration">Duration in Days*</label>
 								<div class="col-sm-3">
 									<form:select path="duration" id="field-duration"
 										class="form-control"> 
@@ -143,12 +145,13 @@
 						
 						<hr>
 					</div>
-
+						<p><strong>Please Enter Your Credit Card Information</strong></p>
+						<br />
 					<spring:bind path="validCreditcardType">
 						<div id="form-creditcardType"
 							class="form-group ${status.error ? 'has-error' : '' }">
 							<label class="col-sm-2 control-label"
-								for="field-creditcardNumber">Type of card</label>
+								for="field-creditcardNumber">Type of Card*</label>
 							<div class="col-sm-6">
 								<form:select path="creditcardType" id="field-creditcardType"
 									class="form-control">
@@ -165,7 +168,7 @@
 						<div id="form-creditcardName"
 							class="form-group ${status.error ? 'has-error' : '' }">
 							<label class="col-sm-2 control-label" for="field-creditcardName">Name
-								on card</label>
+								on Card*</label>
 							<div class="col-sm-6">
 								<form:input path="creditcardName" id="field-creditcardName"
 									class="form-control" />
@@ -178,7 +181,7 @@
 						<div id="form-creditcard"
 							class="form-group ${status.error ? 'has-error' : '' }">
 							<label class="col-sm-2 control-label"
-								for="field-creditcardNumber">Card number</label>
+								for="field-creditcardNumber">Card Number*</label>
 							<div class="col-sm-6">
 								<form:input path="creditCard" id="field-creditcardNumber"
 									class="form-control" />
@@ -191,7 +194,7 @@
 						<div id="form-securityNumber"
 							class="form-group ${status.error ? 'has-error' : '' }">
 							<label class="col-sm-2 control-label" for="field-securityNumber">Security
-								Number</label>
+								Number*</label>
 							<div class="col-sm-6">
 								<form:input path="securityNumber" id="field-securityNumber"
 									class="form-control" placeholder="CVV" />
@@ -203,8 +206,7 @@
 					<spring:bind path="validExpirationMonth">
 						<div id="form-expirationMonth"
 							class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="col-sm-2 control-label" for="field-expirationMonth">Date
-								of Expiration</label>
+							<label class="col-sm-2 control-label" for="field-expirationMonth">Expiration Date*</label>
 							<div class="col-sm-3">
 								<form:select path="expirationMonth" id="field-expirationMonth"
 									cssClass="form-control">

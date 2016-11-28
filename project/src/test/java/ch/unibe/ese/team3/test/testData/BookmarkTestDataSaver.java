@@ -27,7 +27,7 @@ public class BookmarkTestDataSaver{
 		User ese = userDao.findByUsername("ese@unibe.ch");
 		User jane = userDao.findByUsername("jane@doe.com");
 		User bernerBaer = userDao.findByUsername("user@bern.com");
-		User oprah = userDao.findByUsername("oprah@winfrey.com");
+		User oprah = userDao.findByUsername("oprah@ithaca.com");
 
 		// 5 bookmarks for Ese test-user
 		LinkedList<Ad> bookmarkedAds = new LinkedList<>();

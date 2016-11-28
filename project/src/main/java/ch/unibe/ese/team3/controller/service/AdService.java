@@ -129,9 +129,11 @@ public class AdService extends BaseService {
 		ad.setIncreaseBidPrice(placeAdForm.getIncreaseBidPrice());
 		ad.setcurrentAuctionPrice(placeAdForm.getStartPrice() + placeAdForm.getIncreaseBidPrice());
 		ad.setAuction(placeAdForm.getAuction());
-
+		ad.setAuctionPrice(placeAdForm.getAuctionPrice());
+		
 		ad.setPrice(placeAdForm.getPriceForAd());
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
+		
 		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
 		ad.setDistanceShopping(placeAdForm.getDistanceShopping());
 		ad.setDistancePublicTransport(placeAdForm.getDistancePublicTransport());
@@ -417,7 +419,7 @@ public class AdService extends BaseService {
 			Integer maxBuildYear = convertToNullableInt(searchForm.getBuildYearMax());
 			Integer minRenovationYear = convertToNullableInt(searchForm.getRenovationYearMin());
 			Integer maxRenovationYear = convertToNullableInt(searchForm.getRenovationYearMax());
-
+			
 			if (!inRange(minBath, maxBath, ad.getNumberOfBath())
 					|| !inRange(minSquareFootage, maxSquareFootage, ad.getSquareFootage())
 					|| !inRange(minNumberOfRooms, maxNumberOfRooms, ad.getNumberOfRooms())
