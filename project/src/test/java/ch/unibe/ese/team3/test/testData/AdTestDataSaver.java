@@ -622,11 +622,9 @@ public class AdTestDataSaver {
 		adLocarno.setCreationDate(creationDate6);
 		adLocarno.setPrice(4500);
 		adLocarno.setSquareFootage(42);
-		// adLocarno.setStudio(false);
 		adLocarno.setRoomDescription(studioDescription12);
 		adLocarno.setUser(jane);
 		adLocarno.setTitle("Malibu-style Beachhouse");
-		//adLocarno.setStreet("Kirchweg 12");
 		adLocarno.setStreet("Via Serafino Balestra 36");
 		adLocarno.setCity("Locarno");
 		adLocarno.setLatitude(46.1626373);
