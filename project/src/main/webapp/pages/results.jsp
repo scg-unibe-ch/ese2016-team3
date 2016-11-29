@@ -51,16 +51,34 @@
 				divsbucket[a][1] = divslist[a];
 				divslist[a].remove();
 			}
+			
+			var comparator;
+			
+			if (attname == 'data-price'){
+				comparator = function(a, b){
+					var first = parseInt(a[0]);
+					var second = parseInt(b[0]);
+					if (first == second)
+						return 0;
+					else if (first > second)
+						return 1;
+					else
+						return -1;
+				}
+			}
+			else {
+				comparator = function(a, b) {
+					if (a[0] == b[0])
+						return 0;
+					else if (a[0] > b[0])
+						return 1;
+					else
+						return -1;
+				}
+			}
 
 			//sort the array
-			divsbucket.sort(function(a, b) {
-				if (a[0] == b[0])
-					return 0;
-				else if (a[0] > b[0])
-					return 1;
-				else
-					return -1;
-			});
+			divsbucket.sort(comparator);
 
 			//invert sorted array for certain sort options
 			if (sortmode == "price_desc" || sortmode == "moveIn_asc"
@@ -489,7 +507,7 @@
 
 								<fmt:formatNumber value="${ad.auctionPrice}"
 									var="formattedAuctionPrice" pattern="###,### CHF" />
-								<div data-price="${ad.price}" data-moveIn="${ad.moveInDate}"
+								<div data-price="${ad.auction ? ad.auctionPrice : ad.price}" data-moveIn="${ad.moveInDate}"
 									data-age="${ad.moveInDate}"
 									class="ad-wide-preview-outer resultAd">
 									<div
