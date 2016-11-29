@@ -588,6 +588,18 @@ The following sections describe abbreviations and special terms used in this doc
 ||2. A popup containing a list of the 10 most recent bids is shown.|
 |**Alternate flow**|None|
 
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc38`|
+|**Name**|View own bids|
+|**Description**|The user gets an overview over all the auctions in which he participated.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application and participated in at least one auction.|
+|**Trigger**|The user wants to see his own bids.|
+|**Normal flow**|1. The user clicks on the menu point "My bids"|
+||2. A page containing a list of all his auctions and his bids shows up.|
+|**Alternate flow**|None|
+
 ##### Auction management
 
 ![AuctionManagement](images/AuctionManagement.png)
@@ -835,6 +847,10 @@ The advertiser can specify multiple possible *visiting times* for enquiries. A v
 When an ad is up for sale and the owner has chosen the *auction* option, users can bid on the property. There is also a "buy directly" price. Both startprice for bidding and bidding increment is specified by the property owner, as is the direct buy price. The auction has an end date when it is no longer possible to bid.
 
 Users can either bid for an auction or make a purchase request to buy the property directly. Users can bid multiple times for the same ad. But they can only make one purchase request per ad.
+
+Users can see the last few bids for an ad. This gives them a hint to the strategy of other bidders.
+
+A user can get an overview over all the auctions, in which he participated.
 
 Advertisers can manage their properties which are put under auction. Auctions can be in different states:
 
