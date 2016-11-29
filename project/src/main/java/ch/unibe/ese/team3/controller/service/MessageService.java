@@ -353,7 +353,7 @@ public class MessageService {
 	}
 	
     /**
-     * Sends Message to User who has been overbid
+     * Sends Message to Premium User who has been over bidden 
      * @param ad Ad to bid on
      * @param bidder User who overbids the last one
      */
@@ -363,16 +363,17 @@ public class MessageService {
 		Bid maxbid = bidDao.findTopByAdOrderByAmountDesc(ad);
 		
 		if(maxbid != null){
-			
 			User receiver = maxbid.getBidder();
-			String subject = "Overbid";
-			String text = "Dear "+receiver.getFirstName()+",</br></br>"+
-					"You have been overbidden by "+ bidder.getFirstName() + " "+ bidder.getLastName()+
-					"on "+
-					"<a class=\"link\" href= ../ad?id="+ ad.getId()+">"+ ad.getTitle() +"</a>.</br>";
-	
-			sendMessage(userDao.findByUsername("System"), receiver, subject, text);
-			sendEmail(receiver, subject, text);
+			if(receiver.isPremium()){
+				String subject = "Overbid";
+				String text = "Dear "+receiver.getFirstName()+",</br></br>"+
+						"You have been overbidden by "+ bidder.getFirstName() + " "+ bidder.getLastName()+
+						"on "+
+						"<a class=\"link\" href= ../ad?id="+ ad.getId()+">"+ ad.getTitle() +"</a>.</br>";
+		
+				sendMessage(userDao.findByUsername("System"), receiver, subject, text);
+				sendEmail(receiver, subject, text);
+			}
 		}
 		
 	}

@@ -83,8 +83,9 @@ public class SearchController {
 
 				admeta.setLat(ad.getLatitude());
 				admeta.setLng(ad.getLongitude());
-
-				adResults.add(admeta);
+					
+					adResults.add(admeta);
+				
 			}
 
 			objectMapper = new ObjectMapper();
