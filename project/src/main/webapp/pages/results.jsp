@@ -15,6 +15,27 @@
 
 <script
 	src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDPcQNoMGcp8Oe9l6uY8jLFlMR4pyecFIU&libraries=places"></script>
+<script src="https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js"></script>
+
+<script>
+$(document).ready(function() {
+	    $("#togglebutton").click( function() {
+	        //store the id of the collapsible element
+	        if(localStorage.getItem('collapseItem')){
+	        	localStorage.removeItem('collapseItem');
+	        }
+	        else{
+	        	localStorage.setItem('collapseItem', $(this).attr('data-target'));
+	        }
+	    });
+
+	    var collapseItem = localStorage.getItem('collapseItem'); 
+	    if (collapseItem) {
+	       $(collapseItem).collapse('show')
+	    }
+	    
+});
+</script>
 
 <script>
 	/*
@@ -292,12 +313,16 @@
 								path="squareFootageMax" id="field-squareFootageMax" />
 						</div>
 					</div>
-
-					<button id="togglebutton" type="button" class="btn btn-info">Additional
+					
+					
+					<button id="togglebutton" type="button" class="btn btn-info" data-toggle="collapse" data-target="#additional">Additional
 						filters</button>
+				<div id="additional" class="collapse">
+					
+					
 					<p>
-					<div id="additional" style="display: none">
-
+					
+					
 						<div class="form-group">
 
 							<label for="earliestMoveInDate">Earliest move-in date</label>
@@ -450,11 +475,11 @@
 									path="distanceShoppingMax" placeholder="0" step="100"
 									cssClass="form-control input60" />
 							</div>
-						</div>
-
+						
 					</div>
-
-				</div>
+					</div>
+					
+					</div>
 			</div>
 			<div class="form-group pull-right">
 				<button id="reset" class="btn btn-default">Clear filters</button>
@@ -588,7 +613,6 @@
 
 <script>
 	$("#togglebutton").click(function() {
-		$("#additional").toggle();
 		$("#togglebutton").toggleClass("active");
 	});
 </script>
