@@ -250,20 +250,11 @@ public class MessageService {
     @Transactional
     @Scheduled(cron = "0 0 0 * * *") // everyday on midnight
     public void checkForExpiredAuctions(){
-    	
-    	//Yesterday
-    //	Date yesterday;
-    //	Calendar cal = Calendar.getInstance();
-    //	cal.add(Calendar.DATE, -1);
-    //	yesterday = cal.getTime();
-    //	Iterable<Ad> expiredAds = adDao.findByEndDate(yesterday);
+    
     	
     	Iterable<Ad> expiredAds = adDao.findByEndDateLessThanAndAuctionMessageSent(new Date(),false);
     	
         for(Ad ad : expiredAds){
-          //  ad.setAuctionCompleted(true);
-           // ad.setAvailableForAuction(false);
-          //  adDao.save(ad);
         	ad.setAuctionMessageSent(true);
         	adDao.save(ad);
         	
@@ -300,7 +291,7 @@ public class MessageService {
 		String text2 = "Dear "+owner.getFirstName()+",</br></br>"+"You just sold the " + 
 						"<a class=\"link\" href= ../ad?id="+ ad.getId()+">"+ ad.getTitle() +"</a>.</br>"+
 						"to "+ winner.getFirstName() + " "+ winner.getLastName()+ " "+ winner.getEmail()+
-						"for "+ highestBid.getAmount()+"CHF."+
+						" for "+ highestBid.getAmount()+" CHF.</br>"+
 						"Please contact the winner as soon as possible.";
 		
 		
