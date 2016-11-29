@@ -20,6 +20,10 @@
 	/*
 	 * This script takes all the resultAd divs and sorts them by a parameter specified by the user.
 	 * No arguments need to be passed, since the function simply looks up the dropdown selection.
+	 
+	 Funktioniert korrekt mit 'alten' ads (bis 800)
+	 -filter attribut == display attribut??
+	 
 	 */
 	function sort_div_attribute() {
 		//determine sort modus (by which attribute, asc/desc)
@@ -108,6 +112,11 @@
 
 <script>
 	$(document).ready(function() {
+		/* sorts results when "sort by" is changed */
+		$("#form-sort").change(function() {
+			sort_div_attribute();
+		});
+		
 		$("#cityInput").autocomplete({
 			minLength : 2,
 			source : <c:import url="getzipcodes.jsp" />,
@@ -127,75 +136,59 @@
 		$('a[href="#mapview"]').on('shown.bs.tab', function(e) {
 			initMap();
 		});
-
-		/* sorts results when "sort by" is changed */
-		$("#form-sort").change(function() {
-			sort_div_attribute();
-		});
 	});
 </script>
 
 <script>
 	var map;
-
 	function initMap() {
-		var addresses = $
-		{
-			resultsInJson
-		}
-		;
+		var addresses = ${resultsInJson};
 		var infowindow;
 		var myhome;
 		var contentString;
-
-		infowindow = new google.maps.InfoWindow({
-			maxWidth : 170
-		});
+		
+		infowindow = new google.maps.InfoWindow({maxWidth : 170});
 		geocoder = new google.maps.Geocoder();
 		var swiss = {
 			lat : 47,
 			lng : 9
 		};
-
 		map = new google.maps.Map(document.getElementById('map'), {
 			center : swiss,
 			zoom : 7
 		});
-
-		for (var i = 0; i < addresses.length; i++) {
+		
+		for(var i = 0; i < addresses.length; i++){
 			var ad = addresses[i];
 			makeMarker(ad, infowindow);
 		}
 	}
-
-	function makeMarker(ad, infowindow) {
-		var myLatLng = {
-			lat : ad.lat,
-			lng : ad.lng
-		};
-		var contentString = '<div id="content">' + '<h5>' + ad.name + '</h5>'
-				+ '<div id="bodyContent">' +
-
-				'<img width="160" class="img-responsive" src='+ ad.picture+ '/>'
-				+
-
-				"<a href=\"./ad?id=" + ad.id + "\">" + ad.street + ", "
-				+ ad.zipcode + " " + ad.city + "</a>" + '</div>' + '</div>';
-
+	
+	function makeMarker(ad, infowindow){
+		var myLatLng = {lat: ad.lat, lng: ad.lng};
+		var contentString = '<div id="content">'+
+		   '<h5>'+ad.name +'</h5>'+
+		   '<div id="bodyContent">'+
+		  
+		   '<img width="160" class="img-responsive" src='+ ad.picture+ '/>'+
+		   
+		   "<a href=\"./ad?id=" + ad.id + "\">" +  ad.street + ", " + ad.zipcode + " " + ad.city + "</a>"+
+		   '</div>'+
+		   '</div>';
+		   
 		var marker = new google.maps.Marker({
-			position : myLatLng,
-			map : map,
-			title : ad.name
-		});
-		google.maps.event.addListener(marker, 'click', (function(marker,
-				content, infowindow) {
-			return function() {
-
-				infowindow.setContent(content);
-				infowindow.open(map, marker);
-
-			};
-		})(marker, contentString, infowindow));
+		    position: myLatLng,
+		    map: map,
+		    title: ad.name
+		  });
+		google.maps.event.addListener(marker, 'click', (function(marker,content,infowindow){ 
+		    return function() {
+		    	
+		        infowindow.setContent(content);
+		        infowindow.open(map,marker);
+		        
+		    };
+		})(marker,contentString,infowindow));
 	}
 </script>
 
