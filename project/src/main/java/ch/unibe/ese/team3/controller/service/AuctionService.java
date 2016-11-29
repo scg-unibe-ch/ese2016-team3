@@ -36,6 +36,9 @@ public class AuctionService extends BaseService {
 
 	@Autowired
 	private AdDao adDao;
+	
+	@Autowired
+	private MessageService messageService;
 
 	@Transactional
 	public boolean checkAndBid(Ad ad, User bidder, int amount) {
@@ -43,7 +46,8 @@ public class AuctionService extends BaseService {
 			logger.info(String.format("Bid failed for ad %d by user %s", ad.getId(), bidder.getEmail()));
 			return false;
 		}
-
+		
+		messageService.sendOverbiddenMessage(ad,bidder);
 		bid(ad, bidder, amount);
 		logger.info(String.format("Successful bid for ad %d by user %s, amount: %d", ad.getId(), bidder.getEmail(),
 				amount));

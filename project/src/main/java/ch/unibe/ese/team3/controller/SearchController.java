@@ -93,7 +93,7 @@ public class SearchController {
 			try {
 				jsonResponse += objectMapper.writeValueAsString(adResults);
 			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			jsonResponse += "";

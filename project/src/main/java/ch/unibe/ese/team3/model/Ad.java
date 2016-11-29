@@ -562,6 +562,7 @@ public class Ad {
 		expired.set(Calendar.HOUR_OF_DAY, 23);
 		expired.set(Calendar.MINUTE, 59);
 		expired.set(Calendar.SECOND, 59);
+		
 
 		return !auctionCompleted && availableForAuction && now.after(expired);
 
@@ -575,6 +576,7 @@ public class Ad {
 		expired.set(Calendar.HOUR_OF_DAY, 23);
 		expired.set(Calendar.MINUTE, 59);
 		expired.set(Calendar.SECOND, 59);
+		
 		return !auctionCompleted && availableForAuction && now.after(startDate) && calNow.before(expired);
 	}
 

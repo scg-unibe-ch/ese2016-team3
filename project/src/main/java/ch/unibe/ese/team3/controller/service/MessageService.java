@@ -258,10 +258,7 @@ public class MessageService {
     //	yesterday = cal.getTime();
     //	Iterable<Ad> expiredAds = adDao.findByEndDate(yesterday);
     	
-    	
-    
     	Iterable<Ad> expiredAds = adDao.findByEndDateLessThanAndAuctionMessageSent(new Date(),false);
-    	
     	
         for(Ad ad : expiredAds){
           //  ad.setAuctionCompleted(true);
@@ -289,9 +286,10 @@ public class MessageService {
 		User owner = ad.getUser();
 		
 		String subject1 = "You won an auction";
-		String text1 = "Dear"+winner.getFirstName()+",</br></br>"+
-		"Congratulations! You won the auction on the " + ad.getTitle()+
-		owner.getFirstName()+" "+owner.getLastName()+" will contact you with the details.</br>";
+		String text1 = "Dear "+winner.getFirstName()+",</br></br>"+
+						"Congratulations! You won the auction on the " +
+						"<a class=\"link\" href= ../ad?id="+ ad.getId()+">"+ ad.getTitle() +"</a>.</br>"+
+						owner.getFirstName()+" "+owner.getLastName()+" will contact you with further details.</br>";
 		
 		sendMessage(userDao.findByUsername("System"), winner, subject1, text1);
 		sendEmail(winner, subject1, text1);
@@ -299,7 +297,8 @@ public class MessageService {
 		
 		
 		String subject2 = "Your auction was successfully ";
-		String text2 = "Dear"+owner.getFirstName()+",</br></br>"+"You just sold the " + ad.getTitle()+
+		String text2 = "Dear "+owner.getFirstName()+",</br></br>"+"You just sold the " + 
+						"<a class=\"link\" href= ../ad?id="+ ad.getId()+">"+ ad.getTitle() +"</a>.</br>"+
 						"to "+ winner.getFirstName() + " "+ winner.getLastName()+ " "+ winner.getEmail()+
 						"for "+ highestBid.getAmount()+"CHF."+
 						"Please contact the winner as soon as possible.";
@@ -322,7 +321,8 @@ public class MessageService {
 		User user = userDao.findUserById(ad.getUser().getId());
     	String subject = "Auction Expired";
 		String text = "Dear "+user.getFirstName()+",</br></br>"+
-					"Unfortunately your auction has expired and no one has placed a bid on your" + ad.getTitle();
+					"Unfortunately your auction has expired and no one has placed a bid on your"+
+					"<a class=\"link\" href= ../ad?id="+ ad.getId()+">"+ ad.getTitle() +"</a>.</br>";
 		
 		sendMessage(userDao.findByUsername("System"), user, subject, text);
 		sendEmail(user, subject, text);
@@ -350,6 +350,31 @@ public class MessageService {
 				i++;
 		}
 		return i;
+	}
+	
+    /**
+     * Sends Message to User who has been overbid
+     * @param ad Ad to bid on
+     * @param bidder User who overbids the last one
+     */
+	public void sendOverbiddenMessage(Ad ad, User bidder) {
+		// TODO Auto-generated method stub
+		
+		Bid maxbid = bidDao.findTopByAdOrderByAmountDesc(ad);
+		
+		if(maxbid != null){
+			
+			User receiver = maxbid.getBidder();
+			String subject = "Overbid";
+			String text = "Dear "+receiver.getFirstName()+",</br></br>"+
+					"You have been overbidden by "+ bidder.getFirstName() + " "+ bidder.getLastName()+
+					"on "+
+					"<a class=\"link\" href= ../ad?id="+ ad.getId()+">"+ ad.getTitle() +"</a>.</br>";
+	
+			sendMessage(userDao.findByUsername("System"), receiver, subject, text);
+			sendEmail(receiver, subject, text);
+		}
+		
 	}
 
 }
