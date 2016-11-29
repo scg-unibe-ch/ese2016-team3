@@ -32,26 +32,26 @@
 <style>
 /* TABS: define css class "customTab" in orded to display the tabs of the header green (and define hover effects)*/
 .customTab>li.active>a, .customTab>li.active>a:focus, .customTab>li.active>a:hover {
-	background-color: #32CD32 !important;
+	background-color: #65bf05 !important;
 	color: #FFFFFF;
 }
 
 .customTab>li>a:hover {
-	background-color: #228B22 !important;
+	background-color: #5b8a28 !important;
 	color: #FFFFFF;
 	/* fill	color #d9edf7 default f5f5f5 #337ab7 fff*/
 }
 
 /* CONTAINER: define new class to handle the background color of the container */
 .custom-Container {
-	background-color: #32CD32;
+	background-color: #65bf05;
 }
 
 /* NAVBAR set color of writing and define hover effect.*/
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus
 	{
 	color: #FFFFFF; /*Sets the text hover color on navbar*/
-	background-color: #228B22;
+	background-color: #5b8a28;
 }
 /* set writing color */
 .navbar-default .navbar-nav>li>a {
@@ -62,11 +62,11 @@
 .dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
 	color: #FFFFFF;
 	text-decoration: none;
-	background-color: #32CD32; /*change color of links in drop down here*/
+	background-color: #65bf05; /*change color of links in drop down here*/
 }
 
 .dropdown-toggle:active, .open .dropdown-toggle {
-	background: #32CD32 !important;
+	background: #65bf05 !important;
 	color: #FFFFFF !important;
 }
 </style>

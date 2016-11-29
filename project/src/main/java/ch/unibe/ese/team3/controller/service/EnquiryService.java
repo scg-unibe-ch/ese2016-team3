@@ -2,15 +2,18 @@ package ch.unibe.ese.team3.controller.service;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Rating;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
@@ -57,6 +60,17 @@ public class EnquiryService {
 			}
 		});
 		return enquiries;
+	}
+	
+	public Map<Long, VisitEnquiry> getEnquiriesForAdBySender(Ad ad, User sender){
+		Iterable<VisitEnquiry> sentEnquiries = enquiryDao.findBySender(sender);
+		Map<Long, VisitEnquiry> sentEnquiriesByVisit = new HashMap<Long, VisitEnquiry>();
+		for (VisitEnquiry enquiry : sentEnquiries){
+			if (enquiry.getVisit().getAd().equals(ad)){
+				sentEnquiriesByVisit.put(new Long(enquiry.getVisit().getId()), enquiry);
+			}
+		}		
+		return sentEnquiriesByVisit;
 	}
 
 	/** Saves the given visit enquiry. */

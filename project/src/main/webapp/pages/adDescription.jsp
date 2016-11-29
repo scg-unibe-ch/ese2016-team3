@@ -141,12 +141,11 @@
 <fmt:formatNumber
 	value="${shownAd.currentAuctionPrice  - shownAd.increaseBidPrice}"
 	var="formattedCurrentPrice" pattern="###,### CHF" />
-<fmt:formatNumber
-	value="${shownAd.currentAuctionPrice}"
+<fmt:formatNumber value="${shownAd.currentAuctionPrice}"
 	var="formattedBidPrice" pattern="###,### CHF" />
 
-<fmt:formatNumber value="${shownAd.auctionPrice}" var="formattedAuctionPrice"
-	pattern="###,### CHF" />
+<fmt:formatNumber value="${shownAd.auctionPrice}"
+	var="formattedAuctionPrice" pattern="###,### CHF" />
 <%--- 
 <c:choose>
 	<c:when test="${empty shownAd.moveOutDate }">
@@ -214,14 +213,14 @@
 							</div>
 							<div class="col-sm-5">
 								<div class="pull-right">
-								<c:choose>
-								<c:when test="${shownAd.auction }">
-									<h3>${formattedAuctionPrice}</h3>
-								</c:when>
-								<c:otherwise>
-									<h3>${formattedPrice}</h3>
-								</c:otherwise>
-								</c:choose>
+									<c:choose>
+										<c:when test="${shownAd.auction }">
+											<h3>${formattedAuctionPrice}</h3>
+										</c:when>
+										<c:otherwise>
+											<h3>${formattedPrice}</h3>
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</div>
 						</div>
@@ -252,8 +251,10 @@
 									<p>
 										Current price: <strong>${formattedCurrentPrice}</strong>
 									</p>
-									<button class="btn btn-default" data-toggle="modal"
-										data-target="#existingBidsModal">Show bids</button>
+									<c:if test="${not empty bids}">
+										<button class="btn btn-default" data-toggle="modal"
+											data-target="#existingBidsModal">Show bids</button>
+									</c:if>
 								</div>
 
 								<div class="col-sm-6">
@@ -317,10 +318,10 @@
 						</tr>
 
 						<c:if test="${shownAd.numberOfBath != 0}">
-						<tr>
-							<th>Number of Bathrooms</th>
-							<td>${shownAd.numberOfBath}</td>
-						</tr>
+							<tr>
+								<th>Number of Bathrooms</th>
+								<td>${shownAd.numberOfBath}</td>
+							</tr>
 						</c:if>
 
 						<tr>
@@ -329,40 +330,40 @@
 						</tr>
 
 						<c:if test="${shownAd.distanceSchool != 0}">
-						<tr>
-							<th>Distance to School</th>
-							<td>${shownAd.getDistanceSchoolAsEnum().name}</td>
-						</tr>
+							<tr>
+								<th>Distance to School</th>
+								<td>${shownAd.getDistanceSchoolAsEnum().name}</td>
+							</tr>
 						</c:if>
-						<c:if test="${shownAd.distanceShopping != 0}">	
-						<tr>
-							<th>Distance to shopping center</th>
-							<td>${shownAd.getDistanceShoppingAsEnum().name}</td>
-						</tr>
+						<c:if test="${shownAd.distanceShopping != 0}">
+							<tr>
+								<th>Distance to shopping center</th>
+								<td>${shownAd.getDistanceShoppingAsEnum().name}</td>
+							</tr>
 						</c:if>
 						<c:if test="${shownAd.distancePublicTransport != 0}">
-						<tr>
-							<th>Distance to Public Transportation</th>
-							<td>${shownAd.getDistancePublicTransportAsEnum().name}</td>
-						</tr>
+							<tr>
+								<th>Distance to Public Transportation</th>
+								<td>${shownAd.getDistancePublicTransportAsEnum().name}</td>
+							</tr>
 						</c:if>
 						<c:if test="${shownAd.buildYear != 0}">
-						<tr>
-							<th>Year of Construction</th>
-							<td>${shownAd.buildYear}</td>
-						</tr>
+							<tr>
+								<th>Year of Construction</th>
+								<td>${shownAd.buildYear}</td>
+							</tr>
 						</c:if>
 						<c:if test="${shownAd.renovationYear != 0}">
-						<tr>
-							<th>Year of Renovation</th>
-							<td>${shownAd.renovationYear}</td>
-						</tr>
+							<tr>
+								<th>Year of Renovation</th>
+								<td>${shownAd.renovationYear}</td>
+							</tr>
 						</c:if>
-						<c:if test="${shownAd.floorLevel != 0}">						
-						<tr>
-							<th>Floor Level</th>
-							<td>${shownAd.floorLevel}</td>
-						</tr>
+						<c:if test="${shownAd.floorLevel != 0}">
+							<tr>
+								<th>Floor Level</th>
+								<td>${shownAd.floorLevel}</td>
+							</tr>
 						</c:if>
 					</table>
 				</div>
@@ -500,9 +501,18 @@
 									<td><c:choose>
 											<c:when test="${loggedIn}">
 												<c:if test="${loggedInUserEmail != shownAd.user.username}">
-													<button class="btn btn-primary" type="button"
-														data-id="${visit.id}" onclick="sendEnquiry(${visit.id});">Send
-														Enquiry to Advertiser</button>
+													<c:choose>
+														<c:when test="${empty sentEnquiries[visit.id]}">
+															<button class="btn btn-primary" type="button"
+																data-id="${visit.id}"
+																onclick="sendEnquiry(${visit.id});">Send
+																Enquiry to Advertiser</button>
+														</c:when>
+														<c:otherwise>
+															<button class="btn btn-default" disabled="disabled"
+																type="button">Enquiry sent</button>
+														</c:otherwise>
+													</c:choose>
 												</c:if>
 											</c:when>
 											<c:otherwise>
@@ -533,8 +543,8 @@
 			</div>
 			<div class="modal-body">
 				<p>
-					Do you really want to bid <strong>${formattedBidPrice}</strong>
-					for this ad?
+					Do you really want to bid <strong>${formattedBidPrice}</strong> for
+					this ad?
 				</p>
 			</div>
 			<div class="modal-footer">
@@ -564,7 +574,7 @@
 			<div class="modal-body">
 				<p>
 					Do you really want to buy this real estate for <strong>
-						${formattedPrice}</strong>?
+						${formattedAuctionPrice}</strong>?
 				</p>
 			</div>
 			<div class="modal-footer">
@@ -611,49 +621,48 @@
 		</div>
 	</div>
 </div>
-
-<div class="modal fade" id="existingBidsModal" tabindex="-1">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title" id="myModalLabel">Bids for this ad</h4>
-			</div>
-			<div class="modal-body">
-				<p>
-					See the most recent bids for this ad below.
-				</p>
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>Bid</th>
-							<th>Bidder</th>
-							<th>Date</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${bids}" var="bid" varStatus="loop">
-							<fmt:formatNumber pattern="###,###,### CHF" value="${bid.amount}"
-								var="formattedBidAmount" />
-							<fmt:formatDate value="${bid.timeStamp}"
-								pattern="yyyy-MM-dd HH:mm:ss" var="formattedBidTimeStamp" />
-							<tr class="${loop.index == 0 ? 'text-success success' : '' }">
-								<td>${formattedBidAmount}</td>
-								<td>${bid.bidder.firstName}&nbsp;${bid.bidder.lastName}</td>
-								<td>${formattedBidTimeStamp}</td>
+<c:if test="${not empty bids}">
+	<div class="modal fade" id="existingBidsModal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Bids for this ad</h4>
+				</div>
+				<div class="modal-body">
+					<p>See the most recent bids for this ad below.</p>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Bid</th>
+								<th>Bidder</th>
+								<th>Date</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</thead>
+						<tbody>
+							<c:forEach items="${bids}" var="bid" varStatus="loop">
+								<fmt:formatNumber pattern="###,###,### CHF"
+									value="${bid.amount}" var="formattedBidAmount" />
+								<fmt:formatDate value="${bid.timeStamp}"
+									pattern="yyyy-MM-dd HH:mm:ss" var="formattedBidTimeStamp" />
+								<tr class="${loop.index == 0 ? 'text-success success' : '' }">
+									<td>${formattedBidAmount}</td>
+									<td>${bid.bidder.firstName}&nbsp;${bid.bidder.lastName}</td>
+									<td>${formattedBidTimeStamp}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</c:if>
 
 <c:import url="template/footer.jsp" />
