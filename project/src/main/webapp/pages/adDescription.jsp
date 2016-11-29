@@ -501,9 +501,18 @@
 									<td><c:choose>
 											<c:when test="${loggedIn}">
 												<c:if test="${loggedInUserEmail != shownAd.user.username}">
-													<button class="btn btn-primary" type="button"
-														data-id="${visit.id}" onclick="sendEnquiry(${visit.id});">Send
-														Enquiry to Advertiser</button>
+													<c:choose>
+														<c:when test="${empty sentEnquiries[visit.id]}">
+															<button class="btn btn-primary" type="button"
+																data-id="${visit.id}"
+																onclick="sendEnquiry(${visit.id});">Send
+																Enquiry to Advertiser</button>
+														</c:when>
+														<c:otherwise>
+															<button class="btn btn-default" disabled="disabled"
+																type="button">Enquiry sent</button>
+														</c:otherwise>
+													</c:choose>
 												</c:if>
 											</c:when>
 											<c:otherwise>

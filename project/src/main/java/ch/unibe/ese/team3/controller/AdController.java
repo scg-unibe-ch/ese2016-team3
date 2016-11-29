@@ -2,6 +2,7 @@ package ch.unibe.ese.team3.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -19,12 +20,14 @@ import ch.unibe.ese.team3.controller.pojos.forms.MessageForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.controller.service.AuctionService;
 import ch.unibe.ese.team3.controller.service.BookmarkService;
+import ch.unibe.ese.team3.controller.service.EnquiryService;
 import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.controller.service.VisitService;
 import ch.unibe.ese.team3.exceptions.ResourceNotFoundException;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.User;
+import ch.unibe.ese.team3.model.VisitEnquiry;
 import ch.unibe.ese.team3.model.enums.BookmarkStatus;
 
 /**
@@ -51,6 +54,9 @@ public class AdController {
 
 	@Autowired
 	private AuctionService auctionService;
+	
+	@Autowired
+	private EnquiryService enquiryService;
 
 	/** Gets the ad description page for the ad with the given id. */
 	@RequestMapping(value = "/ad", method = RequestMethod.GET)
@@ -69,6 +75,11 @@ public class AdController {
 		if (ad.isAuction() && user != null) {
 			boolean userSentBuyRequest = auctionService.hasUserSentBuyRequest(ad, user);
 			model.addObject("sentBuyRequest", userSentBuyRequest);
+		}
+		
+		if (user != null){
+			Map<Long, VisitEnquiry> sentEnquiries = enquiryService.getEnquiriesForAdBySender(ad, user);			
+			model.addObject("sentEnquiries", sentEnquiries);
 		}
 
 		model.addObject("shownAd", ad);
