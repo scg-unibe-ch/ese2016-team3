@@ -237,7 +237,7 @@
 						</div>
 					</div>
 					
-					<h4>Prizing</h4>
+					<h4>Pricing</h4>
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<c:if test="${pagemode == 'buy' }">
