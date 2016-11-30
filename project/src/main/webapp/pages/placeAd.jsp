@@ -129,14 +129,10 @@
 										<form:errors path="numberOfRooms" cssClass="text-danger" />
 									</div>
 								</div>
-							</spring:bind>
-							
-							<button id="specifyButton" type="button" class="btn btn-info">Specify More Fields</button>
-							
+							</spring:bind>							
 						</div>
 					</div>
 										
-					<div id="specify" style="display:none">	
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<spring:bind path="numberOfBath">
@@ -240,7 +236,7 @@
 							</spring:bind>
 						</div>
 					</div>
-					</div>
+					
 					<h4>Prizing</h4>
 					<div class="panel panel-default">
 						<div class="panel-body">
@@ -493,13 +489,5 @@
 		</div>
 	</div>
 </div>
-
-<script>
-	$("#specifyButton").click(function(){
-		$("#specify").toggle();	
-		$("#specifyButton").toggleClass("active");
-	
-});
-</script>
 
 <c:import url="template/footer.jsp" />
