@@ -81,10 +81,13 @@ public class SearchController {
 					admeta.setPicture(ad.getPictures().get(0).getFilePath());
 				}
 
-				admeta.setLat(ad.getLatitude());
-				admeta.setLng(ad.getLongitude());
-					
+				if(ad.getLatitude() != null && ad.getLongitude() != null){
+					admeta.setLat(ad.getLatitude());
+					admeta.setLng(ad.getLongitude());
+				}
+				
 					adResults.add(admeta);
+				
 				
 			}
 

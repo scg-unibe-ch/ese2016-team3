@@ -251,7 +251,6 @@ public class MessageService {
     @Scheduled(cron = "0 0 0 * * *") // everyday on midnight
     public void checkForExpiredAuctions(){
     
-    	
     	Iterable<Ad> expiredAds = adDao.findByEndDateLessThanAndAuctionMessageSent(new Date(),false);
     	
         for(Ad ad : expiredAds){
@@ -266,6 +265,7 @@ public class MessageService {
         	}
         }
     }
+    
     /**
      * Sends message to user who won the auction and the owner of the property
      * @param ad Ad which auction has finished
@@ -286,7 +286,6 @@ public class MessageService {
 		sendEmail(winner, subject1, text1);
 
 		
-		
 		String subject2 = "Your auction was successfully ";
 		String text2 = "Dear "+owner.getFirstName()+",</br></br>"+"You just sold the " + 
 						"<a class=\"link\" href= ../ad?id="+ ad.getId()+">"+ ad.getTitle() +"</a>.</br>"+
@@ -298,9 +297,6 @@ public class MessageService {
 		sendMessage(userDao.findByUsername("System"), owner, subject2, text2);
 		sendEmail(owner, subject2, text2);
 
-		
-		
-		
 	}
 
 	/**

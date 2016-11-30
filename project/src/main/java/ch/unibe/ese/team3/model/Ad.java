@@ -585,7 +585,7 @@ public class Ad {
 		return !auctionCompleted && availableForAuction && now.before(startDate);
 	}
 
-	public double getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
@@ -597,7 +597,7 @@ public class Ad {
 		this.longitude = longitude;
 	}
 
-	public double getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 

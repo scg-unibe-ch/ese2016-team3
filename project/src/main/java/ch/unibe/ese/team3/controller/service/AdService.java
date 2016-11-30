@@ -519,6 +519,7 @@ public class AdService extends BaseService {
 		return false;
 	}
 
+	
 	private LatLng getCoordinates(String address) {
 		try {
 			final Geocoder geocoder = new Geocoder();
@@ -543,5 +544,6 @@ public class AdService extends BaseService {
 
 		logger.warn(String.format("Failed to get coordinates from Service. Address: %s", address));
 		return null;
+	
 	}
 }

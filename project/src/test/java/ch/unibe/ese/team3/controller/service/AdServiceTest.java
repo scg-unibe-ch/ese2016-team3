@@ -429,7 +429,7 @@ public class AdServiceTest {
 				adDao.delete(ad);
 		
 	}
-	
+	@Test
 	public void AuctionExpiredTodayVisible(){
 		// Preparation
 		PlaceAdForm placeAdForm = new PlaceAdForm();
