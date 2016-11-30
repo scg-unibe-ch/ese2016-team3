@@ -24,6 +24,7 @@ import ch.unibe.ese.team3.controller.service.EnquiryService;
 import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.controller.service.VisitService;
+import ch.unibe.ese.team3.exceptions.InvalidUserException;
 import ch.unibe.ese.team3.exceptions.ResourceNotFoundException;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.User;
@@ -108,7 +109,12 @@ public class AdController {
 		model.addObject("messageForm", new MessageForm());
 
 		if (!bindingResult.hasErrors()) {
-			messageService.saveFrom(messageForm);
+			try {
+				messageService.saveFrom(messageForm);
+			}
+			catch(InvalidUserException e){
+				
+			}			
 		}
 		return model;
 	}

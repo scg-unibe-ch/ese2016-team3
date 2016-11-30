@@ -6,7 +6,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -109,23 +121,29 @@ public class Ad {
 	private BuyMode buyMode;
 
 	@Fetch(FetchMode.SELECT)
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "ad",  cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<AdPicture> pictures;
 
 	@Fetch(FetchMode.SELECT)
-	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "ad", orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Bid> bids;
 	
 	@Fetch(FetchMode.SELECT)
-	@OneToMany(mappedBy = "triggerAd", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "triggerAd", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<AlertResult> alertResults;
 
 	public List<Bid> getBids() {
 		return bids;
 	}
 
-	public void setBids(List<Bid> bids) {
-		this.bids = bids;
+	public void addBid(Bid bid){
+		bids.add(bid);
+		bid.setAd(this);
+	}
+	
+	public void removeBid(Bid bid){
+		bids.remove(bid);
+		bid.setAd(null);
 	}
 
 	@Fetch(FetchMode.SELECT)
@@ -447,9 +465,18 @@ public class Ad {
 	public List<AdPicture> getPictures() {
 		return pictures;
 	}
-
-	public void setPictures(List<AdPicture> pictures) {
-		this.pictures = pictures;
+	
+	public void addPicture(AdPicture picture){
+		if (this.pictures.contains(picture)){
+			return;
+		}
+		this.pictures.add(picture);
+		picture.setAd(this);
+	}
+	
+	public void removePicture(AdPicture picture){
+		this.pictures.remove(picture);
+		picture.setAd(this);
 	}
 
 	public User getUser() {
@@ -487,9 +514,15 @@ public class Ad {
 	public List<Visit> getVisits() {
 		return visits;
 	}
-
-	public void setVisits(List<Visit> visits) {
-		this.visits = visits;
+	
+	public void addVisit(Visit visit){
+		this.visits.add(visit);
+		visit.setAd(this);
+	}
+	
+	public void removeVisit(Visit visit){
+		this.visits.remove(visit);
+		visit.setAd(null);
 	}
 
 	public boolean getDishwasher() {

@@ -24,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import ch.unibe.ese.team3.controller.pojos.forms.MessageForm;
+import ch.unibe.ese.team3.exceptions.InvalidUserException;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.AlertResult;
 import ch.unibe.ese.team3.model.Message;
@@ -87,33 +88,25 @@ public class MessageService {
 	 * 
 	 * @param messageForm
 	 *            the form to take the data from
+	 * @throws InvalidUserException 
 	 */
 	@Transactional
-	public Message saveFrom(MessageForm messageForm) {
-		Message message = new Message();
-
-		message.setRecipient(userDao.findByUsername(messageForm.getRecipient()));
-		message.setSubject(messageForm.getSubject());
-		message.setText(messageForm.getText());
-		message.setState(MessageState.UNREAD);
+	public void saveFrom(MessageForm messageForm) throws InvalidUserException {
+		User recipient = userDao.findByUsername(messageForm.getRecipient());
+		
+		if (recipient == null){
+			throw new InvalidUserException();
+		}
+		
+		String subject = messageForm.getSubject();
+		String text = messageForm.getText();
 		
 		// get logged in user as the sender
 		org.springframework.security.core.userdetails.User securityUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
 
-		User loggedInUser = userDao.findByUsername(securityUser.getUsername());
-		
-		message.setSender(loggedInUser);
-
-		Calendar calendar = Calendar.getInstance();
-		// java.util.Calendar uses a month range of 0-11 instead of the
-		// XMLGregorianCalendar which uses 1-12
-		calendar.setTimeInMillis(System.currentTimeMillis());
-		message.setDateSent(calendar.getTime());
-
-		messageDao.save(message);
-
-		return message;
+		User sender = userDao.findByUsername(securityUser.getUsername());
+		sendMessage(sender, recipient, subject, text);
 	}
 
 	/** Saves a new message with the given parameters in the DB.
@@ -244,8 +237,8 @@ public class MessageService {
 	
 	/** Returns the number of unread messages a user has. */
 	@Transactional
-	public int unread(long id) {
-		User user = userDao.findOne(id);
+	public int unread(long userId) {
+		User user = userDao.findOne(userId);
 		Iterable<Message> usersMessages = messageDao.findByRecipient(user);
 		int i = 0;
 		for(Message message: usersMessages) {

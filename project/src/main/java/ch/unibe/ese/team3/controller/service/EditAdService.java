@@ -101,14 +101,11 @@ public class EditAdService {
 		 * Save the paths to the picture files, the pictures are assumed to be
 		 * uploaded at this point!
 		 */
-		List<AdPicture> pictures = new ArrayList<>();
 		for (String filePath : filePaths) {
 			AdPicture picture = new AdPicture();
 			picture.setFilePath(filePath);
-			pictures.add(picture);
+			ad.addPicture(picture);
 		}
-		
-		ad.getPictures().addAll(pictures);
 
 		// visits
 		List<Visit> visits = new LinkedList<>();
@@ -135,11 +132,7 @@ public class EditAdService {
 				visit.setAd(ad);
 				visits.add(visit);
 			}
-
-			// add existing visit
-			for (Visit visit : ad.getVisits()) {
-				visits.add(visit);
-			}
+			
 			ad.getVisits().addAll(visits);
 		}
 

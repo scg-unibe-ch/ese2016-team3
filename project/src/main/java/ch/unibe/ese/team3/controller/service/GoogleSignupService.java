@@ -1,18 +1,16 @@
 package ch.unibe.ese.team3.controller.service;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.security.SecureRandom;
 import java.math.BigInteger;
+import java.security.SecureRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.controller.pojos.forms.GoogleSignupForm;
-import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.Gender;
+import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
@@ -46,13 +44,10 @@ public class GoogleSignupService {
 		user.setAccountType(AccountType.BASIC);
 		user.setCreditCard("0000000000000000");
 		
-		Set<UserRole> userRoles = new HashSet<>();
 		UserRole role = new UserRole();
 		role.setRole(DEFAULT_ROLE);
 		role.setUser(user);
-		userRoles.add(role);
-		
-		user.setUserRoles(userRoles);
+		user.addUserRole(role);
 		
 		userDao.save(user);
 	}

@@ -60,6 +60,6 @@ public class VisitService {
 	/** Returns all visitors for the visit with the given id. */
 	public Iterable<User> getVisitorsForVisit(long id) {
 		Visit visit = visitDao.findOne(id);
-		return visit.getSearchers();
+		return visit.getVisitors();
 	}
 }

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ch.unibe.ese.team3.controller.pojos.forms.MessageForm;
 import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.controller.service.UserService;
+import ch.unibe.ese.team3.exceptions.InvalidUserException;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.User;
 
@@ -73,7 +74,12 @@ public class MessageController {
 			BindingResult bindingResult, Principal principal) {
 		ModelAndView model = new ModelAndView("messages");
 		if (!bindingResult.hasErrors()) {
-			messageService.saveFrom(messageForm);
+			try {
+				messageService.saveFrom(messageForm);
+			}
+			catch (InvalidUserException ex){
+				
+			}
 			User user = userService.findUserByUsername(principal.getName());
 			model.addObject("messageForm", new MessageForm());
 			model.addObject("messages", messageService.getInboxForUser(user));

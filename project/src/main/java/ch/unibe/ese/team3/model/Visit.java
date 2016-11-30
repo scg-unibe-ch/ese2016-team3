@@ -1,14 +1,19 @@
 package ch.unibe.ese.team3.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -30,7 +35,15 @@ public class Visit {
 
 	@Fetch(FetchMode.SELECT)
 	@ManyToMany(fetch = FetchType.EAGER)
-	private List<User> searchers;
+	@JoinTable(name = "user_visits",
+		joinColumns = @JoinColumn(name = "visit_id"),
+		inverseJoinColumns = @JoinColumn(name = "user_id")
+	)
+	private List<User> visitors;
+	
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "visit", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<VisitEnquiry> enquiries;
 	
 	@JsonFormat(pattern = "HH:mm, dd.MM.yyyy")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -56,21 +69,18 @@ public class Visit {
 		this.ad = ad;
 	}
 
-	public List<User> getSearchers() {
-		return searchers;
-	}
-
-	public void setSearchers(List<User> searchers) {
-		this.searchers = searchers;
+	public List<User> getVisitors() {
+		return visitors;
 	}
 	
-	//used when an enquiry gets accepted
-	public void addToSearchers(User user) {
-		searchers.add(user);
+	public void addVisitor(User visitor){
+		this.visitors.add(visitor);
+		visitor.addVisit(this);
 	}
 	
-	public void removeFromSearchers(User user){
-		searchers.remove(user);
+	public void removeVisitor(User visitor){
+		this.visitors.remove(visitor);
+		visitor.removeVisit(this);
 	}
 
 	public Date getStartTimestamp() {
@@ -87,6 +97,19 @@ public class Visit {
 
 	public void setEndTimestamp(Date endTimestamp) {
 		this.endTimestamp = endTimestamp;
+	}
+
+	public List<VisitEnquiry> getEnquiries() {
+		return enquiries;
+	}
+
+	public void setEnquiries(List<VisitEnquiry> enquiries) {
+		this.enquiries = enquiries;
+	}
+	
+	public Visit(){
+		this.enquiries = new ArrayList<VisitEnquiry>();
+		this.visitors = new ArrayList<User>();
 	}
 	
 }

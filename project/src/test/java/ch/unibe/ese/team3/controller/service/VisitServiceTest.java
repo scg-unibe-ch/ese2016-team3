@@ -17,7 +17,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
-import ch.unibe.ese.team3.model.dao.*;
+import ch.unibe.ese.team3.model.dao.AdDao;
+import ch.unibe.ese.team3.model.dao.UserDao;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)

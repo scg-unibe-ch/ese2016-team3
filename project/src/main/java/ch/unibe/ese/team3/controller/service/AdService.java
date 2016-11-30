@@ -156,17 +156,11 @@ public class AdService extends BaseService {
 		 * Save the paths to the picture files, the pictures are assumed to be
 		 * uploaded at this point!
 		 */
-		List<AdPicture> pictures = new ArrayList<>();
 		for (String filePath : filePaths) {
 			AdPicture picture = new AdPicture();
 			picture.setFilePath(filePath);
-			pictures.add(picture);
+			ad.addPicture(picture);
 		}
-
-		List<AdPicture> existingPictures = ad.getPictures();
-
-		existingPictures.clear();
-		existingPictures.addAll(pictures);
 
 		// visits
 		List<Visit> visits = new LinkedList<>();

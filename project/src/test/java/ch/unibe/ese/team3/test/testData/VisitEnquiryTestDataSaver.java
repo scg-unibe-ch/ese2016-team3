@@ -154,7 +154,7 @@ public class VisitEnquiryTestDataSaver {
 		for (Visit visit : acceptedVisits) {
 
 			// Get all accepted enquiries for the visit
-			Iterable<User> searchers = visit.getSearchers();
+			Iterable<User> searchers = visit.getVisitors();
 			for (User searcher : searchers) {
 				enquiry = new VisitEnquiry();
 				enquiry.setDateSent(dateFormat.parse(getRandomDummyTime()));

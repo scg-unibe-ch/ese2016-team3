@@ -1,5 +1,6 @@
 package ch.unibe.ese.team3.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,8 +12,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -47,7 +48,7 @@ public class Alert {
 	private int radius;
 
 	@Fetch(FetchMode.SELECT)
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+	@OneToMany(mappedBy = "alert", cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
 	private List<AlertType> alertTypes;
 	
 	@Enumerated(EnumType.STRING)
@@ -417,5 +418,9 @@ public class Alert {
 
 	public void setExtendedAlert(boolean extendedAlert) {
 		this.extendedAlert = extendedAlert;
+	}
+	
+	public Alert() {
+		this.alertTypes = new ArrayList<AlertType>();
 	}
 }

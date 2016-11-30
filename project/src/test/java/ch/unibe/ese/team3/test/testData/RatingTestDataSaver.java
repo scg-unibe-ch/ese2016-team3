@@ -6,8 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.model.Rating;
 import ch.unibe.ese.team3.model.User;
-import ch.unibe.ese.team3.model.dao.UserDao;
 import ch.unibe.ese.team3.model.dao.RatingDao;
+import ch.unibe.ese.team3.model.dao.UserDao;
 
 /**
  * This inserts some alert test data into the database.

@@ -1,9 +1,7 @@
 package ch.unibe.ese.team3.test.testData;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,11 +106,9 @@ public class AdTestDataSaver {
 		adBern.setcurrentAuctionPrice(adBern.getStartPrice() + adBern.getIncreaseBidPrice());
 
 		adBern.setInfrastructureType(InfrastructureType.CABLE);
-		List<AdPicture> pictures = new ArrayList<>();
-		pictures.add(createPicture(adBern, "/img/test/ad1_1.jpg"));
-		pictures.add(createPicture(adBern, "/img/test/ad1_2.jpg"));
-		pictures.add(createPicture(adBern, "/img/test/ad1_3.jpg"));
-		adBern.getPictures().addAll(pictures);
+		adBern.addPicture(createPicture(adBern, "/img/test/ad1_1.jpg"));
+		adBern.addPicture(createPicture(adBern, "/img/test/ad1_2.jpg"));
+		adBern.addPicture(createPicture(adBern, "/img/test/ad1_3.jpg"));
 		adDao.save(adBern);
 
 		String studioDescription2 = "It is small studio close to the"
@@ -160,11 +156,9 @@ public class AdTestDataSaver {
 
 		adBern2.setAuction(false);
 
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adBern2, "/img/test/ad2_1.jpg"));
-		pictures.add(createPicture(adBern2, "/img/test/ad2_2.jpg"));
-		pictures.add(createPicture(adBern2, "/img/test/ad2_3.jpg"));
-		adBern2.getPictures().addAll(pictures);
+		adBern2.addPicture(createPicture(adBern2, "/img/test/ad2_1.jpg"));
+		adBern2.addPicture(createPicture(adBern2, "/img/test/ad2_2.jpg"));
+		adBern2.addPicture(createPicture(adBern2, "/img/test/ad2_3.jpg"));
 		adDao.save(adBern2);
 
 		String studioDescription3 = " In the center of Gundeli (5 Min. away from the"
@@ -212,11 +206,9 @@ public class AdTestDataSaver {
 
 		adBasel.setAuction(false);
 
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adBasel, "/img/test/ad3_1.jpg"));
-		pictures.add(createPicture(adBasel, "/img/test/ad3_2.jpg"));
-		pictures.add(createPicture(adBasel, "/img/test/ad3_3.jpg"));
-		adBasel.getPictures().addAll(pictures);
+		adBasel.addPicture(createPicture(adBasel, "/img/test/ad3_1.jpg"));
+		adBasel.addPicture(createPicture(adBasel, "/img/test/ad3_2.jpg"));
+		adBasel.addPicture(createPicture(adBasel, "/img/test/ad3_3.jpg"));
 		adDao.save(adBasel);
 
 		String studioDescription4 = "Flatshare of 3 persons. Flat with 5 rooms"
@@ -261,11 +253,9 @@ public class AdTestDataSaver {
 
 		adOlten.setAuction(false);
 
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adOlten, "/img/test/ad4_1.png"));
-		pictures.add(createPicture(adOlten, "/img/test/ad4_2.png"));
-		pictures.add(createPicture(adOlten, "/img/test/ad4_3.png"));
-		adOlten.getPictures().addAll(pictures);
+		adOlten.addPicture(createPicture(adOlten, "/img/test/ad4_1.png"));
+		adOlten.addPicture(createPicture(adOlten, "/img/test/ad4_2.png"));
+		adOlten.addPicture(createPicture(adOlten, "/img/test/ad4_3.png"));
 		adDao.save(adOlten);
 
 		String studioDescription5 = "Studio meublé au 3ème étage, comprenant"
@@ -308,11 +298,9 @@ public class AdTestDataSaver {
 
 		adNeuchâtel.setAuction(false);
 
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adNeuchâtel, "/img/test/ad5_1.jpg"));
-		pictures.add(createPicture(adNeuchâtel, "/img/test/ad5_2.jpg"));
-		pictures.add(createPicture(adNeuchâtel, "/img/test/ad5_3.jpg"));
-		adNeuchâtel.getPictures().addAll(pictures);
+		adNeuchâtel.addPicture(createPicture(adNeuchâtel, "/img/test/ad5_1.jpg"));
+		adNeuchâtel.addPicture(createPicture(adNeuchâtel, "/img/test/ad5_2.jpg"));
+		adNeuchâtel.addPicture(createPicture(adNeuchâtel, "/img/test/ad5_3.jpg"));
 		adDao.save(adNeuchâtel);
 
 		String studioDescription6 = "A place just for yourself in a very nice part of Biel."
@@ -353,11 +341,10 @@ public class AdTestDataSaver {
 		adBiel.setAuction(false);
 
 		adBiel.setInfrastructureType(InfrastructureType.SATELLITE);
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adBiel, "/img/test/ad6_1.png"));
-		pictures.add(createPicture(adBiel, "/img/test/ad6_2.png"));
-		pictures.add(createPicture(adBiel, "/img/test/ad6_3.png"));
-		adBiel.getPictures().addAll(pictures);
+		
+		adBiel.addPicture(createPicture(adBiel, "/img/test/ad6_1.png"));
+		adBiel.addPicture(createPicture(adBiel, "/img/test/ad6_2.png"));
+		adBiel.addPicture(createPicture(adBiel, "/img/test/ad6_3.png"));
 		adDao.save(adBiel);
 
 		String roomDescription7 = "The room is a part of 3.5 rooms apartment completely renovated"
@@ -402,11 +389,10 @@ public class AdTestDataSaver {
 
 		adZurich.setAuction(false);
 
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adZurich, "/img/test/ad1_3.jpg"));
-		pictures.add(createPicture(adZurich, "/img/test/ad1_2.jpg"));
-		pictures.add(createPicture(adZurich, "/img/test/ad1_1.jpg"));
-		adZurich.getPictures().addAll(pictures);
+		
+		adZurich.addPicture(createPicture(adZurich, "/img/test/ad1_3.jpg"));
+		adZurich.addPicture(createPicture(adZurich, "/img/test/ad1_2.jpg"));
+		adZurich.addPicture(createPicture(adZurich, "/img/test/ad1_1.jpg"));
 		adDao.save(adZurich);
 
 		String studioDescription8 = "It is small studio close to the"
@@ -453,11 +439,10 @@ public class AdTestDataSaver {
 
 		adLuzern.setAuction(false);
 
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adLuzern, "/img/test/ad2_3.jpg"));
-		pictures.add(createPicture(adLuzern, "/img/test/ad2_2.jpg"));
-		pictures.add(createPicture(adLuzern, "/img/test/ad2_1.jpg"));
-		adLuzern.getPictures().addAll(pictures);
+		
+		adLuzern.addPicture(createPicture(adLuzern, "/img/test/ad2_3.jpg"));
+		adLuzern.addPicture(createPicture(adLuzern, "/img/test/ad2_2.jpg"));
+		adLuzern.addPicture(createPicture(adLuzern, "/img/test/ad2_1.jpg"));
 		adDao.save(adLuzern);
 
 		String studioDescription9 = "In the center of Gundeli (5 Min. away from the"
@@ -505,14 +490,13 @@ public class AdTestDataSaver {
 
 		adAarau.setAuction(false);
 
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adAarau, "/img/test/ad3_3.jpg"));
-		pictures.add(createPicture(adAarau, "/img/test/ad3_2.jpg"));
-		pictures.add(createPicture(adAarau, "/img/test/ad3_1.jpg"));
-		pictures.add(createPicture(adAarau, "/img/test/ad2_2.jpg"));
-		pictures.add(createPicture(adAarau, "/img/test/ad2_3.jpg"));
+		
+		adAarau.addPicture(createPicture(adAarau, "/img/test/ad3_3.jpg"));
+		adAarau.addPicture(createPicture(adAarau, "/img/test/ad3_2.jpg"));
+		adAarau.addPicture(createPicture(adAarau, "/img/test/ad3_1.jpg"));
+		adAarau.addPicture(createPicture(adAarau, "/img/test/ad2_2.jpg"));
+		adAarau.addPicture(createPicture(adAarau, "/img/test/ad2_3.jpg"));
 
-		adAarau.getPictures().addAll(pictures);
 		adDao.save(adAarau);
 
 		String studioDescription10 = "Flatshare of 3 persons. Flat with 5 rooms"
@@ -557,11 +541,10 @@ public class AdTestDataSaver {
 
 		adDavos.setAuction(false);
 
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adDavos, "/img/test/ad4_3.png"));
-		pictures.add(createPicture(adDavos, "/img/test/ad4_2.png"));
-		pictures.add(createPicture(adDavos, "/img/test/ad4_1.png"));
-		adDavos.getPictures().addAll(pictures);
+		
+		adDavos.addPicture(createPicture(adDavos, "/img/test/ad4_3.png"));
+		adDavos.addPicture(createPicture(adDavos, "/img/test/ad4_2.png"));
+		adDavos.addPicture(createPicture(adDavos, "/img/test/ad4_1.png"));
 		adDao.save(adDavos);
 
 		String studioDescription11 = "Studio meublé au 3ème étage, comprenant"
@@ -603,11 +586,10 @@ public class AdTestDataSaver {
 
 		adLausanne.setAuction(false);
 
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adLausanne, "/img/test/ad5_3.jpg"));
-		pictures.add(createPicture(adLausanne, "/img/test/ad5_2.jpg"));
-		pictures.add(createPicture(adLausanne, "/img/test/ad5_1.jpg"));
-		adLausanne.getPictures().addAll(pictures);
+		
+		adLausanne.addPicture(createPicture(adLausanne, "/img/test/ad5_3.jpg"));
+		adLausanne.addPicture(createPicture(adLausanne, "/img/test/ad5_2.jpg"));
+		adLausanne.addPicture(createPicture(adLausanne, "/img/test/ad5_1.jpg"));
 		adDao.save(adLausanne);
 
 		String studioDescription12 = "A place just for yourself in a very nice part of Biel."
@@ -649,11 +631,10 @@ public class AdTestDataSaver {
 
 		adLocarno.setAuction(false);
 
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adLocarno, "/img/test/ad6_3.png"));
-		pictures.add(createPicture(adLocarno, "/img/test/ad6_2.png"));
-		pictures.add(createPicture(adLocarno, "/img/test/ad6_1.png"));
-		adLocarno.getPictures().addAll(pictures);
+		
+		adLocarno.addPicture(createPicture(adLocarno, "/img/test/ad6_3.png"));
+		adLocarno.addPicture(createPicture(adLocarno, "/img/test/ad6_2.png"));
+		adLocarno.addPicture(createPicture(adLocarno, "/img/test/ad6_1.png"));
 		adDao.save(adLocarno);
 
 		// Auction Ad
@@ -698,10 +679,8 @@ public class AdTestDataSaver {
 		adInterlaken.setStartDate(startAuctionDate1);
 		adInterlaken.setEndDate(endAuctionDate1);
 
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adInterlaken, "/img/test/HouseAuction.jpg"));
-
-		adInterlaken.getPictures().addAll(pictures);
+		
+		adInterlaken.addPicture(createPicture(adInterlaken, "/img/test/HouseAuction.jpg"));
 		adDao.save(adInterlaken);
 
 		// Auction Ad 2
@@ -747,10 +726,9 @@ public class AdTestDataSaver {
 		adGrosshoechstetten.setStartDate(startAuctionDate1);
 		adGrosshoechstetten.setEndDate(endAuctionDate1);
 
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adGrosshoechstetten, "/img/test/HouseAuction2.jpg"));
+		
+		adGrosshoechstetten.addPicture(createPicture(adGrosshoechstetten, "/img/test/HouseAuction2.jpg"));
 
-		adGrosshoechstetten.getPictures().addAll(pictures);
 		adDao.save(adGrosshoechstetten);
 
 		// Auction Ad 3 is a paused auction
@@ -797,10 +775,8 @@ public class AdTestDataSaver {
 		adThun.setStartDate(startAuctionDate1);
 		adThun.setEndDate(endAuctionDate1);
 
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adThun, "/img/test/HouseAuction3.jpg"));
-
-		adThun.getPictures().addAll(pictures);
+		
+		adThun.addPicture(createPicture(adThun, "/img/test/HouseAuction3.jpg"));
 		adDao.save(adThun);
 
 		// Auction Ad 4 is an expired auction
@@ -851,10 +827,8 @@ public class AdTestDataSaver {
 		adBern3.setStartDate(startAuctionDateExpired);
 		adBern3.setEndDate(endAuctionDateExpired);
 
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adBern3, "/img/test/HouseAuction4.jpg"));
-
-		adBern3.getPictures().addAll(pictures);
+		
+		adBern3.addPicture(createPicture(adBern3, "/img/test/HouseAuction4.jpg"));
 		adDao.save(adBern3);
 
 		// Auction Ad 5 is a completed auction
@@ -906,11 +880,8 @@ public class AdTestDataSaver {
 
 		adEggiwil.setStartDate(startAuctionDateExpired2);
 		adEggiwil.setEndDate(endAuctionDateExpired2);
-
-		pictures = new ArrayList<>();
-		pictures.add(createPicture(adEggiwil, "/img/test/HouseAuction5.jpg"));
-
-		adEggiwil.getPictures().addAll(pictures);
+		
+		adEggiwil.addPicture(createPicture(adEggiwil, "/img/test/HouseAuction5.jpg"));
 		adDao.save(adEggiwil);		
 		
 		Ad adKreuzlingen = new Ad();

@@ -490,7 +490,7 @@ public class AlertService {
 			alertType.setAlert(alert);
 			listAllAlertTypes.add(alertType);
 		}
-		alert.setAlertTypes(listAllAlertTypes);
+		alert.getAlertTypes().addAll(listAllAlertTypes);
 	}
 	
 	// for testing

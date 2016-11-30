@@ -8,12 +8,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.After;
+import javax.transaction.Transactional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,6 +39,7 @@ import ch.unibe.ese.team3.model.dao.UserDao;
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml" })
 
 @WebAppConfiguration
+@Transactional
 public class AuctionServiceTest {
 
 	@Autowired
@@ -114,14 +115,8 @@ public class AuctionServiceTest {
 		auctionAd.setcurrentAuctionPrice(auctionAd.getStartPrice() + auctionAd.getIncreaseBidPrice());
 		auctionAd.setStartDate(formatter.parse("10.10.2016"));
 		auctionAd.setEndDate(formatter.parse("12.12.2016"));
-		auctionAd.setBids(new ArrayList<Bid>());
 
 		adDao.save(auctionAd);
-	}
-
-	@After
-	public void tearDown() {
-		adDao.delete(auctionAd);
 	}
 
 	@Test

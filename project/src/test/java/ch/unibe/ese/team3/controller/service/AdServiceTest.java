@@ -9,9 +9,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -348,12 +347,11 @@ public class AdServiceTest {
 		user.setLastName(lastName);
 		user.setEnabled(true);
 		user.setGender(gender);
-		Set<UserRole> userRoles = new HashSet<>();
+		List<UserRole> userRoles = new ArrayList<>();
 		UserRole role = new UserRole();
 		role.setRole("ROLE_USER");
 		role.setUser(user);
-		userRoles.add(role);
-		user.setUserRoles(userRoles);
+		user.addUserRole(role);
 		return user;
 	}
 	

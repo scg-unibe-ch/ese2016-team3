@@ -6,14 +6,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.transaction.Transactional;
 
-import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +19,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import ch.unibe.ese.team3.model.Gender;
+import ch.unibe.ese.team3.controller.pojos.forms.MessageForm;
+import ch.unibe.ese.team3.exceptions.InvalidUserException;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.User;
-import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.MessageDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
@@ -35,6 +33,7 @@ import ch.unibe.ese.team3.model.dao.UserDao;
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml"})
 @WebAppConfiguration
+@Transactional
 public class MessageServiceTest {
 	
 	@Autowired
@@ -51,43 +50,31 @@ public class MessageServiceTest {
 	@Column(nullable = false)
 	private MessageState state;
 	
-	Message message;
-	Message message2;
 	User sender;
 	User recipient;
 
-	@Transactional
 	@Before
 	public void setUp() throws ParseException{		
 		sender = userDao.findByUsername("mark@knopfler.com");
-		recipient = userDao.findByUsername("Kim@kardashian.com");
-		message = new Message();
-		message.setSender(sender);
-		message.setState(MessageState.UNREAD);
-		message.setSubject("Your sweet home Alabama");
-		message.setText("where the skies are so blue");
-		messageDao.save(message);
-		
-		message2 = new Message();
-		message2.setSender(sender);
-		message2.setRecipient(recipient);
-		message2.setState(MessageState.UNREAD);
-		message2.setSubject("Kentucky in yer heart");
-		message2.setText("okeli dokeli");
-		message2.setDateSent(dateFormat.parse("12:02 24.02.2014"));
-		messageDao.save(message2);
-		
+		recipient = userDao.findByUsername("Kim@kardashian.com");		
 	}	
 	
-	@Transactional
 	@Test
 	public void sendNewMessage(){
 		
 		String subject = "Your sweet home Alabama";
 		String text = "where the skies are so blue";
-		assertEquals(1, messageDao.findByRecipient(recipient).spliterator().getExactSizeIfKnown());
+		assertEquals(0, messageDao.findByRecipient(recipient).spliterator().getExactSizeIfKnown());
 		messageService.sendMessage(sender, recipient, subject, text);	
-		assertEquals(2, messageDao.findByRecipient(recipient).spliterator().getExactSizeIfKnown());
+		assertEquals(1, messageDao.findByRecipient(recipient).spliterator().getExactSizeIfKnown());
+		
+				
+	}
+	
+	@Test
+	public void getInboxWithTwoMessagesSent(){
+		messageService.sendMessage(sender, recipient, "Message1", "Text Message1");
+		messageService.sendMessage(sender, recipient, "Message2", "Text Message2");
 		
 		ArrayList<Message> messageList = new ArrayList<Message>();
 		Iterable<Message> messages = messageService.getInboxForUser(recipient);
@@ -96,78 +83,84 @@ public class MessageServiceTest {
 		
 		assertEquals(2, messageList.size());
 		
-		Message receivedMessage = messageList.get(0);
+		Message receivedMessage1 = messageList.get(0);
 		
-		assertEquals(recipient, receivedMessage.getRecipient());
-		assertEquals(sender, receivedMessage.getSender());
-		assertEquals(subject, receivedMessage.getSubject());
-		assertEquals(text, receivedMessage.getText());
-		assertEquals(MessageState.READ, receivedMessage.getState());
-			
-		assertEquals(message.getSubject(), messageList.get(0).getSubject());
-		assertEquals(message2.getSubject(), messageList.get(1).getSubject());
-		
+		assertEquals(recipient, receivedMessage1.getRecipient());
+		assertEquals(sender, receivedMessage1.getSender());
+		assertEquals("Message2", receivedMessage1.getSubject());
+		assertEquals("Text Message2", receivedMessage1.getText());
 	}
 	
-	@Transactional
 	@Test
-	public void readMessage(){
+	public void getInboxWithTwoMessagesSentReadState(){
+		messageService.sendMessage(sender, recipient, "Message1", "Text Message1");
+		messageService.sendMessage(sender, recipient, "Message2", "Text Message2");
 		
-		assertEquals(1, messageService.unread(recipient.getId()));
-		messageService.readMessage(message2.getId());
-		assertEquals(MessageState.READ, message2.getState());
+		ArrayList<Message> messageList = new ArrayList<Message>();
+		Iterable<Message> messages = messageService.getInboxForUser(recipient);
+		for(Message inboxMessage: messages)
+			messageList.add(inboxMessage);
+		
+		assertEquals(2, messageList.size());
+		
+		Message receivedMessage1 = messageList.get(0);
+		Message receivedMessage2 = messageList.get(1);
+		
+		assertEquals("Most recent message should be read", MessageState.READ, receivedMessage1.getState());
+		assertEquals("Older message should be unread", MessageState.UNREAD, receivedMessage2.getState());
+	}
+	
+	@Test
+	public void noUnreadMessage(){
+		
 		assertEquals(0, messageService.unread(recipient.getId()));	
 	}
 	
-	@Transactional
-	@After
-	public void tearDown(){
-		messageDao.delete(message);
-		messageDao.delete(message2);
+	@Test
+	public void singleUnreadMessage(){
+		messageService.sendMessage(sender, recipient, "Test singleUnreadMessage", "singleUnreadMessage");
+		assertEquals(1, messageService.unread(recipient.getId()));
 	}
 	
 	@Test
-	public void getInboxForUserEmptyInput() {
-		User userEmptyInbox = createUser("userEmptyInbox@f.ch", "password", "userEmptyInbox", "F", Gender.MALE);
-		userDao.save(userEmptyInbox);
+	public void readMessage(){
+		messageService.sendMessage(sender, recipient, "Message1", "Text Message1");
+		messageService.sendMessage(sender, recipient, "Message2", "Text Message2");
 		
-		Iterable<Message> messages = messageService.getInboxForUser(userEmptyInbox);
+		ArrayList<Message> messageList = new ArrayList<Message>();
+		Iterable<Message> messages = messageService.getInboxForUser(recipient);
+		for(Message inboxMessage: messages)
+			messageList.add(inboxMessage);
 		
-		int countInbox = 0;
-		for (Message message: messages) {
-			countInbox++;
-		}
-		assertEquals(countInbox, 0);
+		assertEquals(2, messageList.size());
+		
+		Message receivedMessage = messageList.get(1);
+		assertEquals(MessageState.UNREAD, receivedMessage.getState());
+		
+		messageService.readMessage(receivedMessage.getId());
+		Message message = messageService.getMessage(receivedMessage.getId());
+		assertEquals(MessageState.READ, message.getState());
 	}
 	
-	/*@Test 
-	public void saveFromMessageFormTest(){
-		
+	@Ignore
+	@Test 
+	public void saveFromMessageFormTest() throws InvalidUserException{		
 		MessageForm messageForm = new MessageForm();
 		messageForm.setRecipient("kim@kardashian.com");
 		messageForm.setSubject("Buy");
 		messageForm.setText("I really really wanna");
 		messageService.saveFrom(messageForm);
-	}*/
+		
+		assertEquals(1, messageService.unread(recipient.getId()));
+	}
 	
-	
-	// Lean user creating method
-	User createUser(String email, String password, String firstName, String lastName, Gender gender) {
-		User user = new User();
-		user.setUsername(email);
-		user.setPassword(password);
-		user.setEmail(email);
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
-		user.setEnabled(true);
-		user.setGender(gender);
-		Set<UserRole> userRoles = new HashSet<>();
-		UserRole role = new UserRole();
-		role.setRole("ROLE_USER");
-		role.setUser(user);
-		userRoles.add(role);
-		user.setUserRoles(userRoles);
-		return user;
+	@Test(expected=InvalidUserException.class)
+	public void saveFromMessageFormInvalidRecipient() throws InvalidUserException{
+		MessageForm messageForm = new MessageForm();
+		messageForm.setRecipient("thisisnovaliduser");
+		messageForm.setSubject("Buy");
+		messageForm.setText("I really really wanna");
+		messageService.saveFrom(messageForm);
 	}
 	
 }

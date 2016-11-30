@@ -89,7 +89,7 @@ public class EnquiryService {
 
 		// add user to the visitor list
 		Visit visit = enquiry.getVisit();
-		visit.addToSearchers(enquiry.getSender());
+		visit.addVisitor(enquiry.getSender());
 		visitDao.save(visit);
 
 		// create a non-initialized rating
@@ -121,7 +121,7 @@ public class EnquiryService {
 		enquiryDao.save(enquiry);
 
 		Visit visit = enquiry.getVisit();
-		visit.removeFromSearchers(enquiry.getSender());
+		visit.removeVisitor(enquiry.getSender());
 		visitDao.save(visit);
 	}
 
