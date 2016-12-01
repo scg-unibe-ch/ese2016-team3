@@ -1,5 +1,7 @@
 package ch.unibe.ese.team3.model.dao;
 
+import java.util.Date;
+
 import org.springframework.data.repository.CrudRepository;
 
 import ch.unibe.ese.team3.model.Ad;
@@ -18,5 +20,10 @@ public interface AdDao extends CrudRepository<Ad, Long> {
 	public Ad findByTitle(String title);
 
 	public Iterable<Ad> findByUserAndAuction(User user, boolean isAuction);
+	
+	public Iterable<Ad> findByEndDate(Date date);
+	
+	public Iterable<Ad> findByEndDateLessThanAndAuctionMessageSent(Date date, boolean auctionMessageSent);
+	
 
 }

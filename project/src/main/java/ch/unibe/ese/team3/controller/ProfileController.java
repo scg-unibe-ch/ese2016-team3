@@ -29,9 +29,7 @@ import ch.unibe.ese.team3.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team3.controller.pojos.forms.SignupForm;
 import ch.unibe.ese.team3.controller.pojos.forms.UpgradeForm;
 import ch.unibe.ese.team3.controller.service.AdService;
-import ch.unibe.ese.team3.controller.service.GoogleLoginService;
-import ch.unibe.ese.team3.controller.service.GoogleSignupService;
-import ch.unibe.ese.team3.controller.service.PremiumChoiceService;
+import ch.unibe.ese.team3.controller.service.GoogleService;
 import ch.unibe.ese.team3.controller.service.SignupService;
 import ch.unibe.ese.team3.controller.service.UpgradeService;
 import ch.unibe.ese.team3.controller.service.UserService;
@@ -62,11 +60,8 @@ public class ProfileController {
 	private SignupService signupService;
 	
 	@Autowired
-	private GoogleSignupService googleSignupService;
+	private GoogleService googleService;
 	
-	@Autowired
-	private GoogleLoginService googleLoginService;
-
 	@Autowired
 	private UserService userService;
 
@@ -82,9 +77,6 @@ public class ProfileController {
 	@Autowired
 	private UpgradeService upgradeService;
 
-	@Autowired
-	private PremiumChoiceService premiumChoiceService;
-
 	/** Returns the login page. */
 	@RequestMapping(value = "/login")
 	public ModelAndView loginPage() {
@@ -97,10 +89,10 @@ public class ProfileController {
 	@RequestMapping(value = "/googlelogin", method = RequestMethod.POST)
 	public ModelAndView googleLogin(GoogleSignupForm googleForm) {
 		ModelAndView model = new ModelAndView("index");
-		if(!googleSignupService.doesUserWithUsernameExist(googleForm.getEmail())){
-			googleSignupService.saveFrom(googleForm);
+		if(!googleService.doesUserWithUsernameExist(googleForm.getEmail())){
+			googleService.saveFrom(googleForm);
 		}
-		googleLoginService.loginFrom(googleForm);
+		googleService.loginFrom(googleForm);
 		model.addObject("newest", adService.getNewestAds(4, BuyMode.BUY));
 		model.addObject("types", Type.values());
 		model.addObject("searchForm", new SearchForm());
@@ -119,9 +111,9 @@ public class ProfileController {
 		model.addObject("years", GetYears());
 		model.addObject("months", GetMonths());
 		
-		Iterable<PremiumChoice> allChoices = premiumChoiceService.findAll();
+		Iterable<PremiumChoice> allChoices = upgradeService.findAll();
 		model.addObject("premiumChoices", allChoices);
-		model.addObject("durations", premiumChoiceService.getDurations());
+		model.addObject("durations", upgradeService.getDurations());
 		return model;
 	}
 
@@ -161,9 +153,9 @@ public class ProfileController {
 			model.addObject("years", GetYears());
 			model.addObject("months", GetMonths());
 			
-			Iterable<PremiumChoice> allChoices = premiumChoiceService.findAll();
+			Iterable<PremiumChoice> allChoices = upgradeService.findAll();
 			model.addObject("premiumChoices", allChoices);
-			model.addObject("durations", premiumChoiceService.getDurations());
+			model.addObject("durations", upgradeService.getDurations());
 		}
 		
 		return model;
@@ -275,7 +267,7 @@ public class ProfileController {
 		ModelAndView model = new ModelAndView("upgrade");
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
-		Iterable<PremiumChoice> allChoices = premiumChoiceService.findAll();
+		Iterable<PremiumChoice> allChoices = upgradeService.findAll();
 		model.addObject("upgradeForm", new UpgradeForm());
 		model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
 		model.addObject("accountTypes", AccountType.values());
@@ -283,7 +275,7 @@ public class ProfileController {
 		model.addObject("years", GetYears());
 		model.addObject("months", GetMonths());
 		model.addObject("premiumChoices", allChoices);
-		model.addObject("durations", premiumChoiceService.getDurations());
+		model.addObject("durations", upgradeService.getDurations());
 		return model;
 	}
 
@@ -295,13 +287,13 @@ public class ProfileController {
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
 		if (!bindingResult.hasErrors()) {
-			PremiumChoice premiumChoice = premiumChoiceService.findPremiumChoiceByDuration(upgradeForm.getDuration());
+			PremiumChoice premiumChoice = upgradeService.findPremiumChoiceByDuration(upgradeForm.getDuration());
 			upgradeService.upgradeFrom(upgradeForm, user, premiumChoice);
 			user = userService.findUserByUsername(username);
 			model = new ModelAndView("redirect:../user?id=" + user.getId());
 			return model;
 		} else {
-			Iterable<PremiumChoice> allChoices = premiumChoiceService.findAll();
+			Iterable<PremiumChoice> allChoices = upgradeService.findAll();
 			model = new ModelAndView("upgrade");
 			model.addObject("upgradeForm", upgradeForm);
 			model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
@@ -310,7 +302,7 @@ public class ProfileController {
 			model.addObject("years", GetYears());
 			model.addObject("months", GetMonths());
 			model.addObject("premiumChoices", allChoices);
-			model.addObject("durations", premiumChoiceService.getDurations());
+			model.addObject("durations", upgradeService.getDurations());
 		}
 		return model;
 	}

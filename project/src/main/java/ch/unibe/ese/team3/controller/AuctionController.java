@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.controller.service.AuctionService;
+import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.exceptions.ForbiddenException;
 import ch.unibe.ese.team3.exceptions.ResourceNotFoundException;
@@ -36,12 +37,14 @@ public class AuctionController {
 	@Autowired
 	private AuctionService auctionService;
 	
+	
 	@RequestMapping(value = "/profile/bidAuction", method = RequestMethod.POST)
 	public ModelAndView bid(Principal principal, @RequestParam int amount, @RequestParam long id, RedirectAttributes redirectAttributes) {
 		User bidder = userService.findUserByUsername(principal.getName());
 		Ad ad = adService.getAdById(id);
 		
-		if (auctionService.checkAndBid(ad, bidder, amount)) {			
+		if (auctionService.checkAndBid(ad, bidder, amount)) {	
+			
 			ModelAndView model = new ModelAndView("redirect:../ad?id=" + ad.getId());
 			redirectAttributes.addFlashAttribute("confirmationMessage",
 					"Your bid was registered successfully. If you win the auction, the advertiser will contact you.");

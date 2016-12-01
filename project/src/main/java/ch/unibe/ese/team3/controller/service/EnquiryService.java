@@ -19,7 +19,6 @@ import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
 import ch.unibe.ese.team3.model.VisitEnquiry;
 import ch.unibe.ese.team3.model.VisitEnquiryState;
-import ch.unibe.ese.team3.model.dao.RatingDao;
 import ch.unibe.ese.team3.model.dao.VisitDao;
 import ch.unibe.ese.team3.model.dao.VisitEnquiryDao;
 
@@ -29,9 +28,6 @@ public class EnquiryService {
 
 	@Autowired
 	private VisitEnquiryDao enquiryDao;
-
-	@Autowired
-	private RatingDao ratingDao;
 
 	@Autowired
 	private VisitDao visitDao;
@@ -91,15 +87,6 @@ public class EnquiryService {
 		Visit visit = enquiry.getVisit();
 		visit.addVisitor(enquiry.getSender());
 		visitDao.save(visit);
-
-		// create a non-initialized rating
-		User ratee = enquiry.getSender();
-		User rater = visit.getAd().getUser();
-		Rating rating = new Rating();
-		rating.setRater(rater);
-		rating.setRatee(ratee);
-		rating.setRating(0);
-		ratingDao.save(rating);
 	}
 
 	/** Declines the enquiry with the given id. */
@@ -125,41 +112,4 @@ public class EnquiryService {
 		visitDao.save(visit);
 	}
 
-	/**
-	 * Gives the ratee the given rating by the rater.
-	 * 
-	 * @param rater
-	 *            the user that issued the rating
-	 * @param ratee
-	 *            the user that was rated
-	 * @param rating
-	 *            the rating that was associated with the ratee
-	 */
-	@Transactional
-	public void rate(User rater, User ratee, int rating) {
-		Rating newRating = getRatingByRaterAndRatee(rater, ratee);
-		newRating.setRating(rating);
-		ratingDao.save(newRating);
-	}
-
-	/** Returns all ratings that were made by the given user. */
-	@Transactional
-	public Iterable<Rating> getRatingsByRater(User rater) {
-		return ratingDao.findByRater(rater);
-	}
-
-	/**
-	 * Returns all ratings that were made by the given user for the given ratee.
-	 * This method always returns one rating, because one rater can only give
-	 * one rating to another user.
-	 */
-	@Transactional
-	public Rating getRatingByRaterAndRatee(User rater, User ratee) {
-		Iterable<Rating> ratings = ratingDao.findByRaterAndRatee(rater, ratee);
-
-		// ugly hack, but works
-		Iterator<Rating> iterator = ratings.iterator();
-		Rating next = iterator.next();
-		return next;
-	}
 }

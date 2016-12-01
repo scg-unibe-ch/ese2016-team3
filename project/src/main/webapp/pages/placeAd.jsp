@@ -64,7 +64,6 @@
 									<label class="col-sm-3 control-label" for="type-room">Type*</label>
 									<div class="col-sm-5">
 										<form:select path="type" id="type" cssClass="form-control">
-											<option value="0"></option>
 											<form:options items="${types}" itemLabel="name" />
 										</form:select>
 									</div>
@@ -129,14 +128,10 @@
 										<form:errors path="numberOfRooms" cssClass="text-danger" />
 									</div>
 								</div>
-							</spring:bind>
-							
-							<button id="specifyButton" type="button" class="btn btn-info">Specify More Fields</button>
-							
+							</spring:bind>							
 						</div>
 					</div>
 										
-					<div id="specify" style="display:none">	
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<spring:bind path="numberOfBath">
@@ -240,8 +235,8 @@
 							</spring:bind>
 						</div>
 					</div>
-					</div>
-					<h4>Prizing</h4>
+					
+					<h4>Pricing</h4>
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<c:if test="${pagemode == 'buy' }">
@@ -346,11 +341,10 @@
 							<spring:bind path="infrastructureType">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label"
-										for="infrastructureType-room">Type of Infrastructure</label>
+										for="infrastructureType-room">Type of Infrastructure*</label>
 									<div class="col-sm-5">
 										<form:select id="infrastructureType" path="infrastructureType"
 											cssClass="form-control">
-											<option value="0"></option>
 											<form:options items="${infrastructureTypes}" itemLabel="name" />
 										</form:select>
 									</div>
@@ -493,13 +487,5 @@
 		</div>
 	</div>
 </div>
-
-<script>
-	$("#specifyButton").click(function(){
-		$("#specify").toggle();	
-		$("#specifyButton").toggleClass("active");
-	
-});
-</script>
 
 <c:import url="template/footer.jsp" />

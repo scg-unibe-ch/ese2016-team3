@@ -1,8 +1,8 @@
 package ch.unibe.ese.team3.model;
 
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -61,7 +61,7 @@ public class Ad {
 
 	@Column(nullable = false)
 	private int price;
-	
+
 	@Column(nullable = false)
 	private int auctionPrice;
 
@@ -127,7 +127,7 @@ public class Ad {
 	@Fetch(FetchMode.SELECT)
 	@OneToMany(mappedBy = "ad", orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Bid> bids;
-	
+
 	@Fetch(FetchMode.SELECT)
 	@OneToMany(mappedBy = "triggerAd", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<AlertResult> alertResults;
@@ -153,7 +153,6 @@ public class Ad {
 	public List<PurchaseRequest> getPurchaseRequests() {
 		return purchaseRequests;
 	}
-
 
 	public void setPurchaseRequests(List<PurchaseRequest> purchaseRequests) {
 		this.purchaseRequests = purchaseRequests;
@@ -195,6 +194,16 @@ public class Ad {
 
 	@Column(nullable = true)
 	private boolean auctionCompleted;
+	
+	private boolean auctionMessageSent;
+
+	public boolean isAuctionMessageSent() {
+		return auctionMessageSent;
+	}
+
+	public void setAuctionMessageSent(boolean auctionMessageSent) {
+		this.auctionMessageSent = auctionMessageSent;
+	}
 
 	public boolean isAuction() {
 		return auction;
@@ -259,11 +268,11 @@ public class Ad {
 	public void setIncreaseBidPrice(int increaseBidPrice) {
 		this.increaseBidPrice = increaseBidPrice;
 	}
-	
+
 	public int getAuctionPrice() {
 		return auctionPrice;
 	}
-	
+
 	public void setAuctionPrice(int price) {
 		this.auctionPrice = price;
 	}
@@ -580,14 +589,28 @@ public class Ad {
 	}
 
 	public boolean hasAuctionExpired() {
-		Date now = new Date();
-		return !auctionCompleted && availableForAuction && now.after(endDate);
+		Calendar now = Calendar.getInstance();
+		Calendar expired = Calendar.getInstance();
+		expired.setTime(endDate);
+		expired.set(Calendar.HOUR_OF_DAY, 23);
+		expired.set(Calendar.MINUTE, 59);
+		expired.set(Calendar.SECOND, 59);
 		
+
+		return !auctionCompleted && availableForAuction && now.after(expired);
+
 	}
 
 	public boolean isAuctionRunning() {
 		Date now = new Date();
-		return !auctionCompleted && availableForAuction && now.after(startDate) && now.before(endDate);
+		Calendar calNow = Calendar.getInstance();
+		Calendar expired = Calendar.getInstance();
+		expired.setTime(endDate);
+		expired.set(Calendar.HOUR_OF_DAY, 23);
+		expired.set(Calendar.MINUTE, 59);
+		expired.set(Calendar.SECOND, 59);
+		
+		return !auctionCompleted && availableForAuction && now.after(startDate) && calNow.before(expired);
 	}
 
 	public boolean isAuctionNotYetRunning() {
@@ -595,7 +618,7 @@ public class Ad {
 		return !auctionCompleted && availableForAuction && now.before(startDate);
 	}
 
-	public double getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
@@ -607,7 +630,7 @@ public class Ad {
 		this.longitude = longitude;
 	}
 
-	public double getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 

@@ -144,12 +144,15 @@
 						</spring:bind>
 						
 						<hr>
-					</div>
 						<p><strong>Please Enter Your Credit Card Information</strong></p>
 						<br />
+					</div>
+					
+					
 					<spring:bind path="validCreditcardType">
 						<div id="form-creditcardType"
 							class="form-group ${status.error ? 'has-error' : '' }">
+							
 							<label class="col-sm-2 control-label"
 								for="field-creditcardNumber">Type of Card*</label>
 							<div class="col-sm-6">

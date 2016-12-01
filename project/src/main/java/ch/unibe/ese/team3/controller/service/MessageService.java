@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -27,10 +28,13 @@ import ch.unibe.ese.team3.controller.pojos.forms.MessageForm;
 import ch.unibe.ese.team3.exceptions.InvalidUserException;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.AlertResult;
+import ch.unibe.ese.team3.model.Bid;
 import ch.unibe.ese.team3.model.Message;
 import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.User;
+import ch.unibe.ese.team3.model.dao.AdDao;
 import ch.unibe.ese.team3.model.dao.AlertResultDao;
+import ch.unibe.ese.team3.model.dao.BidDao;
 import ch.unibe.ese.team3.model.dao.MessageDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
 import ch.unibe.ese.team3.util.ConfigReader;
@@ -39,6 +43,7 @@ import ch.unibe.ese.team3.util.ConfigReader;
 /** Handles all persistence operations concerning messaging. */
 @Service
 @Configuration
+
 public class MessageService {
 
 	@Autowired
@@ -49,6 +54,11 @@ public class MessageService {
 	
 	@Autowired
 	private AlertResultDao alertResultDao;
+	
+	@Autowired
+	private AdDao adDao;
+	@Autowired
+	private BidDao bidDao;
 
 	/** Gets all messages in the inbox of the given user, sorted newest to oldest */
 	@Transactional
@@ -225,6 +235,80 @@ public class MessageService {
 	
 
 	/**
+     * at Midnight of the end date of the auction, the auction expires. 
+     * sends message to most higher bidder and owner of auction at 00:00 of the next day.
+     * for example : End date of auction 11.12.2016. Auction expires on 11.12.2016 at 23:59:59
+     * 				 this method will be evoked on the 12.12.2016 at 00:00
+     */
+    @Transactional
+    @Scheduled(cron = "0 0 0 * * *") // everyday on midnight
+    public void checkForExpiredAuctions(){
+    
+    	Iterable<Ad> expiredAds = adDao.findByEndDateLessThanAndAuctionMessageSent(new Date(),false);
+    	
+        for(Ad ad : expiredAds){
+        	ad.setAuctionMessageSent(true);
+        	adDao.save(ad);
+        	
+        	if(ad.getBids().isEmpty()){
+        		sendNoBidsMessageToOwner(ad);
+        	}
+        	else{
+        		sendSuccessMessages(ad);
+        	}
+        }
+    }
+    
+    /**
+     * Sends message to user who won the auction and the owner of the property
+     * @param ad Ad which auction has finished
+     */
+    private void sendSuccessMessages(Ad ad) {
+		Bid highestBid = bidDao.findTopByAdOrderByAmountDesc(ad);
+		
+		User winner = highestBid.getBidder();
+		User owner = ad.getUser();
+		
+		String subject1 = "You won an auction";
+		String text1 = "Dear "+winner.getFirstName()+",</br></br>"+
+						"Congratulations! You won the auction on the " +
+						"<a class=\"link\" href= ../ad?id="+ ad.getId()+">"+ ad.getTitle() +"</a>.</br>"+
+						owner.getFirstName()+" "+owner.getLastName()+" will contact you with further details.</br>";
+		
+		sendMessage(userDao.findByUsername("System"), winner, subject1, text1);
+		sendEmail(winner, subject1, text1);
+
+		
+		String subject2 = "Your auction was successfully ";
+		String text2 = "Dear "+owner.getFirstName()+",</br></br>"+"You just sold the " + 
+						"<a class=\"link\" href= ../ad?id="+ ad.getId()+">"+ ad.getTitle() +"</a>.</br>"+
+						"to "+ winner.getFirstName() + " "+ winner.getLastName()+ " "+ winner.getEmail()+
+						" for "+ highestBid.getAmount()+" CHF.</br>"+
+						"Please contact the winner as soon as possible.";
+		
+		
+		sendMessage(userDao.findByUsername("System"), owner, subject2, text2);
+		sendEmail(owner, subject2, text2);
+
+	}
+
+	/**
+     * Sends message to user who placed the ad
+     * @param ad Ad which auction has finished
+     */
+	private void sendNoBidsMessageToOwner(Ad ad) {
+
+		User user = userDao.findUserById(ad.getUser().getId());
+    	String subject = "Auction Expired";
+		String text = "Dear "+user.getFirstName()+",</br></br>"+
+					"Unfortunately your auction has expired and no one has placed a bid on your"+
+					"<a class=\"link\" href= ../ad?id="+ ad.getId()+">"+ ad.getTitle() +"</a>.</br>";
+		
+		sendMessage(userDao.findByUsername("System"), user, subject, text);
+		sendEmail(user, subject, text);
+	}
+
+	/**
 	 * Sets the MessageState of a given Message to "READ".
 	 * @param id
 	 */
@@ -246,6 +330,32 @@ public class MessageService {
 				i++;
 		}
 		return i;
+	}
+	
+    /**
+     * Sends Message to Premium User who has been over bidden 
+     * @param ad Ad to bid on
+     * @param bidder User who overbids the last one
+     */
+	public void sendOverbiddenMessage(Ad ad, User bidder) {
+		// TODO Auto-generated method stub
+		
+		Bid maxbid = bidDao.findTopByAdOrderByAmountDesc(ad);
+		
+		if(maxbid != null){
+			User receiver = maxbid.getBidder();
+			if(receiver.isPremium()){
+				String subject = "Overbid";
+				String text = "Dear "+receiver.getFirstName()+",</br></br>"+
+						"You have been overbidden by "+ bidder.getFirstName() + " "+ bidder.getLastName()+
+						"on "+
+						"<a class=\"link\" href= ../ad?id="+ ad.getId()+">"+ ad.getTitle() +"</a>.</br>";
+		
+				sendMessage(userDao.findByUsername("System"), receiver, subject, text);
+				sendEmail(receiver, subject, text);
+			}
+		}
+		
 	}
 
 }
