@@ -24,7 +24,8 @@ public class SignupService {
 	private UserDao userDao;
 	
 	@Autowired
-	private PremiumChoiceService premiumChoiceService;
+	private UpgradeService upgradeService;
+	
 
 	/** Handles persisting a new user to the database. */
 	@Transactional
@@ -49,7 +50,7 @@ public class SignupService {
 			user.setCreditcardName(signupForm.getCreditcardName());
 			
 			int duration = signupForm.getDuration();
-			PremiumChoice premiumChoice = premiumChoiceService.findPremiumChoiceByDuration(duration);
+			PremiumChoice premiumChoice = upgradeService.findPremiumChoiceByDuration(duration);
 			user.setPremiumChoice(premiumChoice);
 		}
 		else {

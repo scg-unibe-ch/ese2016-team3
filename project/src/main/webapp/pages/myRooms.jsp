@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -57,6 +58,7 @@
 										<fmt:formatNumber value="${ad.price}" var="formattedPrice"
 											pattern="###,###,### CHF" />
 										<strong>${formattedPrice}</strong>
+
 										<p>Move-in date: ${ad.moveInDate }</p>
 										<c:if test="${ad.auction}">
 											<p>
@@ -108,9 +110,8 @@
 										<p>
 											<i>${ad.type.name}</i>
 										</p>
-										<fmt:formatNumber value="${ad.price}" var="formattedPrice"
-											pattern="###,###,### CHF" />
-										<strong>${formattedPrice}</strong>
+										<strong><fmt:formatNumber value="${ad.price}"
+													var="formattedNumber" pattern="###,### CHF" />${formattedNumber}</strong>
 										<p>Move-in date: ${ad.moveInDate }</p>
 									</div>
 								</div>

@@ -13,6 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderRequest;
+import com.google.code.geocoder.model.GeocoderResult;
+import com.google.code.geocoder.model.LatLng;
+
+import ch.unibe.ese.team3.base.BaseService;
 import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.AdPicture;
@@ -23,7 +31,7 @@ import ch.unibe.ese.team3.model.dao.AdPictureDao;
 
 /** Provides services for editing ads in the database. */
 @Service
-public class EditAdService {
+public class EditAdService extends BaseService {
 
 	@Autowired
 	private AdService adService;
@@ -63,6 +71,17 @@ public class EditAdService {
 		ad.setZipcode(Integer.parseInt(zip));
 		ad.setCity(placeAdForm.getCity().substring(7));
 
+		String addressString = String.format("%s %s %s", placeAdForm.getStreet(), zip,
+				placeAdForm.getCity().substring(7));
+
+		LatLng coordinates = getCoordinates(addressString);
+		if (coordinates != null) {
+			ad.setLatitude(coordinates.getLat());
+			ad.setLongitude(coordinates.getLng());
+		}
+
+		
+		
 		Calendar calendar = Calendar.getInstance();
 		// java.util.Calendar uses a month range of 0-11 instead of the
 		// XMLGregorianCalendar which uses 1-12
@@ -206,6 +225,33 @@ public class EditAdService {
 		adForm.setType(ad.getType());
 
 		return adForm;
+	}
+	
+	private LatLng getCoordinates(String address) {
+		try {
+			final Geocoder geocoder = new Geocoder();
+			GeocoderRequest geocoderRequest =
+					new GeocoderRequestBuilder()
+					.setAddress(address)
+					.setLanguage("en")
+					.getGeocoderRequest();
+			
+			GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
+
+			List<GeocoderResult> results = geocoderResponse.getResults();
+			if (results != null && !results.isEmpty()) {
+				GeocoderResult result = results.get(0);
+				if (!result.isPartialMatch()) {
+					return result.getGeometry().getLocation();
+				}
+			}
+		} catch (Exception ex) {
+			logger.error(String.format("Failed to connect to GoogleService. Exception: %s", ex.getMessage()));
+		}
+
+		logger.warn(String.format("Failed to get coordinates from Service. Address: %s", address));
+		return null;
+	
 	}
 
 }

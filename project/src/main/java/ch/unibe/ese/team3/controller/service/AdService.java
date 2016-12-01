@@ -236,7 +236,7 @@ public class AdService extends BaseService {
 			}
 		}
 		
-		removeExpiredAuctions(ads);
+		ads = removeExpiredAuctions(ads);
 		
 		Collections.sort(ads, new Comparator<Ad>() {
 			@Override
@@ -253,7 +253,7 @@ public class AdService extends BaseService {
 		return fourNewest;
 	}
 
-	private void removeExpiredAuctions(List<Ad> ads) {
+	private List<Ad> removeExpiredAuctions(List<Ad> ads) {
 		Iterator<Ad> itr = ads.iterator();
 		while (itr.hasNext()) {
 			Ad ad = itr.next();
@@ -264,7 +264,8 @@ public class AdService extends BaseService {
 					itr.remove();
 				
 			}
-		}		
+		}	
+		return ads;
 	}
 
 
@@ -419,32 +420,24 @@ public class AdService extends BaseService {
 			Integer minRenovationYear = convertToNullableInt(searchForm.getRenovationYearMin());
 			Integer maxRenovationYear = convertToNullableInt(searchForm.getRenovationYearMax());
 			
-			Integer adBath = convertToNullableInt(ad.getNumberOfBath());
-			Integer adFloorLevel = convertToNullableInt(ad.getFloorLevel());
-			Integer adBuildYear = convertToNullableInt(ad.getBuildYear());
-			Integer adRenovationYear = convertToNullableInt(ad.getRenovationYear());
-			Integer adDistanceSchool = convertToNullableInt(ad.getDistanceSchool());
-			Integer adDistanceShopping = convertToNullableInt(ad.getDistanceShopping());
-			Integer adDistancePublicTransport = convertToNullableInt(ad.getDistancePublicTransport());
-			
-			if (!inRange(minBath, maxBath, adBath)
+			if (!inRange(minBath, maxBath, ad.getNumberOfBath())
 					|| !inRange(minSquareFootage, maxSquareFootage, ad.getSquareFootage())
 					|| !inRange(minNumberOfRooms, maxNumberOfRooms, ad.getNumberOfRooms())
-					|| !inRange(minFloorLevel, maxFloorLevel, adFloorLevel)
+					|| !inRange(minFloorLevel, maxFloorLevel, ad.getFloorLevel())
 
-					|| !inRange(minBuildYear, maxBuildYear, adBuildYear)
-					|| !inRange(minRenovationYear, maxRenovationYear, adRenovationYear)
+					|| !inRange(minBuildYear, maxBuildYear, ad.getBuildYear())
+					|| !inRange(minRenovationYear, maxRenovationYear, ad.getRenovationYear())
 
-					|| !inRange(minDistanceSchool, maxDistanceSchool, adDistanceSchool)
-					|| !inRange(minDistanceShopping, maxDistanceShopping, adDistanceShopping)
+					|| !inRange(minDistanceSchool, maxDistanceSchool, ad.getDistanceSchool())
+					|| !inRange(minDistanceShopping, maxDistanceShopping, ad.getDistanceShopping())
 					|| !inRange(minDistancePublicTransport, maxDistancePublicTransport,
-							adDistancePublicTransport)) {
+							ad.getDistancePublicTransport())) {
 				iterator.remove();
 			}
 		}
 
 		//removes all expired auctions
-		removeExpiredAuctions(locatedResults);
+		locatedResults = removeExpiredAuctions(locatedResults);
 		
 		locatedResults.sort(new PremiumAdComparator());
 
@@ -493,11 +486,8 @@ public class AdService extends BaseService {
 		return ads;
 	}
 
-	private boolean inRange(Integer min, Integer max, Integer value) {
-		if (value == null) {
-			return true;
-		}
-		else return (min == null || value >= min) && (max == null || value <= max);
+	private boolean inRange(Integer min, Integer max, int value) {
+		return (min == null || value >= min) && (max == null || value <= max);
 	}
 
 	/** Returns all ads that were placed by the given user. */
@@ -529,6 +519,7 @@ public class AdService extends BaseService {
 		return false;
 	}
 
+	
 	private LatLng getCoordinates(String address) {
 		try {
 			final Geocoder geocoder = new Geocoder();
@@ -553,5 +544,6 @@ public class AdService extends BaseService {
 
 		logger.warn(String.format("Failed to get coordinates from Service. Address: %s", address));
 		return null;
+	
 	}
 }

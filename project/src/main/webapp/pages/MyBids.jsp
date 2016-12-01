@@ -9,12 +9,12 @@
 
 <ol class="breadcrumb">
 	<li><a href="/${pagemode}/">Homepage</a></li>
-	<li class="active">My bids</li>
+	<li class="active">My Bids</li>
 </ol>
 
 <div class="row bottom15">
 	<div class="col-md-12 col-xs-12">
-		<h3>My bids</h3>
+		<h3>My Bids</h3>
 		<p>
 			See the auctions in which you participated and your bids below. <span
 				class="text-success">Green rows</span> mean that your bid is the
@@ -25,7 +25,7 @@
 
 <c:choose>
 	<c:when test="${empty myauctions }">
-		<p>You didn't participate in any auctions yet.</p>
+		<p>You haven't participated in any auctions yet.</p>
 	</c:when>
 	<c:otherwise>
 		<c:forEach var="auction" items="${myauctions}">
@@ -57,7 +57,8 @@
 						<c:forEach var="bid" items="${auction.value}">
 							<tr
 								class="${ bid.amount == auction.key.currentAuctionPrice - auction.key.increaseBidPrice ? 'success text-success' : '' }">
-								<td>${bid.amount}</td>
+								<td><fmt:formatNumber value="${bid.amount}"
+										var="formattedNumber" type="currency" pattern="###,### CHF" />${formattedNumber}
 								<td><fmt:formatDate value="${bid.timeStamp}"
 										var="formattedDate" type="date" pattern="yyyy-MM-dd HH:mm:ss" />${formattedDate}</td>
 							</tr>

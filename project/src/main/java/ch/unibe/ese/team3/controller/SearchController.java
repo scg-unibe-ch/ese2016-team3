@@ -77,12 +77,18 @@ public class SearchController {
 				admeta.setId(Long.toString(ad.getId()));
 				admeta.setName(ad.getTitle());
 				admeta.setPrice(Integer.toString(ad.getPrice()));
-				admeta.setPicture(ad.getPictures().get(0).getFilePath());
+				if (!ad.getPictures().isEmpty()) {
+					admeta.setPicture(ad.getPictures().get(0).getFilePath());
+				}
 
-				admeta.setLat(ad.getLatitude());
-				admeta.setLng(ad.getLongitude());
-
-				adResults.add(admeta);
+				if(ad.getLatitude() != null && ad.getLongitude() != null){
+					admeta.setLat(ad.getLatitude());
+					admeta.setLng(ad.getLongitude());
+				}
+				
+					adResults.add(admeta);
+				
+				
 			}
 
 			objectMapper = new ObjectMapper();
@@ -91,7 +97,7 @@ public class SearchController {
 			try {
 				jsonResponse += objectMapper.writeValueAsString(adResults);
 			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			jsonResponse += "";

@@ -6,40 +6,6 @@
 
 <c:import url="template/header.jsp" />
 
-<script>
-function star(starnr, rating) {
-    if(starnr <= rating)
-        return "&#9733";
-    else
-        return "&#9734";
-}
-</script>
-
-<script>
-function stars(id, rating) {
-	document.getElementById(id).innerHTML = 
-	"<span onClick=\"rate(" + id + ", 1)\">" + star(1, rating) + "</span>" +
-	"<span onClick=\"rate(" + id + ", 2)\">" + star(2, rating) + "</span>" +
-	"<span onClick=\"rate(" + id + ", 3)\">" + star(3, rating) + "</span>" +
-	"<span onClick=\"rate(" + id + ", 4)\">" + star(4, rating) + "</span>" +
-	"<span onClick=\"rate(" + id + ", 5)\">" + star(5, rating) + "</span>";
-}
-</script>
-
-<script>
-function ratingFor(id) {
-	$.get("/profile/ratingFor?user=" + id, function(data){stars(id, data)});
-}
-</script>
-
-<script>
-function rate(id, rating) {
-	$.get("/profile/rateUser?rate=" + id + "&stars=" + rating, function(){
-		ratingFor(id);
-	});
-}
-</script>
-
 <ol class="breadcrumb">
 	<li><a href="/${pagemode}/">Homepage</a></li>
 	<li><a href="./schedule">Schedule</a></li>
@@ -62,19 +28,13 @@ function rate(id, rating) {
 				<th>Name</th>
 				<th>Username</th>
 				<th>Profile</th>
-				<th>Rating</th>
 			</tr>
 			</thead>
 		<c:forEach var="visitor" items="${visitors}">
 			<tr>
 				<td>${visitor.firstName} ${visitor.lastName }</td>
 				<td>${visitor.username}</td>
-				<td><a class="btn btn-default" href="../user?id=${visitor.id}">Visit</a></td>
-				<td>
-				<div class="rating" id="${visitor.id}">
-					<script>ratingFor(${visitor.id})</script>
-				</div>
-				</td>
+				<td><a class="btn btn-default" href="../user?id=${visitor.id}">Visit Profile</a></td>
 			</tr>
 		</c:forEach>
 		</table>

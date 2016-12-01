@@ -86,27 +86,4 @@ public class EnquiryController {
 		enquiryService.reopenEnquiry(id);
 	}
 
-	/**
-	 * Rates the user with the given id with the given rating. This rating is
-	 * associated to the user and persisted.
-	 */
-	@RequestMapping(value = "/profile/rateUser", method = RequestMethod.GET)
-	public @ResponseBody void rateUser(Principal principal,
-			@RequestParam("rate") long id, @RequestParam("stars") int rating) {
-		User user = userService.findUserByUsername(principal.getName());
-		enquiryService.rate(user, userService.findUserById(id), rating);
-	}
-
-	/**
-	 * Returns the rating for the given user that the currently logged in user
-	 * has given them.
-	 */
-	@RequestMapping(value = "/profile/ratingFor", method = RequestMethod.GET)
-	public @ResponseBody int ratingFor(Principal principal,
-			@RequestParam("user") long id) {
-		User principe = userService.findUserByUsername(principal.getName());
-		User ratee = userService.findUserById(id);
-		return enquiryService.getRatingByRaterAndRatee(principe, ratee)
-				.getRating();
-	}
 }

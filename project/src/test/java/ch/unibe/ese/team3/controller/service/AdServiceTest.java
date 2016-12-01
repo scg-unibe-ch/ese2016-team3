@@ -3,15 +3,18 @@ package ch.unibe.ese.team3.controller.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.assertFalse;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+
+import javax.validation.constraints.AssertFalse;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -189,6 +192,7 @@ public class AdServiceTest {
 		assertEquals(1, adList.size());
 		assertEquals("Cheap studio in Bern!", adList.get(0).getTitle());
 	}
+
 	
 	@Test
 	public void testFilterBalcony() {
@@ -338,7 +342,175 @@ public class AdServiceTest {
 	 * assertTrue(adService.checkIfAlreadyAdded("ese@unibe.ch", alreadyAdded));
 	 * }
 	 */
+	@Test
+	public void expiredAuctionNotVisible(){
+		
+		// Preparation
+				PlaceAdForm placeAdForm = new PlaceAdForm();
+				placeAdForm.setCity("3018 - Bern");
+				placeAdForm.setType(Type.LOFT);
+				placeAdForm.setRoomDescription("This is an Loft for Auction");
+				placeAdForm.setPrice(600);
+				placeAdForm.setSquareFootage(50);
+				placeAdForm.setTitle("AuctionLoft");
+				placeAdForm.setStreet("Hauptstrasse 13");
+				placeAdForm.setMoveInDate("27-02-2015");
 
+				// new criteria
+				// test newly added fields
+				placeAdForm.setDishwasher(true);
+				placeAdForm.setBalcony(false);
+				placeAdForm.setGarage(true);
+				placeAdForm.setParking(true);
+				placeAdForm.setElevator(false);
+
+				placeAdForm.setNumberOfBath(2);
+				placeAdForm.setType(Type.LOFT);
+				placeAdForm.setInfrastructureType(InfrastructureType.CABLE);
+
+				placeAdForm.setDistancePublicTransport(1000);
+				placeAdForm.setDistanceSchool(2000);
+				placeAdForm.setDistanceShopping(1500);
+
+				placeAdForm.setBuildYear(1960);
+				placeAdForm.setRenovationYear(1980);
+				
+				placeAdForm.setFloorLevel(5);
+				placeAdForm.setNumberOfRooms(5);
+				
+				// set auction specific fields (required for saveForm)
+				placeAdForm.setStartDate("03.10.2016");
+				//yesterday expired
+				Date yesterday;
+			    	Calendar cal = Calendar.getInstance();
+			    	cal.add(Calendar.DATE, -1);
+			    	yesterday = cal.getTime();
+				placeAdForm.setEndDate(yesterday.toString());
+			
+				ArrayList<String> filePaths = new ArrayList<>();
+				filePaths.add("/img/test/ad1_1.jpg");
+
+				User hans = createUser("hans@kanns.ch", "password", "Hans", "Kanns", Gender.MALE);
+				hans.setAboutMe("Hansi Hinterseer");
+				userDao.save(hans);
+
+				adService.saveFrom(placeAdForm, filePaths, hans, BuyMode.BUY);
+				
+				Ad ad = new Ad();
+				Iterable<Ad> ads = adService.getAllAds();
+				Iterator<Ad> iterator = ads.iterator();
+
+				while (iterator.hasNext()) {
+					ad = iterator.next();
+				}
+		
+				
+				SearchForm searchForm = new SearchForm();
+				searchForm.setCity("3018 - Bern");
+				searchForm.setPrice(601);
+				searchForm.setRadius(5);
+				Type[] types = { Type.LOFT };
+				searchForm.setTypes(types);
+				searchForm.setDishwasher(true);
+				searchForm.setBalcony(false);
+				searchForm.setGarage(true);
+				searchForm.setParking(true);
+				searchForm.setElevator(false);
+				
+				searchForm.setRenovationYearMin(1979);
+				searchForm.setRenovationYearMax(1981);
+				Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
+				ArrayList<Ad> adList = (ArrayList<Ad>) queryedAds;
+				
+				
+				assertNotEquals("AuctionLoft", adList.get(0).getTitle());
+				assertTrue(ad.hasAuctionExpired());
+			//	assertEquals(0, adList.size());
+				adDao.delete(ad);
+		
+	}
+	@Test
+	public void AuctionExpiredTodayVisible(){
+		// Preparation
+		PlaceAdForm placeAdForm = new PlaceAdForm();
+		placeAdForm.setCity("3018 - Bern");
+		placeAdForm.setType(Type.LOFT);
+		placeAdForm.setRoomDescription("This is an Loft for Auction");
+		placeAdForm.setPrice(6000);
+		placeAdForm.setSquareFootage(100);
+		placeAdForm.setTitle("AuctionLoftVisibel");
+		placeAdForm.setStreet("Hauptstrasse 13");
+		placeAdForm.setMoveInDate("27-02-2015");
+
+		// new criteria
+		// test newly added fields
+		placeAdForm.setDishwasher(true);
+		placeAdForm.setBalcony(true);
+		placeAdForm.setGarage(true);
+		placeAdForm.setParking(true);
+		placeAdForm.setElevator(true);
+
+		placeAdForm.setNumberOfBath(3);
+		placeAdForm.setType(Type.LOFT);
+		placeAdForm.setInfrastructureType(InfrastructureType.CABLE);
+
+		placeAdForm.setDistancePublicTransport(100);
+		placeAdForm.setDistanceSchool(100);
+		placeAdForm.setDistanceShopping(100);
+
+		placeAdForm.setBuildYear(1970);
+		placeAdForm.setRenovationYear(2000);
+		
+		placeAdForm.setFloorLevel(5);
+		placeAdForm.setNumberOfRooms(5);
+		
+		// set auction specific fields (required for saveForm)
+		placeAdForm.setStartDate("03.10.2016");
+		//today expire
+		placeAdForm.setEndDate(new Date().toString());
+	
+		ArrayList<String> filePaths = new ArrayList<>();
+		filePaths.add("/img/test/ad1_1.jpg");
+
+		User hans = createUser("hans@kanns.ch", "password", "Hans", "Kanns", Gender.MALE);
+		hans.setAboutMe("Hansi Hinterseer");
+		userDao.save(hans);
+
+		adService.saveFrom(placeAdForm, filePaths, hans, BuyMode.BUY);
+		
+		Ad ad = new Ad();
+		Iterable<Ad> ads = adService.getAllAds();
+		Iterator<Ad> iterator = ads.iterator();
+
+		while (iterator.hasNext()) {
+			ad = iterator.next();
+		}
+
+		
+		SearchForm searchForm = new SearchForm();
+		searchForm.setCity("3018 - Bern");
+		searchForm.setPrice(6000);
+		searchForm.setRadius(5);
+		Type[] types = { Type.LOFT };
+		searchForm.setTypes(types);
+		searchForm.setDishwasher(true);
+		searchForm.setBalcony(true);
+		searchForm.setGarage(true);
+		searchForm.setParking(true);
+		searchForm.setElevator(true);
+		
+		searchForm.setRenovationYearMin(1999);
+		searchForm.setRenovationYearMax(2001);
+		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
+		ArrayList<Ad> adList = (ArrayList<Ad>) queryedAds;
+		
+		
+		assertEquals("AuctionLoftVisibel", adList.get(0).getTitle());
+		assertFalse(ad.hasAuctionExpired());
+	//	assertNotEquals(0, adList.size());
+		adDao.delete(ad);
+		
+	}
 	private User createUser(String email, String password, String firstName, String lastName, Gender gender) {
 		User user = new User();
 		user.setUsername(email);
@@ -365,5 +537,6 @@ public class AdServiceTest {
 		}
 		return countMessages;
 	}
+	
 
 }

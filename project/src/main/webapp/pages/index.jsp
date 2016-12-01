@@ -76,7 +76,8 @@
 								<p>
 									<i>${ad.type.name}</i>
 								</p>
-								<strong>CHF ${ad.price }</strong>
+								<strong><fmt:formatNumber value="${ad.price}"
+										var="formattedNumber" pattern="###,### CHF" />${formattedNumber}</strong>
 								<fmt:formatDate value="${ad.moveInDate}"
 									var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 								<p>Move-in date: ${formattedMoveInDate }</p>
