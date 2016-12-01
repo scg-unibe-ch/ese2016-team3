@@ -7,15 +7,24 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.controller.service.AdService;
+import ch.unibe.ese.team3.model.Ad;
+import ch.unibe.ese.team3.model.AdPicture;
 import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
@@ -23,7 +32,13 @@ import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.AdDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.Filter;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -53,6 +68,12 @@ public class AdControllerTest {
 	@Autowired
 	private AdDao adDao;
 	
+	@Autowired
+	private WebApplicationContext context;
+	
+	@Autowired
+	private Filter springSecurityFilterChain;
+	
 	//@InjectMocks
 	//private ApplicationContext applicationContext;
 	
@@ -64,7 +85,11 @@ public class AdControllerTest {
 	public void setUp() throws Exception {
 		
 		MockitoAnnotations.initMocks(this);
-		this.mockMvc = MockMvcBuilders.standaloneSetup(adControllerMock).build();
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
+				.addFilters(springSecurityFilterChain)
+				.build();
+
+	
 		
 		//this.request = new MockHttpServletRequest();
 		//this.response = new MockHttpServletResponse();
@@ -105,6 +130,23 @@ public class AdControllerTest {
 		
 	}
 	
+	private void login() {
+		mockMvc = MockMvcBuilders.webAppContextSetup(context)
+				.defaultRequest(get("/").with(user("ese@unibe.ch").roles("USER")))
+						.addFilters(springSecurityFilterChain)
+						.build();
+	}
+	
+	@Test 
+	public void postAd() throws Exception {
+		this.login();
+		User ese = userDao.findByUsername("ese@unibe.ch");
+		Ad ad = this.generateAd(ese);
+		this.mockMvc.perform(
+				post("/ad?id=" + ad.getId()))
+				.andExpect(status().is3xxRedirection());
+	}
+	
 	
 	/*@Test
 	public void test() throws Exception {
@@ -115,6 +157,60 @@ public class AdControllerTest {
 		.andExpect(redirectedUrl())
 		
 	}*/
+	
+	private Ad generateAd(User user) throws ParseException {
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+		String roomDescription13 = "This is a beautiful Villa near the Sea";
+		Date startAuctionDate1 = formatter.parse("02.11.2016");
+		Date endAuctionDate1 = formatter.parse("20.01.2017");
+		Date moveInDate9 = formatter.parse("11.12.2016");
+		Date creationDate9 = formatter.parse("01.11.2016");
+
+
+		Ad adInterlaken = new Ad();
+		adInterlaken.setZipcode(3800);
+		adInterlaken.setType(Type.VILLA);
+		adInterlaken.setBuyMode(BuyMode.BUY);
+		adInterlaken.setMoveInDate(moveInDate9);
+		adInterlaken.setCreationDate(creationDate9);
+		adInterlaken.setSquareFootage(100);
+		adInterlaken.setRoomDescription(roomDescription13);
+		adInterlaken.setUser(user);
+		adInterlaken.setTitle("Vintage Villa");
+		adInterlaken.setStreet("Spühlibachweg 10");
+		adInterlaken.setCity("Interlaken");
+		adInterlaken.setLatitude(46.68638);
+		adInterlaken.setLongitude(7.8729456);
+		adInterlaken.setNumberOfBath(5);
+
+		adInterlaken.setBalcony(true);
+		adInterlaken.setGarage(true);
+		adInterlaken.setDishwasher(true);
+		adInterlaken.setElevator(false);
+		adInterlaken.setGarage(true);
+		adInterlaken.setBuildYear(1999);
+		adInterlaken.setRenovationYear(2015);
+		adInterlaken.setDistancePublicTransport(1000);
+		adInterlaken.setDistanceSchool(2000);
+		adInterlaken.setDistanceShopping(800);
+		adInterlaken.setFloorLevel(1);
+		adInterlaken.setNumberOfRooms(10);
+		adInterlaken.setInfrastructureType(InfrastructureType.CABLE);
+
+		adInterlaken.setAuctionPrice(500000);
+		adInterlaken.setAuction(true);
+		adInterlaken.setStartPrice(150000);
+		adInterlaken.setPrice(150000);
+		adInterlaken.setIncreaseBidPrice(100);
+		adInterlaken.setcurrentAuctionPrice(adInterlaken.getStartPrice() + adInterlaken.getIncreaseBidPrice());
+		adInterlaken.setStartDate(startAuctionDate1);
+		adInterlaken.setEndDate(endAuctionDate1);
+
+		adDao.save(adInterlaken);
+		
+		return adInterlaken;
+	}
 
 
 }
