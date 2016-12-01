@@ -186,3 +186,11 @@
 				<p>${errorMessage }</p>
 			</div>
 		</c:if>
+		<c:if test="${not empty warningMessage }">
+			<div class="alert alert-warning">
+				<p>${warningMessage }</p>
+			</div>
+		</c:if>
+		
+		
+		
