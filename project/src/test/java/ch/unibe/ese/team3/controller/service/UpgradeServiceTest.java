@@ -18,16 +18,16 @@ import ch.unibe.ese.team3.model.PremiumChoice;
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml"})
 @WebAppConfiguration
-public class PremiumChoiceServiceTest {
+public class UpgradeServiceTest {
 	
 	@Autowired
-	private PremiumChoiceService premiumChoiceService;
+	private UpgradeService upgradeService;
 	
 	
 	@Test
 	public void testFindByDuration(){
 		
-		PremiumChoice choice1 = premiumChoiceService.findPremiumChoiceByDuration(7);
+		PremiumChoice choice1 = upgradeService.findPremiumChoiceByDuration(7);
 		
 		assertEquals(7, choice1.getDuration());
 	}

@@ -32,9 +32,6 @@ public class TestDataSeeder implements InitializingBean {
 	@Autowired
 	private BookmarkTestDataSaver bookmarkTestDataSaver;
 	
-	@Autowired
-	private RatingTestDataSaver ratingTestDataSaver;
-	
 	@Autowired 
 	private PremiumChoiceTestDataSaver choiceTestDataSaver;
 	
@@ -52,7 +49,6 @@ public class TestDataSeeder implements InitializingBean {
 		visitEnquiryDataSaver.saveTestData();
 		alertDataSaver.saveTestData();
 		bookmarkTestDataSaver.saveTestData();
-		ratingTestDataSaver.saveTestData();
 		choiceTestDataSaver.saveTestData();
 	}
 
