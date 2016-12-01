@@ -21,6 +21,7 @@ import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
 import ch.unibe.ese.team3.model.dao.AdDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
+import ch.unibe.ese.team3.util.ListUtils;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -47,11 +48,7 @@ public class VisitServiceTest {
 		
 		Iterable<Visit> visits = visitService.getVisitsByAd(ad);
 		
-		int count = 0;
-		
-		for (Visit visit : visits){
-			count++;
-		}
+		int count = ListUtils.countIterable(visits);
 		
 		assertEquals(3, count);
 	}
@@ -75,11 +72,7 @@ public class VisitServiceTest {
 		
 		Iterable<Visit> visitsForUser = visitService.getVisitsForUser(user);
 		
-		int count = 0;
-		
-		for (Visit visit : visitsForUser){
-			count++;
-		}
+		int count = ListUtils.countIterable(visitsForUser);
 		
 		assertEquals(20, count);		
 	}
@@ -88,11 +81,7 @@ public class VisitServiceTest {
 	public void testGetVisitorsForVisit(){
 		Iterable<User> visitors = visitService.getVisitorsForVisit(1L);
 		
-		int count = 0;
-		
-		for (User user : visitors){
-			count++;
-		}
+		int count = ListUtils.countIterable(visitors);
 		
 		assertEquals(2, count);
 	}

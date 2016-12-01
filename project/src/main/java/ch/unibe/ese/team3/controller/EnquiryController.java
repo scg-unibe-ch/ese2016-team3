@@ -1,7 +1,6 @@
 package ch.unibe.ese.team3.controller;
 
 import java.security.Principal;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,6 @@ import ch.unibe.ese.team3.controller.service.VisitService;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
 import ch.unibe.ese.team3.model.VisitEnquiry;
-import ch.unibe.ese.team3.model.VisitEnquiryState;
 
 /**
  * Handles all requests concerning enquiries of type

@@ -33,6 +33,7 @@ import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.AdDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
+import ch.unibe.ese.team3.util.ListUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/config/springMVC.xml",
@@ -163,10 +164,10 @@ public class AdServiceTest {
 	@Test
 	public void getAllAds() {
 		Iterable<Ad> adsInDB = adDao.findByPriceLessThanAndBuyMode(2147483647, BuyMode.BUY);
-		int acctualAdNumber = countIterable(adsInDB);
+		int acctualAdNumber = ListUtils.countIterable(adsInDB);
 		
 		Iterable<Ad> ads = adService.getAllAds();
-		int countReturnedAds = countIterable(ads);
+		int countReturnedAds = ListUtils.countIterable(ads);
 		// assert number of returned ads equals number in DB
 		assertEquals(countReturnedAds, acctualAdNumber);
 	}
@@ -524,15 +525,6 @@ public class AdServiceTest {
 		role.setUser(user);
 		user.addUserRole(role);
 		return user;
-	}
-	
-	// method to count all iterables
-	<T> int countIterable(Iterable<T> iterable) {
-		int countMessages = 0;
-		for (T element : iterable ) {
-			countMessages++;
-		}
-		return countMessages;
 	}
 	
 

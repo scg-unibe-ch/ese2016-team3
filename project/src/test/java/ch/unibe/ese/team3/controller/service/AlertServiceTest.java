@@ -36,6 +36,7 @@ import ch.unibe.ese.team3.model.dao.AlertDao;
 import ch.unibe.ese.team3.model.dao.AlertResultDao;
 import ch.unibe.ese.team3.model.dao.MessageDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
+import ch.unibe.ese.team3.util.ListUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/config/springMVC.xml",
@@ -272,27 +273,21 @@ public class AlertServiceTest {
 		// inbox of alertMessageReceiver is empty
 		Iterable<Message> messagesBeforeAlert = messageDao.findByRecipient(alertMessageReceiver);
 
-		assertEquals(countIterable(messagesBeforeAlert), 0);
+		assertEquals(ListUtils.countIterable(messagesBeforeAlert), 0);
 		
 		Iterable<AlertResult> resultsBefore = alertResultDao.findAll();
 		
-		int sizeBefore = 0;
-		for(AlertResult result : resultsBefore) {
-		   sizeBefore++;
-		}
+		int sizeBefore = ListUtils.countIterable(resultsBefore);
 		// trigger alert
 		alertService.triggerAlerts(oltenResidence);
 		Iterable<AlertResult> results = alertResultDao.findAll();
 		
-		int size = 0;
-		for(AlertResult result : results) {
-		   size++;
-		}
+		int size = ListUtils.countIterable(results);
 		assertTrue(sizeBefore < size);
 		
 		// assert alertMessageReceiver receives a message when alert triggers
 		Iterable<Message> messagesAfterAlert = messageDao.findByRecipient(alertMessageReceiver);
-		assertEquals(1, countIterable(messagesAfterAlert));
+		assertEquals(1, ListUtils.countIterable(messagesAfterAlert));
 		
 		adDao.delete(oltenResidence);
 	}
@@ -351,12 +346,12 @@ public class AlertServiceTest {
 		
 		// trigger alerts and make sure the user gets no message
 		Iterable<Message> messagesBefore = messageDao.findByRecipient(userNoTrigger);
-		assertEquals(countIterable(messagesBefore), 0);
+		assertEquals(ListUtils.countIterable(messagesBefore), 0);
 		
 		alertService.triggerAlerts(ad);
 		
 		Iterable<Message> messagesAfter = messageDao.findByRecipient(userNoTrigger);
-		assertEquals(countIterable(messagesAfter), 0);
+		assertEquals(ListUtils.countIterable(messagesAfter), 0);
 		
 		adDao.delete(ad);
 	}
@@ -561,18 +556,18 @@ public class AlertServiceTest {
 				
 				adDao.save(ad);
 				
-				assertEquals(countIterable(messageDao.findByRecipient(userExtendedAlert1)), 0);
-				assertEquals(countIterable(messageDao.findByRecipient(userExtendedAlert2)), 0);
+				assertEquals(ListUtils.countIterable(messageDao.findByRecipient(userExtendedAlert1)), 0);
+				assertEquals(ListUtils.countIterable(messageDao.findByRecipient(userExtendedAlert2)), 0);
 				
 				// trigger alerts
 				alertService.triggerAlerts(ad);
 				
 				
 				Iterable<Message> messagesAfter = messageDao.findByRecipient(userExtendedAlert1);
-				assertEquals(countIterable(messagesAfter), 0);
+				assertEquals(ListUtils.countIterable(messagesAfter), 0);
 				
 				messagesAfter = messageDao.findByRecipient(userExtendedAlert2);
-				assertEquals(countIterable(messagesAfter), 0);
+				assertEquals(ListUtils.countIterable(messagesAfter), 0);
 				
 				adDao.delete(ad);		
 	}
@@ -590,15 +585,6 @@ public class AlertServiceTest {
 		//alertTypes.add(typeApartment);
 		
 		return alertTypes;
-	}
-
-	// method to count all iterables
-	<T> int countIterable(Iterable<T> iterable) {
-		int countMessages = 0;
-		for (T element : iterable ) {
-			countMessages++;
-		}
-		return countMessages;
 	}
 	
 	private Date convertStringToDate(String date) {

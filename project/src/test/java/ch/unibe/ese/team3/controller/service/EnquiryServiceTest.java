@@ -3,7 +3,6 @@ package ch.unibe.ese.team3.controller.service;
 import static org.junit.Assert.assertEquals;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +27,7 @@ import ch.unibe.ese.team3.model.dao.AdDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
 import ch.unibe.ese.team3.model.dao.VisitDao;
 import ch.unibe.ese.team3.model.dao.VisitEnquiryDao;
+import ch.unibe.ese.team3.util.ListUtils;
 
 /**
  * 
@@ -118,7 +118,7 @@ public class EnquiryServiceTest {
 		
 		enquiryService.createEnquiry(visit1, enquirySender);
 		
-		List<VisitEnquiry> enquiries = convertToList(visitEnquiryDao.findBySender(enquirySender));
+		List<VisitEnquiry> enquiries = ListUtils.convertToList(visitEnquiryDao.findBySender(enquirySender));
 		assertEquals(1, enquiries.size());		
 	}
 	
@@ -131,7 +131,7 @@ public class EnquiryServiceTest {
 		
 		enquiryService.createEnquiry(visit1, ueliMaurer);
 		
-		List<VisitEnquiry> enquiries = convertToList(visitEnquiryDao.findBySender(ueliMaurer));
+		List<VisitEnquiry> enquiries = ListUtils.convertToList(visitEnquiryDao.findBySender(ueliMaurer));
 		VisitEnquiry enquiry = enquiries.get(0);
 		
 		enquiryService.acceptEnquiry(enquiry.getId());
@@ -149,7 +149,7 @@ public class EnquiryServiceTest {
 		
 		enquiryService.createEnquiry(visit1, ueliMaurer);
 		
-		List<VisitEnquiry> enquiries = convertToList(visitEnquiryDao.findBySender(ueliMaurer));
+		List<VisitEnquiry> enquiries = ListUtils.convertToList(visitEnquiryDao.findBySender(ueliMaurer));
 		VisitEnquiry enquiry = enquiries.get(0);
 		
 		enquiryService.declineEnquiry(enquiry.getId());
@@ -167,7 +167,7 @@ public class EnquiryServiceTest {
 		
 		enquiryService.createEnquiry(visit1, ueliMaurer);
 		
-		List<VisitEnquiry> enquiries = convertToList(visitEnquiryDao.findBySender(ueliMaurer));
+		List<VisitEnquiry> enquiries = ListUtils.convertToList(visitEnquiryDao.findBySender(ueliMaurer));
 		VisitEnquiry enquiry = enquiries.get(0);
 		
 		enquiryService.declineEnquiry(enquiry.getId());
@@ -193,11 +193,5 @@ public class EnquiryServiceTest {
 		role.setUser(user);
 		user.addUserRole(role);
 		return user;
-	}
-	
-	public <T> List<T> convertToList(Iterable<T> iterable){
-		List<T> list = new ArrayList<T>();
-		iterable.forEach(x -> list.add(x));
-		return list;
 	}
 }
