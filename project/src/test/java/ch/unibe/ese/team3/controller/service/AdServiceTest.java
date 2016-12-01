@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -518,7 +517,6 @@ public class AdServiceTest {
 		user.setLastName(lastName);
 		user.setEnabled(true);
 		user.setGender(gender);
-		List<UserRole> userRoles = new ArrayList<>();
 		UserRole role = new UserRole();
 		role.setRole("ROLE_USER");
 		role.setUser(user);
