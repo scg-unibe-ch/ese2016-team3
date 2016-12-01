@@ -1,9 +1,9 @@
 package ch.unibe.ese.team3.controller.service;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.HashSet;
 import java.util.Set;
-import java.security.SecureRandom;
-import java.math.BigInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.controller.pojos.forms.GoogleSignupForm;
-import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.Gender;
+import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.UserDao;
 

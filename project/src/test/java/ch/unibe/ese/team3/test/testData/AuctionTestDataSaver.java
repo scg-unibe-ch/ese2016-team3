@@ -15,7 +15,10 @@ import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Bid;
 import ch.unibe.ese.team3.model.PurchaseRequest;
 import ch.unibe.ese.team3.model.User;
-import ch.unibe.ese.team3.model.dao.*;
+import ch.unibe.ese.team3.model.dao.AdDao;
+import ch.unibe.ese.team3.model.dao.BidDao;
+import ch.unibe.ese.team3.model.dao.PurchaseRequestDao;
+import ch.unibe.ese.team3.model.dao.UserDao;
 
 @Service
 public class AuctionTestDataSaver {

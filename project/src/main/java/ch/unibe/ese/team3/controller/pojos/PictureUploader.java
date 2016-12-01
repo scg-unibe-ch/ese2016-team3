@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -24,8 +23,6 @@ import ch.unibe.ese.team3.dto.PictureMeta;
  *
  */
 public class PictureUploader {
-
-	private static final int EXTENSION_LENGTH = 4;
 
 	private String absoluteFilePath;
 	private String relativePath;
@@ -80,9 +77,8 @@ public class PictureUploader {
 				try {
 					byte[] bytes = file.getBytes();
 					String originalFileName = file.getOriginalFilename();
-					String extension = originalFileName.substring(
-							originalFileName.length() - EXTENSION_LENGTH)
-							.toLowerCase(Locale.ROOT);
+					int pointIndex = originalFileName.lastIndexOf(".");
+					String extension = originalFileName.substring(pointIndex).toLowerCase();
 					// check filetypes
 					if (!(extension.equals(".jpg") || extension.equals(".png")
 							|| extension.equals(".jpeg") || extension

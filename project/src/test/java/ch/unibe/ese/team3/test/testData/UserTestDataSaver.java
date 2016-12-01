@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.User;
-import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.UserPicture;
 import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.UserDao;

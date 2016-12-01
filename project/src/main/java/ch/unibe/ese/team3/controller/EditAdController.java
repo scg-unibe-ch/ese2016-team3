@@ -21,6 +21,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ch.unibe.ese.team3.controller.pojos.PictureUploader;
 import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.controller.service.AdService;
@@ -35,9 +38,6 @@ import ch.unibe.ese.team3.model.InfrastructureType;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.enums.Distance;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * This controller handles all requests concerning editing ads.

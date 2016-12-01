@@ -3,7 +3,6 @@ package ch.unibe.ese.team3.controller.service;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.unibe.ese.team3.model.Ad;
-import ch.unibe.ese.team3.model.Rating;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
 import ch.unibe.ese.team3.model.VisitEnquiry;

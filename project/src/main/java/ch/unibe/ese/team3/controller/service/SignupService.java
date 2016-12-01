@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.controller.pojos.forms.SignupForm;
-import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.AccountType;
+import ch.unibe.ese.team3.model.PremiumChoice;
+import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.UserDao;
-import ch.unibe.ese.team3.model.PremiumChoice;
 
 /** Handles the persisting of new users */
 @Service
