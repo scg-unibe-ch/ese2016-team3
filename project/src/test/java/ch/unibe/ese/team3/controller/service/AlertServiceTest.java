@@ -19,6 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import ch.unibe.ese.team3.controller.pojos.forms.AlertForm;
 import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Alert;
@@ -65,6 +66,72 @@ public class AlertServiceTest {
 	@Autowired
 	AlertResultDao alertResultDao;
 
+	
+	@Test
+	public void safeFromTest() {
+		
+		AlertForm alertForm = new AlertForm();
+		
+		//alertForm.setZipCode(3000);
+		alertForm.setCity("3000 - Bern");
+		alertForm.setBuyMode(BuyMode.BUY);
+		alertForm.setPrice(5000);
+		alertForm.setExtendedAlert(false);
+		alertForm.setRadius(5);
+		alertForm.setTypes(new ArrayList<Type>());
+		
+		// Create user Adolf Ogi
+		User adolfOgi = createUser("rudolff@ogi.ch", "password", "Adolf", "Ogi", Gender.MALE, AccountType.BASIC);
+		adolfOgi.setAboutMe("Juhuu");
+		userDao.save(adolfOgi);
+		
+		alertService.saveFrom(alertForm, adolfOgi);
+		
+		assertEquals("3000 - Bern", alertForm.getCity());
+	//	assertEquals(adolfOgi, alertForm.getUser()); 		User wird nie gesetzt in alters, richtig so? oder BUG?
+		
+		
+	}
+	@Test
+	public void safeFromExtendedAlertsTest() {
+		
+		AlertForm alertForm = new AlertForm();
+		
+		//alertForm.setZipCode(3000);
+		alertForm.setCity("3000 - Bern");
+		alertForm.setBuyMode(BuyMode.BUY);
+		alertForm.setPrice(5000);
+		alertForm.setExtendedAlert(true);
+		alertForm.setRadius(5);
+		
+		// create list of Types
+		List<Type>	types = new ArrayList<Type>();
+		types.add(Type.APARTMENT);
+		types.add(Type.HOUSE);
+		
+		alertForm.setTypes(types);
+		
+		// Create user Adolf Ogi
+		User adolfOgi = createUser("hansJunior@ogi.ch", "password", "Adolf", "Ogi", Gender.MALE, AccountType.BASIC);
+		adolfOgi.setAboutMe("Hallo:)");
+		userDao.save(adolfOgi);
+		
+		//extended Alter criteria
+		alertForm.setEarliestMoveInDate("11-10-2016");
+		alertForm.setBalcony(true);
+		alertForm.setNumberOfRoomsMin(4);
+		
+		
+		
+		
+		alertService.saveFrom(alertForm, adolfOgi);
+		
+		assertEquals("3000 - Bern", alertForm.getCity());
+		assertTrue(alertForm.isBalcony());
+	//	assertEquals(adolfOgi, alertForm.getUser()); 		User wird nie gesetzt in alters, richtig so? oder BUG?
+		
+		
+	}
 	@Test
 	public void createAlerts() {
 		// create list of AlertTypes
