@@ -13,7 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.controller.service.AuctionService;
-import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.exceptions.ForbiddenException;
 import ch.unibe.ese.team3.exceptions.ResourceNotFoundException;
