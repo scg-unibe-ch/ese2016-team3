@@ -199,9 +199,12 @@ public class Alert {
 	public List<AlertType> getAlertTypes() {
 		return alertTypes;
 	}
-
-	public void setAlertTypes(List<AlertType> alertTypes) {
-		this.alertTypes = alertTypes;
+	
+	public void addAlertType(AlertType type){
+		if (!alertTypes.contains(type)){
+			this.alertTypes.add(type);
+			type.setAlert(this);
+		}
 	}
 
 	public Date getEarliestMoveInDate() {

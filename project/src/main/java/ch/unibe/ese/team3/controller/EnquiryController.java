@@ -56,13 +56,7 @@ public class EnquiryController {
 		Visit visit = visitService.getVisitById(id);
 		User user = userService.findUserByUsername(principal.getName());
 
-		VisitEnquiry visitEnquiry = new VisitEnquiry();
-		visitEnquiry.setDateSent(new Date());
-		visitEnquiry.setSender(user);
-		visitEnquiry.setState(VisitEnquiryState.OPEN);
-		visitEnquiry.setVisit(visit);
-
-		enquiryService.saveVisitEnquiry(visitEnquiry);
+		enquiryService.createEnquiry(visit, user);
 	}
 
 	/** Sets the state of the enquiry with the given id to accepted. */

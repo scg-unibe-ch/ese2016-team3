@@ -2,6 +2,7 @@ package ch.unibe.ese.team3.controller.service;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -67,12 +68,6 @@ public class EnquiryService {
 		return sentEnquiriesByVisit;
 	}
 
-	/** Saves the given visit enquiry. */
-	@Transactional
-	public void saveVisitEnquiry(VisitEnquiry visitEnquiry) {
-		enquiryDao.save(visitEnquiry);
-	}
-
 	/** Accepts the enquiry with the given id. */
 	@Transactional
 	public void acceptEnquiry(long enquiryId) {
@@ -108,6 +103,17 @@ public class EnquiryService {
 		Visit visit = enquiry.getVisit();
 		visit.removeVisitor(enquiry.getSender());
 		visitDao.save(visit);
+	}
+
+	@Transactional
+	public void createEnquiry(Visit visit, User user) {
+		VisitEnquiry visitEnquiry = new VisitEnquiry();
+		visitEnquiry.setDateSent(new Date());
+		visitEnquiry.setSender(user);
+		visitEnquiry.setState(VisitEnquiryState.OPEN);
+		visit.addEnquiry(visitEnquiry);
+
+		enquiryDao.save(visitEnquiry);
 	}
 
 }

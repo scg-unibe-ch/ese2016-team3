@@ -321,6 +321,18 @@ public class User {
 	public List<AlertResult> getAlertResults() {
 		return alertResults;
 	}
+	
+	public void addAlertResult(AlertResult result){
+		if (!alertResults.contains(result)){
+			alertResults.add(result);
+			result.setUser(this);
+		}
+	}
+	
+	public void removeAlertResult(AlertResult result){
+		alertResults.remove(result);
+		result.setUser(null);
+	}
 
 	public List<Message> getSentMessages() {
 		return sentMessages;
@@ -382,7 +394,9 @@ public class User {
 	}
 
 	public void addVisit(Visit visit) {
-		this.visits.add(visit);
+		if (!visits.contains(visit)){
+			this.visits.add(visit);
+		}
 	}
 
 	public void removeVisit(Visit visit) {

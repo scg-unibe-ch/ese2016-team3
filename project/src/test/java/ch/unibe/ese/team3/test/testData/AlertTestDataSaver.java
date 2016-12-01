@@ -71,7 +71,9 @@ public class AlertTestDataSaver {
 		// 2 Alerts for the ese test-user
 		Alert alert = new Alert();
 		alert.setUser(ese);
-		alert.setAlertTypes(alertTypes);
+		for (AlertType type : alertTypes){
+			alert.addAlertType(type);
+		}
 		alert.setBuyMode(BuyMode.BUY);
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
@@ -83,7 +85,9 @@ public class AlertTestDataSaver {
 		
 		Alert alert2 = new Alert();
 		alert2.setUser(ese);
-		alert2.setAlertTypes(alertTypes2);
+		for (AlertType type : alertTypes2){
+			alert2.addAlertType(type);
+		}
 		alert2.setBuyMode(BuyMode.BUY);
 		alert2.setCity("Zürich");
 		alert2.setZipcode(8000);

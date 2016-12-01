@@ -13,6 +13,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
+import javax.transaction.Transactional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,7 @@ import ch.unibe.ese.team3.model.dao.UserDao;
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml" })
 @WebAppConfiguration
+@Transactional
 public class AdServiceTest {
 
 	@Autowired
@@ -146,10 +149,9 @@ public class AdServiceTest {
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date result = df.parse("2015-02-27");
-
-		assertEquals(0, result.compareTo(ad.getMoveInDate()));
 		
-		adDao.delete(ad);
+		//Hack to avoid datetime issues when comparing
+		assertEquals(result.toString(), ad.getMoveInDate().toString());
 	}
 
 	@Test

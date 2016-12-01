@@ -93,7 +93,7 @@ public class AdService extends BaseService {
 				int dayMoveIn = Integer.parseInt(placeAdForm.getMoveInDate().substring(0, 2));
 				int monthMoveIn = Integer.parseInt(placeAdForm.getMoveInDate().substring(3, 5));
 				int yearMoveIn = Integer.parseInt(placeAdForm.getMoveInDate().substring(6, 10));
-				calendar.set(yearMoveIn, monthMoveIn - 1, dayMoveIn);
+				calendar.set(yearMoveIn, monthMoveIn - 1, dayMoveIn, 0, 0, 0);
 				ad.setMoveInDate(calendar.getTime());
 			}
 

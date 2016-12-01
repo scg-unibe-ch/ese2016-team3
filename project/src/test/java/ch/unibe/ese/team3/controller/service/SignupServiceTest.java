@@ -2,6 +2,8 @@ package ch.unibe.ese.team3.controller.service;
 
 import static org.junit.Assert.assertEquals;
 
+import javax.transaction.Transactional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import ch.unibe.ese.team3.model.dao.UserDao;
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml"})
 @WebAppConfiguration
+@Transactional
 public class SignupServiceTest {
 	
 	@Autowired

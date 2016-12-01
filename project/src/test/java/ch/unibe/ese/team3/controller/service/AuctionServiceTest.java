@@ -175,7 +175,7 @@ public class AuctionServiceTest {
 	
 	@Test
 	public void bidOnExpiredAuction(){
-		auctionAd.setEndDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		auctionAd.setEndDate(Date.from(LocalDate.now().minusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		adDao.save(auctionAd);
 		
 		int amount = 901000;
@@ -270,7 +270,7 @@ public class AuctionServiceTest {
 	
 	@Test
 	public void bidOnResumedButExpiredAuction(){
-		auctionAd.setEndDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		auctionAd.setEndDate(Date.from(LocalDate.now().minusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		adDao.save(auctionAd);
 		
 		auctionService.stopAuction(auctionAd);

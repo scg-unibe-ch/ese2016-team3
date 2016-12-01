@@ -102,9 +102,17 @@ public class Visit {
 	public List<VisitEnquiry> getEnquiries() {
 		return enquiries;
 	}
-
-	public void setEnquiries(List<VisitEnquiry> enquiries) {
-		this.enquiries = enquiries;
+	
+	public void addEnquiry(VisitEnquiry enquiry){
+		if (!enquiries.contains(enquiry)){
+			enquiries.add(enquiry);
+			enquiry.setVisit(this);
+		}
+	}
+	
+	public void removeEnquiry(VisitEnquiry enquiry){
+		this.enquiries.remove(enquiry);
+		enquiry.setVisit(null);
 	}
 	
 	public Visit(){

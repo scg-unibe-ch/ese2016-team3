@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,7 @@ import ch.unibe.ese.team3.model.dao.UserDao;
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml" })
 @WebAppConfiguration
+@Transactional
 public class AlertServiceTest {
 
 	@Autowired
@@ -99,7 +102,7 @@ public class AlertServiceTest {
 		alert.setZipcode(3000);
 		alert.setPrice(1500);
 		alert.setRadius(100);
-		alert.setAlertTypes(alertTypes);
+		addAlertTypesToAlert(alert, alertTypes);
 		
 		alertDao.save(alert);
 
@@ -110,7 +113,7 @@ public class AlertServiceTest {
 		alert.setZipcode(3002);
 		alert.setPrice(1000);
 		alert.setRadius(5);
-		alert.setAlertTypes(alertTypes2);
+		addAlertTypesToAlert(alert, alertTypes2);
 		alertDao.save(alert);
 
 		// copy alerts to a list
@@ -123,6 +126,12 @@ public class AlertServiceTest {
 		assertEquals(adolfOgi, alertList.get(0).getUser());
 		assertEquals("Bern", alertList.get(1).getCity());
 		assertTrue(alertList.get(0).getRadius() > alertList.get(1).getRadius());
+	}
+
+	private void addAlertTypesToAlert(Alert alert, List<AlertType> alertTypes) {
+		for (AlertType alertType : alertTypes){
+			alert.addAlertType(alertType);
+		}
 	}
 
 	@Test
@@ -157,7 +166,7 @@ public class AlertServiceTest {
 		Alert alert = new Alert();
 		alert.setUser(thomyF);
 		alert.setBuyMode(BuyMode.BUY);
-		alert.setAlertTypes(alertTypes);
+		addAlertTypesToAlert(alert, alertTypes);
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
 		alert.setPrice(1500);
@@ -167,7 +176,7 @@ public class AlertServiceTest {
 		alert = new Alert();
 		alert.setUser(thomyF);
 		alert.setBuyMode(BuyMode.BUY);
-		alert.setAlertTypes(alertTypes2);
+		addAlertTypesToAlert(alert, alertTypes);
 		alert.setCity("Bern");
 		alert.setZipcode(3002);
 		alert.setPrice(1000);
@@ -229,7 +238,7 @@ public class AlertServiceTest {
 		// create Alert for alertMessageReceiver
 		Alert alert = new Alert();
 		alert.setUser(alertMessageReceiver);
-		alert.setAlertTypes(alertTypes);
+		addAlertTypesToAlert(alert, alertTypes);
 		alert.setBuyMode(BuyMode.BUY);
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
@@ -304,7 +313,7 @@ public class AlertServiceTest {
 		Alert alert = new Alert();
 		alert.setUser(userNoTrigger);
 		alert.setBuyMode(BuyMode.BUY);
-		alert.setAlertTypes(alertTypes);
+		addAlertTypesToAlert(alert, alertTypes);
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
 		alert.setPrice(1500);
@@ -390,7 +399,7 @@ public class AlertServiceTest {
 				Alert alert = new Alert();
 				alert.setUser(userExtendedAlert1);
 				alert.setBuyMode(BuyMode.BUY);
-				alert.setAlertTypes(alertTypes);
+				addAlertTypesToAlert(alert, alertTypes);
 				alert.setCity("Bern");
 				alert.setZipcode(3000);
 				alert.setPrice(1500);
@@ -401,7 +410,7 @@ public class AlertServiceTest {
 				List<AlertType>alertTypes2 = createAlertTypes();
 				alert2.setUser(userExtendedAlert2);
 				alert2.setBuyMode(BuyMode.BUY);
-				alert2.setAlertTypes(alertTypes2);
+				addAlertTypesToAlert(alert2, alertTypes2);
 				alert2.setCity("Bern");
 				alert2.setZipcode(3000);
 				alert2.setPrice(1500);
@@ -412,7 +421,7 @@ public class AlertServiceTest {
 				List<AlertType>alertTypes3 = createAlertTypes();
 				alert3.setUser(userExtendedAlert2);
 				alert3.setBuyMode(BuyMode.BUY);
-				alert3.setAlertTypes(alertTypes3);
+				addAlertTypesToAlert(alert3, alertTypes3);
 				alert3.setCity("Bern");
 				alert3.setZipcode(3000);
 				alert3.setPrice(1500);
@@ -423,7 +432,7 @@ public class AlertServiceTest {
 				List<AlertType>alertTypes4 = createAlertTypes();
 				alert4.setUser(userExtendedAlert2);
 				alert4.setBuyMode(BuyMode.BUY);
-				alert4.setAlertTypes(alertTypes4);
+				addAlertTypesToAlert(alert4, alertTypes4);
 				alert4.setCity("Bern");
 				alert4.setZipcode(3000);
 				alert4.setPrice(1500);
@@ -434,7 +443,7 @@ public class AlertServiceTest {
 				List<AlertType>alertTypes5 = createAlertTypes();
 				alert5.setUser(userExtendedAlert2);
 				alert5.setBuyMode(BuyMode.BUY);
-				alert5.setAlertTypes(alertTypes5);
+				addAlertTypesToAlert(alert5, alertTypes5);
 				alert5.setCity("Bern");
 				alert5.setZipcode(3000);
 				alert5.setPrice(1500);
@@ -446,7 +455,7 @@ public class AlertServiceTest {
 				List<AlertType>alertTypes6 = createAlertTypes();
 				alert6.setUser(userExtendedAlert2);
 				alert6.setBuyMode(BuyMode.BUY);
-				alert6.setAlertTypes(alertTypes6);
+				addAlertTypesToAlert(alert6, alertTypes6);
 				alert6.setCity("Bern");
 				alert6.setZipcode(3000);
 				alert6.setPrice(1500);
@@ -459,7 +468,7 @@ public class AlertServiceTest {
 				List<AlertType>alertTypes7 = createAlertTypes();
 				alert7.setUser(userExtendedAlert2);
 				alert7.setBuyMode(BuyMode.BUY);
-				alert7.setAlertTypes(alertTypes7);
+				addAlertTypesToAlert(alert7, alertTypes7);
 				alert7.setCity("Bern");
 				alert7.setZipcode(3000);
 				alert7.setPrice(1500);
@@ -472,7 +481,7 @@ public class AlertServiceTest {
 				List<AlertType>alertTypes8 = createAlertTypes();
 				alert8.setUser(userExtendedAlert2);
 				alert8.setBuyMode(BuyMode.BUY);
-				alert8.setAlertTypes(alertTypes8);
+				addAlertTypesToAlert(alert8, alertTypes8);
 				alert8.setCity("Bern");
 				alert8.setZipcode(3000);
 				alert8.setPrice(1500);
@@ -485,7 +494,7 @@ public class AlertServiceTest {
 				List<AlertType>alertTypes9 = createAlertTypes();
 				alert9.setUser(userExtendedAlert2);
 				alert9.setBuyMode(BuyMode.BUY);
-				alert9.setAlertTypes(alertTypes9);
+				addAlertTypesToAlert(alert9, alertTypes9);
 				alert9.setCity("Bern");
 				alert9.setZipcode(3000);
 				alert9.setPrice(1500);
@@ -496,7 +505,7 @@ public class AlertServiceTest {
 				List<AlertType>alertTypes10 = createAlertTypes();
 				alert10.setUser(userExtendedAlert2);
 				alert10.setBuyMode(BuyMode.BUY);
-				alert10.setAlertTypes(alertTypes10);
+				addAlertTypesToAlert(alert10, alertTypes10);
 				alert10.setCity("Bern");
 				alert10.setZipcode(3000);
 				alert10.setPrice(1500);

@@ -67,11 +67,10 @@ public class AuctionService extends BaseService {
 
 	private void bid(Ad ad, User user, int amount) {
 		Bid bid = new Bid();
-		bid.setAd(ad);
 		bid.setAmount(amount);
 		bid.setBidder(user);
 		bid.setTimeStamp(new Date());
-		ad.getBids().add(bid);
+		ad.addBid(bid);
 		bidDao.save(bid);
 		incrementBidPrice(ad);
 		incrementPrice(ad);
@@ -79,10 +78,9 @@ public class AuctionService extends BaseService {
 
 	private void buy(Ad ad, User purchaser) {
 		PurchaseRequest request = new PurchaseRequest();
-		request.setAd(ad);
 		request.setPurchaser(purchaser);
 		request.setCreated(new Date());
-		ad.getPurchaseRequests().add(request);
+		ad.addPurchaseRequest(request);
 		purchaseRequestDao.save(request);
 	}
 

@@ -137,8 +137,10 @@ public class Ad {
 	}
 
 	public void addBid(Bid bid){
-		bids.add(bid);
-		bid.setAd(this);
+		if (!bids.contains(bid)){
+			bids.add(bid);
+			bid.setAd(this);
+		}
 	}
 	
 	public void removeBid(Bid bid){
@@ -153,9 +155,17 @@ public class Ad {
 	public List<PurchaseRequest> getPurchaseRequests() {
 		return purchaseRequests;
 	}
-
-	public void setPurchaseRequests(List<PurchaseRequest> purchaseRequests) {
-		this.purchaseRequests = purchaseRequests;
+	
+	public void addPurchaseRequest(PurchaseRequest request){
+		if (!this.purchaseRequests.contains(request)){
+			this.purchaseRequests.add(request);
+			request.setAd(this);
+		}
+	}
+	
+	public void removePurchaseRequest(PurchaseRequest request){
+		this.purchaseRequests.remove(request);
+		request.setAd(null);
 	}
 
 	@ManyToOne(optional = false)
@@ -476,11 +486,10 @@ public class Ad {
 	}
 	
 	public void addPicture(AdPicture picture){
-		if (this.pictures.contains(picture)){
-			return;
+		if (!this.pictures.contains(picture)){
+			this.pictures.add(picture);
+			picture.setAd(this);
 		}
-		this.pictures.add(picture);
-		picture.setAd(this);
 	}
 	
 	public void removePicture(AdPicture picture){
@@ -525,8 +534,10 @@ public class Ad {
 	}
 	
 	public void addVisit(Visit visit){
-		this.visits.add(visit);
-		visit.setAd(this);
+		if (!visits.contains(visit)){
+			this.visits.add(visit);
+			visit.setAd(this);
+		}
 	}
 	
 	public void removeVisit(Visit visit){
