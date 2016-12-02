@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.jolbox.bonecp.BoneCPDataSource;
 
+import ch.unibe.ese.team3.base.BaseService;
 import ch.unibe.ese.team3.dto.Location;
 
 /**
@@ -19,7 +20,7 @@ import ch.unibe.ese.team3.dto.Location;
  * no ORM is involved.
  */
 @Service
-public class GeoDataService {
+public class GeoDataService extends BaseService {
 
 	@Autowired
 	private BoneCPDataSource mainDataSource;
@@ -35,7 +36,7 @@ public class GeoDataService {
 					"SELECT zip.zip , zip.location, zip.lat, zip.lon, zip.department FROM `zipcodes` zip");
 			return executeQuery(statement);
 		} catch (SQLException ex) {
-
+			logger.error(String.format("Failed to get all locations from DB. Message: %s", ex.getMessage()));
 		} finally {
 			if (statement != null) {
 				try {
@@ -64,7 +65,7 @@ public class GeoDataService {
 			statement.setString(1, city);
 			return executeQuery(statement);
 		} catch (SQLException ex) {
-			ex.printStackTrace();
+			logger.error(String.format("Failed to get locations by city '%s' from DB. Message: %s", city, ex.getMessage()));
 		} finally {
 			if (statement != null) {
 				try {
@@ -93,7 +94,7 @@ public class GeoDataService {
 			statement.setInt(1, zipcode);
 			return executeQuery(statement);
 		} catch (SQLException ex) {
-
+			logger.error(String.format("Failed to get locations by zipcode %d from DB. Message: %s", ex.getMessage()));
 		} finally {
 			if (statement != null) {
 				try {
