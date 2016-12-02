@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +51,10 @@ public class AlertServiceTest {
 
 	@Autowired
 	UserDao userDao;
-	
+
 	@Autowired
 	MessageDao messageDao;
-	
+
 	@Autowired
 	MessageService messageService;
 
@@ -61,7 +63,7 @@ public class AlertServiceTest {
 
 	@Autowired
 	AlertService alertService;
-	
+
 	@Autowired
 	AlertResultDao alertResultDao;
 
@@ -78,8 +80,9 @@ public class AlertServiceTest {
 		alertTypes.add(typeApartment);
 
 		ArrayList<Alert> alertList = new ArrayList<Alert>();
-		
-		// create 2nd list of AlertTypes (necessary, as an alert cannot reference the same alert type)
+
+		// create 2nd list of AlertTypes (necessary, as an alert cannot
+		// reference the same alert type)
 		AlertType typeApartment2 = new AlertType();
 		typeApartment2.setType(Type.APARTMENT);
 		AlertType typeLoft2 = new AlertType();
@@ -87,7 +90,7 @@ public class AlertServiceTest {
 
 		List<AlertType> alertTypes2 = new ArrayList<>();
 		alertTypes2.add(typeLoft2);
-		
+
 		// Create user Adolf Ogi
 		User adolfOgi = createUser("adolf@ogi.ch", "password", "Adolf", "Ogi", Gender.MALE, AccountType.BASIC);
 		adolfOgi.setAboutMe("Wallis rocks");
@@ -102,7 +105,7 @@ public class AlertServiceTest {
 		alert.setPrice(1500);
 		alert.setRadius(100);
 		alert.setAlertTypes(alertTypes);
-		
+
 		alertDao.save(alert);
 
 		alert = new Alert();
@@ -145,7 +148,8 @@ public class AlertServiceTest {
 		alertTypes.add(typeLoft);
 		alertTypes.add(typeApartment);
 
-		// create 2nd list of AlertTypes (necessary, as an alert cannot reference the same alert type)
+		// create 2nd list of AlertTypes (necessary, as an alert cannot
+		// reference the same alert type)
 		AlertType typeApartment2 = new AlertType();
 		typeApartment2.setType(Type.APARTMENT);
 		AlertType typeLoft2 = new AlertType();
@@ -153,8 +157,8 @@ public class AlertServiceTest {
 
 		List<AlertType> alertTypes2 = new ArrayList<>();
 		alertTypes2.add(typeLoft2);
-		
-		//-------------------------------
+
+		// -------------------------------
 		// Create 2 alerts for Thomy F
 		Alert alert = new Alert();
 		alert.setUser(thomyF);
@@ -197,37 +201,43 @@ public class AlertServiceTest {
 		oltenResidence.setCity("Olten");
 		oltenResidence.setBalcony(false);
 		oltenResidence.setGarage(false);
-		
 
 		adDao.save(oltenResidence);
-		
+
 		assertFalse("Olten no radius mismatch first alert",
-		alertService.radiusMismatch(oltenResidence, alertList.get(0)));
-		assertTrue("Olten radius mismatch second alert",
-		alertService.radiusMismatch(oltenResidence, alertList.get(1)));
-		assertFalse("Olten no type mismatch fist alert",
-		alertService.typeMismatch(oltenResidence, alertList.get(0))); 
-		assertTrue("Olten type mismatch second alert",
-		alertService.typeMismatch(oltenResidence, alertList.get(1))); // is true as 2nd alert does not contain alert type "appartment"
-		
+				alertService.radiusMismatch(oltenResidence, alertList.get(0)));
+		assertTrue("Olten radius mismatch second alert", alertService.radiusMismatch(oltenResidence, alertList.get(1)));
+		assertFalse("Olten no type mismatch fist alert", alertService.typeMismatch(oltenResidence, alertList.get(0)));
+		assertTrue("Olten type mismatch second alert", alertService.typeMismatch(oltenResidence, alertList.get(1))); // is
+																														// true
+																														// as
+																														// 2nd
+																														// alert
+																														// does
+																														// not
+																														// contain
+																														// alert
+																														// type
+																														// "appartment"
+
 		adDao.delete(oltenResidence);
 	}
-	
+
 	@Test
 	public void triggerAlertMessageToUser() {
-		User alertMessageReceiver = createUser("alertMessageTest@f.ch", "password", "alertMessageReceiver", "F", Gender.MALE, AccountType.PREMIUM);
+		User alertMessageReceiver = createUser("alertMessageTest@f.ch", "password", "alertMessageReceiver", "F",
+				Gender.MALE, AccountType.PREMIUM);
 		userDao.save(alertMessageReceiver);
-		
+
 		User adCreator = createUser("adCreator@f.ch", "password", "adCreator", "F", Gender.MALE, AccountType.BASIC);
 		userDao.save(adCreator);
-		
+
 		// create list of AlertTypes
 		AlertType typeLoft = new AlertType();
 		typeLoft.setType(Type.LOFT);
 		List<AlertType> alertTypes = new ArrayList<>();
 		alertTypes.add(typeLoft);
 
-		
 		// create Alert for alertMessageReceiver
 		Alert alert = new Alert();
 		alert.setUser(alertMessageReceiver);
@@ -237,8 +247,9 @@ public class AlertServiceTest {
 		alert.setZipcode(3000);
 		alert.setPrice(1500);
 		alert.setRadius(100);
+
 		alertDao.save(alert);
-		
+
 		// save ad, which triggers alert of alertMessageReceiver
 		// save an ad
 		Date date = new Date();
@@ -259,37 +270,37 @@ public class AlertServiceTest {
 		oltenResidence.setCity("Olten");
 		oltenResidence.setBalcony(false);
 		oltenResidence.setGarage(false);
-		
+
 		adDao.save(oltenResidence);
-		
+
 		// inbox of alertMessageReceiver is empty
 		Iterable<Message> messagesBeforeAlert = messageDao.findByRecipient(alertMessageReceiver);
 
 		assertEquals(countIterable(messagesBeforeAlert), 0);
-		
+
 		Iterable<AlertResult> resultsBefore = alertResultDao.findAll();
-		
+
 		int sizeBefore = 0;
-		for(AlertResult result : resultsBefore) {
-		   sizeBefore++;
+		for (AlertResult result : resultsBefore) {
+			sizeBefore++;
 		}
 		// trigger alert
 		alertService.triggerAlerts(oltenResidence);
 		Iterable<AlertResult> results = alertResultDao.findAll();
-		
+
 		int size = 0;
-		for(AlertResult result : results) {
-		   size++;
+		for (AlertResult result : results) {
+			size++;
 		}
 		assertTrue(sizeBefore < size);
-		
+
 		// assert alertMessageReceiver receives a message when alert triggers
 		Iterable<Message> messagesAfterAlert = messageDao.findByRecipient(alertMessageReceiver);
 		assertEquals(1, countIterable(messagesAfterAlert));
-		
+
 		adDao.delete(oltenResidence);
 	}
-	
+
 	@Test
 	public void noTriggerWhenPriceTooHigh() {
 		// create list of AlertTypes
@@ -297,11 +308,12 @@ public class AlertServiceTest {
 		typeLoft.setType(Type.LOFT);
 		List<AlertType> alertTypes = new ArrayList<>();
 		alertTypes.add(typeLoft);
-		
+
 		// create user
-		User userNoTrigger = createUser("userNoTrigger@f.ch", "password", "userNoTrigger", "F", Gender.MALE, AccountType.PREMIUM);
+		User userNoTrigger = createUser("userNoTrigger@f.ch", "password", "userNoTrigger", "F", Gender.MALE,
+				AccountType.PREMIUM);
 		userDao.save(userNoTrigger);
-		
+
 		// create Alert
 		Alert alert = new Alert();
 		alert.setUser(userNoTrigger);
@@ -312,7 +324,7 @@ public class AlertServiceTest {
 		alert.setPrice(1500);
 		alert.setRadius(100);
 		alertDao.save(alert);
-		
+
 		// create Ad
 		Date date = new Date();
 		Ad ad = new Ad();
@@ -328,7 +340,7 @@ public class AlertServiceTest {
 		ad.setTitle("tooExpansiveAd");
 		ad.setStreet("Florastr. 100");
 		ad.setCity("Bern");
-		
+
 		ad.setSquareFootage(42);
 		ad.setNumberOfBath(3);
 		ad.setNumberOfRooms(5);
@@ -337,25 +349,329 @@ public class AlertServiceTest {
 		ad.setDistanceShopping(400);
 		ad.setRenovationYear(1990);
 		ad.setBuildYear(1940);
-		
-		//  no mismatches
+
+		// no mismatches
 		assertFalse(alertService.radiusMismatch(ad, alert));
 		assertFalse(alertService.typeMismatch(ad, alert));
-		
+
 		// trigger alerts and make sure the user gets no message
 		Iterable<Message> messagesBefore = messageDao.findByRecipient(userNoTrigger);
 		assertEquals(countIterable(messagesBefore), 0);
-		
+
 		alertService.triggerAlerts(ad);
-		
+
 		Iterable<Message> messagesAfter = messageDao.findByRecipient(userNoTrigger);
 		assertEquals(countIterable(messagesAfter), 0);
-		
+
 		adDao.delete(ad);
 	}
-	
+
+	@Test
+	public void testExtendedAlert() {
+		// create list of AlertTypes
+
+		// create user
+		User userExtendedAlert1 = createUser("userExtendedAlert1@f.ch", "password", "userExtendedAlert1", "F",
+				Gender.MALE, AccountType.BASIC);
+		userDao.save(userExtendedAlert1);
+
+		User userExtendedAlert2 = createUser("userExtendedAlert2@f.ch", "password", "userExtendedAlert2", "F",
+				Gender.MALE, AccountType.BASIC);
+		userDao.save(userExtendedAlert2);
+
+		User userAdCreator = createUser("userAdCreator@f.ch", "password", "userAdCreator", "F", Gender.MALE,
+				AccountType.BASIC);
+		userDao.save(userAdCreator);
+
+		// -----------------
+		// create Alerts to check binary criteria
+
+		Type[] typeLoft = { Type.LOFT };
+
+		List<AlertType> alertTypes = createAlertTypes(typeLoft);
+		Alert alert = new Alert();
+		alert.setUser(userExtendedAlert1);
+		alert.setBuyMode(BuyMode.BUY);
+		alert.setAlertTypes(alertTypes);
+		alert.setCity("Bern");
+		alert.setZipcode(3000);
+		alert.setPrice(1500);
+		alert.setRadius(100);
+		alert.setDishwasher(true);
+
+		Alert alert2 = new Alert();
+		List<AlertType> alertTypes2 = createAlertTypes(typeLoft);
+		alert2.setUser(userExtendedAlert2);
+		alert2.setBuyMode(BuyMode.BUY);
+		alert2.setAlertTypes(alertTypes2);
+		alert2.setCity("Bern");
+		alert2.setZipcode(3000);
+		alert2.setPrice(1500);
+		alert2.setRadius(100);
+		alert2.setElevator(true);
+
+		Alert alert3 = new Alert();
+		List<AlertType> alertTypes3 = createAlertTypes(typeLoft);
+		alert3.setUser(userExtendedAlert2);
+		alert3.setBuyMode(BuyMode.BUY);
+		alert3.setAlertTypes(alertTypes3);
+		alert3.setCity("Bern");
+		alert3.setZipcode(3000);
+		alert3.setPrice(1500);
+		alert3.setRadius(100);
+		alert3.setParking(true);
+
+		Alert alert4 = new Alert();
+		List<AlertType> alertTypes4 = createAlertTypes(typeLoft);
+		alert4.setUser(userExtendedAlert2);
+		alert4.setBuyMode(BuyMode.BUY);
+		alert4.setAlertTypes(alertTypes4);
+		alert4.setCity("Bern");
+		alert4.setZipcode(3000);
+		alert4.setPrice(1500);
+		alert4.setRadius(100);
+		alert4.setGarage(true);
+
+		Alert alert5 = new Alert();
+		List<AlertType> alertTypes5 = createAlertTypes(typeLoft);
+		alert5.setUser(userExtendedAlert2);
+		alert5.setBuyMode(BuyMode.BUY);
+		alert5.setAlertTypes(alertTypes5);
+		alert5.setCity("Bern");
+		alert5.setZipcode(3000);
+		alert5.setPrice(1500);
+		alert5.setRadius(100);
+		alert5.setBalcony(true);
+
+		// test Criteria with Numbers
+		Alert alert6 = new Alert();
+		List<AlertType> alertTypes6 = createAlertTypes(typeLoft);
+		alert6.setUser(userExtendedAlert2);
+		alert6.setBuyMode(BuyMode.BUY);
+		alert6.setAlertTypes(alertTypes6);
+		alert6.setCity("Bern");
+		alert6.setZipcode(3000);
+		alert6.setPrice(1500);
+		alert6.setRadius(100);
+
+		alert6.setDistanceSchoolMax(10);
+		alert6.setDistanceSchoolMin(0);
+
+		Alert alert7 = new Alert();
+		List<AlertType> alertTypes7 = createAlertTypes(typeLoft);
+		alert7.setUser(userExtendedAlert2);
+		alert7.setBuyMode(BuyMode.BUY);
+		alert7.setAlertTypes(alertTypes7);
+		alert7.setCity("Bern");
+		alert7.setZipcode(3000);
+		alert7.setPrice(1500);
+		alert7.setRadius(100);
+
+		alert7.setNumberOfRoomsMax(4);
+		alert7.setNumberOfRoomsMin(1);
+
+		Alert alert8 = new Alert();
+		List<AlertType> alertTypes8 = createAlertTypes(typeLoft);
+		alert8.setUser(userExtendedAlert2);
+		alert8.setBuyMode(BuyMode.BUY);
+		alert8.setAlertTypes(alertTypes8);
+		alert8.setCity("Bern");
+		alert8.setZipcode(3000);
+		alert8.setPrice(1500);
+		alert8.setRadius(100);
+
+		alert8.setRenovationYearMin(2000);
+		alert8.setRenovationYearMax(2010);
+
+		Alert alert9 = new Alert();
+		List<AlertType> alertTypes9 = createAlertTypes(typeLoft);
+		alert9.setUser(userExtendedAlert2);
+		alert9.setBuyMode(BuyMode.BUY);
+		alert9.setAlertTypes(alertTypes9);
+		alert9.setCity("Bern");
+		alert9.setZipcode(3000);
+		alert9.setPrice(1500);
+		alert9.setRadius(100);
+		alert9.setInfrastructureType(InfrastructureType.CABLE);
+
+		Alert alert10 = new Alert();
+		List<AlertType> alertTypes10 = createAlertTypes(typeLoft);
+		alert10.setUser(userExtendedAlert2);
+		alert10.setBuyMode(BuyMode.BUY);
+		alert10.setAlertTypes(alertTypes10);
+		alert10.setCity("Bern");
+		alert10.setZipcode(3000);
+		alert10.setPrice(1500);
+		alert10.setRadius(100);
+		alert10.setEarliestMoveInDate(convertStringToDate("10-01-2015"));
+		alert10.setLatestMoveInDate(convertStringToDate("10-02-2015"));
+
+		// save Alerts
+		alertDao.save(alert);
+		alertDao.save(alert2);
+		alertDao.save(alert3);
+		alertDao.save(alert4);
+		alertDao.save(alert5);
+		alertDao.save(alert6);
+		alertDao.save(alert7);
+		alertDao.save(alert8);
+		alertDao.save(alert9);
+		alertDao.save(alert10);
+
+		// create Ad
+		Date date = new Date();
+		Ad ad = new Ad();
+		ad.setZipcode(3000);
+		ad.setBuyMode(BuyMode.BUY);
+		ad.setMoveInDate(convertStringToDate("01-01-2016"));
+		ad.setCreationDate(date);
+		ad.setPrice(1000);
+		ad.setSquareFootage(42);
+		ad.setType(Type.LOFT);
+		ad.setRoomDescription("blah");
+		ad.setUser(userAdCreator);
+		ad.setTitle("AdTestAlert");
+		ad.setStreet("Florastr. 100");
+		ad.setCity("Bern");
+
+		// no alert should be triggered, as none of them fulfills the criteria
+		ad.setDishwasher(false);
+		ad.setElevator(false);
+		ad.setGarage(false);
+		ad.setBalcony(false);
+		ad.setParking(false);
+
+		ad.setSquareFootage(42);
+		ad.setNumberOfBath(3);
+		ad.setNumberOfRooms(5);
+		ad.setDistancePublicTransport(1000);
+		ad.setDistanceSchool(100);
+		ad.setDistanceShopping(400);
+		ad.setRenovationYear(1990);
+		ad.setBuildYear(1940);
+
+		ad.setInfrastructureType(InfrastructureType.SATELLITE);
+
+		adDao.save(ad);
+
+		assertEquals(countIterable(messageDao.findByRecipient(userExtendedAlert1)), 0);
+		assertEquals(countIterable(messageDao.findByRecipient(userExtendedAlert2)), 0);
+
+		// trigger alerts
+		alertService.triggerAlerts(ad);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(userExtendedAlert1);
+		assertEquals(countIterable(messagesAfter), 0);
+
+		messagesAfter = messageDao.findByRecipient(userExtendedAlert2);
+		assertEquals(countIterable(messagesAfter), 0);
+
+		adDao.delete(ad);
+	}
+
+	// ---------------------------------
+	// Test individual Alert Criteria
+
+	private User basicUserWithAlert;
+	private User premiumUserWithAlert;
+	private User userPlacingAd;
+
+	private Ad normalAd;
+	Alert alert;
+
+	@Before
+	public void setUp() {
+		// set up users
+		basicUserWithAlert = createUser("basicUserWithAlert@ka.ch", "password", "basicUserWithAlert",
+				"basicUserWithAlert", Gender.MALE, AccountType.BASIC);
+		userDao.save(basicUserWithAlert);
+
+		premiumUserWithAlert = createUser("otherUserWithAlert@ka.ch", "password", "premiumUserWithAlert",
+				"premiumUserWithAlert", Gender.MALE, AccountType.PREMIUM);
+		userDao.save(premiumUserWithAlert);
+
+		userPlacingAd = userDao.findByUsername("user@bern.com");
+		
+		// ad with all criteria (normal value)
+		Date date = new Date();
+		normalAd = new Ad();
+		normalAd.setZipcode(3012);
+		normalAd.setBuyMode(BuyMode.BUY);
+		normalAd.setMoveInDate(convertStringToDate("01-01-2016"));
+		normalAd.setCreationDate(date);
+		normalAd.setPrice(1000000);
+		normalAd.setSquareFootage(80);
+		normalAd.setType(Type.APARTMENT);
+		normalAd.setRoomDescription("test");
+		normalAd.setUser(userPlacingAd);
+		normalAd.setTitle("AdTestAlertHochfeld");
+		normalAd.setStreet("Hochfeldstrasse 44");
+		normalAd.setCity("Bern");
+
+		normalAd.setDishwasher(false);
+		normalAd.setElevator(false);
+		normalAd.setGarage(false);
+		normalAd.setBalcony(false);
+		normalAd.setParking(false);
+
+		normalAd.setFloorLevel(3);
+		normalAd.setSquareFootage(100);
+		normalAd.setNumberOfBath(2);
+		normalAd.setNumberOfRooms(5);
+		normalAd.setDistancePublicTransport(900);
+		normalAd.setDistanceSchool(100);
+		normalAd.setDistanceShopping(450);
+		normalAd.setRenovationYear(1990);
+		normalAd.setBuildYear(1940);
+
+		normalAd.setInfrastructureType(InfrastructureType.SATELLITE);
+		
+		adDao.save(normalAd);
+		
+
+		// set basic alert criteria
+		alert = new Alert();
+		Type[] Types = { Type.LOFT };			// change to APARTMENT -> error
+		List<AlertType> alertTypes = createAlertTypes(Types); 
+
+		alert.setUser(premiumUserWithAlert);
+		alert.setBuyMode(BuyMode.BUY);
+		alert.setAlertTypes(alertTypes);
+		alert.setCity("Bern");
+		alert.setZipcode(3000);
+		alert.setPrice(2000000);
+		alert.setRadius(300);
+	}
+
+	@After
+	public void tearDown() {
+		userDao.delete(premiumUserWithAlert);
+		userDao.delete(basicUserWithAlert);
+		adDao.delete(normalAd);
+	}
+
+	@Test
+	public void floorlevel() {
+		// should trigger if Ad is placed
+		alert.setFloorLevelMin(1);
+		alert.setFloorLevelMax(3);
+
+		alertDao.save(alert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(countIterable(messagesBefore), 0);
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		// assertEquals(countIterable(messagesAfter), 1);
+
+		alertDao.delete(alert);
+	}
+
 	// Lean user creating method
-	User createUser(String email, String password, String firstName, String lastName, Gender gender, AccountType accountType) {
+	User createUser(String email, String password, String firstName, String lastName, Gender gender,
+			AccountType accountType) {
 		User user = new User();
 		user.setUsername(email);
 		user.setPassword(password);
@@ -373,229 +689,34 @@ public class AlertServiceTest {
 		user.setUserRoles(userRoles);
 		return user;
 	}
-	
-	@Test
-	public void testExtendedAlert() {
-		// create list of AlertTypes	
-					
-				// create user
-				User userExtendedAlert1 = createUser("userExtendedAlert1@f.ch", "password", "userExtendedAlert1", "F", Gender.MALE, AccountType.BASIC);
-				userDao.save(userExtendedAlert1);
-				
-				User userExtendedAlert2 = createUser("userExtendedAlert2@f.ch", "password", "userExtendedAlert2", "F", Gender.MALE, AccountType.BASIC);
-				userDao.save(userExtendedAlert2);
-				
-				User userAdCreator = createUser("userAdCreator@f.ch", "password", "userAdCreator", "F", Gender.MALE, AccountType.BASIC);
-				userDao.save(userAdCreator);
-				
-				//-----------------
-				// create Alerts to check binary criteria
-				List<AlertType>alertTypes = createAlertTypes();
-				Alert alert = new Alert();
-				alert.setUser(userExtendedAlert1);
-				alert.setBuyMode(BuyMode.BUY);
-				alert.setAlertTypes(alertTypes);
-				alert.setCity("Bern");
-				alert.setZipcode(3000);
-				alert.setPrice(1500);
-				alert.setRadius(100);
-				alert.setDishwasher(true);
 
-				Alert alert2 = new Alert();
-				List<AlertType>alertTypes2 = createAlertTypes();
-				alert2.setUser(userExtendedAlert2);
-				alert2.setBuyMode(BuyMode.BUY);
-				alert2.setAlertTypes(alertTypes2);
-				alert2.setCity("Bern");
-				alert2.setZipcode(3000);
-				alert2.setPrice(1500);
-				alert2.setRadius(100);
-				alert2.setElevator(true);
-				
-				Alert alert3 = new Alert();
-				List<AlertType>alertTypes3 = createAlertTypes();
-				alert3.setUser(userExtendedAlert2);
-				alert3.setBuyMode(BuyMode.BUY);
-				alert3.setAlertTypes(alertTypes3);
-				alert3.setCity("Bern");
-				alert3.setZipcode(3000);
-				alert3.setPrice(1500);
-				alert3.setRadius(100);
-				alert3.setParking(true);
-				
-				Alert alert4 = new Alert();
-				List<AlertType>alertTypes4 = createAlertTypes();
-				alert4.setUser(userExtendedAlert2);
-				alert4.setBuyMode(BuyMode.BUY);
-				alert4.setAlertTypes(alertTypes4);
-				alert4.setCity("Bern");
-				alert4.setZipcode(3000);
-				alert4.setPrice(1500);
-				alert4.setRadius(100);
-				alert4.setGarage(true);
-				
-				Alert alert5 = new Alert();
-				List<AlertType>alertTypes5 = createAlertTypes();
-				alert5.setUser(userExtendedAlert2);
-				alert5.setBuyMode(BuyMode.BUY);
-				alert5.setAlertTypes(alertTypes5);
-				alert5.setCity("Bern");
-				alert5.setZipcode(3000);
-				alert5.setPrice(1500);
-				alert5.setRadius(100);
-				alert5.setBalcony(true);
-				
-				// test Criteria with Numbers
-				Alert alert6 = new Alert();
-				List<AlertType>alertTypes6 = createAlertTypes();
-				alert6.setUser(userExtendedAlert2);
-				alert6.setBuyMode(BuyMode.BUY);
-				alert6.setAlertTypes(alertTypes6);
-				alert6.setCity("Bern");
-				alert6.setZipcode(3000);
-				alert6.setPrice(1500);
-				alert6.setRadius(100);
+	// ------------------------------
+	// Helper Methods
 
-				alert6.setDistanceSchoolMax(10);
-				alert6.setDistanceSchoolMin(0);
-				
-				Alert alert7 = new Alert();
-				List<AlertType>alertTypes7 = createAlertTypes();
-				alert7.setUser(userExtendedAlert2);
-				alert7.setBuyMode(BuyMode.BUY);
-				alert7.setAlertTypes(alertTypes7);
-				alert7.setCity("Bern");
-				alert7.setZipcode(3000);
-				alert7.setPrice(1500);
-				alert7.setRadius(100);
+	// causes data integrety error
 
-				alert7.setNumberOfRoomsMax(4);
-				alert7.setNumberOfRoomsMin(1);
-				
-				Alert alert8 = new Alert();
-				List<AlertType>alertTypes8 = createAlertTypes();
-				alert8.setUser(userExtendedAlert2);
-				alert8.setBuyMode(BuyMode.BUY);
-				alert8.setAlertTypes(alertTypes8);
-				alert8.setCity("Bern");
-				alert8.setZipcode(3000);
-				alert8.setPrice(1500);
-				alert8.setRadius(100);
+	private List<AlertType> createAlertTypes(Type[] types) {
 
-				alert8.setRenovationYearMin(2000);
-				alert8.setRenovationYearMax(2010); 
-				
-				Alert alert9 = new Alert();
-				List<AlertType>alertTypes9 = createAlertTypes();
-				alert9.setUser(userExtendedAlert2);
-				alert9.setBuyMode(BuyMode.BUY);
-				alert9.setAlertTypes(alertTypes9);
-				alert9.setCity("Bern");
-				alert9.setZipcode(3000);
-				alert9.setPrice(1500);
-				alert9.setRadius(100);
-				alert9.setInfrastructureType(InfrastructureType.CABLE);
-				
-				Alert alert10 = new Alert();
-				List<AlertType>alertTypes10 = createAlertTypes();
-				alert10.setUser(userExtendedAlert2);
-				alert10.setBuyMode(BuyMode.BUY);
-				alert10.setAlertTypes(alertTypes10);
-				alert10.setCity("Bern");
-				alert10.setZipcode(3000);
-				alert10.setPrice(1500);
-				alert10.setRadius(100);
-				alert10.setEarliestMoveInDate(convertStringToDate("10-01-2015"));
-				alert10.setLatestMoveInDate(convertStringToDate("10-02-2015"));
-				
-				// save Alerts
-				alertDao.save(alert);
-				alertDao.save(alert2);
-				alertDao.save(alert3);
-				alertDao.save(alert4);
-				alertDao.save(alert5);
-				alertDao.save(alert6);
-				alertDao.save(alert7);
-				alertDao.save(alert8);
-				alertDao.save(alert9);
-				alertDao.save(alert10);
-
-				// create Ad
-				Date date = new Date();
-				Ad ad = new Ad();
-				ad.setZipcode(3000);
-				ad.setBuyMode(BuyMode.BUY);
-				ad.setMoveInDate(convertStringToDate("01-01-2016"));
-				ad.setCreationDate(date);
-				ad.setPrice(1000);
-				ad.setSquareFootage(42);
-				ad.setType(Type.LOFT);
-				ad.setRoomDescription("blah");
-				ad.setUser(userAdCreator);
-				ad.setTitle("AdTestAlert");
-				ad.setStreet("Florastr. 100");
-				ad.setCity("Bern");
-				
-				// no alert should be triggered, as none of them fulfills the criteria
-				ad.setDishwasher(false);
-				ad.setElevator(false);
-				ad.setGarage(false);
-				ad.setBalcony(false);
-				ad.setParking(false);
-				
-				ad.setSquareFootage(42);
-				ad.setNumberOfBath(3);
-				ad.setNumberOfRooms(5);
-				ad.setDistancePublicTransport(1000);
-				ad.setDistanceSchool(100);
-				ad.setDistanceShopping(400);
-				ad.setRenovationYear(1990);
-				ad.setBuildYear(1940);
-				
-				ad.setInfrastructureType(InfrastructureType.SATELLITE);
-				
-				adDao.save(ad);
-				
-				assertEquals(countIterable(messageDao.findByRecipient(userExtendedAlert1)), 0);
-				assertEquals(countIterable(messageDao.findByRecipient(userExtendedAlert2)), 0);
-				
-				// trigger alerts
-				alertService.triggerAlerts(ad);
-				
-				
-				Iterable<Message> messagesAfter = messageDao.findByRecipient(userExtendedAlert1);
-				assertEquals(countIterable(messagesAfter), 0);
-				
-				messagesAfter = messageDao.findByRecipient(userExtendedAlert2);
-				assertEquals(countIterable(messagesAfter), 0);
-				
-				adDao.delete(ad);		
-	}
-	
-	
-	
-	private List<AlertType> createAlertTypes() {
-		AlertType typeLoft = new AlertType();
-		typeLoft.setType(Type.LOFT);
-		//AlertType typeApartment = new AlertType();
-		//typeApartment.setType(Type.APARTMENT);
-		
 		List<AlertType> alertTypes = new ArrayList<>();
-		alertTypes.add(typeLoft);
-		//alertTypes.add(typeApartment);
-		
+
+		for (int i = 0; i < types.length; i++) {
+			AlertType alertType = new AlertType();
+			alertType.setType(types[i]);
+			// alertType.setAlert(alert);
+			alertTypes.add(alertType);
+		}
 		return alertTypes;
 	}
 
 	// method to count all iterables
 	<T> int countIterable(Iterable<T> iterable) {
 		int countMessages = 0;
-		for (T element : iterable ) {
+		for (T element : iterable) {
 			countMessages++;
 		}
 		return countMessages;
 	}
-	
+
 	private Date convertStringToDate(String date) {
 		try {
 			DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
