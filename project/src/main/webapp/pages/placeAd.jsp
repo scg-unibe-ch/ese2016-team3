@@ -64,7 +64,6 @@
 									<label class="col-sm-3 control-label" for="type-room">Type*</label>
 									<div class="col-sm-5">
 										<form:select path="type" id="type" cssClass="form-control">
-											<option value="0"></option>
 											<form:options items="${types}" itemLabel="name" />
 										</form:select>
 									</div>
@@ -342,11 +341,10 @@
 							<spring:bind path="infrastructureType">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label"
-										for="infrastructureType-room">Type of Infrastructure</label>
+										for="infrastructureType-room">Type of Infrastructure*</label>
 									<div class="col-sm-5">
 										<form:select id="infrastructureType" path="infrastructureType"
 											cssClass="form-control">
-											<option value="0"></option>
 											<form:options items="${infrastructureTypes}" itemLabel="name" />
 										</form:select>
 									</div>

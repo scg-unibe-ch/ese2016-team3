@@ -1,6 +1,6 @@
 package ch.unibe.ese.team3.controller.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 

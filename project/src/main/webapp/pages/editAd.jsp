@@ -321,7 +321,7 @@
 							<spring:bind path="infrastructureType">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 									<label class="col-sm-3 control-label"
-										for="infrastructureType-room">Type of Infrastructure</label>
+										for="infrastructureType-room">Type of Infrastructure*</label>
 									<div class="col-sm-5">
 										<form:select id="infrastructureType" path="infrastructureType"
 											cssClass="form-control">
@@ -361,8 +361,7 @@
 
 						</div>
 						<div class="form-group">
-							<label class="col-sm-3 control-label" for="roomDescription">Room
-								Description*</label>
+							<label class="col-sm-3 control-label" for="roomDescription">Description*</label>
 							<div class="col-sm-5">
 								<form:textarea path="roomDescription" rows="5" cols="50"
 									placeholder="Room Description" class="form-control" />

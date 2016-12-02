@@ -1,29 +1,38 @@
 package ch.unibe.ese.team3.controller.service;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.HashSet;
 import java.util.Set;
-import java.security.SecureRandom;
-import java.math.BigInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team3.controller.pojos.forms.GoogleSignupForm;
-import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.Gender;
+import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
 /** Handles the persisting of new users signing up with google */
 @Service
-public class GoogleSignupService {
+public class GoogleService {
 	
 	private static final String DEFAULT_ROLE = "ROLE_USER";
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	@Qualifier("org.springframework.security.authenticationManager")
+	private AuthenticationManager authenticationManager;
 
 	/** Handles persisting a new user to the database. */
 	@Transactional
@@ -65,5 +74,14 @@ public class GoogleSignupService {
 	@Transactional
 	public boolean doesUserWithUsernameExist(String username){
 		return userDao.findByUsername(username) != null;
+	}
+
+	/** Handles login of google user. */
+	@Transactional
+	public void loginFrom(GoogleSignupForm googleForm) {
+		User user = userDao.findByUsername(googleForm.getEmail());
+		Authentication request = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+		Authentication result = authenticationManager.authenticate(request);
+		SecurityContextHolder.getContext().setAuthentication(result);
 	}
 }

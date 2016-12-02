@@ -20,7 +20,7 @@ $(function() {
 	$('#field-pictures').fileupload({
 		url : '/profile/placeAd/uploadPictures',
 		dataType : 'json',
-		acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+		acceptFileTypes: /(\.|\/)(gif|jpg|jpeg|png)$/i,
 		done : function(e, data) {
 			showPictures();
 		}

@@ -9,8 +9,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Gender;
+import ch.unibe.ese.team3.model.User;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
