@@ -53,5 +53,27 @@ public class GeoDataServiceTest {
 		assertEquals("Ammerswil", locations.get(1).getCity());
 	}
 	
+	@Test
+	public void getSpecificLocationByCityWithUmlaut(){
+		locations = geoDataService.getLocationsByCity("Abländschen");
+		assertEquals(1, locations.size());
+	}
 	
+	@Test
+	public void getSpecificLocationByCitySpecialChar(){
+		locations = geoDataService.getLocationsByCity("L'Abbaye");
+		assertEquals(1, locations.size());
+	}
+	
+	@Test
+	public void getSpecificLocationByCityNoCity(){
+		locations = geoDataService.getLocationsByCity("Niemandshausen");
+		assertEquals(0, locations.size());
+	}
+	
+	@Test
+	public void getSpecficiLocationByZipNoCity(){
+		locations = geoDataService.getLocationsByZipcode(9999);
+		assertEquals(0, locations.size());
+	}
 }
