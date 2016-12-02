@@ -134,7 +134,7 @@ public class AlertServiceTest {
 	
 		// set basic alert criteria
 		alert = new Alert();
-		Type[] Types = { Type.LOFT }; // change to APARTMENT -> error
+		Type[] Types = { Type.APARTMENT }; // change to APARTMENT -> error
 		List<AlertType> alertTypes = createAlertTypes(Types);
 	
 		alert.setUser(premiumUserWithAlert);
@@ -696,7 +696,7 @@ public class AlertServiceTest {
 	// Test individual Alert Criteria
 
 	@Test
-	public void floorlevel() {
+	public void floorlevelInRange() {
 		// should trigger if Ad is placed
 		alert.setFloorLevelMin(1);
 		alert.setFloorLevelMax(3);
@@ -713,6 +713,33 @@ public class AlertServiceTest {
 
 		alertDao.delete(alert);
 	}
+	
+	@Test
+	public void floorlevelOutOfRange() {
+		// should trigger if Ad is placed
+		alert.setFloorLevelMin(5);
+		alert.setFloorLevelMax(7);
+
+		alertDao.save(alert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+
+		alertDao.delete(alert);
+	}
+	
+	
+	
+	
+	
+	
+	// ------------------------------
+	// Helper Methods
 
 	// Lean user creating method
 	User createUser(String email, String password, String firstName, String lastName, Gender gender,
@@ -732,11 +759,6 @@ public class AlertServiceTest {
 		user.addUserRole(role);
 		return user;
 	}
-
-	// ------------------------------
-	// Helper Methods
-
-	// causes data integrety error
 
 	private List<AlertType> createAlertTypes(Type[] types) {
 		List<AlertType> alertTypes = new ArrayList<>();

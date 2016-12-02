@@ -16,6 +16,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,12 @@ public class AdServiceTest {
 
 	@Autowired
 	private AdDao adDao;
-
+	
+	
+	SearchForm basicSearchForm;
+	Ad searchAd;
+	User adPlacer;
+	
 	/**
 	 * In order to test the saved ad, I need to get it back from the DB again,
 	 * so these two methods need to be tested together, normally we want to test
@@ -62,6 +68,57 @@ public class AdServiceTest {
 	 * 
 	 * @throws ParseException
 	 */
+		
+	@Before
+	public void setup() {
+		adPlacer = userDao.findByUsername("ese@unibe.ch");
+		
+		// create searchform with basic criteria
+		basicSearchForm = new SearchForm();
+		basicSearchForm.setCity("6001 - Luzern");
+		basicSearchForm.setPrice(2000000);
+		basicSearchForm.setRadius(300);
+		Type[] types = { Type.APARTMENT, Type.HOUSE, Type.LOFT, Type.STUDIO, Type.VILLA };
+		basicSearchForm.setTypes(types);
+		
+		// ad to search for 
+		Date date = new Date();
+		searchAd = new Ad();
+		searchAd.setZipcode(3012);
+		searchAd.setBuyMode(BuyMode.BUY);
+		searchAd.setMoveInDate(convertStringToDate("01-01-2016"));
+		searchAd.setCreationDate(date);
+		searchAd.setPrice(1000000);
+		searchAd.setSquareFootage(80);
+		searchAd.setType(Type.APARTMENT);
+		searchAd.setRoomDescription("test");
+		searchAd.setUser(adPlacer);
+		searchAd.setTitle("searchAdTest");
+		searchAd.setStreet("Hochfeldstrasse 44");
+		searchAd.setCity("Bern");
+	
+		searchAd.setDishwasher(false);
+		searchAd.setElevator(false);
+		searchAd.setGarage(false);
+		searchAd.setBalcony(false);
+		searchAd.setParking(false);
+	
+		searchAd.setFloorLevel(3);
+		searchAd.setSquareFootage(100);
+		searchAd.setNumberOfBath(2);
+		searchAd.setNumberOfRooms(5);
+		searchAd.setDistancePublicTransport(900);
+		searchAd.setDistanceSchool(100);
+		searchAd.setDistanceShopping(450);
+		searchAd.setRenovationYear(1990);
+		searchAd.setBuildYear(1940);
+	
+		searchAd.setInfrastructureType(InfrastructureType.SATELLITE);
+	
+		adDao.save(searchAd);
+	}
+	
+	
 	@Test
 	public void saveFromAndGetById() throws ParseException {
 		// Preparation
@@ -219,13 +276,18 @@ public class AdServiceTest {
 
 	@Test
 	public void getAllAds() {
-		Iterable<Ad> adsInDB = adDao.findByPriceLessThanAndBuyMode(2147483647, BuyMode.BUY);
-		int acctualAdNumber = ListUtils.countIterable(adsInDB);
+		Iterable<Ad> adsInDBbuy = adDao.findByPriceLessThanAndBuyMode(2147483647, BuyMode.BUY);
+		int numberOfAdsBuy = ListUtils.countIterable(adsInDBbuy);
+		Iterable<Ad> adsInDBrent = adDao.findByPriceLessThanAndBuyMode(2147483647, BuyMode.RENT);
+		int numberOfAdsRent = ListUtils.countIterable(adsInDBrent);
+		
+		int acctualNumberOfAds = numberOfAdsBuy + numberOfAdsRent;
 		
 		Iterable<Ad> ads = adService.getAllAds();
 		int countReturnedAds = ListUtils.countIterable(ads);
+		
 		// assert number of returned ads equals number in DB
-		assertEquals(countReturnedAds, acctualAdNumber);
+		assertEquals(acctualNumberOfAds, countReturnedAds);
 	}
 
 	@Test
@@ -359,31 +421,40 @@ public class AdServiceTest {
 	}
 	
 	@Test
-	public void getNewestAds() {
+	public void getNewestAds() throws ParseException {
+		// create 3 new ads
+		
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		ArrayList<String> filePaths = new ArrayList<>();
+		
+		PlaceAdForm placeAdForm = new PlaceAdForm();
+		placeAdForm.setCity("3018 - Bern");
+		placeAdForm.setType(Type.APARTMENT);
+		placeAdForm.setRoomDescription("Test Room description");
+		placeAdForm.setPrice(600);
+		placeAdForm.setSquareFootage(50);
+		placeAdForm.setTitle("ad1");
+		placeAdForm.setStreet("Hauptstrasse 13");
+		placeAdForm.setMoveInDate("27-02-2015");
+		placeAdForm.setStartDate("03.10.2016");
+		placeAdForm.setEndDate("03.12.2016");
+		
+		adService.saveFrom(placeAdForm, filePaths, userDao.findByUsername("ese@unibe.ch"), BuyMode.BUY);
+		placeAdForm.setTitle("ad2");
+		adService.saveFrom(placeAdForm, filePaths, userDao.findByUsername("ese@unibe.ch"), BuyMode.BUY);
+		placeAdForm.setTitle("ad3");
+		adService.saveFrom(placeAdForm, filePaths, userDao.findByUsername("ese@unibe.ch"), BuyMode.BUY);
+		
+		
 		Iterable<Ad> newestdAds = adService.getNewestAds(3, BuyMode.BUY);
 		ArrayList<Ad> listNewestAds = (ArrayList<Ad>) newestdAds;
 
 		assertEquals(listNewestAds.size(), 3);
 
-		assertEquals("Malibu-style Beachhouse", listNewestAds.get(0).getTitle());
-		// Note: 
-		assertTrue("Unexpected value for listNewestAds.get(0): " + listNewestAds.get(0),
-				listNewestAds.get(0).getTitle().equals("Nice studio") ||
-				listNewestAds.get(0).getTitle().equals("Olten Residence") ||
-				listNewestAds.get(0).getTitle().equals("Beautiful studio in Aarau") ||
-				listNewestAds.get(0).getTitle().equals("Malibu-style Beachhouse"));
-		assertTrue("Unexpected value for listNewestAds.get(1): " + listNewestAds.get(1),
-				listNewestAds.get(1).getTitle().equals("Nice studio") ||
-				listNewestAds.get(1).getTitle().equals("Beautiful studio in Aarau") ||
-				listNewestAds.get(1).getTitle().equals("Olten Residence") ||
-				listNewestAds.get(1).getTitle().equals("Malibu-style Beachhouse"));
-		assertTrue("Unexpected value for listNewestAds.get(2): " + listNewestAds.get(2),
-				listNewestAds.get(2).getTitle().equals("Nice studio") ||
-				listNewestAds.get(2).getTitle().equals("Beautiful studio in Aarau") ||
-				listNewestAds.get(2).getTitle().equals("Olten Residence") ||
-				listNewestAds.get(2).getTitle().equals("Malibu-style Beachhouse"));
+		assertEquals("ad3", listNewestAds.get(0).getTitle());
+		assertEquals("ad2", listNewestAds.get(1).getTitle());
+		assertEquals("ad1", listNewestAds.get(2).getTitle());
 		
-		//
 	}
 
 	@Test
@@ -579,6 +650,368 @@ public class AdServiceTest {
 		adDao.delete(ad);
 		
 	}
+	
+	
+	//---------------------------------------
+	// test individual search criteria
+	//---------------------------------------
+	
+	@Test
+	public void floorLevelInRange() {
+		basicSearchForm.setFloorLevelMax(5);
+		basicSearchForm.setFloorLevelMin(0);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertTrue(searchAdInResults);
+	}
+	
+	@Test
+	public void floorLevelOutOfRange() {
+		basicSearchForm.setFloorLevelMax(2);
+		basicSearchForm.setFloorLevelMin(0);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	
+	@Test
+	public void squareFootageInRange() {
+		basicSearchForm.setSquareFootageMax(101);
+		basicSearchForm.setSquareFootageMin(90);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertTrue(searchAdInResults);
+	}
+	
+	@Test
+	public void squareFootageOutOfRange() {
+		basicSearchForm.setSquareFootageMax(90);
+		basicSearchForm.setSquareFootageMin(80);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	@Test
+	public void numberOfBathInRange() {
+		basicSearchForm.setNumberOfBathMax(4);
+		basicSearchForm.setNumberOfBathMin(1);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertTrue(searchAdInResults);
+	}
+	
+	@Test
+	public void numberOfBathOutOfRange() {
+		basicSearchForm.setNumberOfBathMax(1);
+		basicSearchForm.setNumberOfBathMin(0);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	@Test
+	public void numberOfRoomsInRange() {
+		basicSearchForm.setNumberOfRoomsMax(5);
+		basicSearchForm.setNumberOfRoomsMin(0);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertTrue(searchAdInResults);
+	}
+	
+	@Test
+	public void numberOfRoomsOutOfRange() {
+		basicSearchForm.setNumberOfRoomsMax(4);
+		basicSearchForm.setNumberOfRoomsMin(4);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	@Test
+	public void distancePublicTransportInRange() {
+		basicSearchForm.setDistancePublicTransportMax(2000);
+		basicSearchForm.setDistancePublicTransportMin(800);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertTrue(searchAdInResults);
+	}
+	
+	@Test
+	public void distancePublicTransportOutOfRange() {
+		basicSearchForm.setDistancePublicTransportMax(2000);
+		basicSearchForm.setDistancePublicTransportMin(1000);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	@Test
+	public void distanceSchoolInRange() {
+		basicSearchForm.setDistanceSchoolMax(200);
+		basicSearchForm.setDistanceSchoolMin(0);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertTrue(searchAdInResults);
+	}
+	
+	@Test
+	public void distanceSchoolOutOfRange() {
+		basicSearchForm.setDistanceSchoolMax(2000);
+		basicSearchForm.setDistanceSchoolMin(200);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	@Test
+	public void distanceShoppingInRange() {
+		basicSearchForm.setDistanceShoppingMax(0);
+		basicSearchForm.setDistanceShoppingMin(400);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertTrue(searchAdInResults);
+	}
+	
+	@Test
+	public void distanceShoppingOutOfRange() {
+		basicSearchForm.setDistanceShoppingMax(300);
+		basicSearchForm.setDistanceShoppingMin(0);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	@Test
+	public void renovationYearInRange() {
+		basicSearchForm.setRenovationYearMax(0);
+		basicSearchForm.setRenovationYearMin(1900);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertTrue(searchAdInResults);
+	}
+	
+	@Test
+	public void renovationYearOutOfRange() {
+		basicSearchForm.setRenovationYearMax(1980);
+		basicSearchForm.setRenovationYearMin(1900);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	@Test
+	public void buildYearInRange() {
+		basicSearchForm.setBuildYearMax(2015);
+		basicSearchForm.setBuildYearMin(1930);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertTrue(searchAdInResults);
+	}
+	
+	@Test
+	public void buildYearOutOfRange() {
+		basicSearchForm.setBuildYearMax(0);
+		basicSearchForm.setBuildYearMin(1980);
+		
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	
+	@Test
+	public void searchDishwasher() {
+		basicSearchForm.setDishwasher(true);
+				
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	
+	@Test
+	public void searchElevator() {
+		basicSearchForm.setElevator(true);
+				
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	@Test
+	public void searchGarage() {
+		basicSearchForm.setGarage(true);
+				
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	@Test
+	public void searchBalcony() {
+		basicSearchForm.setBalcony(true);
+				
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	@Test
+	public void searchParking() {
+		basicSearchForm.setParking(true);
+				
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	
+	@Test
+	public void infrastructureTypeMatch() {
+		basicSearchForm.setInfrastructureType(InfrastructureType.SATELLITE);
+				
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertTrue(searchAdInResults);
+	}
+	@Test
+	public void infrastructureTypeNotMatch() {
+		basicSearchForm.setInfrastructureType(InfrastructureType.CABLE);
+				
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	
+	@Test
+	public void flatTypeNotMatch() {
+		Type[] types = { Type.HOUSE};
+		basicSearchForm.setTypes(types);
+				
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	
+	@Test
+	public void moveInDateInRange() {
+		basicSearchForm.setEarliestMoveInDate("01-11-2015");
+		basicSearchForm.setLatestMoveInDate("01-02-2016");
+				
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertTrue(searchAdInResults);
+	}
+	
+	@Test
+	public void moveInDateOutOfRange() {
+		basicSearchForm.setEarliestMoveInDate("02-01-2016");
+		basicSearchForm.setLatestMoveInDate("05-01-2016");
+				
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertFalse(searchAdInResults);
+	}
+	
+	@Test
+	public void onlyEarliestMoveDateSet() {
+		basicSearchForm.setEarliestMoveInDate("02-11-2015");
+
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertTrue(searchAdInResults);
+	}
+	
+	@Test
+	public void onlyLatestMoveDateSet() {
+		basicSearchForm.setLatestMoveInDate("05-01-2016");
+				
+		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
+		
+		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
+		
+		assertTrue(searchAdInResults);
+	}
+	
+	
+	// checks if the created ad "searchAd" is returned by the filter function
+	private Boolean isSearchAdInResults(Ad searchAd, Iterable<Ad> filteredAd) {
+		Boolean searchAdContained = false;
+		for (Ad ad : filteredAd) {
+			if (searchAd.equals(ad)) { // string is title of "searchAdTest"
+				searchAdContained = true;
+			}
+		}
+		return searchAdContained;
+	}
+	
+	
+	//---------------------------------------
+	// Helper methods
+	//---------------------------------------
 	private User createUser(String email, String password, String firstName, String lastName, Gender gender) {
 		User user = new User();
 		user.setUsername(email);
@@ -593,6 +1026,15 @@ public class AdServiceTest {
 		role.setUser(user);
 		user.addUserRole(role);
 		return user;
+	}
+	private Date convertStringToDate(String date) {
+		try {
+			DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+			Date earliestMoveInDate = formatter.parse(date);
+			return earliestMoveInDate;
+		} catch (Exception e) {
+		}
+		return null;
 	}
 	
 
