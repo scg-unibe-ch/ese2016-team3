@@ -41,7 +41,7 @@ import ch.unibe.ese.team3.model.dao.UserDao;
 import ch.unibe.ese.team3.util.ListUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/config/springMVC.xml",
+@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/config/springMVC_test.xml",
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml" })
 
