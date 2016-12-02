@@ -1,10 +1,11 @@
 package ch.unibe.ese.team3.controller.service;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -64,9 +65,9 @@ public class EnquiryServiceTest {
 	
 	User thomyG;
 	
-	Ad oltenResidence;
+	Ad oltenResidence, aarauResidence;
 	
-	Visit visit1, visit2;
+	Visit visit1, visit2, visit3, visit4;
 	
 	@Before
 	public void createVisits() throws Exception {		
@@ -108,6 +109,37 @@ public class EnquiryServiceTest {
 		visit2.setStartTimestamp(formatter.parse("18.12.2014 10:00"));
 		visit2.setEndTimestamp(formatter.parse("18.12.2014 12:00"));
 		visitDao.save(visit2);
+		
+		//save an ad
+		Date date2 = new Date();
+		aarauResidence= new Ad();
+		aarauResidence.setZipcode(5000);
+		aarauResidence.setMoveInDate(date2);
+		aarauResidence.setCreationDate(date2);
+		aarauResidence.setPrice(1200);
+		aarauResidence.setSquareFootage(42);
+		//aarauResidence.setStudio(false);
+		aarauResidence.setRoomDescription("blah");
+		aarauResidence.setUser(thomyG);
+		aarauResidence.setTitle("Aarau Residence");
+		aarauResidence.setStreet("Industriestrasse 4");
+		aarauResidence.setCity("Aarau");
+		aarauResidence.setBalcony(false);
+		aarauResidence.setGarage(false);
+		adDao.save(aarauResidence);
+
+		//ad two possible visiting times ("visits") to the ad
+		visit3 = new Visit();
+		aarauResidence.addVisit(visit3);
+		visit3.setStartTimestamp(formatter.parse("16.12.2014 10:00"));
+		visit3.setEndTimestamp(formatter.parse("16.12.2014 12:00"));
+		visitDao.save(visit3);
+
+		visit3 = new Visit();
+		aarauResidence.addVisit(visit3);
+		visit3.setStartTimestamp(formatter.parse("18.12.2014 10:00"));
+		visit3.setEndTimestamp(formatter.parse("18.12.2014 12:00"));
+		visitDao.save(visit3);
 	}
 	
 	@Test
@@ -175,6 +207,111 @@ public class EnquiryServiceTest {
 		
 		assertEquals(VisitEnquiryState.OPEN, visitEnquiryDao.findOne(enquiry.getId()).getState());
 		assertEquals(0, visitDao.findOne(visit1.getId()).getVisitors().size());
+	}
+	
+	@Test
+	public void getEnquiriesByRecipientNoEnquiries(){
+		Iterable<VisitEnquiry> enquiries = enquiryService.getEnquiriesByRecipient(thomyG);
+		assertEquals(0, ListUtils.countIterable(enquiries));
+	}
+	
+	@Test
+	public void getEnquiriesByRecipientSingleEnquiry(){
+		User ueliMaurer = createUser("ueli@maurer.ch", "password", "Ueli", "Maurer",
+				Gender.MALE);
+		ueliMaurer.setAboutMe("Wallis rocks");
+		userDao.save(ueliMaurer);
+		
+		enquiryService.createEnquiry(visit1, ueliMaurer);
+		
+		Iterable<VisitEnquiry> enquiries = enquiryService.getEnquiriesByRecipient(thomyG);
+		assertEquals(1, ListUtils.countIterable(enquiries));
+	}
+	
+	@Test
+	public void getEnquiriesByRecipientMultipleEnquiries(){
+		User ueliMaurer = createUser("ueli@maurer.ch", "password", "Ueli", "Maurer",
+				Gender.MALE);
+		ueliMaurer.setAboutMe("Wallis rocks");
+		userDao.save(ueliMaurer);
+		
+		User alainBerset = createUser("alain@berset.ch", "password", "Alain", "Berset",
+				Gender.MALE);
+		alainBerset.setAboutMe("Vive la vaudoise!");
+		userDao.save(alainBerset);
+		
+		enquiryService.createEnquiry(visit1, ueliMaurer);
+		enquiryService.createEnquiry(visit1, alainBerset);
+		
+		List<VisitEnquiry> enquiries = ListUtils.convertToList(enquiryService.getEnquiriesByRecipient(thomyG));
+		assertEquals(2, enquiries.size());
+		
+		assertEquals(alainBerset, enquiries.get(0).getSender());
+		assertEquals(ueliMaurer, enquiries.get(1).getSender());
+	}
+	
+	@Test
+	public void getEnquiriesForAdBySenderNoEnquiries(){
+		User ueliMaurer = createUser("ueli@maurer.ch", "password", "Ueli", "Maurer",
+				Gender.MALE);
+		ueliMaurer.setAboutMe("Wallis rocks");
+		userDao.save(ueliMaurer);
+		
+		Map<Long, VisitEnquiry> enquiries = enquiryService.getEnquiriesForAdBySender(oltenResidence, ueliMaurer);
+		
+		assertTrue(enquiries.isEmpty());
+	}
+	
+	@Test
+	public void getEnquiriesForAdBySenderSingleEnquiry(){
+		User ueliMaurer = createUser("ueli@maurer.ch", "password", "Ueli", "Maurer",
+				Gender.MALE);
+		ueliMaurer.setAboutMe("Wallis rocks");
+		userDao.save(ueliMaurer);
+		
+		enquiryService.createEnquiry(visit1, ueliMaurer);
+		
+		Map<Long, VisitEnquiry> enquiries = enquiryService.getEnquiriesForAdBySender(oltenResidence, ueliMaurer);
+		
+		assertFalse(enquiries.isEmpty());
+		assertTrue(enquiries.containsKey(visit1.getId()));
+		assertEquals(1, enquiries.size());
+	}
+	
+	@Test
+	public void getEnquiriesForAdBySenderMultipleEnquiries(){
+		User ueliMaurer = createUser("ueli@maurer.ch", "password", "Ueli", "Maurer",
+				Gender.MALE);
+		ueliMaurer.setAboutMe("Wallis rocks");
+		userDao.save(ueliMaurer);
+		
+		enquiryService.createEnquiry(visit1, ueliMaurer);
+		enquiryService.createEnquiry(visit2, ueliMaurer);
+		
+		Map<Long, VisitEnquiry> enquiries = enquiryService.getEnquiriesForAdBySender(oltenResidence, ueliMaurer);
+		
+		assertFalse(enquiries.isEmpty());
+		assertTrue(enquiries.containsKey(visit1.getId()));
+		assertTrue(enquiries.containsKey(visit2.getId()));
+		assertEquals(2, enquiries.size());
+	}
+	
+	@Test
+	public void getEnquiriesForAdBySenderMultipleEnquiriesForDifferentAds(){
+		User ueliMaurer = createUser("ueli@maurer.ch", "password", "Ueli", "Maurer",
+				Gender.MALE);
+		ueliMaurer.setAboutMe("Wallis rocks");
+		userDao.save(ueliMaurer);
+		
+		enquiryService.createEnquiry(visit1, ueliMaurer);
+		enquiryService.createEnquiry(visit3, ueliMaurer);
+		
+		Map<Long, VisitEnquiry> enquiries = enquiryService.getEnquiriesForAdBySender(oltenResidence, ueliMaurer);
+		
+		assertFalse(enquiries.isEmpty());
+		assertTrue(enquiries.containsKey(visit1.getId()));
+		assertFalse(enquiries.containsKey(visit3.getId()));
+		assertEquals(1, enquiries.size());
 	}
 	
 	//Lean user creating method
