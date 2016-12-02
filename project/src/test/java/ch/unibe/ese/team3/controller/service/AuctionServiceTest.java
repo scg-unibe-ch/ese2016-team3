@@ -11,6 +11,8 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
 
 import javax.transaction.Transactional;
 
@@ -22,16 +24,21 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Bid;
 import ch.unibe.ese.team3.model.BuyMode;
+import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.InfrastructureType;
+import ch.unibe.ese.team3.model.PurchaseRequest;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
+import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.AdDao;
 import ch.unibe.ese.team3.model.dao.BidDao;
 import ch.unibe.ese.team3.model.dao.PurchaseRequestDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
+import ch.unibe.ese.team3.util.ListUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/config/springMVC.xml",
@@ -71,8 +78,14 @@ public class AuctionServiceTest {
 	@Before
 	public void setUp() throws ParseException {
 		
-		bidder1 = userDao.findByUsername("ese@unibe.ch");
-		bidder2 = userDao.findByUsername("user@bern.com");
+		bidder1 = createUser("bidder1@ithaca.com", "password", "Bidder1", "Bidder1", Gender.MALE, AccountType.BASIC);
+		bidder2 = createUser("bidder2@ithaca.com", "password", "Bidder1", "Bidder1", Gender.MALE, AccountType.BASIC);
+		bidder1.setAboutMe("About");
+		bidder2.setAboutMe("About");
+		
+		userDao.save(bidder1);
+		userDao.save(bidder2);
+		
 		purchaser1 = bidder1;
 		purchaser2 = bidder2;
 		auctionOwner = userDao.findByUsername("jane@doe.com");
@@ -210,7 +223,7 @@ public class AuctionServiceTest {
 		
 		assertTrue(buySuccessful);
 		
-		int count = countIterable(purchaseRequestDao.findByAd(auctionAd));		
+		int count = ListUtils.countIterable(purchaseRequestDao.findByAd(auctionAd));		
 		assertEquals(1, count);
 	}
 	
@@ -222,7 +235,7 @@ public class AuctionServiceTest {
 		assertTrue(buySuccessful1);
 		assertTrue(buySuccessful2);
 		
-		int count = countIterable(purchaseRequestDao.findByAd(auctionAd));		
+		int count = ListUtils.countIterable(purchaseRequestDao.findByAd(auctionAd));		
 		assertEquals(2, count);
 	}
 	
@@ -341,15 +354,136 @@ public class AuctionServiceTest {
 	public void userHasNotSentPurchaseRequestForAd(){
 		assertFalse(auctionService.hasUserSentBuyRequest(auctionAd, purchaser1));
 	}
+	
+	@Test
+	public void getBidsForAdNoBids(){
+		List<Bid> bids = auctionService.getBidsForAd(auctionAd);
+		assertEquals(0, bids.size());
+	}
+	
+	@Test
+	public void getBidsForAdWithSingleBid(){
+		int amount = 901000;
 
-	private <T> int countIterable(Iterable<T> iterable) {
-		int count = 0;
-		Iterator<T> iter = iterable.iterator(); 
-		while (iter.hasNext()){
-			count++;
-			iter.next();
+		auctionService.checkAndBid(auctionAd, bidder1, amount);
+		
+		List<Bid> bids = auctionService.getBidsForAd(auctionAd);
+		assertEquals(1, bids.size());
+	}
+	
+	@Test
+	public void getBidsForAdWithMultipleBid(){
+		int amount1 = 901000;
+		int amount2 = 902000;
+
+		auctionService.checkAndBid(auctionAd, bidder1, amount1);
+		auctionService.checkAndBid(auctionAd, bidder2, amount2);
+		
+		List<Bid> bids = auctionService.getBidsForAd(auctionAd);
+		assertEquals(2, bids.size());
+		
+		assertEquals(amount2, bids.get(0).getAmount());
+		assertEquals(amount1, bids.get(1).getAmount());
+	}
+	
+	@Test
+	public void getPurchaseRequestsForAdNoRequests(){
+		List<PurchaseRequest> purchaseRequests = auctionService.getPurchaseRequestForAd(auctionAd);
+		assertEquals(0, purchaseRequests.size());
+	}
+	
+	@Test
+	public void getPurchaseRequestsForAdWithSingleRequest(){
+		auctionService.checkAndBuy(auctionAd, bidder1);
+		
+		List<PurchaseRequest> purchaseRequests = auctionService.getPurchaseRequestForAd(auctionAd);
+		assertEquals(1, purchaseRequests.size());
+	}
+	
+	@Test
+	public void getPurchaseRequestsForAdWithMultipleRequests(){
+		auctionService.checkAndBuy(auctionAd, bidder1);
+		auctionService.checkAndBuy(auctionAd, bidder2);
+		
+		List<PurchaseRequest> purchaseRequests = auctionService.getPurchaseRequestForAd(auctionAd);
+		assertEquals(2, purchaseRequests.size());
+	}
+	
+	@Test
+	public void getMostRecentBidsLessThanTenBids(){
+		int amount1 = 901000;
+		int amount2 = 902000;
+
+		auctionService.checkAndBid(auctionAd, bidder1, amount1);
+		auctionService.checkAndBid(auctionAd, bidder2, amount2);
+		
+		List<Bid> bids = auctionService.getMostRecentBidsForAd(auctionAd);
+		assertEquals(2, bids.size());
+		
+		assertEquals(amount2, bids.get(0).getAmount());
+		assertEquals(amount1, bids.get(1).getAmount());
+	}
+	
+	@Test
+	public void getMostRecentBidsMoreThanTenBids(){
+		int amount = 901000;
+		
+		User[] users = new User[]{bidder1, bidder2};
+		
+		for (int i = 0; i < 20; i++){
+			auctionService.checkAndBid(auctionAd, users[i%2], amount);
+			amount += 1000;
 		}
 		
-		return count;
+		List<Bid> bids = auctionService.getMostRecentBidsForAd(auctionAd);
+		assertEquals(10, bids.size());
+		
+		assertEquals(amount - 1000, bids.get(0).getAmount());
+		assertEquals(amount - 10000, bids.get(9).getAmount());
+	}
+	
+	@Test
+	public void getBidsByUserNoBids(){
+		Map<Ad, SortedSet<Bid>> bids = auctionService.getBidsByUser(bidder1);
+		assertTrue(bids.isEmpty());
+	}
+	
+	@Test
+	public void getBidsByUserSingleBid(){
+		auctionService.checkAndBid(auctionAd, bidder1, 901000);
+		
+		Map<Ad, SortedSet<Bid>> bids = auctionService.getBidsByUser(bidder1);
+		assertTrue(bids.containsKey(auctionAd));
+		assertEquals(1, bids.get(auctionAd).size());
+		assertEquals(901000, bids.get(auctionAd).first().getAmount());
+	}
+	
+	@Test
+	public void getBidsByUserMultipleBids(){
+		auctionService.checkAndBid(auctionAd, bidder1, 901000);
+		auctionService.checkAndBid(auctionAd, bidder1, 902000);
+		
+		Map<Ad, SortedSet<Bid>> bids = auctionService.getBidsByUser(bidder1);
+		assertTrue(bids.containsKey(auctionAd));
+		assertEquals(2, bids.get(auctionAd).size());
+		assertEquals(902000, bids.get(auctionAd).first().getAmount());
+	}
+	
+	public User createUser(String email, String password, String firstName,
+			String lastName, Gender gender, AccountType type) {
+		User user = new User();
+		user.setUsername(email);
+		user.setPassword(password);
+		user.setEmail(email);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setEnabled(true);
+		user.setGender(gender);
+		UserRole role = new UserRole();
+		role.setRole("ROLE_USER");
+		role.setUser(user);
+		user.addUserRole(role);
+		user.setAccountType(type);
+		return user;
 	}
 };

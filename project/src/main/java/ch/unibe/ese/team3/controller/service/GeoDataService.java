@@ -1,9 +1,9 @@
 package ch.unibe.ese.team3.controller.service;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.jolbox.bonecp.BoneCPDataSource;
 
+import ch.unibe.ese.team3.base.BaseService;
 import ch.unibe.ese.team3.dto.Location;
 
 /**
@@ -19,7 +20,7 @@ import ch.unibe.ese.team3.dto.Location;
  * no ORM is involved.
  */
 @Service
-public class GeoDataService {
+public class GeoDataService extends BaseService {
 
 	@Autowired
 	private BoneCPDataSource mainDataSource;
@@ -27,8 +28,24 @@ public class GeoDataService {
 	/**
 	 * Returns a list of all locations in the database.
 	 */
-	public List<Location> getAllLocations() {
-		return executeQuery("SELECT zip.zip , zip.location, zip.lat, zip.lon, zip.department FROM `zipcodes` zip");
+	public List<Location> getAllLocations() {		
+		PreparedStatement statement = null;
+
+		try {
+			statement = getConnection().prepareStatement(
+					"SELECT zip.zip , zip.location, zip.lat, zip.lon, zip.department FROM `zipcodes` zip");
+			return executeQuery(statement);
+		} catch (SQLException ex) {
+			logger.error(String.format("Failed to get all locations from DB. Message: %s", ex.getMessage()));
+		} finally {
+			if (statement != null) {
+				try {
+					statement.getConnection().close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		return new ArrayList<Location>();
 	}
 
 	/**
@@ -40,12 +57,24 @@ public class GeoDataService {
 	 * @return a list of all locations that match the given city
 	 */
 	public List<Location> getLocationsByCity(String city) {
-		if (city.contains("\'")) {
-			city = "";
-		}
-		return executeQuery("SELECT zip.zip , zip.location, zip.lat, zip.lon, zip.department FROM `zipcodes` zip WHERE location = '"
-				+ city + "' ORDER BY zip ASC;");
+		PreparedStatement statement = null;
 
+		try {
+			statement = getConnection().prepareStatement(
+					"SELECT zip.zip , zip.location, zip.lat, zip.lon, zip.department FROM `zipcodes` zip WHERE location = ?");
+			statement.setString(1, city);
+			return executeQuery(statement);
+		} catch (SQLException ex) {
+			logger.error(String.format("Failed to get locations by city '%s' from DB. Message: %s", city, ex.getMessage()));
+		} finally {
+			if (statement != null) {
+				try {
+					statement.getConnection().close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		return new ArrayList<Location>();
 	}
 
 	/**
@@ -56,46 +85,39 @@ public class GeoDataService {
 	 * @return a list of all locations that match
 	 */
 	public List<Location> getLocationsByZipcode(int zipcode) {
-		return executeQuery("SELECT zip.zip, zip.location, zip.lat, zip.lon, zip.department FROM `zipcodes` zip WHERE zip = "
-				+ zipcode + ";");
-	}
 
-	private List<Location> executeQuery(String query) {
-		Connection connection = null;
-		Statement statement = null;
-		ResultSet resultSet = null;
-		List<Location> locationList = new ArrayList<>();
+		PreparedStatement statement = null;
+
 		try {
-			connection = mainDataSource.getConnection();
-			statement = connection.createStatement();
-
-			resultSet = statement.executeQuery(query);
-			locationList = writeResultSet(resultSet, locationList);
-
+			statement = getConnection().prepareStatement(
+					"SELECT zip.zip, zip.location, zip.lat, zip.lon, zip.department FROM `zipcodes` zip WHERE zip = ?");
+			statement.setInt(1, zipcode);
+			return executeQuery(statement);
 		} catch (SQLException ex) {
-			System.out.println("Could not read locations from database.");
-			ex.printStackTrace();
+			logger.error(String.format("Failed to get locations by zipcode %d from DB. Message: %s", ex.getMessage()));
 		} finally {
-			try {
-				if (statement != null) {
-					statement.close();
+			if (statement != null) {
+				try {
+					statement.getConnection().close();
+				} catch (SQLException e) {
 				}
-				if (statement != null) {
-					connection.close();
-				}
-			} catch (SQLException ex) {
-				// ignore
 			}
 		}
+		return new ArrayList<Location>();
+	}
 
+	private List<Location> executeQuery(PreparedStatement statement) throws SQLException {
+		ResultSet resultSet = null;
+		List<Location> locationList = new ArrayList<>();
+		resultSet = statement.executeQuery();
+		locationList = writeResultSet(resultSet, locationList);
 		return locationList;
 	}
 
 	/**
 	 * Fills the given list with the results from resultSet.
 	 */
-	private List<Location> writeResultSet(ResultSet resultSet,
-			List<Location> locationList) throws SQLException {
+	private List<Location> writeResultSet(ResultSet resultSet, List<Location> locationList) throws SQLException {
 		while (resultSet.next()) {
 			int zip = resultSet.getInt("zip");
 			String city = resultSet.getString("location");
@@ -114,5 +136,9 @@ public class GeoDataService {
 		}
 
 		return locationList;
+	}
+
+	private Connection getConnection() throws SQLException {
+		return mainDataSource.getConnection();
 	}
 }
