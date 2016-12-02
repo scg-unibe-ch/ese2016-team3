@@ -73,7 +73,7 @@ public class AlertServiceTest {
 	// ---------------------------------
 	// Test individual Alert Criteria
 	
-	Alert alert;
+	AlertForm alertForm;
 
 	private User basicUserWithAlert;
 
@@ -90,7 +90,7 @@ public class AlertServiceTest {
 				"basicUserWithAlert", Gender.MALE, AccountType.BASIC);
 		userDao.save(basicUserWithAlert);
 	
-		premiumUserWithAlert = createUser("otherUserWithAlert@ka.ch", "password", "premiumUserWithAlert",
+		premiumUserWithAlert = createUser("premiumUserWithAlert@ka.ch", "password", "premiumUserWithAlert",
 				"premiumUserWithAlert", Gender.MALE, AccountType.PREMIUM);
 		userDao.save(premiumUserWithAlert);
 	
@@ -133,17 +133,20 @@ public class AlertServiceTest {
 		adDao.save(normalAd);
 	
 		// set basic alert criteria
-		alert = new Alert();
-		Type[] Types = { Type.APARTMENT }; // change to APARTMENT -> error
-		List<AlertType> alertTypes = createAlertTypes(Types);
+		alertForm = new AlertForm();
+		
+		List<Type> types = new ArrayList<Type>();
+		types.add(Type.APARTMENT);
+		
 	
-		alert.setUser(premiumUserWithAlert);
-		alert.setBuyMode(BuyMode.BUY);
-		addAlertTypesToAlert(alert, alertTypes);
-		alert.setCity("Bern");
-		alert.setZipcode(3000);
-		alert.setPrice(2000000);
-		alert.setRadius(300);
+		alertForm.setUser(premiumUserWithAlert);
+		alertForm.setBuyMode(BuyMode.BUY);
+		alertForm.setTypes(types);
+		alertForm.setCity("3001 - Bern");
+		//alertForm.setZipCode(3001);
+		alertForm.setPrice(2000000);
+		alertForm.setRadius(300);
+		alertForm.setExtendedAlert(true);
 	}
 
 	@Test
@@ -248,7 +251,7 @@ public class AlertServiceTest {
 		alert.setPrice(1500);
 		alert.setRadius(100);
 		addAlertTypesToAlert(alert, alertTypes);
-		alertDao.save(alert);
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
 
 		alert = new Alert();
 		alert.setUser(adolfOgi);
@@ -258,7 +261,7 @@ public class AlertServiceTest {
 		alert.setPrice(1000);
 		alert.setRadius(5);
 		addAlertTypesToAlert(alert, alertTypes2);
-		alertDao.save(alert);
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
 
 		// copy alerts to a list
 		Iterable<Alert> alerts = alertService.getAlertsByUser(adolfOgi);
@@ -310,7 +313,7 @@ public class AlertServiceTest {
 		alert.setZipcode(3000);
 		alert.setPrice(1500);
 		alert.setRadius(100);
-		alertDao.save(alert);
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
 
 		alert = new Alert();
 		alert.setUser(thomyF);
@@ -320,7 +323,7 @@ public class AlertServiceTest {
 		alert.setZipcode(3002);
 		alert.setPrice(1000);
 		alert.setRadius(5);
-		alertDao.save(alert);
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
 
 		Iterable<Alert> alerts = alertService.getAlertsByUser(userDao.findByUsername("thomy@f.ch"));
 		for (Alert returnedAlert : alerts)
@@ -380,7 +383,7 @@ public class AlertServiceTest {
 		alert.setPrice(1500);
 		alert.setRadius(100);
 
-		alertDao.save(alert);
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
 
 		// save ad, which triggers alert of alertMessageReceiver
 		// save an ad
@@ -448,7 +451,7 @@ public class AlertServiceTest {
 		alert.setZipcode(3000);
 		alert.setPrice(1500);
 		alert.setRadius(100);
-		alertDao.save(alert);
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
 
 		// create Ad
 		Date date = new Date();
@@ -630,7 +633,7 @@ public class AlertServiceTest {
 		alert10.setLatestMoveInDate(convertStringToDate("10-02-2015"));
 
 		// save Alerts
-		alertDao.save(alert);
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
 		alertDao.save(alert2);
 		alertDao.save(alert3);
 		alertDao.save(alert4);
@@ -694,14 +697,14 @@ public class AlertServiceTest {
 
 	// ---------------------------------
 	// Test individual Alert Criteria
-
+	
 	@Test
-	public void floorlevelInRange() {
+	public void floorlevelOutOfRange() {
 		// should trigger if Ad is placed
-		alert.setFloorLevelMin(1);
-		alert.setFloorLevelMax(3);
-
-		alertDao.save(alert);
+		alertForm.setFloorLevelMin(5);
+		alertForm.setFloorLevelMax(7);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
 
 		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
 		assertEquals(0, ListUtils.countIterable(messagesBefore));
@@ -709,18 +712,32 @@ public class AlertServiceTest {
 		alertService.triggerAlerts(normalAd);
 
 		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
-		assertEquals(1, ListUtils.countIterable(messagesAfter));
-
-		alertDao.delete(alert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
 	}
 	
 	@Test
-	public void floorlevelOutOfRange() {
+	public void floorlevelInRange() {
 		// should trigger if Ad is placed
-		alert.setFloorLevelMin(5);
-		alert.setFloorLevelMax(7);
+		alertForm.setFloorLevelMin(1);
+		alertForm.setFloorLevelMax(3);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+		
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
 
-		alertDao.save(alert);
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(1, ListUtils.countIterable(messagesAfter));	
+	}
+		
+	@Test
+	public void squareFootageOutOfRange() {
+		alertForm.setSquareFootageMax(90);
+		alertForm.setSquareFootageMin(80);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
 
 		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
 		assertEquals(0, ListUtils.countIterable(messagesBefore));
@@ -730,17 +747,458 @@ public class AlertServiceTest {
 		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
 		assertEquals(0, ListUtils.countIterable(messagesAfter));
 
-		alertDao.delete(alert);
+		
+	}
+	@Test
+	public void numberOfBathInRange() {
+		alertForm.setNumberOfBathMax(4);
+		alertForm.setNumberOfBathMin(1);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(1, ListUtils.countIterable(messagesAfter));
+
+		
 	}
 	
+	@Test
+	public void numberOfBathOutOfRange() {
+		alertForm.setNumberOfBathMax(1);
+		alertForm.setNumberOfBathMin(0);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	@Test
+	public void numberOfRoomsInRange() {
+		alertForm.setNumberOfRoomsMax(5);
+		alertForm.setNumberOfRoomsMin(0);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(1, ListUtils.countIterable(messagesAfter));
+
+		
+	}
 	
+	@Test
+	public void numberOfRoomsOutOfRange() {
+		alertForm.setNumberOfRoomsMax(4);
+		alertForm.setNumberOfRoomsMin(4);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	@Test
+	public void distancePublicTransportInRange() {
+		alertForm.setDistancePublicTransportMax(2000);
+		alertForm.setDistancePublicTransportMin(800);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(1, ListUtils.countIterable(messagesAfter));
+
+		
+	}
 	
+	@Test
+	public void distancePublicTransportOutOfRange() {
+		alertForm.setDistancePublicTransportMax(2000);
+		alertForm.setDistancePublicTransportMin(1000);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+
+		
+	}
 	
+	@Test
+	public void distanceSchoolInRange() {
+		alertForm.setDistanceSchoolMax(200);
+		alertForm.setDistanceSchoolMin(0);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(1, ListUtils.countIterable(messagesAfter));
+
+		
+	}
 	
+	@Test
+	public void distanceSchoolOutOfRange() {
+		alertForm.setDistanceSchoolMax(2000);
+		alertForm.setDistanceSchoolMin(200);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	@Test
+	public void distanceShoppingInRange() {
+		alertForm.setDistanceShoppingMax(0);
+		alertForm.setDistanceShoppingMin(400);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(1, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	
+	@Test
+	public void distanceShoppingOutOfRange() {
+		alertForm.setDistanceShoppingMax(300);
+		alertForm.setDistanceShoppingMin(0);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	
+	@Test
+	public void renovationYearInRange() {
+		alertForm.setRenovationYearMax(0);
+		alertForm.setRenovationYearMin(1900);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(1, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	
+	@Test
+	public void renovationYearOutOfRange() {
+		alertForm.setRenovationYearMax(1980);
+		alertForm.setRenovationYearMin(1900);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	
+	@Test
+	public void buildYearInRange() {
+		alertForm.setBuildYearMax(2015);
+		alertForm.setBuildYearMin(1930);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(1, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	
+	@Test
+	public void buildYearOutOfRange() {
+		alertForm.setBuildYearMax(0);
+		alertForm.setBuildYearMin(1980);
+		
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	
+	@Test
+	public void searchDishwasher() {
+		alertForm.setDishwasher(true);
+				
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+	}
+	
+	@Test
+	public void searchElevator() {
+		alertForm.setElevator(true);
+				
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	@Test
+	public void searchGarage() {
+		alertForm.setGarage(true);
+				
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	@Test
+	public void searchBalcony() {
+		alertForm.setBalcony(true);
+				
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	@Test
+	public void searchParking() {
+		alertForm.setParking(true);
+				
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	
+	@Test
+	public void infrastructureTypeMatch() {
+		alertForm.setInfrastructureType(InfrastructureType.SATELLITE);
+				
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(1, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	@Test
+	public void infrastructureTypeNotMatch() {
+		alertForm.setInfrastructureType(InfrastructureType.CABLE);
+				
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	
+	@Test
+	public void flatTypeNotMatch() {
+		List<Type> types = new ArrayList<Type>();
+		types.add(Type.HOUSE);
+		
+		alertForm.setTypes(types);
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+		
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	
+	@Test
+	public void moveInDateInRange() {
+		alertForm.setEarliestMoveInDate("01-11-2015");
+		alertForm.setLatestMoveInDate("01-02-2016");
+				
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(1, ListUtils.countIterable(messagesAfter));	
+	}
+	
+	@Test
+	public void moveInDateOutOfRange() {
+		alertForm.setEarliestMoveInDate("02-01-2016");
+		alertForm.setLatestMoveInDate("05-01-2016");
+				
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	
+	@Test
+	public void onlyEarliestMoveDateSet() {
+		alertForm.setEarliestMoveInDate("02-11-2015");
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(1, ListUtils.countIterable(messagesAfter));
+
+		
+	}
+	
+	@Test
+	public void onlyLatestMoveDateSet() {
+		alertForm.setLatestMoveInDate("05-01-2016");
+		alertService.saveFrom(alertForm, premiumUserWithAlert);		
+		
+
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(normalAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(1, ListUtils.countIterable(messagesAfter));
+	}
 	
 	// ------------------------------
 	// Helper Methods
-
+	// ------------------------------
+	
 	// Lean user creating method
 	User createUser(String email, String password, String firstName, String lastName, Gender gender,
 			AccountType accountType) {
