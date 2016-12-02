@@ -141,6 +141,9 @@ public class EditAdController {
 			model = new ModelAndView("redirect:../ad?id=" + ad.getId());
 			redirectAttributes.addFlashAttribute("confirmationMessage",
 					"Ad edited successfully. You can take a look at it below.");
+			if(ad.getLatitude() == null && ad.getLongitude() == null){
+				redirectAttributes.addFlashAttribute("warningMessage", "Please reconsider the adress, there were no coordinates found");
+			}
 		}
 		else {
 			Ad ad = adService.getAdById(adId);

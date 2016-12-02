@@ -153,9 +153,18 @@ public class PlaceAdController {
 			// reset the picture uploader
 			this.pictureUploader = null;
 
+			
+			
+			
 			model = new ModelAndView("redirect:../ad?id=" + ad.getId());
 			redirectAttributes.addFlashAttribute("confirmationMessage",
 					"Ad placed successfully. You can take a look at it below.");
+			
+			if(ad.getLatitude() == null && ad.getLongitude() == null){
+				redirectAttributes.addFlashAttribute("warningMessage", "Please reconsider the adress, there were no coordinates found");
+			}
+			
+			
 		} else {
 			model = new ModelAndView("placeAd");
 			model.addObject("types", Type.values());

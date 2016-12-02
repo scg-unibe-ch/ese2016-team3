@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -154,6 +155,61 @@ public class AdServiceTest {
 		//Hack to avoid datetime issues when comparing
 		assertEquals(result.toString(), ad.getMoveInDate().toString());
 	}
+	
+	@Test
+	public void saveFromWithCoordinatesAndVisitsTest() throws ParseException {
+		// Preparation
+		PlaceAdForm placeAdForm = new PlaceAdForm();
+		placeAdForm.setCity("3072 Ostermundigen");
+		placeAdForm.setType(Type.APARTMENT);
+		placeAdForm.setRoomDescription("Test Room description");
+		placeAdForm.setPrice(600);
+		placeAdForm.setSquareFootage(50);
+		placeAdForm.setTitle("title");
+		placeAdForm.setStreet("Forelstrasse 22");
+		placeAdForm.setMoveInDate("27-02-2015");
+
+		// new criteria
+		// test newly added fields
+		placeAdForm.setDishwasher(false);
+		placeAdForm.setBalcony(true);
+		placeAdForm.setGarage(false);
+		placeAdForm.setParking(false);
+		placeAdForm.setElevator(true);
+
+		
+		placeAdForm.setNumberOfRooms(5);
+		
+		List<String> visits = new ArrayList<String>();
+		String visit = "01-11-2016 ; 14:45 ; 15:55";
+		visits.add(visit);
+		
+		placeAdForm.setVisits(visits);
+	
+		ArrayList<String> filePaths = new ArrayList<>();
+		filePaths.add("/img/test/ad1_1.jpg");
+
+		User hans = createUser("hansilein@kanns.ch", "password", "Hans", "Kanns", Gender.MALE);
+		hans.setAboutMe("Hansi Hinterseer");
+		userDao.save(hans);
+
+		
+		adService.saveFrom(placeAdForm, filePaths, hans, BuyMode.BUY);
+
+		Ad ad = new Ad();
+		Iterable<Ad> ads = adService.getAllAds();
+		Iterator<Ad> iterator = ads.iterator();
+
+		while (iterator.hasNext()) {
+			ad = iterator.next();
+		}
+
+		
+		assertEquals(46.960744, ad.getLatitude(), 0.00001);
+		assertEquals(7.483973 , ad.getLongitude(), 0.00001);
+		
+		adDao.delete(ad);
+	}
 
 	@Test
 	public void getAdById() {
@@ -192,7 +248,19 @@ public class AdServiceTest {
 		assertEquals(1, adList.size());
 		assertEquals("Cheap studio in Bern!", adList.get(0).getTitle());
 	}
+	@Test
+	public void queryResultsWithouType() {
+		SearchForm searchForm = new SearchForm();
+		searchForm.setCity("3001 - Bern");
+		searchForm.setPrice(700);
+		searchForm.setRadius(5);
+		searchForm.setTypes(new Type[0]);
+		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
+		ArrayList<Ad> adList = (ArrayList<Ad>) queryedAds;
 
+		assertEquals(1, adList.size());
+		assertEquals("Cheap studio in Bern!", adList.get(0).getTitle());
+	}
 	
 	@Test
 	public void testFilterBalcony() {
@@ -390,7 +458,7 @@ public class AdServiceTest {
 				ArrayList<String> filePaths = new ArrayList<>();
 				filePaths.add("/img/test/ad1_1.jpg");
 
-				User hans = createUser("hans@kanns.ch", "password", "Hans", "Kanns", Gender.MALE);
+				User hans = createUser("hansi@kanns.ch", "password", "Hansi", "Kanns", Gender.MALE);
 				hans.setAboutMe("Hansi Hinterseer");
 				userDao.save(hans);
 
@@ -472,7 +540,7 @@ public class AdServiceTest {
 		ArrayList<String> filePaths = new ArrayList<>();
 		filePaths.add("/img/test/ad1_1.jpg");
 
-		User hans = createUser("hans@kanns.ch", "password", "Hans", "Kanns", Gender.MALE);
+		User hans = createUser("hänsu@kanns.ch", "password", "Hans", "Kanns", Gender.MALE);
 		hans.setAboutMe("Hansi Hinterseer");
 		userDao.save(hans);
 
