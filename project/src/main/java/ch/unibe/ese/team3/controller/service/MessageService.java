@@ -240,6 +240,30 @@ public class MessageService {
 			}
 		}
 	}
+	
+	@Scheduled(cron = "0 0 1 * * *")
+	public void sendPremiumExpiryMessage(){
+		Iterable <User> users = userDao.findAll();
+		Date now = new Date();
+		Date tomorrow = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(now);
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		tomorrow = calendar.getTime();
+		
+		for (User user : users){
+			if(user.isPremium()){
+				if(tomorrow.after(user.getPremiumExpiryDate())){
+					String subject = "Your Ithaca premium membership will expire tomorrow!";
+					String text = "Hi there, " + user.getFirstName()
+							+ "<br> <br> It seems as if your premium membership will expire tomorrow! <br>"
+							+ "<br> We hope you've enjoyed the benefits, if you still want to be a premium member, "
+							+ "please upgrade again after it expires.";
+					sendEmail(user, subject, text);
+				}
+			}
+		}
+	}
 
 	/**
 	 * at Midnight of the end date of the auction, the auction expires. sends
