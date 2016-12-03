@@ -1,11 +1,11 @@
 package ch.unibe.ese.team3.controller.service;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
-import java.util.Calendar;
 
 import ch.unibe.ese.team3.controller.pojos.forms.SignupForm;
 import ch.unibe.ese.team3.model.AccountType;

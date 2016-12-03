@@ -1,12 +1,11 @@
 package ch.unibe.ese.team3.controller.service;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.scheduling.annotation.Scheduled;
 
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.UserDao;
