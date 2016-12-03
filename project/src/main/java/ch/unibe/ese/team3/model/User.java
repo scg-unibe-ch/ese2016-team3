@@ -1,7 +1,7 @@
 package ch.unibe.ese.team3.model;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -82,7 +82,7 @@ public class User {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<UserRole> userRoles;
+	private List<UserRole> userRoles;
 
 	@Column(nullable = true)
 	private String googlePicture;
@@ -99,10 +99,31 @@ public class User {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Ad> bookmarkedAds;
 	
-	//new
 	@Fetch(FetchMode.SELECT)
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+	@OneToMany(mappedBy = "bidder", cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
 	private List<Bid> bids;
+	
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "purchaser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+	private List<PurchaseRequest> purchaseRequests;
+	
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<AlertResult> alertResults;
+	
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Message> sentMessages;
+	
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Message> receivedMessages;
+	
+	@ManyToMany(mappedBy = "visitors", fetch = FetchType.EAGER)
+	private List<Visit> visits;
+	
+	@OneToMany(mappedBy = "sender", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<VisitEnquiry> enquiries;
 
 	public long getId() {
 		return id;
@@ -225,12 +246,12 @@ public class User {
 		creditcardName = name;
 	}
 
-	public Set<UserRole> getUserRoles() {
+	public List<UserRole> getUserRoles() {
 		return userRoles;
 	}
-
-	public void setUserRoles(Set<UserRole> userRoles) {
-		this.userRoles = userRoles;
+	
+	public void addUserRole(UserRole role){
+		this.userRoles.add(role);
 	}
 
 	public String getPassword() {
@@ -277,16 +298,16 @@ public class User {
 		return bookmarkedAds;
 	}
 	
-	public void setBookmarkedAds(List<Ad> bookmarkedAds) {
-		this.bookmarkedAds = bookmarkedAds;
+	public void addBookmark(Ad ad){
+		this.bookmarkedAds.add(ad);
+	}
+	
+	public void removeBookmark(Ad ad){
+		this.bookmarkedAds.remove(ad);
 	}
 
 	public List<Bid> getBids() {
 		return bids;
-	}
-
-	public void setBids(List<Bid> bids) {
-		this.bids = bids;
 	}
 	
 	public PremiumChoice getPremiumChoice(){
@@ -295,6 +316,58 @@ public class User {
 	
 	public void setPremiumChoice(PremiumChoice premiumChoice){
 		this.premiumChoice = premiumChoice;
+	}
+
+	public List<AlertResult> getAlertResults() {
+		return alertResults;
+	}
+	
+	public void addAlertResult(AlertResult result){
+		if (!alertResults.contains(result)){
+			alertResults.add(result);
+			result.setUser(this);
+		}
+	}
+	
+	public void removeAlertResult(AlertResult result){
+		alertResults.remove(result);
+		result.setUser(null);
+	}
+
+	public List<Message> getSentMessages() {
+		return sentMessages;
+	}
+
+	public List<Message> getReceivedMessages() {
+		return receivedMessages;
+	}
+
+	public void setGoogleUser(boolean isGoogleUser) {
+		this.isGoogleUser = isGoogleUser;
+	}
+
+	public List<PurchaseRequest> getPurchaseRequests() {
+		return purchaseRequests;
+	}
+
+	public List<Visit> getVisits() {
+		return visits;
+	}
+
+	public List<VisitEnquiry> getEnquiries() {
+		return enquiries;
+	}
+	
+	public User(){
+		this.alertResults = new ArrayList<AlertResult>();
+		this.bookmarkedAds = new ArrayList<Ad>();
+		this.bids = new ArrayList<Bid>();
+		this.enquiries = new ArrayList<VisitEnquiry>();
+		this.purchaseRequests = new ArrayList<PurchaseRequest>();
+		this.receivedMessages = new ArrayList<Message>();
+		this.sentMessages = new ArrayList<Message>();
+		this.userRoles = new ArrayList<UserRole>();
+		this.visits = new ArrayList<Visit>();
 	}
 
 	@Override
@@ -318,6 +391,16 @@ public class User {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	public void addVisit(Visit visit) {
+		if (!visits.contains(visit)){
+			this.visits.add(visit);
+		}
+	}
+
+	public void removeVisit(Visit visit) {
+		this.visits.remove(visit);		
 	}
 	
 }

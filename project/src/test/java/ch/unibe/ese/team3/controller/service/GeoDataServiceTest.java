@@ -1,8 +1,10 @@
 package ch.unibe.ese.team3.controller.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +21,7 @@ import ch.unibe.ese.team3.dto.Location;
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml"})
 @WebAppConfiguration
+@Transactional
 public class GeoDataServiceTest {
 	
 	private List<Location> locations;
@@ -50,5 +53,27 @@ public class GeoDataServiceTest {
 		assertEquals("Ammerswil", locations.get(1).getCity());
 	}
 	
+	@Test
+	public void getSpecificLocationByCityWithUmlaut(){
+		locations = geoDataService.getLocationsByCity("Abländschen");
+		assertEquals(1, locations.size());
+	}
 	
+	@Test
+	public void getSpecificLocationByCitySpecialChar(){
+		locations = geoDataService.getLocationsByCity("L'Abbaye");
+		assertEquals(1, locations.size());
+	}
+	
+	@Test
+	public void getSpecificLocationByCityNoCity(){
+		locations = geoDataService.getLocationsByCity("Niemandshausen");
+		assertEquals(0, locations.size());
+	}
+	
+	@Test
+	public void getSpecficiLocationByZipNoCity(){
+		locations = geoDataService.getLocationsByZipcode(9999);
+		assertEquals(0, locations.size());
+	}
 }

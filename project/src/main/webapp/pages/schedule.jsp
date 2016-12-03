@@ -37,9 +37,9 @@
 									var="formattedVisitDay" type="date" pattern="dd.MM.yyyy" />
 								${formattedVisitDay}</td>
 							<td><fmt:formatDate value="${presentation.startTimestamp}"
-									var="formattedStartTime" type="date" pattern="hh.mm" /> <fmt:formatDate
+									var="formattedStartTime" type="date" pattern="HH.mm" /> <fmt:formatDate
 									value="${presentation.endTimestamp}" var="formattedEndTime"
-									type="date" pattern="hh.mm" /> ${formattedStartTime} -
+									type="date" pattern="HH.mm" /> ${formattedStartTime} -
 								${formattedEndTime}</td>
 							<td><a href="./visitors?visit=${presentation.id}">Visitor list</a></td>
 						</tr>
@@ -71,9 +71,9 @@
 									var="formattedVisitDay" type="date" pattern="dd.MM.yyyy" />
 								${formattedVisitDay}</td>
 							<td><fmt:formatDate value="${visit.startTimestamp}"
-									var="formattedStartTime" type="date" pattern="hh.mm" /> <fmt:formatDate
+									var="formattedStartTime" type="date" pattern="HH.mm" /> <fmt:formatDate
 									value="${visit.endTimestamp}" var="formattedEndTime"
-									type="date" pattern="hh.mm" /> ${formattedStartTime} -
+									type="date" pattern="HH.mm" /> ${formattedStartTime} -
 								${formattedEndTime}</td>
 						</tr>
 					</c:forEach>

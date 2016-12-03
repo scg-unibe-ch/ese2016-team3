@@ -2,6 +2,8 @@ package ch.unibe.ese.team3.controller.service;
 
 import static org.junit.Assert.assertEquals;
 
+import javax.transaction.Transactional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import ch.unibe.ese.team3.controller.pojos.forms.SignupForm;
-import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Gender;
-import ch.unibe.ese.team3.model.dao.*;
+import ch.unibe.ese.team3.model.User;
+import ch.unibe.ese.team3.model.dao.UserDao;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,6 +23,7 @@ import ch.unibe.ese.team3.model.dao.*;
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml"})
 @WebAppConfiguration
+@Transactional
 public class SignupServiceTest {
 	
 	@Autowired

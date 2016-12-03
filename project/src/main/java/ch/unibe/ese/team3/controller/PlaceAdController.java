@@ -31,9 +31,9 @@ import ch.unibe.ese.team3.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team3.controller.service.AdService;
 import ch.unibe.ese.team3.controller.service.AlertService;
 import ch.unibe.ese.team3.controller.service.UserService;
+import ch.unibe.ese.team3.dto.PictureMeta;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.BuyMode;
-import ch.unibe.ese.team3.dto.PictureMeta;
 import ch.unibe.ese.team3.model.Type;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.enums.Distance;
@@ -153,9 +153,18 @@ public class PlaceAdController {
 			// reset the picture uploader
 			this.pictureUploader = null;
 
+			
+			
+			
 			model = new ModelAndView("redirect:../ad?id=" + ad.getId());
 			redirectAttributes.addFlashAttribute("confirmationMessage",
 					"Ad placed successfully. You can take a look at it below.");
+			
+			if(ad.getLatitude() == null && ad.getLongitude() == null){
+				redirectAttributes.addFlashAttribute("warningMessage", "Please reconsider the adress, there were no coordinates found");
+			}
+			
+			
 		} else {
 			model = new ModelAndView("placeAd");
 			model.addObject("types", Type.values());

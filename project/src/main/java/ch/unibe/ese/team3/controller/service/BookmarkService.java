@@ -52,8 +52,6 @@ public class BookmarkService {
 	
 	// updates effectively the new List into DB
 	private void updateUser(List<Ad> bookmarkedAds, User user) {
-		user.setBookmarkedAds(bookmarkedAds);
-		userDao.save(user);
-	
+		userDao.save(user);	
 	}
 }

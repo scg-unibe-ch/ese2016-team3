@@ -47,6 +47,8 @@ public class MessageTestDataSaver {
 		message.setText("Hello Mr. Wayne\n\n" + getDummyText1());
 		message.setSender(jane);
 		message.setRecipient(testerMuster);
+		jane.getSentMessages().add(message);
+		testerMuster.getReceivedMessages().add(message);
 		message.setState(MessageState.UNREAD);
 		message.setDateSent(dateFormat.parse("12:02 24.02.2014"));
 		messageDao.save(message);
@@ -56,6 +58,8 @@ public class MessageTestDataSaver {
 		message.setText("Hey again Mr. Wayne\n\n" + getDummyText2());
 		message.setSender(bernerBaer);
 		message.setRecipient(testerMuster);
+		bernerBaer.getSentMessages().add(message);
+		testerMuster.getReceivedMessages().add(message);
 		message.setState(MessageState.UNREAD);
 		message.setDateSent(dateFormat.parse("12:30 24.02.2014"));
 		messageDao.save(message);
@@ -65,6 +69,8 @@ public class MessageTestDataSaver {
 		message.setText("Hello Mr. Bär\n " + getDummyText3());
 		message.setSender(oprah);
 		message.setRecipient(testerMuster);
+		oprah.getSentMessages().add(message);
+		testerMuster.getReceivedMessages().add(message);
 		message.setState(MessageState.READ);
 		message.setDateSent(dateFormat.parse("11:30 24.02.2014"));
 		messageDao.save(message);
@@ -75,6 +81,8 @@ public class MessageTestDataSaver {
 		message.setText("Hey Jane\n\n" + getDummyText2());
 		message.setSender(bernerBaer);
 		message.setRecipient(jane);
+		bernerBaer.getSentMessages().add(message);
+		jane.getReceivedMessages().add(message);
 		message.setState(MessageState.UNREAD);
 		message.setDateSent(dateFormat.parse("12:30 24.02.2014"));
 		messageDao.save(message);
@@ -84,6 +92,8 @@ public class MessageTestDataSaver {
 		message.setText("Whats up Jane?\n\n" + getDummyText3());
 		message.setSender(oprah);
 		message.setRecipient(jane);
+		oprah.getSentMessages().add(message);
+		jane.getReceivedMessages().add(message);
 		message.setState(MessageState.READ);
 		message.setDateSent(dateFormat.parse("11:30 24.02.2014"));
 		messageDao.save(message);
@@ -94,6 +104,8 @@ public class MessageTestDataSaver {
 		message.setText("Hey Huggy bear\n\n" + getDummyText1());
 		message.setSender(jane);
 		message.setRecipient(bernerBaer);
+		jane.getSentMessages().add(message);
+		bernerBaer.getReceivedMessages().add(message);
 		message.setState(MessageState.UNREAD);
 		message.setDateSent(dateFormat.parse("12:30 24.02.2014"));
 		messageDao.save(message);
@@ -103,6 +115,8 @@ public class MessageTestDataSaver {
 		message.setText("Whats up Mr. bear?\n\n" + getDummyText3());
 		message.setSender(oprah);
 		message.setRecipient(bernerBaer);
+		oprah.getSentMessages().add(message);
+		bernerBaer.getReceivedMessages().add(message);
 		message.setState(MessageState.READ);
 		message.setDateSent(dateFormat.parse("11:30 24.02.2014"));
 		messageDao.save(message);
@@ -113,6 +127,8 @@ public class MessageTestDataSaver {
 		message.setText("Hey Oprah\n\n" + getDummyText1());
 		message.setSender(jane);
 		message.setRecipient(oprah);
+		jane.getSentMessages().add(message);
+		oprah.getReceivedMessages().add(message);
 		message.setState(MessageState.UNREAD);
 		message.setDateSent(dateFormat.parse("12:30 24.02.2014"));
 		messageDao.save(message);
@@ -122,6 +138,8 @@ public class MessageTestDataSaver {
 		message.setText("Whats up Oprah?\n\n" + getDummyText2());
 		message.setSender(bernerBaer);
 		message.setRecipient(oprah);
+		bernerBaer.getSentMessages().add(message);
+		oprah.getReceivedMessages().add(message);
 		message.setState(MessageState.UNREAD);
 		message.setDateSent(dateFormat.parse("11:30 24.02.2014"));
 		messageDao.save(message);

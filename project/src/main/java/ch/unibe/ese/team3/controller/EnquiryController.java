@@ -1,7 +1,6 @@
 package ch.unibe.ese.team3.controller;
 
 import java.security.Principal;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,6 @@ import ch.unibe.ese.team3.controller.service.VisitService;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
 import ch.unibe.ese.team3.model.VisitEnquiry;
-import ch.unibe.ese.team3.model.VisitEnquiryState;
 
 /**
  * Handles all requests concerning enquiries of type
@@ -56,13 +54,7 @@ public class EnquiryController {
 		Visit visit = visitService.getVisitById(id);
 		User user = userService.findUserByUsername(principal.getName());
 
-		VisitEnquiry visitEnquiry = new VisitEnquiry();
-		visitEnquiry.setDateSent(new Date());
-		visitEnquiry.setSender(user);
-		visitEnquiry.setState(VisitEnquiryState.OPEN);
-		visitEnquiry.setVisit(visit);
-
-		enquiryService.saveVisitEnquiry(visitEnquiry);
+		enquiryService.createEnquiry(visit, user);
 	}
 
 	/** Sets the state of the enquiry with the given id to accepted. */

@@ -1,15 +1,12 @@
 package ch.unibe.ese.team3.test.testData;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.User;
-import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.UserPicture;
 import ch.unibe.ese.team3.model.UserRole;
 import ch.unibe.ese.team3.model.dao.UserDao;
@@ -90,12 +87,10 @@ public class UserTestDataSaver {
 		user.setLastName(lastName);
 		user.setEnabled(true);
 		user.setGender(gender);
-		Set<UserRole> userRoles = new HashSet<>();
 		UserRole role = new UserRole();
 		role.setRole("ROLE_USER");
 		role.setUser(user);
-		userRoles.add(role);
-		user.setUserRoles(userRoles);
+		user.addUserRole(role);
 		user.setAccountType(type);
 		return user;
 	}
@@ -110,7 +105,6 @@ public class UserTestDataSaver {
 		user.setLastName(lastName);
 		user.setEnabled(true);
 		user.setGender(gender);
-		Set<UserRole> userRoles = new HashSet<>();
 		UserRole role = new UserRole();
 		UserPicture picture = new UserPicture();
 		picture.setUser(user);
@@ -118,8 +112,7 @@ public class UserTestDataSaver {
 		user.setPicture(picture);
 		role.setRole("ROLE_USER");
 		role.setUser(user);
-		userRoles.add(role);
-		user.setUserRoles(userRoles);
+		user.addUserRole(role);
 		user.setAccountType(type);
 		return user;
 	}

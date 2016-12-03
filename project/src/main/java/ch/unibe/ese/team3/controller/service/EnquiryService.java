@@ -2,8 +2,8 @@ package ch.unibe.ese.team3.controller.service;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.unibe.ese.team3.model.Ad;
-import ch.unibe.ese.team3.model.Rating;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.Visit;
 import ch.unibe.ese.team3.model.VisitEnquiry;
@@ -69,12 +68,6 @@ public class EnquiryService {
 		return sentEnquiriesByVisit;
 	}
 
-	/** Saves the given visit enquiry. */
-	@Transactional
-	public void saveVisitEnquiry(VisitEnquiry visitEnquiry) {
-		enquiryDao.save(visitEnquiry);
-	}
-
 	/** Accepts the enquiry with the given id. */
 	@Transactional
 	public void acceptEnquiry(long enquiryId) {
@@ -85,7 +78,7 @@ public class EnquiryService {
 
 		// add user to the visitor list
 		Visit visit = enquiry.getVisit();
-		visit.addToSearchers(enquiry.getSender());
+		visit.addVisitor(enquiry.getSender());
 		visitDao.save(visit);
 	}
 
@@ -108,8 +101,19 @@ public class EnquiryService {
 		enquiryDao.save(enquiry);
 
 		Visit visit = enquiry.getVisit();
-		visit.removeFromSearchers(enquiry.getSender());
+		visit.removeVisitor(enquiry.getSender());
 		visitDao.save(visit);
+	}
+
+	@Transactional
+	public void createEnquiry(Visit visit, User user) {
+		VisitEnquiry visitEnquiry = new VisitEnquiry();
+		visitEnquiry.setDateSent(new Date());
+		visitEnquiry.setSender(user);
+		visitEnquiry.setState(VisitEnquiryState.OPEN);
+		visit.addEnquiry(visitEnquiry);
+
+		enquiryDao.save(visitEnquiry);
 	}
 
 }

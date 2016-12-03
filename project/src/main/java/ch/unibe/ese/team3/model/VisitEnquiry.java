@@ -30,7 +30,6 @@ public class VisitEnquiry {
 	@Column(nullable = false)
 	private VisitEnquiryState state;
 
-	/** Which visit does the enquiry belong to? */
 	@ManyToOne
 	private Visit visit;
 

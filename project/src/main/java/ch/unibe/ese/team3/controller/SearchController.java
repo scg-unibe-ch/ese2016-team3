@@ -37,12 +37,6 @@ public class SearchController {
 
 	private ObjectMapper objectMapper;
 
-	/**
-	 * The search form that is used for searching. It is saved between request
-	 * so that users don't have to enter their search parameters multiple times.
-	 */
-	private SearchForm searchForm;
-
 	/** Shows the search ad page. */
 	@RequestMapping(value = "/searchAd", method = RequestMethod.GET)
 	public ModelAndView searchAd() {
@@ -116,9 +110,6 @@ public class SearchController {
 
 	@ModelAttribute
 	public SearchForm getSearchForm() {
-		//if (searchForm == null) {
-		//	searchForm = new SearchForm();
-		//}
 		return new SearchForm();
 	}
 }

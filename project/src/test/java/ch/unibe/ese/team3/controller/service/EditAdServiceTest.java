@@ -2,14 +2,15 @@ package ch.unibe.ese.team3.controller.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
+import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,6 +37,7 @@ import ch.unibe.ese.team3.model.dao.UserDao;
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml"})
 @WebAppConfiguration
+@Transactional
 public class EditAdServiceTest {
 	
 	@Autowired
@@ -64,14 +66,14 @@ public class EditAdServiceTest {
 		placeAdForm.setMoveInDate("27-02-2015");
 	
 		placeAdForm.setBalcony(false);
-;
+
 		placeAdForm.setGarage(true);
 
 
 		ArrayList<String> filePaths = new ArrayList<>();
 		filePaths.add("/img/test/ad1_1.jpg");
 		
-		User hans = createUser("fritz@flitzt.ch", "password", "Fritz", "Flitzt",
+		User hans = createUser("hans@flitzt.ch", "password", "hans", "Flitzt",
 				Gender.MALE);
 		hans.setAboutMe("Wie der Blitz");
 		userDao.save(hans);
@@ -91,6 +93,97 @@ public class EditAdServiceTest {
 		
 	}
 	
+	@Test
+	public void saveFromTestnewAdress(){
+		//Perparation
+		PlaceAdForm placeAdForm = new PlaceAdForm();
+		placeAdForm.setCity("3018 - Bern");
+		placeAdForm.setType(Type.APARTMENT);
+		placeAdForm.setRoomDescription("Test Room description");
+		placeAdForm.setPrice(600);
+		placeAdForm.setSquareFootage(50);
+		placeAdForm.setTitle("title");
+		placeAdForm.setStreet("Hauptstrasse 13");
+		placeAdForm.setMoveInDate("27-02-2015");
+	
+		placeAdForm.setBalcony(false);
+
+		placeAdForm.setGarage(true);
+
+
+		ArrayList<String> filePaths = new ArrayList<>();
+		filePaths.add("/img/test/ad1_1.jpg");
+		
+		User hans = createUser("fritz@flitzt.ch", "password", "Fritz", "Flitzt",
+				Gender.MALE);
+		hans.setAboutMe("Wie der Blitz");
+		userDao.save(hans);
+		
+		Ad ad = adService.saveFrom(placeAdForm, filePaths, hans, BuyMode.BUY);
+		long adId = ad.getId();
+		
+		// veränderung von placeAdForm
+		placeAdForm.setStreet("Forelstrasse 22");
+		placeAdForm.setCity("3072 - Ostermundigen");
+		
+		
+		ad = editadservice.saveFrom(placeAdForm, filePaths, hans, adId);
+	
+		
+		assertEquals(46.960744,ad.getLatitude().doubleValue(), 0.00001);
+		assertEquals(7.483973, ad.getLongitude().doubleValue(), 0.00001);
+		
+		
+		
+	}
+	
+	
+	@Test
+	public void saveFromTestnewVistitingTime(){
+		//Perparation
+		PlaceAdForm placeAdForm = new PlaceAdForm();
+		placeAdForm.setCity("3018 - Bern");
+		placeAdForm.setType(Type.APARTMENT);
+		placeAdForm.setRoomDescription("Test Room description");
+		placeAdForm.setPrice(600);
+		placeAdForm.setSquareFootage(50);
+		placeAdForm.setTitle("title");
+		placeAdForm.setStreet("Hauptstrasse 13");
+		placeAdForm.setMoveInDate("27-02-2015");
+	
+		placeAdForm.setBalcony(false);
+
+		placeAdForm.setGarage(true);
+
+
+		ArrayList<String> filePaths = new ArrayList<>();
+		filePaths.add("/img/test/ad1_1.jpg");
+		
+		User hans = createUser("meier@flitzt.ch", "password", "meier", "Flitzt",
+				Gender.MALE);
+		hans.setAboutMe("Wie der Blitz");
+		userDao.save(hans);
+		
+		Ad ad = adService.saveFrom(placeAdForm, filePaths, hans, BuyMode.BUY);
+		long adId = ad.getId();
+		
+		// veränderung von placeAdForm
+		List<String> visits = new ArrayList<String>();
+		String visit = "01-11-2016 ; 14:45 ; 15:55";
+		visits.add(visit);
+		
+		
+		placeAdForm.setVisits(visits);
+		
+		
+		ad = editadservice.saveFrom(placeAdForm, filePaths, hans, adId);
+	
+		
+		assertEquals(1,ad.getVisits().size());
+		
+		
+		
+	}
 	@Test
 	public void deletePictureFromAdTest() throws ParseException{
 		editadservice.deletePictureFromAd(1, 1);
@@ -155,12 +248,10 @@ public class EditAdServiceTest {
 		user.setLastName(lastName);
 		user.setEnabled(true);
 		user.setGender(gender);
-		Set<UserRole> userRoles = new HashSet<>();
 		UserRole role = new UserRole();
 		role.setRole("ROLE_USER");
 		role.setUser(user);
-		userRoles.add(role);
-		user.setUserRoles(userRoles);
+		user.addUserRole(role);
 		return user;   
 	}
 	

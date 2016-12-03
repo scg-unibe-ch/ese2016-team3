@@ -15,100 +15,121 @@
 
 <script
 	src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDPcQNoMGcp8Oe9l6uY8jLFlMR4pyecFIU&libraries=places"></script>
-<script src="https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js"></script>
+<script
+	src="https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js"></script>
 
 <script>
-$(document).ready(function() {
-	    $("#togglebutton").click( function() {
-	        //store the id of the collapsible element
-	        if(localStorage.getItem('collapseItem')){
-	        	localStorage.removeItem('collapseItem');
-	        }
-	        else{
-	        	localStorage.setItem('collapseItem', $(this).attr('data-target'));
-	        }
-	    });
+	$(document).ready(
+			function() {
+				$("#togglebutton").click(
+						function() {
+							//store the id of the collapsible element
+							if (localStorage.getItem('collapseItem')) {
+								localStorage.removeItem('collapseItem');
+							} else {
+								localStorage.setItem('collapseItem', $(this)
+										.attr('data-target'));
+							}
+						});
 
-	    var collapseItem = localStorage.getItem('collapseItem'); 
-	    if (collapseItem) {
-	       $(collapseItem).collapse('show')
-	    }
-	    
-});
+				var collapseItem = localStorage.getItem('collapseItem');
+				if (collapseItem) {
+					$(collapseItem).collapse('show')
+				}
+
+			});
 </script>
 
 <script>
 	/*
 	 * This script takes all the resultAd divs and sorts them by a parameter specified by the user.
 	 * No arguments need to be passed, since the function simply looks up the dropdown selection.
-	 
-	 Funktioniert korrekt mit 'alten' ads (bis 800)
-	 -filter attribut == display attribut??
-	 
 	 */
-	function sort_div_attribute() {
-		//determine sort modus (by which attribute, asc/desc)
-		var sortmode = $('#modus').find(":selected").val();
+	var priceSort = false;
+	var inDateSort = false;
+	var creationDateSort = false;
 
-		//only start the process if a modus has been selected
-		if (sortmode.length > 0) {
-			var attname;
+	function sort_div_attribute(code) {
+		//code 1: sort by price
+		//code 2: sort by move-in date
+		//code 3: sort by creation date
 
-			//determine which variable we pass to the sort function
-			if (sortmode == "price_asc" || sortmode == "price_desc")
-				attname = 'data-price';
-			else if (sortmode == "moveIn_asc" || sortmode == "moveIn_desc")
-				attname = 'data-moveIn';
-			else
-				attname = 'data-age';
-
-			//copying divs into an array which we're going to sort
-			var divsbucket = new Array();
-			var divslist = $('div.resultAd');
-			var divlength = divslist.length;
-			for (a = 0; a < divlength; a++) {
-				divsbucket[a] = new Array();
-				divsbucket[a][0] = divslist[a].getAttribute(attname);
-				divsbucket[a][1] = divslist[a];
-				divslist[a].remove();
+		// get sort mode based on code and existing sort
+		if (code == 1) {
+			if (!priceSort) {
+				var sortmode = "price_asc";
+				priceSort = !priceSort;
+			} else {
+				var sortmode = "price_desc";
+				priceSort = !priceSort;
 			}
-			
-			var comparator;
-			
-			if (attname == 'data-price'){
-				comparator = function(a, b){
-					var first = parseInt(a[0]);
-					var second = parseInt(b[0]);
-					if (first == second)
-						return 0;
-					else if (first > second)
-						return 1;
-					else
-						return -1;
-				}
+			var attname = 'data-price';
+		}
+		if (code == 2) {
+			if (!inDateSort) {
+				var sortmode = "moveIn_asc";
+				inDateSort = !inDateSort;
+			} else {
+				var sortmode = "moveIn_desc";
+				inDateSort = !inDateSort;
 			}
-			else {
-				comparator = function(a, b) {
-					if (a[0] == b[0])
-						return 0;
-					else if (a[0] > b[0])
-						return 1;
-					else
-						return -1;
-				}
+			var attname = 'data-moveIn';
+		}
+		if (code == 3) {
+			if (!creationDateSort) {
+				var sortmode = "dateAge_asc";
+				creationDateSort = !creationDateSort;
+			} else {
+				var sortmode = "dateAge_desc";
+				creationDateSort = !creationDateSort;
 			}
+			var attname = 'data-age';
+		}
 
-			//sort the array
-			divsbucket.sort(comparator);
+		//Sorting based on sort mode and attname
+		var divsbucket = new Array();
+		var divslist = $('div.resultAd');
+		var divlength = divslist.length;
+		for (a = 0; a < divlength; a++) {
+			divsbucket[a] = new Array();
+			divsbucket[a][0] = divslist[a].getAttribute(attname);
+			divsbucket[a][1] = divslist[a];
+			divslist[a].remove();
+		}
 
-			//invert sorted array for certain sort options
-			if (sortmode == "price_desc" || sortmode == "moveIn_asc"
-					|| sortmode == "dateAge_asc")
-				divsbucket.reverse();
+		var comparator;
 
-			//insert sorted divs into document again
-			for (a = 0; a < divlength; a++)
-				$("#resultsDiv").append($(divsbucket[a][1]));
+		if (attname == 'data-price') {
+			comparator = function(a, b) {
+				var first = parseInt(a[0]);
+				var second = parseInt(b[0]);
+				if (first == second)
+					return 0;
+				else if (first > second)
+					return 1;
+				else
+					return -1;
+			}
+		} else {
+			comparator = function(a, b) {
+				if (a[0] == b[0])
+					return 0;
+				else if (a[0] > b[0])
+					return 1;
+				else
+					return -1;
+			}
+		}
+		//sort the array
+		divsbucket.sort(comparator);
+		//invert sorted array for certain sort options
+		if (sortmode == "price_desc" || sortmode == "moveIn_asc"
+				|| sortmode == "dateAge_asc") {
+			divsbucket.reverse()
+		}
+		//insert sorted divs into document again
+		for (a = 0; a < divlength; a++) {
+			$("#resultsDiv").append($(divsbucket[a][1]))
 		}
 	}
 </script>
@@ -152,10 +173,10 @@ $(document).ready(function() {
 <script>
 	$(document).ready(function() {
 		/* sorts results when "sort by" is changed */
-		$("#form-sort").change(function() {
+		/* $("#form-sort").change(function() {
 			sort_div_attribute();
-		});
-		
+		}); */
+
 		$("#cityInput").autocomplete({
 			minLength : 2,
 			source : <c:import url="getzipcodes.jsp" />,
@@ -177,6 +198,14 @@ $(document).ready(function() {
 		});
 	});
 </script>
+
+<style>
+/*fixes issue when buttons are disappearing behind ad div when screen is made smaller*/
+.toFront {
+	position: relative;
+	z-index: 100;
+}
+</style>
 
 <script>
 	var map;
@@ -230,8 +259,6 @@ $(document).ready(function() {
 		})(marker,contentString,infowindow));
 	}
 </script>
-
-
 
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-4 col-ls-4">
@@ -313,16 +340,15 @@ $(document).ready(function() {
 								path="squareFootageMax" id="field-squareFootageMax" />
 						</div>
 					</div>
-					
-					
-					<button id="togglebutton" type="button" class="btn btn-info" data-toggle="collapse" data-target="#additional">Additional
+
+
+					<button id="togglebutton" type="button" class="btn btn-info"
+						data-toggle="collapse" data-target="#additional">Additional
 						filters</button>
-				<div id="additional" class="collapse">
-					
-					
-					<p>
-					
-					
+					<div id="additional" class="collapse">
+
+
+						<p>
 						<div class="form-group">
 
 							<label for="earliestMoveInDate">Earliest move-in date</label>
@@ -475,11 +501,10 @@ $(document).ready(function() {
 									path="distanceShoppingMax" placeholder="0" step="100"
 									cssClass="form-control input60" />
 							</div>
-						
+
+						</div>
 					</div>
-					</div>
-					
-					</div>
+				</div>
 			</div>
 			<div class="form-group pull-right">
 				<button id="reset" class="btn btn-default">Clear filters</button>
@@ -494,37 +519,36 @@ $(document).ready(function() {
 			<div class="col-sm-6">
 				<h4>Results</h4>
 			</div>
-			<div class="form-group form-inline pull-right col-sm-5"
-				id="form-sort">
-				<label><b>Sort:</b> </label> <select id="modus" class="form-control"
-					data-style="btn-primary">
-					<option value="">Sort by:</option>
-					<option value="price_asc">Price (ascending)</option>
-					<option value="price_desc">Price (descending)</option>
-					<option value="moveIn_desc">Move-in date (earliest to
-						latest)</option>
-					<option value="moveIn_asc">Move-in date (latest to
-						earliest)</option>
-					<option value="dateAge_asc">Date created (youngest to
-						oldest)</option>
-					<option value="dateAge_desc">Date created (oldest to
-						youngest)</option>
-				</select>
-			</div>
 		</div>
 		<c:choose>
 			<c:when test="${empty results}">
 				<p>No results found!
 			</c:when>
 			<c:otherwise>
-				<ul class="nav nav-tabs">
+				<ul class="nav nav-tabs ">
 					<li class="active"><a data-toggle="tab" href="#listview"><span
 							class="glyphicon glyphicon-list"></span> List</a></li>
 					<li><a data-toggle="tab" href="#mapview"><span
 							class="glyphicon glyphicon-map-marker"></span> Map</a></li>
+
 				</ul>
+
 				<div class="tab-content">
 					<div id="listview" class="tab-pane fade in active">
+
+						<button class="btn btn-default pull-right col-sm-2 toFront"
+							onclick="sort_div_attribute(3)">
+							<span class="glyphicon glyphicon-sort"></span> Creation Date
+						</button>
+						<button class="btn btn-default pull-right col-sm-2 toFront"
+							onclick="sort_div_attribute(2)">
+							<span class="glyphicon glyphicon-sort"></span> Move-in Date
+						</button>
+
+						<button class="btn btn-default pull-right col-sm-2 toFront"
+							onclick="sort_div_attribute(1)">
+							<span class="glyphicon glyphicon-sort"></span> Price
+						</button>
 						<div id="resultsDiv">
 							<c:forEach var="ad" items="${results}">
 								<fmt:formatNumber value="${ad.price}" var="formattedPrice"
@@ -532,8 +556,8 @@ $(document).ready(function() {
 
 								<fmt:formatNumber value="${ad.auctionPrice}"
 									var="formattedAuctionPrice" pattern="###,### CHF" />
-								<div data-price="${ad.auction ? ad.auctionPrice : ad.price}" data-moveIn="${ad.moveInDate}"
-									data-age="${ad.moveInDate}"
+								<div data-price="${ad.auction ? ad.auctionPrice : ad.price}"
+									data-moveIn="${ad.moveInDate}" data-age="${ad.creationDate}"
 									class="ad-wide-preview-outer resultAd">
 									<div
 										class="col-md-12 ad-wide-preview-inner ${ad.isPremiumAd() ? 'premiumAd' : '' }">

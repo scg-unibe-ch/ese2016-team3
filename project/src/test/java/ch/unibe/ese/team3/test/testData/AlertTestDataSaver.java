@@ -1,7 +1,6 @@
 package ch.unibe.ese.team3.test.testData;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.unibe.ese.team3.controller.service.AlertService;
 import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.Alert;
-import ch.unibe.ese.team3.model.AlertResult;
 import ch.unibe.ese.team3.model.AlertType;
 import ch.unibe.ese.team3.model.BuyMode;
 import ch.unibe.ese.team3.model.Type;
@@ -73,7 +71,9 @@ public class AlertTestDataSaver {
 		// 2 Alerts for the ese test-user
 		Alert alert = new Alert();
 		alert.setUser(ese);
-		alert.setAlertTypes(alertTypes);
+		for (AlertType type : alertTypes){
+			alert.addAlertType(type);
+		}
 		alert.setBuyMode(BuyMode.BUY);
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
@@ -85,7 +85,9 @@ public class AlertTestDataSaver {
 		
 		Alert alert2 = new Alert();
 		alert2.setUser(ese);
-		alert2.setAlertTypes(alertTypes2);
+		for (AlertType type : alertTypes2){
+			alert2.addAlertType(type);
+		}
 		alert2.setBuyMode(BuyMode.BUY);
 		alert2.setCity("Zürich");
 		alert2.setZipcode(8000);

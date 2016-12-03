@@ -252,7 +252,7 @@ public class ProfileController {
 	public ModelAndView visitors(@RequestParam("visit") long id) {
 		ModelAndView model = new ModelAndView("visitors");
 		Visit visit = visitService.getVisitById(id);
-		Iterable<User> visitors = visit.getSearchers();
+		Iterable<User> visitors = visit.getVisitors();
 
 		model.addObject("visitors", visitors);
 

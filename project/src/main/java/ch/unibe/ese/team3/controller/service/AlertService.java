@@ -74,21 +74,16 @@ public class AlertService {
 
 		alert.setRadius(alertForm.getRadius());
 
-		int countAlertTypes = 0;
-		List<AlertType> alertTypes = new ArrayList<AlertType>();
-		for (Type type : alertForm.getTypes()) {
-			AlertType alertType = new AlertType();
-			alertType.setType(type);
-			alertType.setAlert(alert);
-			alertTypes.add(alertType);
-			countAlertTypes++;
-		}
-
-		// if there are no alertTypes specified in the form, the alert searches for all alertTypes
-		if (countAlertTypes == 0) {
-			setAllAlertTypes(alert);
+		// if there are no alertTypes specified in the form, the alert searches
+		// for all alertTypes
+		if (alertForm.getTypes().isEmpty()) {
+			addAllAlertTypesToAlert(alert);
 		} else {
-			alert.setAlertTypes(alertTypes);
+			for (Type type : alertForm.getTypes()) {
+				AlertType alertType = new AlertType();
+				alertType.setType(type);
+				alert.addAlertType(alertType);
+			}
 		}
 
 		alert.setUser(user);
@@ -136,8 +131,6 @@ public class AlertService {
 		}
 		alertDao.save(alert);
 	}
-	
-	
 
 	private Date convertStringToDate(String date) {
 		try {
@@ -176,12 +169,10 @@ public class AlertService {
 		filterWithBasicCriteria(ad, alerts);
 		filterWithExtendedCriteria(ad, alerts);
 
-		List<User> alertReceivers = getDistinctAlertReceivers(alerts);		
+		List<User> alertReceivers = getDistinctAlertReceivers(alerts);
 		saveAlertResults(ad, alertReceivers);
 		sendAlertMessages(ad, alertReceivers);
 	}
-
-
 
 	private void filterWithBasicCriteria(Ad ad, Iterable<Alert> alerts) {
 		// loop through all ads with matching city and price range, throw out
@@ -252,8 +243,7 @@ public class AlertService {
 	private String getAlertText(Ad ad) {
 		return "Dear user,<br>good news. A new ad matching one of your alerts has been "
 				+ "entered into our system. You can visit it here:<br><br>" + "<a class=\"link\" href=/ad?id="
-				+ ad.getId() + ">" + ad.getTitle() + "</a><br><br>" + "Good luck and enjoy,<br>"
-				+ "Your Ithaca crew";
+				+ ad.getId() + ">" + ad.getTitle() + "</a><br><br>" + "Good luck and enjoy,<br>" + "Your Ithaca crew";
 	}
 
 	/**
@@ -470,29 +460,20 @@ public class AlertService {
 			}
 		}
 	}
-	
+
 	/**
 	 * Adds all AlertTypes to an alert.
+	 * 
 	 * @param alert
 	 */
-	private void setAllAlertTypes(Alert alert) {
-		List<Type> allTypes = new ArrayList<Type>();
-		allTypes.add(Type.APARTMENT);
-		allTypes.add(Type.LOFT);
-		allTypes.add(Type.STUDIO);
-		allTypes.add(Type.VILLA);
-		allTypes.add(Type.HOUSE);
-
-		List<AlertType> listAllAlertTypes = new ArrayList<AlertType>();
-		for (Type type : allTypes) {
+	private void addAllAlertTypesToAlert(Alert alert) {
+		for (Type type : Type.values()) {
 			AlertType alertType = new AlertType();
 			alertType.setType(type);
-			alertType.setAlert(alert);
-			listAllAlertTypes.add(alertType);
+			alert.addAlertType(alertType);
 		}
-		alert.setAlertTypes(listAllAlertTypes);
 	}
-	
+
 	// for testing
 	public boolean radiusMismatch(Ad ad, Alert alert) {
 		return radiusMismatchWith(ad, alert);

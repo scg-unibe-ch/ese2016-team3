@@ -1,7 +1,6 @@
 package ch.unibe.ese.team3.controller.service;
 
 import java.util.ArrayList;
-
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,6 +23,7 @@ import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.AdDao;
 import ch.unibe.ese.team3.model.dao.BidDao;
 import ch.unibe.ese.team3.model.dao.PurchaseRequestDao;
+import ch.unibe.ese.team3.util.ListUtils;
 
 @Service
 public class AuctionService extends BaseService {
@@ -68,11 +68,10 @@ public class AuctionService extends BaseService {
 
 	private void bid(Ad ad, User user, int amount) {
 		Bid bid = new Bid();
-		bid.setAd(ad);
 		bid.setAmount(amount);
 		bid.setBidder(user);
 		bid.setTimeStamp(new Date());
-		ad.getBids().add(bid);
+		ad.addBid(bid);
 		bidDao.save(bid);
 		incrementBidPrice(ad);
 		incrementPrice(ad);
@@ -80,10 +79,9 @@ public class AuctionService extends BaseService {
 
 	private void buy(Ad ad, User purchaser) {
 		PurchaseRequest request = new PurchaseRequest();
-		request.setAd(ad);
 		request.setPurchaser(purchaser);
 		request.setCreated(new Date());
-		ad.getPurchaseRequests().add(request);
+		ad.addPurchaseRequest(request);
 		purchaseRequestDao.save(request);
 	}
 
@@ -209,15 +207,15 @@ public class AuctionService extends BaseService {
 	}
 
 	public List<Bid> getBidsForAd(Ad ad) {
-		return convertToList(bidDao.findByAdOrderByAmountDesc(ad));
+		return ListUtils.convertToList(bidDao.findByAdOrderByAmountDesc(ad));
 	}
 
 	public List<PurchaseRequest> getPurchaseRequestForAd(Ad ad) {
-		return convertToList(purchaseRequestDao.findByAdOrderByCreatedAsc(ad));
+		return ListUtils.convertToList(purchaseRequestDao.findByAdOrderByCreatedAsc(ad));
 	}
 
 	public Map<Ad, SortedSet<Bid>> getBidsByUser(User bidder) {
-		List<Bid> bidsByUser = convertToList(bidDao.findByBidder(bidder));
+		List<Bid> bidsByUser = ListUtils.convertToList(bidDao.findByBidder(bidder));
 		Map<Ad, SortedSet<Bid>> bidsByAd = new HashMap<Ad, SortedSet<Bid>>();
 		for (Bid bid : bidsByUser) {
 			Ad ad = bid.getAd();
@@ -241,19 +239,6 @@ public class AuctionService extends BaseService {
 				return -1;
 			}
 		}
-
-	}
-
-	private <T> List<T> convertToList(Iterable<T> iterable) {
-		ArrayList<T> list = new ArrayList<T>();
-
-		Iterator<T> iterator = iterable.iterator();
-		while (iterator.hasNext()) {
-			T item = iterator.next();
-			list.add(item);
-		}
-
-		return list;
 	}
 
 	public boolean hasUserSentBuyRequest(Ad ad, User user) {
@@ -262,7 +247,7 @@ public class AuctionService extends BaseService {
 	}
 
 	public List<Bid> getMostRecentBidsForAd(Ad ad) {
-		return convertToList(bidDao.findTop10ByAdOrderByAmountDesc(ad));
+		return ListUtils.convertToList(bidDao.findTop10ByAdOrderByAmountDesc(ad));
 	}
 
 }

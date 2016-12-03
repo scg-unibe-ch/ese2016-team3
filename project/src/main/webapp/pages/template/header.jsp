@@ -124,7 +124,7 @@
 						<c:choose>
 							<c:when test="${loggedIn}">
 								<li><a href="/${pagemode}/profile/placeAd"><span
-										class="glyphicon glyphicon-pencil"></span>Place ad</a></li>
+										class="glyphicon glyphicon-pencil"></span> Place ad</a></li>
 								<li class="navbar-right dropdown"><%@include
 										file='/pages/getUserPicture.jsp'%> <a
 									class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
@@ -186,3 +186,11 @@
 				<p>${errorMessage }</p>
 			</div>
 		</c:if>
+		<c:if test="${not empty warningMessage }">
+			<div class="alert alert-warning">
+				<p>${warningMessage }</p>
+			</div>
+		</c:if>
+		
+		
+		
