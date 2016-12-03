@@ -1,42 +1,27 @@
 package ch.unibe.ese.team3.controller;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
-import ch.unibe.ese.team3.controller.pojos.forms.SignupForm;
-import ch.unibe.ese.team3.controller.service.SignupService;
-import ch.unibe.ese.team3.model.Gender;
+import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-/**
- * Check:
- * http://testdrivendevelopment.ourownjava.com/spring-test/spring-mvc-rest-unit-testing-post-request/
- * 
- * and
- * 
- * https://www.petrikainulainen.net/programming/spring-framework/unit-testing-of-spring-mvc-controllers-rest-api/
- * 
- * @author sabineb
- *
- */
+import java.security.Principal;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/config/springMVC.xml",
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
@@ -44,60 +29,110 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class ProfileControllerTest {
 	
-private MockMvc mockMvc;
+	private MockMvc mockMvc;
 	
 	@Autowired
-	@Mock
-	private SignupService signupServiceMock;
+	WebApplicationContext context;
 	
 	@Autowired
-	@InjectMocks
-	private ProfileController profileControllerMock;
+	MockHttpServletRequest request;
 	
-	@Autowired 
-	private UserDao userDao;
-	
-	
-	//@InjectMocks
-	//private ApplicationContext applicationContext;
-	
-	//private MockHttpServletRequest request;
-	//private MockHttpServletResponse response;
-	//private HandlerAdapter handlerAdapter;
-	
+	@Autowired
+	UserDao userDao;
+
 	@Before
 	public void setUp() throws Exception {
 		
-		MockitoAnnotations.initMocks(this);
-		this.mockMvc = MockMvcBuilders.standaloneSetup(profileControllerMock).build();
-		
-		//this.request = new MockHttpServletRequest();
-		//this.response = new MockHttpServletResponse();
-		
-		//this.handlerAdapter = applicationContext.getBean(HandlerAdapter.class);
-		
-		SignupForm signup = new SignupForm();
-		signup.setEmail("blabla");
-		signup.setFirstName("hans");
-		signup.setLastName("kuh");
-		signup.setPassword("password");
-		signup.setIsPremium(false);
-		signup.setGender(Gender.OTHER);
-				
-			//.thenReturn(user = userDao.findByUsername("jane@doe.com"));
-		
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
 	}
 	
 	
+	@Test 
+	public void getLoginPage() throws Exception {
+		this.mockMvc.perform(get("/login"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("login"));
+	}
+	
 	@Test
-	public void test() throws Exception {
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/signup"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("/signup"))
-				.andExpect(forwardedUrl("/signup"))
-				.andReturn();
-		Assert.assertNotNull(result.getModelAndView());
+	public void getSignupPage() throws Exception {
+		this.mockMvc.perform(get("/signup"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("signup"))
+			.andExpect(model().attributeExists("signupForm"));
+	}
+	
+	@Test
+	public void testInvalidSignup() throws Exception {
+		this.mockMvc.perform(post("/signup")
+				.param("email", "blu@ithaca.ch")
+				.param("password", "")
+				.param("firstName", "")
+				.param("lastName", "Heiri")
+				.param("isPremium", "false")
+				.param("gender", "MALE"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("signup"))
+			.andExpect(model().attributeExists("signupForm"));
+	}
+	
+	@Test
+	public void testValidSignup() throws Exception {
+		this.mockMvc.perform(post("/signup")
+				.param("email", "bla@ithaca.ch")
+				.param("password", "halloo")
+				.param("firstName", "Hans")
+				.param("lastName", "Heiri")
+				.param("isPremium", "false")
+				.param("gender", "MALE"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("login"))
+			.andExpect(model().attributeExists("confirmationMessage", "googleForm"));
+	}
+	
+	@Test 
+	public void getEditProfilePage() throws Exception {
+		Principal principal = mock(Principal.class);
+		when(principal.getName()).thenReturn("ese@unibe.ch");
 		
+		this.mockMvc.perform(get("/profile/editProfile")
+				.principal(principal))
+			.andExpect(status().isOk())
+			.andExpect(view().name("editProfile"))
+			.andExpect(model().attributeExists("editProfileForm", "currentUser"));
+	}
+	
+	@Test
+	public void testInvalidEditProfile() throws Exception {
+		Principal principal = mock(Principal.class);
+		when(principal.getName()).thenReturn("jane@doe.com");
+		
+		this.mockMvc.perform(post("/profile/editProfile")
+				.principal(principal)
+				.param("username", "jap@blue.ch")
+				.param("password", "yoyoyo")
+				.param("firstName", "")
+				.param("lastName", "bubli"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("editProfile"))
+			.andExpect(model().attributeExists("editProfileForm"));
+	}
+	
+	@Test
+	public void testValidEditProfile() throws Exception {
+		Principal principal = mock(Principal.class);
+		when(principal.getName()).thenReturn("jane@doe.com");
+		
+		User user = userDao.findByUsername(principal.getName());
+
+		this.mockMvc.perform(post("/profile/editProfile")
+				.principal(principal)
+				.param("username", "jap@blue.ch")
+				.param("password", "yoyoyo")
+				.param("firstName", "hibli")
+				.param("lastName", "bubli"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("redirect:../user?id=" + user.getId()));
 	}
 
 }
