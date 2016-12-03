@@ -53,12 +53,11 @@ public class AdServiceTest {
 
 	@Autowired
 	private AdDao adDao;
-	
-	
+
 	SearchForm basicSearchForm;
 	Ad searchAd;
 	User adPlacer;
-	
+
 	/**
 	 * In order to test the saved ad, I need to get it back from the DB again,
 	 * so these two methods need to be tested together, normally we want to test
@@ -68,11 +67,11 @@ public class AdServiceTest {
 	 * 
 	 * @throws ParseException
 	 */
-		
+
 	@Before
 	public void setup() {
 		adPlacer = userDao.findByUsername("ese@unibe.ch");
-		
+
 		// create searchform with basic criteria
 		basicSearchForm = new SearchForm();
 		basicSearchForm.setCity("6001 - Luzern");
@@ -80,8 +79,8 @@ public class AdServiceTest {
 		basicSearchForm.setRadius(300);
 		Type[] types = { Type.APARTMENT, Type.HOUSE, Type.LOFT, Type.STUDIO, Type.VILLA };
 		basicSearchForm.setTypes(types);
-		
-		// ad to search for 
+
+		// ad to search for
 		Date date = new Date();
 		searchAd = new Ad();
 		searchAd.setZipcode(3012);
@@ -96,13 +95,13 @@ public class AdServiceTest {
 		searchAd.setTitle("searchAdTest");
 		searchAd.setStreet("Hochfeldstrasse 44");
 		searchAd.setCity("Bern");
-	
+
 		searchAd.setDishwasher(false);
 		searchAd.setElevator(false);
 		searchAd.setGarage(false);
 		searchAd.setBalcony(false);
 		searchAd.setParking(false);
-	
+
 		searchAd.setFloorLevel(3);
 		searchAd.setSquareFootage(100);
 		searchAd.setNumberOfBath(2);
@@ -112,13 +111,12 @@ public class AdServiceTest {
 		searchAd.setDistanceShopping(450);
 		searchAd.setRenovationYear(1990);
 		searchAd.setBuildYear(1940);
-	
+
 		searchAd.setInfrastructureType(InfrastructureType.SATELLITE);
-	
+
 		adDao.save(searchAd);
 	}
-	
-	
+
 	@Test
 	public void saveFromAndGetById() throws ParseException {
 		// Preparation
@@ -150,14 +148,14 @@ public class AdServiceTest {
 
 		placeAdForm.setBuildYear(1960);
 		placeAdForm.setRenovationYear(1980);
-		
+
 		placeAdForm.setFloorLevel(5);
 		placeAdForm.setNumberOfRooms(5);
-		
+
 		// set auction specific fields (required for saveForm)
 		placeAdForm.setStartDate("03.10.2016");
 		placeAdForm.setEndDate("03.12.2016");
-	
+
 		ArrayList<String> filePaths = new ArrayList<>();
 		filePaths.add("/img/test/ad1_1.jpg");
 
@@ -208,16 +206,16 @@ public class AdServiceTest {
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date result = df.parse("2015-02-27");
-		
-		//Hack to avoid datetime issues when comparing
+
+		// Hack to avoid datetime issues when comparing
 		assertEquals(result.toString(), ad.getMoveInDate().toString());
 	}
-	
+
 	@Test
 	public void saveFromWithCoordinatesAndVisitsTest() throws ParseException {
 		// Preparation
 		PlaceAdForm placeAdForm = new PlaceAdForm();
-		placeAdForm.setCity("3072 Ostermundigen");
+		placeAdForm.setCity("3072 - Ostermundigen");
 		placeAdForm.setType(Type.APARTMENT);
 		placeAdForm.setRoomDescription("Test Room description");
 		placeAdForm.setPrice(600);
@@ -234,15 +232,14 @@ public class AdServiceTest {
 		placeAdForm.setParking(false);
 		placeAdForm.setElevator(true);
 
-		
 		placeAdForm.setNumberOfRooms(5);
-		
+
 		List<String> visits = new ArrayList<String>();
 		String visit = "01-11-2016 ; 14:45 ; 15:55";
 		visits.add(visit);
-		
+
 		placeAdForm.setVisits(visits);
-	
+
 		ArrayList<String> filePaths = new ArrayList<>();
 		filePaths.add("/img/test/ad1_1.jpg");
 
@@ -250,7 +247,6 @@ public class AdServiceTest {
 		hans.setAboutMe("Hansi Hinterseer");
 		userDao.save(hans);
 
-		
 		adService.saveFrom(placeAdForm, filePaths, hans, BuyMode.BUY);
 
 		Ad ad = new Ad();
@@ -261,11 +257,8 @@ public class AdServiceTest {
 			ad = iterator.next();
 		}
 
-		
 		assertEquals(46.960744, ad.getLatitude(), 0.00001);
-		assertEquals(7.483973 , ad.getLongitude(), 0.00001);
-		
-		adDao.delete(ad);
+		assertEquals(7.483973, ad.getLongitude(), 0.00001);
 	}
 
 	@Test
@@ -280,12 +273,12 @@ public class AdServiceTest {
 		int numberOfAdsBuy = ListUtils.countIterable(adsInDBbuy);
 		Iterable<Ad> adsInDBrent = adDao.findByPriceLessThanAndBuyMode(2147483647, BuyMode.RENT);
 		int numberOfAdsRent = ListUtils.countIterable(adsInDBrent);
-		
+
 		int acctualNumberOfAds = numberOfAdsBuy + numberOfAdsRent;
-		
+
 		Iterable<Ad> ads = adService.getAllAds();
 		int countReturnedAds = ListUtils.countIterable(ads);
-		
+
 		// assert number of returned ads equals number in DB
 		assertEquals(acctualNumberOfAds, countReturnedAds);
 	}
@@ -300,7 +293,7 @@ public class AdServiceTest {
 		searchForm.setTypes(types);
 		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
 		ArrayList<Ad> adList = (ArrayList<Ad>) queryedAds;
-		
+
 		searchForm.setBalcony(false);
 		searchForm.setGarage(true);
 		searchForm.setDishwasher(true);
@@ -310,6 +303,7 @@ public class AdServiceTest {
 		assertEquals(1, adList.size());
 		assertEquals("Cheap studio in Bern!", adList.get(0).getTitle());
 	}
+
 	@Test
 	public void queryResultsWithouType() {
 		SearchForm searchForm = new SearchForm();
@@ -323,7 +317,7 @@ public class AdServiceTest {
 		assertEquals(1, adList.size());
 		assertEquals("Cheap studio in Bern!", adList.get(0).getTitle());
 	}
-	
+
 	@Test
 	public void testFilterBalcony() {
 		SearchForm searchForm = new SearchForm();
@@ -333,17 +327,17 @@ public class AdServiceTest {
 		searchForm.setBalcony(true);
 		Type[] types = { Type.APARTMENT };
 		searchForm.setTypes(types);
-		
+
 		SearchForm searchForm2 = new SearchForm();
 		searchForm2.setCity("3001 - Bern");
 		searchForm2.setPrice(6000);
 		searchForm2.setRadius(1000);
 		searchForm2.setBalcony(false);
 		searchForm2.setTypes(types);
-				
+
 		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
 		ArrayList<Ad> adList = (ArrayList<Ad>) queryedAds;
-		
+
 		Iterable<Ad> queryedAds2 = adService.queryResults(searchForm2, BuyMode.BUY);
 		ArrayList<Ad> adList2 = (ArrayList<Ad>) queryedAds2;
 
@@ -352,29 +346,29 @@ public class AdServiceTest {
 
 	@Test
 	public void extendedQuerryWithNewCriteria() throws ParseException {
-		Type[] types = { Type.APARTMENT, Type.HOUSE, Type.STUDIO, Type.VILLA }; 
-		
-		// convert movein dates to dates 
+		Type[] types = { Type.APARTMENT, Type.HOUSE, Type.STUDIO, Type.VILLA };
+
+		// convert movein dates to dates
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 		Date earlyestMoveinDate = formatter.parse("03.10.2014");
 		Date latestMoveinDate = formatter.parse("01.03.2015");
-		
+
 		SearchForm searchForm = new SearchForm();
 		searchForm.setCity("3001 - Bern");
 		searchForm.setPrice(1000000);
 		searchForm.setRadius(400);
-		
+
 		searchForm.setTypes(types);
-		
-		searchForm.setBalcony(true);	// does only filter if true
+
+		searchForm.setBalcony(true); // does only filter if true
 		searchForm.setElevator(false);
 		searchForm.setDishwasher(false);
 		searchForm.setGarage(false);
 		searchForm.setParking(false);
-		
+
 		searchForm.setNumberOfBathMin(1);
 		searchForm.setNumberOfBathMin(2);
-		
+
 		searchForm.setFloorLevelMin(1);
 		searchForm.setFloorLevelMax(6);
 		searchForm.setDistancePublicTransportMin(0);
@@ -391,42 +385,42 @@ public class AdServiceTest {
 
 		searchForm.setEarliestMoveInDate("03.10.2014");
 		searchForm.setLatestMoveInDate("01.03.2015");
-		
+
 		searchForm.setInfrastructureType(InfrastructureType.CABLE);
 
 		searchForm.setRenovationYearMin(1960);
-		
+
 		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
-		// iterate over each returned ad and check if the search criteria are fulfilled
-		for (Ad ad: queryedAds) {
-			assertTrue(ad.getPrice()<1000000);
-			assertTrue(ad.getType().equals(Type.APARTMENT) ||ad.getType().equals(Type.HOUSE) ||
-					ad.getType().equals(Type.STUDIO) ||ad.getType().equals(Type.VILLA));
+		// iterate over each returned ad and check if the search criteria are
+		// fulfilled
+		for (Ad ad : queryedAds) {
+			assertTrue(ad.getPrice() < 1000000);
+			assertTrue(ad.getType().equals(Type.APARTMENT) || ad.getType().equals(Type.HOUSE)
+					|| ad.getType().equals(Type.STUDIO) || ad.getType().equals(Type.VILLA));
 			assertTrue(ad.getBalcony());
-			assertTrue(ad.getFloorLevel() > 0 && ad.getFloorLevel()<7);
-			assertTrue(ad.getDistancePublicTransport()>= 0 && ad.getDistancePublicTransport()<=1000);
-			assertTrue(ad.getDistanceSchool()>= 0 && ad.getDistanceSchool()<=1000);
-			assertTrue(ad.getDistanceShopping()>= 0 && ad.getDistanceShopping()<=1000);
-			assertTrue(ad.getNumberOfBath()>= 1 && ad.getNumberOfBath()<=3);
-			assertTrue(ad.getBuildYear()<=2000);
-			assertTrue(ad.getRenovationYear()>= 1960);
+			assertTrue(ad.getFloorLevel() > 0 && ad.getFloorLevel() < 7);
+			assertTrue(ad.getDistancePublicTransport() >= 0 && ad.getDistancePublicTransport() <= 1000);
+			assertTrue(ad.getDistanceSchool() >= 0 && ad.getDistanceSchool() <= 1000);
+			assertTrue(ad.getDistanceShopping() >= 0 && ad.getDistanceShopping() <= 1000);
+			assertTrue(ad.getNumberOfBath() >= 1 && ad.getNumberOfBath() <= 3);
+			assertTrue(ad.getBuildYear() <= 2000);
+			assertTrue(ad.getRenovationYear() >= 1960);
 			assertEquals(ad.getInfrastructureType(), InfrastructureType.CABLE);
-			assertTrue(ad.getSquareFootage()>= 30 && ad.getSquareFootage()<=60);
-			
-			assertTrue((ad.getMoveInDate().before(latestMoveinDate) ||  ad.getMoveInDate().after(earlyestMoveinDate)) 
+			assertTrue(ad.getSquareFootage() >= 30 && ad.getSquareFootage() <= 60);
+
+			assertTrue((ad.getMoveInDate().before(latestMoveinDate) || ad.getMoveInDate().after(earlyestMoveinDate))
 					|| ad.getMoveInDate().equals(latestMoveinDate) || ad.getMoveInDate().equals(earlyestMoveinDate));
 		}
-		
-		
+
 	}
-	
+
 	@Test
 	public void getNewestAds() throws ParseException {
 		// create 3 new ads
-		
+
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		ArrayList<String> filePaths = new ArrayList<>();
-		
+
 		PlaceAdForm placeAdForm = new PlaceAdForm();
 		placeAdForm.setCity("3018 - Bern");
 		placeAdForm.setType(Type.APARTMENT);
@@ -438,14 +432,13 @@ public class AdServiceTest {
 		placeAdForm.setMoveInDate("27-02-2015");
 		placeAdForm.setStartDate("03.10.2016");
 		placeAdForm.setEndDate("03.12.2016");
-		
+
 		adService.saveFrom(placeAdForm, filePaths, userDao.findByUsername("ese@unibe.ch"), BuyMode.BUY);
 		placeAdForm.setTitle("ad2");
 		adService.saveFrom(placeAdForm, filePaths, userDao.findByUsername("ese@unibe.ch"), BuyMode.BUY);
 		placeAdForm.setTitle("ad3");
 		adService.saveFrom(placeAdForm, filePaths, userDao.findByUsername("ese@unibe.ch"), BuyMode.BUY);
-		
-		
+
 		Iterable<Ad> newestdAds = adService.getNewestAds(3, BuyMode.BUY);
 		ArrayList<Ad> listNewestAds = (ArrayList<Ad>) newestdAds;
 
@@ -454,7 +447,7 @@ public class AdServiceTest {
 		assertEquals("ad3", listNewestAds.get(0).getTitle());
 		assertEquals("ad2", listNewestAds.get(1).getTitle());
 		assertEquals("ad1", listNewestAds.get(2).getTitle());
-		
+
 	}
 
 	@Test
@@ -482,94 +475,81 @@ public class AdServiceTest {
 	 * }
 	 */
 	@Test
-	public void expiredAuctionNotVisible(){
-		
+	public void expiredAuctionNotVisible() {
+
 		// Preparation
-				PlaceAdForm placeAdForm = new PlaceAdForm();
-				placeAdForm.setCity("3018 - Bern");
-				placeAdForm.setType(Type.LOFT);
-				placeAdForm.setRoomDescription("This is an Loft for Auction");
-				placeAdForm.setPrice(600);
-				placeAdForm.setSquareFootage(50);
-				placeAdForm.setTitle("AuctionLoft");
-				placeAdForm.setStreet("Hauptstrasse 13");
-				placeAdForm.setMoveInDate("27-02-2015");
+		PlaceAdForm placeAdForm = new PlaceAdForm();
+		placeAdForm.setCity("3018 - Bern");
+		placeAdForm.setType(Type.LOFT);
+		placeAdForm.setRoomDescription("This is an Loft for Auction");
+		placeAdForm.setPrice(600);
+		placeAdForm.setSquareFootage(50);
+		placeAdForm.setTitle("AuctionLoft");
+		placeAdForm.setStreet("Hauptstrasse 13");
+		placeAdForm.setMoveInDate("27-02-2015");
 
-				// new criteria
-				// test newly added fields
-				placeAdForm.setDishwasher(true);
-				placeAdForm.setBalcony(false);
-				placeAdForm.setGarage(true);
-				placeAdForm.setParking(true);
-				placeAdForm.setElevator(false);
+		// new criteria
+		// test newly added fields
+		placeAdForm.setDishwasher(true);
+		placeAdForm.setBalcony(false);
+		placeAdForm.setGarage(true);
+		placeAdForm.setParking(true);
+		placeAdForm.setElevator(false);
 
-				placeAdForm.setNumberOfBath(2);
-				placeAdForm.setType(Type.LOFT);
-				placeAdForm.setInfrastructureType(InfrastructureType.CABLE);
+		placeAdForm.setNumberOfBath(2);
+		placeAdForm.setType(Type.LOFT);
+		placeAdForm.setInfrastructureType(InfrastructureType.CABLE);
 
-				placeAdForm.setDistancePublicTransport(1000);
-				placeAdForm.setDistanceSchool(2000);
-				placeAdForm.setDistanceShopping(1500);
+		placeAdForm.setDistancePublicTransport(1000);
+		placeAdForm.setDistanceSchool(2000);
+		placeAdForm.setDistanceShopping(1500);
 
-				placeAdForm.setBuildYear(1960);
-				placeAdForm.setRenovationYear(1980);
-				
-				placeAdForm.setFloorLevel(5);
-				placeAdForm.setNumberOfRooms(5);
-				
-				// set auction specific fields (required for saveForm)
-				placeAdForm.setStartDate("03.10.2016");
-				//yesterday expired
-				Date yesterday;
-			    	Calendar cal = Calendar.getInstance();
-			    	cal.add(Calendar.DATE, -1);
-			    	yesterday = cal.getTime();
-				placeAdForm.setEndDate(yesterday.toString());
-			
-				ArrayList<String> filePaths = new ArrayList<>();
-				filePaths.add("/img/test/ad1_1.jpg");
+		placeAdForm.setBuildYear(1960);
+		placeAdForm.setRenovationYear(1980);
 
-				User hans = createUser("hansi@kanns.ch", "password", "Hansi", "Kanns", Gender.MALE);
-				hans.setAboutMe("Hansi Hinterseer");
-				userDao.save(hans);
+		placeAdForm.setFloorLevel(5);
+		placeAdForm.setNumberOfRooms(5);
 
-				adService.saveFrom(placeAdForm, filePaths, hans, BuyMode.BUY);
-				
-				Ad ad = new Ad();
-				Iterable<Ad> ads = adService.getAllAds();
-				Iterator<Ad> iterator = ads.iterator();
-
-				while (iterator.hasNext()) {
-					ad = iterator.next();
-				}
+		// set auction specific fields (required for saveForm)
+		placeAdForm.setStartDate("03.10.2016");
+		// yesterday expired
+		Calendar now = Calendar.getInstance();
+		now.add(Calendar.DATE, -1);
 		
-				
-				SearchForm searchForm = new SearchForm();
-				searchForm.setCity("3018 - Bern");
-				searchForm.setPrice(601);
-				searchForm.setRadius(5);
-				Type[] types = { Type.LOFT };
-				searchForm.setTypes(types);
-				searchForm.setDishwasher(true);
-				searchForm.setBalcony(false);
-				searchForm.setGarage(true);
-				searchForm.setParking(true);
-				searchForm.setElevator(false);
-				
-				searchForm.setRenovationYearMin(1979);
-				searchForm.setRenovationYearMax(1981);
-				Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
-				ArrayList<Ad> adList = (ArrayList<Ad>) queryedAds;
-				
-				
-				assertNotEquals("AuctionLoft", adList.get(0).getTitle());
-				assertTrue(ad.hasAuctionExpired());
-			//	assertEquals(0, adList.size());
-				adDao.delete(ad);
+		placeAdForm.setEndDate(String.format("%02d.%02d.%d", now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.MONTH) + 1, now.get(Calendar.YEAR)));
+		placeAdForm.setAuction(true);
+
+		ArrayList<String> filePaths = new ArrayList<>();
+		filePaths.add("/img/test/ad1_1.jpg");
+
+		User hans = createUser("hansi@kanns.ch", "password", "Hansi", "Kanns", Gender.MALE);
+		hans.setAboutMe("Hansi Hinterseer");
+		userDao.save(hans);
+
+		adService.saveFrom(placeAdForm, filePaths, hans, BuyMode.BUY);
+
+		SearchForm searchForm = new SearchForm();
+		searchForm.setCity("3018 - Bern");
+		searchForm.setPrice(601);
+		searchForm.setRadius(5);
+		Type[] types = { Type.LOFT };
+		searchForm.setTypes(types);
+		searchForm.setDishwasher(true);
+		searchForm.setBalcony(false);
+		searchForm.setGarage(true);
+		searchForm.setParking(true);
+		searchForm.setElevator(false);
+
+		searchForm.setRenovationYearMin(1979);
+		searchForm.setRenovationYearMax(1981);
+		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
+		ArrayList<Ad> adList = (ArrayList<Ad>) queryedAds;
 		
+		assertEquals(0, adList.size());
 	}
+
 	@Test
-	public void AuctionExpiredTodayVisible(){
+	public void AuctionExpiredTodayVisible() {
 		// Preparation
 		PlaceAdForm placeAdForm = new PlaceAdForm();
 		placeAdForm.setCity("3018 - Bern");
@@ -599,15 +579,16 @@ public class AdServiceTest {
 
 		placeAdForm.setBuildYear(1970);
 		placeAdForm.setRenovationYear(2000);
-		
+
 		placeAdForm.setFloorLevel(5);
 		placeAdForm.setNumberOfRooms(5);
-		
+
 		// set auction specific fields (required for saveForm)
 		placeAdForm.setStartDate("03.10.2016");
-		//today expire
-		placeAdForm.setEndDate(new Date().toString());
-	
+		// today expire
+		Calendar now = Calendar.getInstance();
+		placeAdForm.setEndDate(String.format("%02d.%02d.%d", now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.MONTH) + 1, now.get(Calendar.YEAR)));
+
 		ArrayList<String> filePaths = new ArrayList<>();
 		filePaths.add("/img/test/ad1_1.jpg");
 
@@ -616,7 +597,7 @@ public class AdServiceTest {
 		userDao.save(hans);
 
 		adService.saveFrom(placeAdForm, filePaths, hans, BuyMode.BUY);
-		
+
 		Ad ad = new Ad();
 		Iterable<Ad> ads = adService.getAllAds();
 		Iterator<Ad> iterator = ads.iterator();
@@ -625,7 +606,6 @@ public class AdServiceTest {
 			ad = iterator.next();
 		}
 
-		
 		SearchForm searchForm = new SearchForm();
 		searchForm.setCity("3018 - Bern");
 		searchForm.setPrice(6000);
@@ -637,366 +617,371 @@ public class AdServiceTest {
 		searchForm.setGarage(true);
 		searchForm.setParking(true);
 		searchForm.setElevator(true);
-		
+
 		searchForm.setRenovationYearMin(1999);
 		searchForm.setRenovationYearMax(2001);
 		Iterable<Ad> queryedAds = adService.queryResults(searchForm, BuyMode.BUY);
 		ArrayList<Ad> adList = (ArrayList<Ad>) queryedAds;
-		
-		
+
 		assertEquals("AuctionLoftVisibel", adList.get(0).getTitle());
 		assertFalse(ad.hasAuctionExpired());
-	//	assertNotEquals(0, adList.size());
-		adDao.delete(ad);
-		
 	}
-	
-	
-	//---------------------------------------
+
+	// ---------------------------------------
 	// test individual search criteria
-	//---------------------------------------
-	
+	// ---------------------------------------
+
 	@Test
 	public void floorLevelInRange() {
 		basicSearchForm.setFloorLevelMax(5);
 		basicSearchForm.setFloorLevelMin(0);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertTrue(searchAdInResults);
 	}
-	
+
 	@Test
 	public void floorLevelOutOfRange() {
 		basicSearchForm.setFloorLevelMax(2);
 		basicSearchForm.setFloorLevelMin(0);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
-	
+
 	@Test
 	public void squareFootageInRange() {
 		basicSearchForm.setSquareFootageMax(101);
 		basicSearchForm.setSquareFootageMin(90);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertTrue(searchAdInResults);
 	}
-	
+
 	@Test
 	public void squareFootageOutOfRange() {
 		basicSearchForm.setSquareFootageMax(90);
 		basicSearchForm.setSquareFootageMin(80);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
+
 	@Test
 	public void numberOfBathInRange() {
 		basicSearchForm.setNumberOfBathMax(4);
 		basicSearchForm.setNumberOfBathMin(1);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertTrue(searchAdInResults);
 	}
-	
+
 	@Test
 	public void numberOfBathOutOfRange() {
 		basicSearchForm.setNumberOfBathMax(1);
 		basicSearchForm.setNumberOfBathMin(0);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
+
 	@Test
 	public void numberOfRoomsInRange() {
 		basicSearchForm.setNumberOfRoomsMax(5);
 		basicSearchForm.setNumberOfRoomsMin(0);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertTrue(searchAdInResults);
 	}
-	
+
 	@Test
 	public void numberOfRoomsOutOfRange() {
 		basicSearchForm.setNumberOfRoomsMax(4);
 		basicSearchForm.setNumberOfRoomsMin(4);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
+
 	@Test
 	public void distancePublicTransportInRange() {
 		basicSearchForm.setDistancePublicTransportMax(2000);
 		basicSearchForm.setDistancePublicTransportMin(800);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertTrue(searchAdInResults);
 	}
-	
+
 	@Test
 	public void distancePublicTransportOutOfRange() {
 		basicSearchForm.setDistancePublicTransportMax(2000);
 		basicSearchForm.setDistancePublicTransportMin(1000);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
+
 	@Test
 	public void distanceSchoolInRange() {
 		basicSearchForm.setDistanceSchoolMax(200);
 		basicSearchForm.setDistanceSchoolMin(0);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertTrue(searchAdInResults);
 	}
-	
+
 	@Test
 	public void distanceSchoolOutOfRange() {
 		basicSearchForm.setDistanceSchoolMax(2000);
 		basicSearchForm.setDistanceSchoolMin(200);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
+
 	@Test
 	public void distanceShoppingInRange() {
 		basicSearchForm.setDistanceShoppingMax(0);
 		basicSearchForm.setDistanceShoppingMin(400);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertTrue(searchAdInResults);
 	}
-	
+
 	@Test
 	public void distanceShoppingOutOfRange() {
 		basicSearchForm.setDistanceShoppingMax(300);
 		basicSearchForm.setDistanceShoppingMin(0);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
+
 	@Test
 	public void renovationYearInRange() {
 		basicSearchForm.setRenovationYearMax(0);
 		basicSearchForm.setRenovationYearMin(1900);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertTrue(searchAdInResults);
 	}
-	
+
 	@Test
 	public void renovationYearOutOfRange() {
 		basicSearchForm.setRenovationYearMax(1980);
 		basicSearchForm.setRenovationYearMin(1900);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
+
 	@Test
 	public void buildYearInRange() {
 		basicSearchForm.setBuildYearMax(2015);
 		basicSearchForm.setBuildYearMin(1930);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertTrue(searchAdInResults);
 	}
-	
+
 	@Test
 	public void buildYearOutOfRange() {
 		basicSearchForm.setBuildYearMax(0);
 		basicSearchForm.setBuildYearMin(1980);
-		
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
-	
+
 	@Test
 	public void searchDishwasher() {
 		basicSearchForm.setDishwasher(true);
-				
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
-	
+
 	@Test
 	public void searchElevator() {
 		basicSearchForm.setElevator(true);
-				
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
+
 	@Test
 	public void searchGarage() {
 		basicSearchForm.setGarage(true);
-				
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
+
 	@Test
 	public void searchBalcony() {
 		basicSearchForm.setBalcony(true);
-				
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
+
 	@Test
 	public void searchParking() {
 		basicSearchForm.setParking(true);
-				
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
-	
+
 	@Test
 	public void infrastructureTypeMatch() {
 		basicSearchForm.setInfrastructureType(InfrastructureType.SATELLITE);
-				
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertTrue(searchAdInResults);
 	}
+
 	@Test
 	public void infrastructureTypeNotMatch() {
 		basicSearchForm.setInfrastructureType(InfrastructureType.CABLE);
-				
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
-	
+
 	@Test
 	public void flatTypeNotMatch() {
-		Type[] types = { Type.HOUSE};
+		Type[] types = { Type.HOUSE };
 		basicSearchForm.setTypes(types);
-				
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
-	
+
 	@Test
 	public void moveInDateInRange() {
 		basicSearchForm.setEarliestMoveInDate("01-11-2015");
 		basicSearchForm.setLatestMoveInDate("01-02-2016");
-				
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertTrue(searchAdInResults);
 	}
-	
+
 	@Test
 	public void moveInDateOutOfRange() {
 		basicSearchForm.setEarliestMoveInDate("02-01-2016");
 		basicSearchForm.setLatestMoveInDate("05-01-2016");
-				
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertFalse(searchAdInResults);
 	}
-	
+
 	@Test
 	public void onlyEarliestMoveDateSet() {
 		basicSearchForm.setEarliestMoveInDate("02-11-2015");
 
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertTrue(searchAdInResults);
 	}
-	
+
 	@Test
 	public void onlyLatestMoveDateSet() {
 		basicSearchForm.setLatestMoveInDate("05-01-2016");
-				
+
 		Iterable<Ad> filteredAd = adService.queryResults(basicSearchForm, BuyMode.BUY);
-		
+
 		Boolean searchAdInResults = isSearchAdInResults(searchAd, filteredAd);
-		
+
 		assertTrue(searchAdInResults);
 	}
-	
-	
+
 	// checks if the created ad "searchAd" is returned by the filter function
 	private Boolean isSearchAdInResults(Ad searchAd, Iterable<Ad> filteredAd) {
 		Boolean searchAdContained = false;
@@ -1007,11 +992,10 @@ public class AdServiceTest {
 		}
 		return searchAdContained;
 	}
-	
-	
-	//---------------------------------------
+
+	// ---------------------------------------
 	// Helper methods
-	//---------------------------------------
+	// ---------------------------------------
 	private User createUser(String email, String password, String firstName, String lastName, Gender gender) {
 		User user = new User();
 		user.setUsername(email);
@@ -1027,6 +1011,7 @@ public class AdServiceTest {
 		user.addUserRole(role);
 		return user;
 	}
+
 	private Date convertStringToDate(String date) {
 		try {
 			DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -1036,6 +1021,5 @@ public class AdServiceTest {
 		}
 		return null;
 	}
-	
 
 }
