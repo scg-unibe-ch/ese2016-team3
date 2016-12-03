@@ -67,13 +67,14 @@ public class ProfileControllerTest {
 		this.mockMvc.perform(post("/signup")
 				.param("email", "blu@ithaca.ch")
 				.param("password", "")
-				.param("firstName", "")
+				.param("firstName", "Hans")
 				.param("lastName", "Heiri")
 				.param("isPremium", "false")
 				.param("gender", "MALE"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("signup"))
-			.andExpect(model().attributeExists("signupForm"));
+			.andExpect(model().attributeHasFieldErrors("signupForm", "password"))
+			.andExpect(model().attributeExists("signupForm"));	
 	}
 	
 	@Test
@@ -109,7 +110,7 @@ public class ProfileControllerTest {
 		
 		this.mockMvc.perform(post("/profile/editProfile")
 				.principal(principal)
-				.param("username", "jap@blue.ch")
+				.param("username", "jane@doe.com")
 				.param("password", "yoyoyo")
 				.param("firstName", "")
 				.param("lastName", "bubli"))
@@ -131,7 +132,7 @@ public class ProfileControllerTest {
 				.param("password", "yoyoyo")
 				.param("firstName", "hibli")
 				.param("lastName", "bubli"))
-			.andExpect(status().isOk())
+			.andExpect(status().is(302)) // URL redirection status
 			.andExpect(view().name("redirect:../user?id=" + user.getId()));
 	}
 
