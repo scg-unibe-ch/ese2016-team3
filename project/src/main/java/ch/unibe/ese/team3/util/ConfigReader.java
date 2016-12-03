@@ -7,15 +7,8 @@ import java.util.ResourceBundle;
 public class ConfigReader {
 
 	private static Map<String, String> config;
-
-	private static ConfigReader instance;
-
-	public static ConfigReader getInstance() {
-		if (instance == null) {
-			instance = new ConfigReader();
-		}
-		return instance;
-	}
+	
+	public String configFileName;
 
 	public String getConfigValue(String key) {
 		if (config.containsKey(key)) {
@@ -24,9 +17,10 @@ public class ConfigReader {
 		return null;
 	}
 
-	private ConfigReader() {
+	public ConfigReader(String configFileName) {
+		this.configFileName = configFileName;
 		config = new HashMap<String, String>();
-		ResourceBundle bundle = ResourceBundle.getBundle("config");
+		ResourceBundle bundle = ResourceBundle.getBundle(this.configFileName);
 		for (Object key : bundle.keySet()) {
 			String keyString = (String) key;
 			config.put(keyString, bundle.getString(keyString));

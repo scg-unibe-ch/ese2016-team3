@@ -2,6 +2,7 @@ package ch.unibe.ese.team3.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -75,6 +76,9 @@ public class User {
 	
 	@Column(nullable = true)
 	private String creditcardName;
+	
+	@Column(nullable = true)
+	private Date premiumExpiryDate;
 	
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.MERGE)
@@ -206,6 +210,17 @@ public class User {
 		}
 	}
 	
+	public void removePremium(){
+		accountType = AccountType.BASIC;
+		creditCard = null;
+		securityNumber = null;
+		creditcardType = null;
+		expirationMonth = null;
+		expirationYear = null;
+		creditcardName = null;
+		premiumChoice = null;
+	}
+	
 	public String getCreditCard(){
 		return creditCard;
 	}
@@ -244,6 +259,14 @@ public class User {
 	
 	public void setCreditcardName(String name){
 		creditcardName = name;
+	}
+	
+	public Date getPremiumExpiryDate(){
+		return premiumExpiryDate;
+	}
+	
+	public void setPremiumExpiryDate(Date date){
+		premiumExpiryDate = date;
 	}
 
 	public List<UserRole> getUserRoles() {

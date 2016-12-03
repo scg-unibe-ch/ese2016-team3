@@ -442,8 +442,17 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-sm-4">
-								<img class="img-responsive img-circle"
-									src="${shownAd.user.picture.filePath != null ? shownAd.user.picture.filePath : '/img/avatar.png'}" />
+								<c:choose>
+									<c:when test="${shownAd.user.isGoogleUser}">
+										<img class="img-responsive img-circle" src="${shownAd.user.googlePicture}">
+									</c:when>
+									<c:when test="${shownAd.user.picture.filePath != null}">
+										<img class="img-responsive img-circle" src="${shownAd.user.picture.filePath}">
+									</c:when>
+									<c:otherwise>
+										<img class="img-responsive img-circle" src="/img/avatar.png">
+									</c:otherwise>
+								</c:choose>	
 							</div>
 							<div class="col-sm-8">
 								<h4>Advertiser</h4>

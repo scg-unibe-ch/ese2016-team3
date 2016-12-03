@@ -242,8 +242,8 @@ public class AlertService {
 	 */
 	private String getAlertText(Ad ad) {
 		return "Dear user,<br>good news. A new ad matching one of your alerts has been "
-				+ "entered into our system. You can visit it here:<br><br>" + "<a class=\"link\" href=/ad?id="
-				+ ad.getId() + ">" + ad.getTitle() + "</a><br><br>" + "Good luck and enjoy,<br>" + "Your Ithaca crew";
+				+ "entered into our system. You can visit it here:<br><br>" + "<a class=\"link\" href=\"http://localhost:8080/+ " + ad.getBuyMode().getName() + "/ad?id="
+				+ ad.getId() + "\">" + ad.getTitle() + "</a><br><br>" + "Good luck and enjoy,<br>" + "Your Ithaca crew";
 	}
 
 	/**
@@ -472,15 +472,5 @@ public class AlertService {
 			alertType.setType(type);
 			alert.addAlertType(alertType);
 		}
-	}
-
-	// for testing
-	public boolean radiusMismatch(Ad ad, Alert alert) {
-		return radiusMismatchWith(ad, alert);
-	}
-
-	// for testing
-	public boolean typeMismatch(Ad ad, Alert alert) {
-		return typeMismatchWith(ad, alert);
 	}
 }

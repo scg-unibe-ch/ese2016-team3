@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+import java.util.Calendar;
+
 import ch.unibe.ese.team3.controller.pojos.forms.SignupForm;
 import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.PremiumChoice;
@@ -45,6 +48,13 @@ public class SignupService {
 			user.setExpirationMonth(signupForm.getExpirationMonth());
 			user.setExpirationYear(signupForm.getExpirationYear());
 			user.setCreditcardName(signupForm.getCreditcardName());
+			
+			Date now = new Date();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(now);
+			calendar.add(Calendar.DAY_OF_MONTH, signupForm.getDuration());
+			Date expiryDate = calendar.getTime();
+			user.setPremiumExpiryDate(expiryDate);
 			
 			int duration = signupForm.getDuration();
 			PremiumChoice premiumChoice = upgradeService.findPremiumChoiceByDuration(duration);

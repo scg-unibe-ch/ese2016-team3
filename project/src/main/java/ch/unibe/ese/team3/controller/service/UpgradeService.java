@@ -1,6 +1,8 @@
 package ch.unibe.ese.team3.controller.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +59,13 @@ public class UpgradeService {
 		user.setExpirationMonth(upgradeForm.getExpirationMonth());
 		user.setExpirationYear(upgradeForm.getExpirationYear());
 		user.setCreditcardName(upgradeForm.getCreditcardName());
+		
+		Date now = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(now);
+		calendar.add(Calendar.DAY_OF_MONTH, upgradeForm.getDuration());
+		Date expiryDate = calendar.getTime();
+		user.setPremiumExpiryDate(expiryDate);
 		
 		user.setAccountType(AccountType.PREMIUM);
 		user.setPremiumChoice(premiumChoice);

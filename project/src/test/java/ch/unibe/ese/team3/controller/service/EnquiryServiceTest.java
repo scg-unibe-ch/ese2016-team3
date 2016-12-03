@@ -1,6 +1,8 @@
 package ch.unibe.ese.team3.controller.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,7 +40,7 @@ import ch.unibe.ese.team3.util.ListUtils;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-		"file:src/main/webapp/WEB-INF/config/springMVC.xml",
+		"file:src/main/webapp/WEB-INF/config/springMVC_test.xml",
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml"})
 @WebAppConfiguration
@@ -229,7 +231,7 @@ public class EnquiryServiceTest {
 	}
 	
 	@Test
-	public void getEnquiriesByRecipientMultipleEnquiries(){
+	public void getEnquiriesByRecipientMultipleEnquiries() throws InterruptedException{
 		User ueliMaurer = createUser("ueli@maurer.ch", "password", "Ueli", "Maurer",
 				Gender.MALE);
 		ueliMaurer.setAboutMe("Wallis rocks");
@@ -241,6 +243,7 @@ public class EnquiryServiceTest {
 		userDao.save(alainBerset);
 		
 		enquiryService.createEnquiry(visit1, ueliMaurer);
+		Thread.sleep(1000); //ensure that first enquiry has another timestamp than second enquiry
 		enquiryService.createEnquiry(visit1, alainBerset);
 		
 		List<VisitEnquiry> enquiries = ListUtils.convertToList(enquiryService.getEnquiriesByRecipient(thomyG));

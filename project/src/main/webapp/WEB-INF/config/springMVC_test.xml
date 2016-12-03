@@ -41,7 +41,7 @@
 	</mvc:interceptors>
 	
 	<bean class="ch.unibe.ese.team3.util.ConfigReader" scope="singleton">
-		<constructor-arg type="java.lang.String" value="config"/>
+		<constructor-arg type="java.lang.String" value="test"/>
 	</bean>
 	
 	<!-- resources -->

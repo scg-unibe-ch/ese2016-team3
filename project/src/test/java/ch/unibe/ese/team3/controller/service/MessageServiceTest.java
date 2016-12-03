@@ -11,7 +11,6 @@ import javax.persistence.Column;
 import javax.transaction.Transactional;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +25,11 @@ import ch.unibe.ese.team3.model.MessageState;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.MessageDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
+import ch.unibe.ese.team3.util.ListUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-		"file:src/main/webapp/WEB-INF/config/springMVC.xml",
+		"file:src/main/webapp/WEB-INF/config/springMVC_test.xml",
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml"})
 @WebAppConfiguration
@@ -72,8 +72,9 @@ public class MessageServiceTest {
 	}
 	
 	@Test
-	public void getInboxWithTwoMessagesSent(){
+	public void getInboxWithTwoMessagesSent() throws InterruptedException{
 		messageService.sendMessage(sender, recipient, "Message1", "Text Message1");
+		Thread.sleep(1000); //To ensure message 1 arrives before message 2
 		messageService.sendMessage(sender, recipient, "Message2", "Text Message2");
 		
 		ArrayList<Message> messageList = new ArrayList<Message>();
@@ -92,8 +93,9 @@ public class MessageServiceTest {
 	}
 	
 	@Test
-	public void getInboxWithTwoMessagesSentReadState(){
+	public void getInboxWithTwoMessagesSentReadState() throws InterruptedException{
 		messageService.sendMessage(sender, recipient, "Message1", "Text Message1");
+		Thread.sleep(1000); //To ensure message 1 arrives before message 2
 		messageService.sendMessage(sender, recipient, "Message2", "Text Message2");
 		
 		ArrayList<Message> messageList = new ArrayList<Message>();
@@ -142,14 +144,42 @@ public class MessageServiceTest {
 		assertEquals(MessageState.READ, message.getState());
 	}
 	
-	@Ignore
+	@Test
+	public void getInboxNoMessages(){
+		Iterable<Message> inbox = messageService.getInboxForUser(recipient);
+		assertEquals(0, ListUtils.countIterable(inbox));
+	}
+	
+	@Test
+	public void getSentNoMessage(){
+		Iterable<Message> sent = messageService.getSentForUser(sender);
+		assertEquals(0, ListUtils.countIterable(sent));
+	}
+	
+	@Test
+	public void getSentSingleMessage(){
+		messageService.sendMessage(sender, recipient, "Test", "Test");
+		
+		Iterable<Message> sent = messageService.getSentForUser(sender);
+		assertEquals(1, ListUtils.countIterable(sent));
+	}
+	
+	@Test
+	public void getSentMultipleMessages(){
+		messageService.sendMessage(sender, recipient, "Test1", "Test1");
+		messageService.sendMessage(sender, recipient, "Test2", "Test2");
+		
+		Iterable<Message> sent = messageService.getSentForUser(sender);
+		assertEquals(2, ListUtils.countIterable(sent));
+	}
+	
 	@Test 
 	public void saveFromMessageFormTest() throws InvalidUserException{		
 		MessageForm messageForm = new MessageForm();
 		messageForm.setRecipient("kim@kardashian.com");
 		messageForm.setSubject("Buy");
 		messageForm.setText("I really really wanna");
-		messageService.saveFrom(messageForm);
+		messageService.saveFrom(messageForm, sender);
 		
 		assertEquals(1, messageService.unread(recipient.getId()));
 	}
@@ -160,7 +190,18 @@ public class MessageServiceTest {
 		messageForm.setRecipient("thisisnovaliduser");
 		messageForm.setSubject("Buy");
 		messageForm.setText("I really really wanna");
-		messageService.saveFrom(messageForm);
+		messageService.saveFrom(messageForm, sender);
+	}
+	
+	@Test
+	public void unreadMultipleReadMessages(){
+		for (int i = 0; i < 10; i++){
+			messageService.sendMessage(sender, recipient, "Subject " + i, "Text " + i);
+		}
+		
+		assertEquals(10, messageService.unread(recipient.getId()));
+		messageService.getInboxForUser(recipient);
+		assertEquals(9, messageService.unread(recipient.getId()));
 	}
 	
 }

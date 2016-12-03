@@ -16,7 +16,7 @@ import ch.unibe.ese.team3.model.PremiumChoice;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-		"file:src/main/webapp/WEB-INF/config/springMVC.xml",
+		"file:src/main/webapp/WEB-INF/config/springMVC_test.xml",
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml"})
 @WebAppConfiguration
