@@ -1,6 +1,9 @@
 <%@page import="ch.unibe.ese.team3.model.Ad"%>
+<%@page import="ch.unibe.ese.team3.model.User"%>
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html;charset=utf-8"%>
+<%@ page import="java.io.*,java.util.*"%>
+<%@ page import="javax.servlet.*,java.text.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -106,7 +109,11 @@
 							<c:when test="${user.accountType == 'PREMIUM' && principalID eq user.id}">
 								<br /><br />
 								<h4><font color="gold">&#9733</font> This is a premium account <font color="gold">&#9733</font></h4>
-								Option valid for ${user.premiumChoice.duration} days
+								<%
+									SimpleDateFormat ft = new SimpleDateFormat ("E dd.MM.yyyy");
+									User user = (User) request.getAttribute("user");
+									out.print("Option valid until " + ft.format(user.getPremiumExpiryDate()) );
+								%>
 							</c:when>
 							<c:otherwise></c:otherwise>
 						</c:choose>
