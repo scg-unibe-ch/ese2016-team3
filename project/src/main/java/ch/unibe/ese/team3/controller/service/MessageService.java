@@ -187,7 +187,7 @@ public class MessageService {
 			message.setFrom(new InternetAddress("ithacaserver@gmail.com"));
 			message.addRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(recipient.getEmail(), false));
 			message.setSubject(subject);
-			message.setText(text);
+			message.setContent(text, "text/html; charset=utf-8");
 
 			Transport.send(message);
 			System.out.println("Message sent successfully for " + recipient.getUsername());
@@ -223,7 +223,7 @@ public class MessageService {
 				for (AlertResult alertResult : alertResultDao.findByUser(user)) {
 					if (alertResult.getTriggerDate().after(yesterday) || alertResult.getNotified() == false) {
 						Ad ad = alertResult.getTriggerAd();
-						text += "</a><br><br> <a class=\"link\" href=/ad?id=" + ad.getId() + ">" + ad.getTitle()
+						text += "</a><br><br> <a href=\"http://localhost:8080/buy/ad?id=" + ad.getId() + "\">" + ad.getTitle()
 								+ "</a><br><br>" + ad.getRoomDescription() + "\n";
 						alertResult.setNotified(true);
 					}
@@ -280,7 +280,7 @@ public class MessageService {
 
 		String subject1 = "You won an auction";
 		String text1 = "Dear " + winner.getFirstName() + ",</br></br>" + "Congratulations! You won the auction on the "
-				+ "<a class=\"link\" href= ../ad?id=" + ad.getId() + ">" + ad.getTitle() + "</a>.</br>"
+				+ "<a href=\"http://localhost:8080/buy/ad?id=" + ad.getId() + "\">" + ad.getTitle() + "</a>.</br>"
 				+ owner.getFirstName() + " " + owner.getLastName() + " will contact you with further details.</br>";
 
 		sendMessage(userDao.findByUsername("System"), winner, subject1, text1);
@@ -288,7 +288,7 @@ public class MessageService {
 
 		String subject2 = "Your auction was successfully";
 		String text2 = "Dear " + owner.getFirstName() + ",</br></br>" + "You just sold the "
-				+ "<a class=\"link\" href= ../ad?id=" + ad.getId() + ">" + ad.getTitle() + "</a>.</br>" + "to "
+				+ "<a href=\"http://localhost:8080/buy/ad?id=" + ad.getId() + "\">" + ad.getTitle() + "</a></br>" + "to "
 				+ winner.getFirstName() + " " + winner.getLastName() + " " + winner.getEmail() + " for "
 				+ highestBid.getAmount() + " CHF.</br>" + "Please contact the winner as soon as possible.";
 
@@ -308,8 +308,8 @@ public class MessageService {
 		User user = userDao.findUserById(ad.getUser().getId());
 		String subject = "Auction expired";
 		String text = "Dear " + user.getFirstName() + ",</br></br>"
-				+ "Unfortunately your auction has expired and no one has placed a bid on your"
-				+ "<a class=\"link\" href= ../ad?id=" + ad.getId() + ">" + ad.getTitle() + "</a>.</br>";
+				+ "Unfortunately your auction has expired and no one has placed a bid on your "
+				+ "<a href=\"http://localhost:8080/buy/ad?id=" + ad.getId() + "\">" + ad.getTitle() + "</a>.</br>";
 
 		sendMessage(userDao.findByUsername("System"), user, subject, text);
 		sendEmail(user, subject, text);
@@ -356,8 +356,8 @@ public class MessageService {
 			if (receiver.isPremium()) {
 				String subject = "Overbid";
 				String text = "Dear " + receiver.getFirstName() + ",</br></br>" + "You have been overbidden by "
-						+ bidder.getFirstName() + " " + bidder.getLastName() + "on "
-						+ "<a class=\"link\" href= ../ad?id=" + ad.getId() + ">" + ad.getTitle() + "</a>.</br>";
+						+ bidder.getFirstName() + " " + bidder.getLastName() + " on "
+						+ "<a href=\"http://localhost:8080/buy/ad?id=" + ad.getId() + "\">" + ad.getTitle() + "</a>.</br>";
 
 				sendMessage(userDao.findByUsername("System"), receiver, subject, text);
 				sendEmail(receiver, subject, text);
