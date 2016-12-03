@@ -29,7 +29,7 @@ public class SignupService {
 
 	/** Handles persisting a new user to the database. */
 	@Transactional
-	public void saveFrom(SignupForm signupForm) {
+	public User saveFrom(SignupForm signupForm) {
 		User user = new User();
 		user.setUsername(signupForm.getEmail());
 		user.setEmail(signupForm.getEmail());
@@ -72,6 +72,8 @@ public class SignupService {
 		user.addUserRole(role);
 		
 		userDao.save(user);
+		
+		return user;
 	}
 	
 	/**
