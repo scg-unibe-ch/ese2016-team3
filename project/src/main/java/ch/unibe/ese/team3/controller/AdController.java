@@ -24,6 +24,7 @@ import ch.unibe.ese.team3.controller.service.EnquiryService;
 import ch.unibe.ese.team3.controller.service.MessageService;
 import ch.unibe.ese.team3.controller.service.UserService;
 import ch.unibe.ese.team3.controller.service.VisitService;
+import ch.unibe.ese.team3.exceptions.ForbiddenException;
 import ch.unibe.ese.team3.exceptions.InvalidUserException;
 import ch.unibe.ese.team3.exceptions.ResourceNotFoundException;
 import ch.unibe.ese.team3.model.Ad;
@@ -101,20 +102,28 @@ public class AdController {
 	 */
 	@RequestMapping(value = "/ad", method = RequestMethod.POST)
 	public ModelAndView messageSent(@RequestParam("id") long id, @Valid MessageForm messageForm,
-			BindingResult bindingResult) {
-
+			BindingResult bindingResult, Principal principal) {
+		
+		if (principal == null){
+			throw new ForbiddenException();
+		}
+		
 		ModelAndView model = new ModelAndView("adDescription");
 		Ad ad = adService.getAdById(id);
 		model.addObject("shownAd", ad);
 		model.addObject("messageForm", new MessageForm());
+		
+		User sender = userService.findUserByUsername(principal.getName());
 
 		if (!bindingResult.hasErrors()) {
 			try {
-				messageService.saveFrom(messageForm);
+				messageService.saveFrom(messageForm, sender);
+				model.addObject("messageForm", new MessageForm());
 			}
-			catch(InvalidUserException e){
-				
-			}			
+			catch (InvalidUserException ex){
+				model.addObject("errorMessage", "Could not send message. The recipient is invalid");
+				model.addObject("messageForm", messageForm);
+			}		
 		}
 		return model;
 	}

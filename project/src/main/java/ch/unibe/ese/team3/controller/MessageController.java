@@ -72,16 +72,20 @@ public class MessageController {
 	@RequestMapping(value = "/profile/messages", method = RequestMethod.POST)
 	public ModelAndView messageSent(@Valid MessageForm messageForm,
 			BindingResult bindingResult, Principal principal) {
+		
+		User sender = userService.findUserByUsername(principal.getName());
+		
 		ModelAndView model = new ModelAndView("messages");
 		if (!bindingResult.hasErrors()) {
 			try {
-				messageService.saveFrom(messageForm);
+				messageService.saveFrom(messageForm, sender);
+				model.addObject("messageForm", new MessageForm());
 			}
 			catch (InvalidUserException ex){
-				
+				model.addObject("errorMessage", "Could not send message. The recipient is invalid");
+				model.addObject("messageForm", messageForm);
 			}
 			User user = userService.findUserByUsername(principal.getName());
-			model.addObject("messageForm", new MessageForm());
 			model.addObject("messages", messageService.getInboxForUser(user));
 		}
 		return model;

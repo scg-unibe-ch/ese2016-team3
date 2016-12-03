@@ -20,7 +20,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import ch.unibe.ese.team3.controller.pojos.forms.MessageForm;
@@ -105,7 +104,7 @@ public class MessageService {
 	 * @throws InvalidUserException
 	 */
 	@Transactional
-	public void saveFrom(MessageForm messageForm) throws InvalidUserException {
+	public void saveFrom(MessageForm messageForm, User sender) throws InvalidUserException {
 		User recipient = userDao.findByUsername(messageForm.getRecipient());
 
 		if (recipient == null) {
@@ -115,11 +114,6 @@ public class MessageService {
 		String subject = messageForm.getSubject();
 		String text = messageForm.getText();
 
-		// get logged in user as the sender
-		org.springframework.security.core.userdetails.User securityUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder
-				.getContext().getAuthentication().getPrincipal();
-
-		User sender = userDao.findByUsername(securityUser.getUsername());
 		sendMessage(sender, recipient, subject, text);
 	}
 
@@ -292,7 +286,7 @@ public class MessageService {
 		sendMessage(userDao.findByUsername("System"), winner, subject1, text1);
 		sendEmail(winner, subject1, text1);
 
-		String subject2 = "Your auction was successfully ";
+		String subject2 = "Your auction was successfully";
 		String text2 = "Dear " + owner.getFirstName() + ",</br></br>" + "You just sold the "
 				+ "<a class=\"link\" href= ../ad?id=" + ad.getId() + ">" + ad.getTitle() + "</a>.</br>" + "to "
 				+ winner.getFirstName() + " " + winner.getLastName() + " " + winner.getEmail() + " for "
@@ -312,7 +306,7 @@ public class MessageService {
 	private void sendNoBidsMessageToOwner(Ad ad) {
 
 		User user = userDao.findUserById(ad.getUser().getId());
-		String subject = "Auction Expired";
+		String subject = "Auction expired";
 		String text = "Dear " + user.getFirstName() + ",</br></br>"
 				+ "Unfortunately your auction has expired and no one has placed a bid on your"
 				+ "<a class=\"link\" href= ../ad?id=" + ad.getId() + ">" + ad.getTitle() + "</a>.</br>";
@@ -355,8 +349,6 @@ public class MessageService {
 	 *            User who overbids the last one
 	 */
 	public void sendOverbiddenMessage(Ad ad, User bidder) {
-		// TODO Auto-generated method stub
-
 		Bid maxbid = bidDao.findTopByAdOrderByAmountDesc(ad);
 
 		if (maxbid != null) {
