@@ -241,6 +241,10 @@ public class MessageService {
 		}
 	}
 	
+	/**
+	 * Sends a message to all premium users at 1AM, one day before their premium membership expires,
+	 * warning them about it.
+	 */
 	@Scheduled(cron = "0 0 1 * * *")
 	public void sendPremiumExpiryMessage(){
 		Iterable <User> users = userDao.findAll();
@@ -253,14 +257,20 @@ public class MessageService {
 		
 		for (User user : users){
 			if(user.isPremium()){
-				if(tomorrow.after(user.getPremiumExpiryDate())){
-					String subject = "Your Ithaca premium membership will expire tomorrow!";
-					String text = "Hi there, " + user.getFirstName()
-							+ "<br> <br> It seems as if your premium membership will expire tomorrow! <br>"
-							+ "<br> We hope you've enjoyed the benefits, if you still want to be a premium member, "
-							+ "please upgrade again after it expires.";
-					sendEmail(user, subject, text);
+				try{
+					if(tomorrow.after(user.getPremiumExpiryDate())){
+						String subject = "Your Ithaca premium membership will expire tomorrow!";
+						String text = "Hi there, " + user.getFirstName()
+								+ "<br> <br> It seems as if your premium membership will expire tomorrow! <br>"
+								+ "<br> We hope you've enjoyed the benefits, if you still want to be a premium member, "
+								+ "please upgrade again after it expires.";
+						sendEmail(user, subject, text);
+					}
 				}
+				catch(Exception e){
+					
+				}
+				
 			}
 		}
 	}

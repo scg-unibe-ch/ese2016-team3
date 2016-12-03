@@ -210,6 +210,17 @@ public class User {
 		}
 	}
 	
+	public void removePremium(){
+		accountType = AccountType.BASIC;
+		creditCard = null;
+		securityNumber = null;
+		creditcardType = null;
+		expirationMonth = null;
+		expirationYear = null;
+		creditcardName = null;
+		premiumChoice = null;
+	}
+	
 	public String getCreditCard(){
 		return creditCard;
 	}

@@ -1,8 +1,12 @@
 package ch.unibe.ese.team3.controller.service;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.UserDao;
@@ -27,5 +31,25 @@ public class UserService {
 	public User findUserById(long id) {
 		return userDao.findUserById(id);
 	}
-
+	
+	/**
+	 * Removes all premium privileges from expired premium users at 1AM.
+	 */
+	@Scheduled(cron = "0 0 1 * * *")
+	public void removeExpiredPremiumUsers(){
+		Iterable <User> users = userDao.findAll();
+		Date now = new Date();
+		
+		for (User user : users){
+			if (user.isPremium()){
+				try{
+					if(user.getPremiumExpiryDate().before(now)){
+						user.removePremium();
+					}
+				} 
+				catch(Exception e){					
+				}
+			}
+		}
+	}
 }
