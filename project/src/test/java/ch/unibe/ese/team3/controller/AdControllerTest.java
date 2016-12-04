@@ -1,67 +1,16 @@
 package ch.unibe.ese.team3.controller;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.security.Principal;
-
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/config/springMVC_test.xml",
-		"file:src/main/webapp/WEB-INF/config/springData.xml",
-		"file:src/main/webapp/WEB-INF/config/springSecurity.xml" })
-@WebAppConfiguration
-@Transactional
-public class AdControllerTest {
+import org.junit.Test;
+import org.springframework.test.web.servlet.MvcResult;
 
-	private MockMvc mockMvc;
-
-	private Principal getTestPrincipal() {
-		Principal principal = new Principal() {
-			@Override
-			public String getName() {
-				return "ese@unibe.ch";
-			}
-		};
-		return principal;
-	}
-	
-	private Principal getTestPrincipal(String name) {
-		Principal principal = new Principal() {
-			@Override
-			public String getName() {
-				return name;
-			}
-		};
-		return principal;
-	}
-
-	@Autowired
-	private WebApplicationContext context;
-
-	@Before
-	public void setUp() {
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
-	}
+public class AdControllerTest extends BaseControllerTest {
 
 	@Test
 	public void getAdNotAuthenticated() throws Exception {
@@ -77,7 +26,7 @@ public class AdControllerTest {
 
 	@Test
 	public void getAdAuthenticated() throws Exception {
-		this.mockMvc.perform(get("/ad").principal(getTestPrincipal()).param("id", "2")).andExpect(status().isOk())
+		this.mockMvc.perform(get("/ad").principal(getTestPrincipal("ese@unibe.ch")).param("id", "2")).andExpect(status().isOk())
 				.andExpect(view().name("adDescription")).andExpect(model().attributeExists("shownAd", "sentEnquiries",
 						"messageForm", "loggedInUserEmail", "visits"));
 	}
@@ -91,7 +40,7 @@ public class AdControllerTest {
 
 	@Test
 	public void getAuctionAdAuthenticated() throws Exception {
-		this.mockMvc.perform(get("/ad").principal(getTestPrincipal()).param("id", "13")).andExpect(status().isOk())
+		this.mockMvc.perform(get("/ad").principal(getTestPrincipal("ese@unibe.ch")).param("id", "13")).andExpect(status().isOk())
 				.andExpect(view().name("adDescription")).andExpect(model().attributeExists("shownAd", "sentEnquiries",
 						"messageForm", "loggedInUserEmail", "visits", "bids", "sentBuyRequest"));
 	}
@@ -104,7 +53,7 @@ public class AdControllerTest {
 	@Test
 	public void sendMessageInvalidRecipient() throws Exception {
 		this.mockMvc
-				.perform(post("/ad").principal(getTestPrincipal()).param("id", "1")
+				.perform(post("/ad").principal(getTestPrincipal("ese@unibe.ch")).param("id", "1")
 						.param("recipient", "blabla@ithaca.com").param("subject", "subject").param("text", "Text"))
 				.andExpect(status().isOk()).andExpect(view().name("adDescription"))
 				.andExpect(model().attribute("errorMessage", "Could not send message. The recipient is invalid"));
@@ -113,7 +62,7 @@ public class AdControllerTest {
 	@Test
 	public void sendMessageInvalidForm() throws Exception {
 		this.mockMvc
-				.perform(post("/ad").principal(getTestPrincipal()).param("id", "1")
+				.perform(post("/ad").principal(getTestPrincipal("ese@unibe.ch")).param("id", "1")
 						.param("recipient", "blabla@ithaca.com").param("subject", "subject"))
 				.andExpect(status().isOk()).andExpect(view().name("adDescription"))
 				.andExpect(model().attributeHasErrors("messageForm"));
@@ -122,7 +71,7 @@ public class AdControllerTest {
 	@Test
 	public void sendMessageSuccess() throws Exception {
 		this.mockMvc
-				.perform(post("/ad").principal(getTestPrincipal()).param("id", "1").param("recipient", "jane@doe.com")
+				.perform(post("/ad").principal(getTestPrincipal("ese@unibe.ch")).param("id", "1").param("recipient", "jane@doe.com")
 						.param("subject", "subject").param("text", "Text"))
 				.andExpect(status().isOk()).andExpect(view().name("adDescription")).andExpect(model().hasNoErrors())
 				.andExpect(model().attributeDoesNotExist("errorMessage"));
@@ -139,7 +88,7 @@ public class AdControllerTest {
 	@Test
 	public void myRoomsAuthenticated() throws Exception {
 		this.mockMvc
-		.perform(get("/profile/myRooms").principal(getTestPrincipal()))
+		.perform(get("/profile/myRooms").principal(getTestPrincipal("ese@unibe.ch")))
 		.andExpect(status().isOk())
 		.andExpect(view().name("myRooms"))
 		.andExpect(model().attributeExists("bookmarkedAdvertisements", "ownAdvertisements"));
@@ -171,7 +120,7 @@ public class AdControllerTest {
 	
 	@Test
 	public void isBookmarkStatusOwnAd() throws Exception {
-		MvcResult result = this.mockMvc.perform(post("/bookmark").principal(getTestPrincipal())
+		MvcResult result = this.mockMvc.perform(post("/bookmark").principal(getTestPrincipal("ese@unibe.ch"))
 				.param("id", "2")
 				.param("screening", "true")
 				.param("bookmarked", "true"))
@@ -183,7 +132,7 @@ public class AdControllerTest {
 	
 	@Test
 	public void isBookmarkStatusIsBookmarked() throws Exception {
-		MvcResult result = this.mockMvc.perform(post("/bookmark").principal(getTestPrincipal())
+		MvcResult result = this.mockMvc.perform(post("/bookmark").principal(getTestPrincipal("ese@unibe.ch"))
 				.param("id", "1")
 				.param("screening", "true")
 				.param("bookmarked", "true"))
@@ -195,7 +144,7 @@ public class AdControllerTest {
 	
 	@Test
 	public void isBookmarkStatusIsNotBookmarked() throws Exception {
-		MvcResult result = this.mockMvc.perform(post("/bookmark").principal(getTestPrincipal())
+		MvcResult result = this.mockMvc.perform(post("/bookmark").principal(getTestPrincipal("ese@unibe.ch"))
 				.param("id", "13")
 				.param("screening", "true")
 				.param("bookmarked", "true"))
@@ -207,7 +156,7 @@ public class AdControllerTest {
 	
 	@Test
 	public void isBookmarkStatusBookmark() throws Exception {
-		MvcResult result = this.mockMvc.perform(post("/bookmark").principal(getTestPrincipal())
+		MvcResult result = this.mockMvc.perform(post("/bookmark").principal(getTestPrincipal("ese@unibe.ch"))
 				.param("id", "14")
 				.param("screening", "false")
 				.param("bookmarked", "false"))

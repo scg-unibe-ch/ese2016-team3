@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
 	AdControllerTest.class,
-	ProfileControllerTest.class
+	ProfileControllerTest.class,
+	IndexControllerTest.class
 })
 public class ControllerTestSuite {
 

@@ -35,18 +35,6 @@ public class IndexController {
 		model.addObject("types", Type.values());
 		return model;
 	}
-
-	/** Displays the about us page. */
-	@RequestMapping(value = "/about")
-	public ModelAndView about() {
-		return new ModelAndView("about");
-	}
-
-	/** Displays the disclaimer page. */
-	@RequestMapping(value = "/disclaimer")
-	public ModelAndView disclaimer() {
-		return new ModelAndView("disclaimer");
-	}
 	
 	@ModelAttribute
 	public SearchForm getSearchForm() {
