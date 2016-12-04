@@ -739,6 +739,8 @@ The user can choose the account type. There are two account types (premium and n
 
 If any of these informations aren't filled in, an error occurs, which tells the user that he must fill in a valid information.
 
+The user can also sign up with his google account. For this, a pop-up window appears in which the user confirms the signup and types in his google password. The login happens automatically after this signup, in contrast to the normal signup. After signing up like this, the user can log in using the google button, or change his password on edit profile and use this password and the Gmail address to log in normally.
+
 ##### Logged in users
 
 A logged in user can:
@@ -770,7 +772,7 @@ After the results are displayed, the user can choose to:
 
 - *Sort search:* The search results can be sorted by: ascending or descending price, move-in date earliest to latest or latest to earliest, or by the date the ad was created, youngest to oldest or oldest to youngest. 
 
-- *Filter search:* The search can be filtered further by filling out the earliest and latest move-in date in a dropdown calendar. The user can also check boxes for; balcony or patio, garage, parking, elevator and dishwasher. In a dropdown menu, the user can choose between the infrastructure types; satellite, cable or fiber optic cable. He can also choose upper and lower limits for; floor level, nr. of bathrooms, nr. of rooms, build year, renovation year, distance to school, shopping and public transport. The search criteria are always visible to the user.
+- *Filter search:* The search can be filtered further by choosing upper and lower limits for number of rooms and square meters. These search criteria are always visible to the user. Additional filters can be shown by pressing a button. Here, the user can fill out the earliest and latest move-in date in a dropdown calendar. He can also check boxes for; balcony or patio, garage, parking, elevator and dishwasher. In a dropdown menu, the user can choose between the infrastructure types; satellite, cable or fiber optic cable. He can also choose upper and lower limits for; nr. of bathrooms, floor level, build year, renovation year, distance to school, shopping and public transport. These filters can be hidden again by pressing the above button a second time.
 
 - *Participate in auction:* The user can participate in an auction when looking at ads for sale by directly buying or bidding from the result page.
 
@@ -872,7 +874,7 @@ The application behaves different for the different user roles as follows:
 - In the same situation, a normal user gets a summary of all triggered alerts once a day. The summary is sent to the internal system mail box and also by email.
 - The advertisement of premium users are shown at the top of the search result list.
 
-A normal user can upgrade to premium for a choice of durations with different prices. For this he has to give his credit card information. After the amount of days he has paid for has passed, the user is reverted back to normal status, the premium membership has run out. It is not possible to cancel the premium subscription since it is paid for in full.
+A normal user can upgrade to premium for a choice of durations with different prices. For this he has to give his credit card information. After the amount of days he has paid for has passed, the user is reverted back to normal status, the premium membership has run out. One day before the membership runs out, an email is sent to the user, informing about this. It is not possible to cancel the premium subscription since it is paid for in full.
 
 #### Enquiries
 
