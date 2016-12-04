@@ -4,11 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+import java.util.Calendar;
+
 import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.UserPicture;
 import ch.unibe.ese.team3.model.UserRole;
+import ch.unibe.ese.team3.model.CreditcardType;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
 /**
@@ -75,6 +79,39 @@ public class UserTestDataSaver {
 		User eric = createUser("eric@clapton.com", "guitar", "Eric", "Clapton", "/img/test/user.jpg", Gender.MALE, AccountType.BASIC);
 		eric.setAboutMe(getDummyText());
 		userDao.save(eric);
+		
+		//User for Email test
+		User email = createUser("ithacatest@trash-mail.com", "123456", "Ithaca", "Test", Gender.MALE, AccountType.PREMIUM);
+		Date expiryTomorrow = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(expiryTomorrow);
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		calendar.add(Calendar.HOUR_OF_DAY, -1);
+		expiryTomorrow = calendar.getTime();
+		email.setPremiumExpiryDate(expiryTomorrow);
+		email.setCreditCard("1111222233334444");
+		email.setCreditcardType(CreditcardType.VISA);
+		email.setCreditcardName("Email Test");
+		email.setExpirationMonth("10");
+		email.setExpirationYear("2020");
+		email.setSecurityNumber("123");
+		userDao.save(email);
+		
+		//User for removing expired Premium.
+		User removePremium = createUser("ithacatest2@trash-mail.com", "123456", "Ithaca", "Test", Gender.MALE, AccountType.PREMIUM);
+		Date expiryBefore = new Date();
+		Calendar calendar2 = Calendar.getInstance();
+		calendar2.setTime(expiryBefore);
+		calendar2.add(Calendar.HOUR_OF_DAY, 1);
+		expiryBefore = calendar2.getTime();
+		removePremium.setPremiumExpiryDate(expiryBefore);
+		removePremium.setCreditCard("1111222233334444");
+		removePremium.setCreditcardType(CreditcardType.VISA);
+		removePremium.setCreditcardName("Email Test");
+		removePremium.setExpirationMonth("10");
+		removePremium.setExpirationYear("2020");
+		removePremium.setSecurityNumber("123");
+		userDao.save(removePremium);
 	}
 
 	public User createUser(String email, String password, String firstName,

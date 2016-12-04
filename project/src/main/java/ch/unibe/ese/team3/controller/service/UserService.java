@@ -44,6 +44,7 @@ public class UserService {
 				try{
 					if(user.getPremiumExpiryDate().before(now)){
 						user.removePremium();
+						userDao.save(user);
 					}
 				} 
 				catch(Exception e){					
