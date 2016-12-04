@@ -113,6 +113,7 @@ The following sections describe abbreviations and special terms used in this doc
 |uc35|Pause auction|The manager of auctions|Med|1|
 |uc36|Resume auction|The manager of auctions|Med|1|
 |uc37|Complete auction|The manager of auctions|Med|1|
+|uc38|View extended alert criteria|The user of the web application|low|1|
 
 #### User management
 ![User management](images/User_Management2.0.png)
@@ -524,9 +525,9 @@ The following sections describe abbreviations and special terms used in this doc
 |**Primary actor**|The user of the web application|
 |**Precondition**|The user is logged into the application. The user is in the Alerts view (`uc25`).|
 |**Trigger**|The user want to subscribe to an alert.|
-|**Normal flow**|1. The user fills out a form, in which he specifies under which conditions a newly created Ad creates an alert. Type of room, Location and maximal price are specified.|
+|**Normal flow**|1. The user fills out a form, in which he specifies under which conditions a newly created Ad creates an alert. The following criteria are specified by the user: Types of accomodation (Apartment, Loft, House, Villa, Studio), Max Price, City/zip code, radius (maximal accepted distance from specified city), and if the alert should be triggered by ad, which are for buying or for renting.
 ||2. The user subscribes to the alert by clicking the "Subscribe" button.| 
-|**Alternate flow**|If the criteria specified under point 1. are not entered correctly, an error message is displayed.|
+|**Alternate flow**|The user clicks the checkbox "Extended Alert". He then specifies additional criteria, based on which the alert triggers (additional criteria: ).|
 
 |Use case element|Description|
 |:---|:---|
@@ -539,6 +540,19 @@ The following sections describe abbreviations and special terms used in this doc
 |**Normal flow**|1. The user views the active alerts in the Alerts view.|
 ||2. The user deletes the alert by clicking the "Delete" button.| 
 |**Alternate flow**|None|
+
+|Use case element|Description|
+|:---|:---|
+|**ID**|`uc38`|
+|**Name**|View extended alert criteria|
+|**Description**|The user checks the alert criteria of an extended alert he created.|
+|**Primary actor**|The user of the web application|
+|**Precondition**|The user is logged into the application. The user is in the Alerts view (`uc25`). The user has created an extended alert.|
+|**Trigger**|The user wants to see all the criteria he set when he created an alert.|
+|**Normal flow**|1. The user views the active alerts in the Alerts view.|
+||2. The user clicks on the "details" button right of the extended alert. A modal apprears, which shows all the extended alert criteria| 
+|**Alternate flow**|None|
+
 
 #### Auctions
 
@@ -792,7 +806,24 @@ From the view of the ad, the user can:
 
 #### Alerts 
 
-A logged in user can view and modify his alerts by choosing "Alerts" from the Profile drop-down menu. He can create a new alert by filling in the initial search criteria and clicking "Subscribe". Below where the user can create new alerts is "Your active alerts", where he can view a list of alerts in a table with type, city, radius, max price and a column "Action" with a button to delete the alert.
+A logged in user can view and modify his alerts by choosing "Alerts" from the Profile drop-down menu. He can create a new alert by filling in the initial search criteria and clicking "Subscribe". In addition, the user can create an "Extended Alert". This way more criteria can be added, which determine when an alert triggers.
+
+The following criteria can be added for an extended alert:
+
+|Extended Alert Criteria||
+|:---|:---|
+|Infrastructure type|Earliest move-in date|
+|Latest move-in date|Garage available|
+|Balcony or Patio available|Parking available|
+|Elevator available|Dishwasher available|
+|Floor level |Build year|
+|Nr. of Baths|Renovation year|
+|Distance to school (m)|Distance to public transport (m)|
+|Nr. of Rooms|Distance to shopping (m)|
+
+For the number criteria, min and max can be specified. Under infrastructure type cable, satellite and fiber optic cable can be selected.
+
+Below where the user can create new alerts is "Your active alerts", where he can view a list of alerts in a table with type, city, radius, max price and a column "Action" with a button to delete the alert. If the alert is an extended alert, a button "Details" appears under the column "Action". With this button, the user can view the criteria, which he specified by creating an extended alert.
 
 If an alert is triggered, the user gets a message to his inbox in the application. The message is also sent to his email account.
 

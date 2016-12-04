@@ -10,7 +10,6 @@ Contains java code which builds website. Is structured in the following sub-fold
 - interceptors
 - model
 - util
-#### sql
 
 Contains SQL table with zip codes.
 
