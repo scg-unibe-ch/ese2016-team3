@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 	AdControllerTest.class,
 	ProfileControllerTest.class,
-	IndexControllerTest.class
+	IndexControllerTest.class,
+	AuctionControllerTest.class
 })
 public class ControllerTestSuite {
 

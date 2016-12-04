@@ -322,6 +322,29 @@ public class AuctionServiceTest {
 		auctionService.resumeAuction(auctionAd1);
 		assertTrue(auctionAd1.isAvailableForAuction());
 	}
+	
+	@Test
+	public void resumeCompletedAuction(){
+		assertTrue(auctionService.completeAuction(auctionAd1));
+		assertFalse(auctionService.resumeAuction(auctionAd1));
+	}
+	
+	@Test
+	public void completeCompletedAuction(){
+		assertTrue(auctionService.completeAuction(auctionAd1));
+		assertFalse(auctionService.completeAuction(auctionAd1));		
+	}
+	
+	@Test
+	public void stopStoppedAuction(){
+		assertTrue(auctionService.stopAuction(auctionAd1));
+		assertFalse(auctionService.stopAuction(auctionAd1));
+	}
+	
+	@Test
+	public void resumeRunningAuction(){
+		assertFalse(auctionService.resumeAuction(auctionAd1));
+	}
 
 	@Test
 	public void bidOnResumedAuction() {

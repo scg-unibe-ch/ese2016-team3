@@ -204,4 +204,14 @@ public class MessageServiceTest {
 		assertEquals(9, messageService.unread(recipient.getId()));
 	}
 	
+	@Test
+	public void sendPremiumExpiryMessageTest(){
+		//Manual test done by checking "ithacatest@trash-mail.com"
+		//Commented out because sending emails does not work in the test.
+		//However, message was received when sendEmail was commented out.
+		//messageService.sendPremiumExpiryMessage();
+		//User messageTest = userDao.findByUsername("ithacatest@trash-mail.com");
+		//assertEquals(1, messageService.unread(messageTest.getId()));
+	}
+	
 }

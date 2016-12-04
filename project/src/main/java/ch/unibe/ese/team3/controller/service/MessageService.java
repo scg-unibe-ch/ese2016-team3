@@ -245,6 +245,7 @@ public class MessageService {
 	 * Sends a message to all premium users at 1AM, one day before their premium membership expires,
 	 * warning them about it.
 	 */
+	// Every minute for testing purposes @Scheduled(cron = "1 * * * * *")
 	@Scheduled(cron = "0 0 1 * * *")
 	public void sendPremiumExpiryMessage(){
 		Iterable <User> users = userDao.findAll();
@@ -265,6 +266,7 @@ public class MessageService {
 								+ "<br> We hope you've enjoyed the benefits, if you still want to be a premium member, "
 								+ "please upgrade again after it expires.";
 						sendEmail(user, subject, text);
+						sendMessage(userDao.findByUsername("System"), user, subject, text);
 					}
 				}
 				catch(Exception e){
