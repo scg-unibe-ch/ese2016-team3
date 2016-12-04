@@ -36,6 +36,15 @@ public class UserTestDataSaver {
 		User ese = createUser("ese@unibe.ch", "ese", "John", "Wayne",
 				"/img/test/portrait.jpg", Gender.MALE, AccountType.PREMIUM);
 		ese.setAboutMe(getDummyText());
+		Calendar expirationOfPremium = Calendar.getInstance();
+		expirationOfPremium.add(Calendar.DAY_OF_MONTH, 365);
+		ese.setPremiumExpiryDate(expirationOfPremium.getTime());
+		ese.setCreditCard("1111222233334444");
+		ese.setCreditcardType(CreditcardType.VISA);
+		ese.setCreditcardName("John Wayne");
+		ese.setExpirationMonth("11");
+		ese.setExpirationYear("2021");
+		ese.setSecurityNumber("725");
 		userDao.save(ese);
 		
 		// Searcher
