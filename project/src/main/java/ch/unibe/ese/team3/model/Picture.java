@@ -54,6 +54,9 @@ public abstract class Picture {
 		Picture other = (Picture) obj;
 		if (id != other.id)
 			return false;
+		if (!this.filePath.equals(other.filePath))
+			return false;
+		
 		return true;
 	}
 
