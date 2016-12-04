@@ -39,6 +39,10 @@ public class AuctionController {
 	
 	@RequestMapping(value = "/profile/bidAuction", method = RequestMethod.POST)
 	public ModelAndView bid(Principal principal, @RequestParam int amount, @RequestParam long id, RedirectAttributes redirectAttributes) {
+		if (principal == null){
+			throw new ForbiddenException();
+		}
+		
 		User bidder = userService.findUserByUsername(principal.getName());
 		Ad ad = adService.getAdById(id);
 		
@@ -61,6 +65,10 @@ public class AuctionController {
 	@RequestMapping(value = "/profile/buyAuction", method = RequestMethod.POST)
 	public ModelAndView buy(Principal principal, @RequestParam long id, RedirectAttributes redirectAttributes) {
 
+		if (principal == null){
+			throw new ForbiddenException();
+		}
+		
 		User purchaser = userService.findUserByUsername(principal.getName());
 		Ad ad = adService.getAdById(id);
 		
@@ -80,6 +88,10 @@ public class AuctionController {
 	
 	@RequestMapping(value = "/profile/auctions", method = RequestMethod.GET)
 	public ModelAndView showAuctionManagement(Principal principal){
+		if (principal == null){
+			throw new ForbiddenException();
+		}
+		
 		User owner = userService.findUserByUsername(principal.getName());		
 		
 		ModelAndView model = new ModelAndView("AuctionManagement");
@@ -94,6 +106,10 @@ public class AuctionController {
 	
 	@RequestMapping(value = "/profile/mybids", method = RequestMethod.GET)
 	public ModelAndView showMyAuctions(Principal principal){
+		if (principal == null){
+			throw new ForbiddenException();
+		}
+		
 		User currentUser = userService.findUserByUsername(principal.getName());
 		
 		ModelAndView model = new ModelAndView("MyBids");
@@ -104,6 +120,10 @@ public class AuctionController {
 	
 	@RequestMapping(value ="/profile/auction", method = RequestMethod.GET)
 	public ModelAndView showAuctionDetails(Principal principal, @RequestParam("id") int id){
+		if (principal == null){
+			throw new ForbiddenException();
+		}
+		
 		User owner = userService.findUserByUsername(principal.getName());
 		Ad ad = adService.getAdById(id);
 		
@@ -114,6 +134,10 @@ public class AuctionController {
 
 	@RequestMapping(value ="/profile/auction/complete", method = RequestMethod.POST)
 	public ModelAndView completeAuction(Principal principal, @RequestParam("adIdComplete") int id){
+		if (principal == null){
+			throw new ForbiddenException();
+		}
+		
 		User owner = userService.findUserByUsername(principal.getName());
 		Ad ad = adService.getAdById(id);
 		
@@ -129,6 +153,10 @@ public class AuctionController {
 	
 	@RequestMapping(value ="/profile/auction/resume", method = RequestMethod.POST)
 	public ModelAndView resumeAuction(Principal principal, @RequestParam("adIdResume") int id){
+		if (principal == null){
+			throw new ForbiddenException();
+		}
+		
 		User owner = userService.findUserByUsername(principal.getName());
 		Ad ad = adService.getAdById(id);
 		
@@ -144,6 +172,10 @@ public class AuctionController {
 	
 	@RequestMapping(value ="/profile/auction/pause", method = RequestMethod.POST)
 	public ModelAndView pauseAuction(Principal principal, @RequestParam("adIdPause") int id){
+		if (principal == null){
+			throw new ForbiddenException();
+		}
+		
 		User owner = userService.findUserByUsername(principal.getName());
 		Ad ad = adService.getAdById(id);
 		
