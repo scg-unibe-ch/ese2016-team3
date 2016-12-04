@@ -150,6 +150,16 @@ public class AuctionControllerTest extends BaseControllerTest {
 	}
 	
 	@Test
+	public void completeAuctionFailure() throws Exception{
+		mockMvc.perform(post("/profile/auction/complete")
+				.principal(getTestPrincipal("jane@doe.com"))
+				.param("adIdComplete", "17"))
+		.andExpect(status().isOk())
+		.andExpect(view().name("AuctionDetails"))
+		.andExpect(model().attributeExists("errorMessage"));
+	}
+	
+	@Test
 	public void resumeAuctionNotAuthenticated() throws Exception{
 		mockMvc.perform(post("/profile/auction/resume")
 				.param("adIdResume", "15"))
@@ -167,6 +177,16 @@ public class AuctionControllerTest extends BaseControllerTest {
 	}
 	
 	@Test
+	public void resumeAuctionFailure() throws Exception {
+		mockMvc.perform(post("/profile/auction/resume")
+				.principal(getTestPrincipal("jane@doe.com"))
+				.param("adIdResume", "13"))
+		.andExpect(status().isOk())
+		.andExpect(view().name("AuctionDetails"))
+		.andExpect(model().attributeExists("errorMessage"));
+	}
+	
+	@Test
 	public void pauseAuctionNotAuthenticated() throws Exception{
 		mockMvc.perform(post("/profile/auction/pause")
 				.param("adIdPause", "13"))
@@ -181,6 +201,16 @@ public class AuctionControllerTest extends BaseControllerTest {
 		.andExpect(status().isOk())
 		.andExpect(view().name("AuctionDetails"))
 		.andExpect(model().attributeExists("confirmationMessage"));
+	}
+	
+	@Test
+	public void pauseAuctionFailure() throws Exception {
+		mockMvc.perform(post("/profile/auction/pause")
+				.principal(getTestPrincipal("jane@doe.com"))
+				.param("adIdPause", "15"))
+		.andExpect(status().isOk())
+		.andExpect(view().name("AuctionDetails"))
+		.andExpect(model().attributeExists("errorMessage"));
 	}
 	
 }

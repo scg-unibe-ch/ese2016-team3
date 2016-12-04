@@ -35,190 +35,201 @@ public class AuctionController {
 	private AdService adService;
 	@Autowired
 	private AuctionService auctionService;
-	
-	
+
 	@RequestMapping(value = "/profile/bidAuction", method = RequestMethod.POST)
-	public ModelAndView bid(Principal principal, @RequestParam int amount, @RequestParam long id, RedirectAttributes redirectAttributes) {
-		if (principal == null){
+	public ModelAndView bid(Principal principal, @RequestParam int amount, @RequestParam long id,
+			RedirectAttributes redirectAttributes) {
+		if (principal == null) {
 			throw new ForbiddenException();
 		}
-		
+
 		User bidder = userService.findUserByUsername(principal.getName());
 		Ad ad = adService.getAdById(id);
-		
-		if (auctionService.checkAndBid(ad, bidder, amount)) {	
-			
+
+		if (auctionService.checkAndBid(ad, bidder, amount)) {
+
 			ModelAndView model = new ModelAndView("redirect:../ad?id=" + ad.getId());
 			redirectAttributes.addFlashAttribute("confirmationMessage",
 					"Your bid was registered successfully. If you win the auction, the advertiser will contact you.");
 			return model;
-		}
-		else{
+		} else {
 			ModelAndView model = new ModelAndView("redirect:../ad?id=" + ad.getId());
-			redirectAttributes.addFlashAttribute("errorMessage",
-					"Sorry, someone else bade more");
+			redirectAttributes.addFlashAttribute("errorMessage", "Sorry, someone else bade more");
 			return model;
 		}
 
 	}
-	
+
 	@RequestMapping(value = "/profile/buyAuction", method = RequestMethod.POST)
 	public ModelAndView buy(Principal principal, @RequestParam long id, RedirectAttributes redirectAttributes) {
 
-		if (principal == null){
+		if (principal == null) {
 			throw new ForbiddenException();
 		}
-		
+
 		User purchaser = userService.findUserByUsername(principal.getName());
 		Ad ad = adService.getAdById(id);
-		
-		if (auctionService.checkAndBuy(ad, purchaser)) {			
+
+		if (auctionService.checkAndBuy(ad, purchaser)) {
 			ModelAndView model = new ModelAndView("redirect:../ad?id=" + ad.getId());
 			redirectAttributes.addFlashAttribute("confirmationMessage",
 					"Your purchase was registered successfully. The advertiser will contact you.");
 			return model;
-		}
-		else{
+		} else {
 			ModelAndView model = new ModelAndView("redirect:../ad?id=" + ad.getId());
-			redirectAttributes.addFlashAttribute("errorMessage",
-					"Sorry, someone else bought it already.");
+			redirectAttributes.addFlashAttribute("errorMessage", "Sorry, someone else bought it already.");
 			return model;
 		}
 	}
-	
+
 	@RequestMapping(value = "/profile/auctions", method = RequestMethod.GET)
-	public ModelAndView showAuctionManagement(Principal principal){
-		if (principal == null){
+	public ModelAndView showAuctionManagement(Principal principal) {
+		if (principal == null) {
 			throw new ForbiddenException();
 		}
-		
-		User owner = userService.findUserByUsername(principal.getName());		
-		
+
+		User owner = userService.findUserByUsername(principal.getName());
+
 		ModelAndView model = new ModelAndView("AuctionManagement");
 		model.addObject("runningAuctions", auctionService.getRunningAuctionsForUser(owner));
 		model.addObject("stoppedAuctions", auctionService.getStoppedAuctionsForUser(owner));
 		model.addObject("expiredAuctions", auctionService.getExpiredAuctionsForUser(owner));
 		model.addObject("notStartedAuctions", auctionService.getNotYetRunningAuctionsForUser(owner));
 		model.addObject("completedAuctions", auctionService.getCompletedAuctionsForUser(owner));
-		
+
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/profile/mybids", method = RequestMethod.GET)
-	public ModelAndView showMyAuctions(Principal principal){
-		if (principal == null){
+	public ModelAndView showMyAuctions(Principal principal) {
+		if (principal == null) {
 			throw new ForbiddenException();
 		}
-		
+
 		User currentUser = userService.findUserByUsername(principal.getName());
-		
+
 		ModelAndView model = new ModelAndView("MyBids");
 		model.addObject("myauctions", auctionService.getBidsByUser(currentUser));
-		
+
 		return model;
 	}
-	
-	@RequestMapping(value ="/profile/auction", method = RequestMethod.GET)
-	public ModelAndView showAuctionDetails(Principal principal, @RequestParam("id") int id){
-		if (principal == null){
+
+	@RequestMapping(value = "/profile/auction", method = RequestMethod.GET)
+	public ModelAndView showAuctionDetails(Principal principal, @RequestParam("id") int id) {
+		if (principal == null) {
 			throw new ForbiddenException();
 		}
-		
+
 		User owner = userService.findUserByUsername(principal.getName());
 		Ad ad = adService.getAdById(id);
-		
+
 		checkPermissions(owner, ad);
-		
+
 		return getModelForAuctionDetails(ad);
 	}
 
-	@RequestMapping(value ="/profile/auction/complete", method = RequestMethod.POST)
-	public ModelAndView completeAuction(Principal principal, @RequestParam("adIdComplete") int id){
-		if (principal == null){
+	@RequestMapping(value = "/profile/auction/complete", method = RequestMethod.POST)
+	public ModelAndView completeAuction(Principal principal, @RequestParam("adIdComplete") int id) {
+		if (principal == null) {
 			throw new ForbiddenException();
 		}
-		
+
 		User owner = userService.findUserByUsername(principal.getName());
 		Ad ad = adService.getAdById(id);
-		
+
 		checkPermissions(owner, ad);
-		
-		auctionService.completeAuction(ad);
-		
-		String message = "Auction has been completed!";		
-		ModelAndView model = getModelForAuctionDetails(ad, message);
-		
-		return model;
-	}
-	
-	@RequestMapping(value ="/profile/auction/resume", method = RequestMethod.POST)
-	public ModelAndView resumeAuction(Principal principal, @RequestParam("adIdResume") int id){
-		if (principal == null){
-			throw new ForbiddenException();
+
+		ModelAndView model;
+
+		if (auctionService.completeAuction(ad)) {
+			String message = "Auction has been completed!";
+			model = getModelForAuctionDetails(ad, message, true);
+		} else {
+			String message = "Couldn't complete auction!";
+			model = getModelForAuctionDetails(ad, message, false);
 		}
-		
-		User owner = userService.findUserByUsername(principal.getName());
-		Ad ad = adService.getAdById(id);
-		
-		checkPermissions(owner, ad);
-		
-		auctionService.resumeAuction(ad);
-		String message = "Auction has been resumed!";
-		
-		ModelAndView model = getModelForAuctionDetails(ad, message);
-		
+
 		return model;
-	}
-	
-	@RequestMapping(value ="/profile/auction/pause", method = RequestMethod.POST)
-	public ModelAndView pauseAuction(Principal principal, @RequestParam("adIdPause") int id){
-		if (principal == null){
-			throw new ForbiddenException();
-		}
-		
-		User owner = userService.findUserByUsername(principal.getName());
-		Ad ad = adService.getAdById(id);
-		
-		checkPermissions(owner, ad);
-		
-		auctionService.stopAuction(ad);
-		String message = "Auction has been paused!";
-		
-		ModelAndView model = getModelForAuctionDetails(ad, message);
-		
-		return model;
-	}
-	
-	private ModelAndView getModelForAuctionDetails(Ad ad) {
-		return getModelForAuctionDetails(ad, null);
 	}
 
-	private ModelAndView getModelForAuctionDetails(Ad ad, String message) {
+	@RequestMapping(value = "/profile/auction/resume", method = RequestMethod.POST)
+	public ModelAndView resumeAuction(Principal principal, @RequestParam("adIdResume") int id) {
+		if (principal == null) {
+			throw new ForbiddenException();
+		}
+
+		User owner = userService.findUserByUsername(principal.getName());
+		Ad ad = adService.getAdById(id);
+
+		checkPermissions(owner, ad);
+
+		ModelAndView model;
+
+		if (auctionService.resumeAuction(ad)) {
+			String message = "Auction has been completed!";
+			model = getModelForAuctionDetails(ad, message, true);
+		} else {
+			String message = "Couldn't resume auction!";
+			model = getModelForAuctionDetails(ad, message, false);
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/profile/auction/pause", method = RequestMethod.POST)
+	public ModelAndView pauseAuction(Principal principal, @RequestParam("adIdPause") int id) {
+		if (principal == null) {
+			throw new ForbiddenException();
+		}
+
+		User owner = userService.findUserByUsername(principal.getName());
+		Ad ad = adService.getAdById(id);
+
+		checkPermissions(owner, ad);
+
+		ModelAndView model;
+
+		if (auctionService.stopAuction(ad)) {
+			String message = "Auction has been completed!";
+			model = getModelForAuctionDetails(ad, message, true);
+		} else {
+			String message = "Couldn't stop pause auction!";
+			model = getModelForAuctionDetails(ad, message, false);
+		}
+
+		return model;
+	}
+
+	private ModelAndView getModelForAuctionDetails(Ad ad) {
+		return getModelForAuctionDetails(ad, null, true);
+	}
+
+	private ModelAndView getModelForAuctionDetails(Ad ad, String message, boolean success) {
 		List<Bid> bids = auctionService.getBidsForAd(ad);
 		List<PurchaseRequest> purchaseRequests = auctionService.getPurchaseRequestForAd(ad);
-		
+
 		ModelAndView model = new ModelAndView("AuctionDetails");
 		model.addObject("ad", ad);
 		model.addObject("bids", bids);
 		model.addObject("purchaseRequests", purchaseRequests);
-		
-		if (message != null && !message.isEmpty()){
-			model.addObject("confirmationMessage", message);
+
+		if (message != null && !message.isEmpty()) {
+			model.addObject(success ? "confirmationMessage" : "errorMessage", message);
 		}
-		
+
 		return model;
 	}
-	
+
 	private void checkPermissions(User owner, Ad ad) {
-		if (ad == null){
+		if (ad == null) {
 			throw new ResourceNotFoundException();
 		}
-		
-		if (!ad.getUser().equals(owner)){
+
+		if (!ad.getUser().equals(owner)) {
 			throw new ForbiddenException();
 		}
-		
-		if (!ad.isAuction()){
+
+		if (!ad.isAuction()) {
 			throw new ResourceNotFoundException();
 		}
 	}

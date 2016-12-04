@@ -116,20 +116,38 @@ public class AuctionService extends BaseService {
 		return amount >= ad.getCurrentAuctionPrice();
 	}
 
-	public void resumeAuction(Ad ad) {
+	public boolean resumeAuction(Ad ad) {
+		if (!ad.isAuctionStopped()){
+			return false;
+		}
+		
 		ad.setAvailableForAuction(true);
 		adDao.save(ad);
+		
+		return true;
 	}
 
-	public void stopAuction(Ad ad) {
+	public boolean stopAuction(Ad ad) {
+		if (!ad.isAuctionRunning() && !ad.isAuctionNotYetRunning()){
+			return false;
+		}
+		
 		ad.setAvailableForAuction(false);
 		adDao.save(ad);
+		
+		return true;
 	}
 
-	public void completeAuction(Ad ad) {
+	public boolean completeAuction(Ad ad) {
+		if (ad.isAuctionCompleted()){
+			return false;
+		}		
+		
 		ad.setAuctionCompleted(true);
 		ad.setAvailableForAuction(false);
 		adDao.save(ad);
+		
+		return true;
 	}
 
 	public List<Ad> getNotYetRunningAuctionsForUser(User owner) {
