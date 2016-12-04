@@ -17,6 +17,9 @@
 				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
 		</mvc:message-converters>
 	</mvc:annotation-driven>
+
+	<bean id="validator"
+      class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 	
 	<context:component-scan base-package="ch.unibe.ese.team3" />
 

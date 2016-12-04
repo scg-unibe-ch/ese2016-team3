@@ -74,9 +74,14 @@ public class AdController {
 		if (ad == null) {
 			throw new ResourceNotFoundException();
 		}
+		
 		if (ad.isAuction() && user != null) {
 			boolean userSentBuyRequest = auctionService.hasUserSentBuyRequest(ad, user);
 			model.addObject("sentBuyRequest", userSentBuyRequest);
+		}
+		
+		if (ad.isAuction()){
+			model.addObject("bids", auctionService.getMostRecentBidsForAd(ad));
 		}
 		
 		if (user != null){
@@ -85,7 +90,6 @@ public class AdController {
 		}
 
 		model.addObject("shownAd", ad);
-		model.addObject("bids", auctionService.getMostRecentBidsForAd(ad));
 		model.addObject("messageForm", new MessageForm());
 
 		String loggedInUserEmail = (principal == null) ? "" : principal.getName();
@@ -111,7 +115,6 @@ public class AdController {
 		ModelAndView model = new ModelAndView("adDescription");
 		Ad ad = adService.getAdById(id);
 		model.addObject("shownAd", ad);
-		model.addObject("messageForm", new MessageForm());
 		
 		User sender = userService.findUserByUsername(principal.getName());
 
