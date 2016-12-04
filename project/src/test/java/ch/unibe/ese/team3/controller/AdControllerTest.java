@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -38,6 +40,16 @@ public class AdControllerTest {
 			@Override
 			public String getName() {
 				return "ese@unibe.ch";
+			}
+		};
+		return principal;
+	}
+	
+	private Principal getTestPrincipal(String name) {
+		Principal principal = new Principal() {
+			@Override
+			public String getName() {
+				return name;
 			}
 		};
 		return principal;
@@ -65,7 +77,7 @@ public class AdControllerTest {
 
 	@Test
 	public void getAdAuthenticated() throws Exception {
-		this.mockMvc.perform(get("/ad").principal(getTestPrincipal()).param("id", "1")).andExpect(status().isOk())
+		this.mockMvc.perform(get("/ad").principal(getTestPrincipal()).param("id", "2")).andExpect(status().isOk())
 				.andExpect(view().name("adDescription")).andExpect(model().attributeExists("shownAd", "sentEnquiries",
 						"messageForm", "loggedInUserEmail", "visits"));
 	}
@@ -131,5 +143,77 @@ public class AdControllerTest {
 		.andExpect(status().isOk())
 		.andExpect(view().name("myRooms"))
 		.andExpect(model().attributeExists("bookmarkedAdvertisements", "ownAdvertisements"));
+	}
+	
+	@Test
+	public void isBookmarkedNotAuthenticated() throws Exception{
+		MvcResult result = this.mockMvc.perform(post("/bookmark")
+				.param("id", "1")
+				.param("screening", "true")
+				.param("bookmarked", "true"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		assertEquals("0", result.getResponse().getContentAsString());
+	}
+	
+	@Test
+	public void isBookmarkStatusInvalidUser() throws Exception {
+		MvcResult result = this.mockMvc.perform(post("/bookmark").principal(getTestPrincipal("test"))
+				.param("id", "1")
+				.param("screening", "true")
+				.param("bookmarked", "true"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		assertEquals("1", result.getResponse().getContentAsString());
+	}
+	
+	@Test
+	public void isBookmarkStatusOwnAd() throws Exception {
+		MvcResult result = this.mockMvc.perform(post("/bookmark").principal(getTestPrincipal())
+				.param("id", "2")
+				.param("screening", "true")
+				.param("bookmarked", "true"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		assertEquals("4", result.getResponse().getContentAsString());
+	}
+	
+	@Test
+	public void isBookmarkStatusIsBookmarked() throws Exception {
+		MvcResult result = this.mockMvc.perform(post("/bookmark").principal(getTestPrincipal())
+				.param("id", "1")
+				.param("screening", "true")
+				.param("bookmarked", "true"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		assertEquals("3", result.getResponse().getContentAsString());
+	}
+	
+	@Test
+	public void isBookmarkStatusIsNotBookmarked() throws Exception {
+		MvcResult result = this.mockMvc.perform(post("/bookmark").principal(getTestPrincipal())
+				.param("id", "13")
+				.param("screening", "true")
+				.param("bookmarked", "true"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		assertEquals("2", result.getResponse().getContentAsString());
+	}
+	
+	@Test
+	public void isBookmarkStatusBookmark() throws Exception {
+		MvcResult result = this.mockMvc.perform(post("/bookmark").principal(getTestPrincipal())
+				.param("id", "14")
+				.param("screening", "false")
+				.param("bookmarked", "false"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		assertEquals("3", result.getResponse().getContentAsString());
 	}
 }
