@@ -212,7 +212,7 @@ The following sections describe abbreviations and special terms used in this doc
 ||2. The search form is shown|
 ||3. The user enters his search criteria|
 ||4. The user clicks on the button "Search"|
-||5. The system shows a list with all ads which meet the search criteria and a form with the entered search criteria|
+||5. The system shows a list with all ads which meet the search criteria and a form with the entered search criteria and additional search criteria to customize the list even more|
 |**Alternate flow**|If the user doesn't enter some required search criteria, validation error messages are shown.|
 ||If no results are found, an appropriate message is shown.|
 
@@ -344,12 +344,13 @@ The following sections describe abbreviations and special terms used in this doc
 |**Trigger**|The user wants to create an Ad|
 |**Normal flow**|1. The user clicks the button "place ad" in the header of the application|
 ||2. The form "Place an ad" is shown. Optional Fields are labelled with (optional)|
-||3. The user specifies the Ad Title, the Type of Property; Address; Move-in-Date; Size and number of rooms; floor level; distance to school, shopping and public transport; year of construction and renovation.|
-||4. The user adds property descriptions to the Ad. Descriptions are added when the user clicks on checkboxes. In addition, the user adds a description as free text.|
-||5. The user chooses whether or not the property will be sold in an auction and specifies auction related fields such as starting price, amount of increase, immediate buying price and start and end dates of the auction.|
-||6. The user uploads pictures|
-||7. The user specifies preferred Visiting times|
-||8. The user clicks on "Submit" in order to create the Ad|
+||3. The user specifies the Ad Title, the Type of Property; Address; Move-in-Date; Size and number of rooms|
+||4. The user chooses whether or not to specify more fields, like floor level; distance to school, shopping and public transport; year of construction and renovation, in order to make his ad more appealing|
+||5. The user adds property descriptions to the Ad and informs other users thereby about whether his property has specific attributes, such as type of infrastructure, elevator, garden etc.. Descriptions are added when the user clicks on checkboxes. In addition, the user adds a description as free text.|
+||6. The user chooses whether or not the property will be sold in an auction and specifies auction related fields such as starting price, amount of increase, immediate buying price and start and end dates of the auction.|
+||7. The user chooses whether or not to updload pictures of his property|
+||8. The user specifies preferred Visiting times|
+||9. The user clicks on "Submit" in order to create the Ad|
 |**Alternate flow**|If a mandatory field is not filled out, an error message pops up which advises the user to add the missing field.|
 
 #### Messaging
@@ -485,7 +486,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Precondition**|The Real estate manager is logged into the application and created an Ad. He is in the Schedule view (`uc23`).|
 |**Trigger**|The Real estate manager wants to see which users are going to visit his real estate at a specific enquiry.
 |**Normal flow**|1. The Real estate manager clicks on the button "See visitors" next to a enquiry.|
-||2. A list with all visitors which are visiting at a given time is shown. For each visitor, a rating is displayed.
+||2. A list with all visitors which are visiting at a given time is shown.
 |**Alternate flow**|None|
 
 |Use case element|Description|
@@ -494,7 +495,7 @@ The following sections describe abbreviations and special terms used in this doc
 |**Name**|Visit Ad belonging to an enquiry|
 |**Description**|The user visits an Ad which belongs to an equiry which is listed in his schedule.|
 |**Primary actor**|The user of the web application|
-|**Precondition**|The user is logged into the application. He is in the Schedule view (`uc23`). He has at least on enquiry in his schedule.|
+|**Precondition**|The user is logged into the application. He is in the Schedule view (`uc23`). He has at least one enquiry in his schedule.|
 |**Trigger**|The user wants to see which Ad is connected with his enquiry.
 |**Normal flow**|1. The Real estate manager clicks on the button "Visit" next to a enquiry.|
 ||2. The user is redirected to the Ad.
@@ -825,10 +826,7 @@ For the number criteria, min and max can be specified. Under infrastructure type
 
 Below where the user can create new alerts is "Your active alerts", where he can view a list of alerts in a table with type, city, radius, max price and a column "Action" with a button to delete the alert. If the alert is an extended alert, a button "Details" appears under the column "Action". With this button, the user can view the criteria, which he specified by creating an extended alert.
 
-If an alert is triggered, the user gets a message to his inbox in the application. The message is also sent to his email account.
-
-The application distinguishes between normal and premium users (see section 'User roles' below).
-
+If an alert is triggered, the immediate response of the system depends on whether the user to whom it was triggered is a normal or a premium user. Premium users receive the alert seconds after it is triggered into their ithaca message box and their personal e-mail. Normal users are notified once a day whether or not new alerts have been triggered for them and receive a message and e-mail with a list of all triggered alerts of that particular day.
 
 #### Placement of advertisements
 
@@ -836,7 +834,7 @@ A real estate manager can create a new advertisement for real estate. An adverti
 
 The advertiser can specify, whether he wants to sell or rent a real estate by choosing the appropriate tab "buy" or "rent" before placing the ad.
 
-The following general information can be declared:
+The following general information is required:
 
 - The *title* of the advertisement (text)
 - The *type* of the real estate (appartment, house, villa, loft, studio)
@@ -844,10 +842,14 @@ The following general information can be declared:
 - The *move-in date*
 - The *size* of the real estate in square meters
 - The *number of rooms*
+- The *price* (per month for renting or total price for buying)
+
+The following  general information can be declared as specification:
+
+- Number of *bath rooms*
 - The *floor level*
 - The *distance to school/shopping center/public transport* from dropdown menu (100m intervals)
 - The *construction / renovation date*
-- The *price* (per month for renting or total price for buying)
 
 In the case of selling property, it can be done by *auction*. A checkbox can be checked and additional information entered:
 
@@ -859,7 +861,6 @@ In the case of selling property, it can be done by *auction*. A checkbox can be 
 
 The following information can be specified with a number or with a selection of options:
 
-- number of *bath rooms*
 - type of *infrastructure* for TV/internet (satellite, fiber, cable etc.)
 
 The following *additional attributes* of the real estate can be specified in a yes/no manner:
@@ -934,7 +935,7 @@ A table of the users owned properties, which he wants to rent to other people, c
 - *Date*: The date of the property presentation,
 - *Time*: The time of the property presentation,
 - *Visit Ad*: A button that if clicked will lead the user to the ad he posted about the flat in question
-- *Visitors*: A button which will open a new site with some information about the property in question and a table of all people that will attend its presentation. The table contains the following: *Name* (full name of the user), *Username* (the Ithaca username of the user), *Profile* (a button that leads to the user's personal profile), *Rating* (the rating of one to 5 stars that this user has on the website)
+- *Visitors*: A button which will open a new site with some information about the property in question and a table of all people that will attend its presentation. The table contains the following: *Name* (full name of the user), *Username* (the Ithaca username of the user), *Profile* (a button that leads to the user's personal profile)
 
 _Your visits_-table:
 A table of the properties a user is interested in and will or has already visited, containing the following:
