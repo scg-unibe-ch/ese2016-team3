@@ -14,11 +14,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import ch.unibe.ese.team3.model.dao.UserDao;
 import ch.unibe.ese.team3.model.AccountType;
 import ch.unibe.ese.team3.model.CreditcardType;
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.User;
+import ch.unibe.ese.team3.model.dao.UserDao;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)

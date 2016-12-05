@@ -1,7 +1,9 @@
 package ch.unibe.ese.team3.dto;
 
 import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import ch.unibe.ese.team3.model.MessageState;
 
 
