@@ -69,8 +69,8 @@
 								<tr data-id="${message.id}"
 									class="message-row ${loop.index == 0 ? 'info' : ''} ${message.state == 'UNREAD' ? 'message-unread' : ''}">
 									<td><a>${message.subject}</a></td>
-									<td>${message.sender.email}</td>
-									<td>${message.recipient.email }</td>
+									<td>${message.sender}</td>
+									<td>${message.recipient}</td>
 									<td>${singleFormattedDateSent}</td>
 								</tr>
 							</c:forEach>
@@ -90,10 +90,10 @@
 			</div>
 			<div class="panel-body">
 				<p>
-					<strong>To: </strong><span id="message-preview-receiver">${messages[0].recipient.email }</span>
+					<strong>To: </strong><span id="message-preview-receiver">${messages[0].recipient }</span>
 				</p>
 				<p>
-					<strong>From: </strong><span id="message-preview-sender">${messages[0].sender.email }</span>
+					<strong>From: </strong><span id="message-preview-sender">${messages[0].sender }</span>
 				</p>
 				<p>
 					<strong>Date sent: </strong><span id="message-preview-date">${formattedDateSent}</span>

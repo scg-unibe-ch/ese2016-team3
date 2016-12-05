@@ -357,8 +357,7 @@ public class MessageService {
 	 * @param id
 	 */
 	@Transactional
-	public void readMessage(long id) {
-		Message message = messageDao.findOne(id);
+	public void readMessage(Message message) {
 		message.setState(MessageState.READ);
 		messageDao.save(message);
 	}

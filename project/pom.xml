@@ -133,6 +133,11 @@
 			<artifactId>geocoder-java</artifactId>
 			<version>0.16</version>
 		</dependency>
+		<dependency>
+     		<groupId>com.jayway.jsonpath</groupId>
+    		<artifactId>json-path</artifactId>
+    		<version>2.2.0</version>
+ 		</dependency>
 
 	</dependencies>
 

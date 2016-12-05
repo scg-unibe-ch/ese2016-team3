@@ -1,45 +1,25 @@
-package ch.unibe.ese.team3.model;
+package ch.unibe.ese.team3.dto;
 
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+import ch.unibe.ese.team3.model.MessageState;
 
-/** Represents a message that is sent between two users. */
-@Entity
-public class Message {
 
-	@Id
-	@GeneratedValue
+public class MessageMeta {
 	private long id;
 
-	@Column(nullable = false)
 	private MessageState state;
 
-	@Column(nullable = false)
 	private String subject;
 
-	@Column(nullable = false)
-	@Lob
 	private String text;
 
 	@JsonFormat(pattern = "HH:mm, dd.MM.yyyy", timezone = "CET" )
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateSent;
 
-	@ManyToOne
-	private User sender;
+	private String sender;
 
-	@ManyToOne
-	private User recipient;
+	private String recipient;
 
 	public long getId() {
 		return id;
@@ -81,19 +61,23 @@ public class Message {
 		this.dateSent = dateSent;
 	}
 
-	public User getSender() {
+	public String getSender() {
 		return sender;
 	}
 
-	public void setSender(User sender) {
+	public void setSender(String sender) {
 		this.sender = sender;
 	}
 
-	public User getRecipient() {
+	public String getRecipient() {
 		return recipient;
 	}
 
-	public void setRecipient(User recipient) {
+	public void setRecipient(String recipient) {
 		this.recipient = recipient;
+	}
+	
+	public String getTextWithLineBreaks(){
+		return this.text.replaceAll("\\r\\n?|\\n", "<br/>");
 	}
 }

@@ -4,8 +4,8 @@ function loadMessages(data) {
 		$.each(data, function(index, message) {
 			var result = '<tr data-id="' + message.id + '" class="message-row ' + (message.state == 'UNREAD' ? 'message-unread' : '') + '" >';
 			result += '<td>' + message.subject + '</td>';
-			result += '<td>' + message.sender.email + '</td>';
-			result += '<td>' + message.recipient.email + '</td>';
+			result += '<td>' + message.sender + '</td>';
+			result += '<td>' + message.recipient + '</td>';
 			result += '<td>' + message.dateSent + '</td></tr>';
 
 			$("#messageList table").append(result);
@@ -26,12 +26,12 @@ function prepareRows() {
 		me.addClass('info');
 		var id = $(this).attr("data-id");
 		if (id == undefined){ return; }
-		$.get("/profile/readMessage?id=" + id, function(data) {
+		$.post("/profile/readMessage?id=" + id, function(data) {
 			$.get("/profile/messages/getMessage?id=" + id, function(data) {
 				$('#messageDetail').show();
 				$('#message-preview-subject').html(data.subject);
-				$('#message-preview-sender').html(data.sender.email);
-				$('#message-preview-receiver').html(data.recipient.email);
+				$('#message-preview-sender').html(data.sender);
+				$('#message-preview-receiver').html(data.recipient);
 				$('#message-preview-date').html(data.dateSent);
 				$('#message-preview-content').html(data.text.replace(/(\r\n?|\n)/g, '<br/>'));
 			}, 'json');
