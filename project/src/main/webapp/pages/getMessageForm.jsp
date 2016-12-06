@@ -53,8 +53,11 @@
 					subjectControl.val("");
 					messageControl.val("");
 					receiverControl.val("");
+					$('#mail-error-message').hide();
 					$('#messageModal').modal('hide')
-				});
+				}).fail(function (response){
+					$('#mail-error-message').show();
+				});	
 			}
 		});
 		
@@ -84,6 +87,9 @@
 				<h4 class="modal-title">New message</h4>
 			</div>
 			<div class="modal-body">
+				<div id="mail-error-message" class="alert alert-danger" style="display: none;">
+					<p>Failed to send mail. Did you verify the recipient?</p>
+				</div>
 				<form:form class="form" id="messageForm" method="post"
 					modelAttribute="messageForm" action="#">
 					<div class="form-group">

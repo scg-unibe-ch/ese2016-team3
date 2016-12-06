@@ -177,6 +177,16 @@ public class MessageControllerTest extends BaseControllerTest {
 	}
 	
 	@Test
+	public void sentMessageInvalidRecipient() throws Exception {
+		mockMvc.perform(post("/profile/messages/sendMessage")
+				.param("subject", "Subject")
+				.param("text", "Text")
+				.param("recipientEmail", "asfsdfd")
+				.principal(getTestPrincipal("jane@doe.com")))
+		.andExpect(status().isBadRequest());
+	}
+	
+	@Test
 	public void sendMessage() throws Exception {
 		mockMvc.perform(post("/profile/messages/sendMessage")
 				.param("subject", "Subject")

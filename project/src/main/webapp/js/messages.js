@@ -26,22 +26,32 @@ function prepareRows() {
 		me.addClass('info');
 		var id = $(this).attr("data-id");
 		if (id == undefined){ return; }
-		$.post("/profile/readMessage?id=" + id, function(data) {
-			$.get("/profile/messages/getMessage?id=" + id, function(data) {
-				$('#messageDetail').show();
-				$('#message-preview-subject').html(data.subject);
-				$('#message-preview-sender').html(data.sender);
-				$('#message-preview-receiver').html(data.recipient);
-				$('#message-preview-date').html(data.dateSent);
-				$('#message-preview-content').html(data.text.replace(/(\r\n?|\n)/g, '<br/>'));
-			}, 'json');
-			unreadMessages(function(unread) {
-				$('#navUnread').html(unread);
-				$('#unreadMessages').html(unread);
-				me.removeClass('message-unread')
-			});
-		});
+		var inbox = $('#inbox').hasClass('active');
+		if (inbox){		
+			$.post("/profile/readMessage?id=" + id, function(data) {
+				getMessage(id);
+				unreadMessages(function(unread) {
+					$('#navUnread').html(unread);
+					$('#unreadMessages').html(unread);
+					me.removeClass('message-unread')
+				});
+			});			
+		}
+		else {
+			getMessage(id);
+		}
 	});
+}
+
+var getMessage = function(id){	
+	$.get("/profile/messages/getMessage?id=" + id, function(data) {
+		$('#messageDetail').show();
+		$('#message-preview-subject').html(data.subject);
+		$('#message-preview-sender').html(data.sender);
+		$('#message-preview-receiver').html(data.recipient);
+		$('#message-preview-date').html(data.dateSent);
+		$('#message-preview-content').html(data.text.replace(/(\r\n?|\n)/g, '<br/>'));
+	}, 'json');
 }
 
 $(document).ready(function() {
