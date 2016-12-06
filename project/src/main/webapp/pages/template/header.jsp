@@ -20,57 +20,6 @@
 <script src="/js/unreadMessages.js"></script>
 <script src="/js/jquery.fileupload.js"></script>
 
-<style>
-/* ensure that autocomplete lists are not too long and have a scrollbar */
-.ui-autocomplete {
-	max-height: 200px;
-	overflow-y: auto;
-	overflow-x: hidden;
-}
-</style>
-
-<style>
-/* TABS: define css class "customTab" in orded to display the tabs of the header green (and define hover effects)*/
-.customTab>li.active>a, .customTab>li.active>a:focus, .customTab>li.active>a:hover {
-	background-color: #65bf05 !important;
-	color: #FFFFFF;
-}
-
-.customTab>li>a:hover {
-	background-color: #5b8a28 !important;
-	color: #FFFFFF;
-	/* fill	color #d9edf7 default f5f5f5 #337ab7 fff*/
-}
-
-/* CONTAINER: define new class to handle the background color of the container */
-.custom-Container {
-	background-color: #65bf05;
-}
-
-/* NAVBAR set color of writing and define hover effect.*/
-.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus
-	{
-	color: #FFFFFF; /*Sets the text hover color on navbar*/
-	background-color: #5b8a28;
-}
-/* set writing color */
-.navbar-default .navbar-nav>li>a {
-	color: #FFFFFF;
-}
-
-/*sets color of dropdown (user)*/
-.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
-	color: #FFFFFF;
-	text-decoration: none;
-	background-color: #65bf05; /*change color of links in drop down here*/
-}
-
-.dropdown-toggle:active, .open .dropdown-toggle {
-	background: #65bf05 !important;
-	color: #FFFFFF !important;
-}
-</style>
-
 <script type="text/javascript">
 	$(document).ready(function() {
 		unreadMessages(function(unread) {
@@ -103,9 +52,9 @@
 			</c:choose>
 		</ul>
 		<nav class="navbar navbar-default" id="mainNav">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-collapse">
+			<div class="navbar-header custom-Container">
+				<button type="button" class="navbar-toggle btn btn-primary"
+					data-toggle="collapse" data-target=".navbar-collapse">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
@@ -137,7 +86,7 @@
 											href="/${pagemode}/user?id=<%out.print(realUser.getId());%>">
 												<span class="glyphicon glyphicon-cog"></span> Show profile
 										</a></li>
-										<li><a href="/${pagemode}/profile/myRooms"> <span      
+										<li><a href="/${pagemode}/profile/myRooms"> <span
 												class="glyphicon glyphicon-home"></span> My Ads
 										</a></li>
 										<li><a href="/buy/profile/auctions"> <span
@@ -188,6 +137,3 @@
 				<p>${warningMessage }</p>
 			</div>
 		</c:if>
-		
-		
-		
