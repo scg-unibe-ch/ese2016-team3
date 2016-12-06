@@ -13,6 +13,19 @@
 	<li class="active">Results</li>
 </ol>
 
+<style>
+/*define class which has a user defined left margin*/
+.margin-left{
+    margin-left: 27px !important;
+}
+    
+/*class, which makes cursor appear */
+.hand-cursor{
+	cursor: pointer;
+}
+
+</style>
+
 <script
 	src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDPcQNoMGcp8Oe9l6uY8jLFlMR4pyecFIU&libraries=places"></script>
 <script
@@ -20,24 +33,24 @@
 
 <script>
 	$(document).ready(
-			function() {
-				$("#togglebutton").click(
-						function() {
-							//store the id of the collapsible element
-							if (localStorage.getItem('collapseItem')) {
-								localStorage.removeItem('collapseItem');
-							} else {
-								localStorage.setItem('collapseItem', $(this)
-										.attr('data-target'));
-							}
-						});
-
-				var collapseItem = localStorage.getItem('collapseItem');
-				if (collapseItem) {
-					$(collapseItem).collapse('show')
-				}
-
-			});
+		function() {
+			$("#togglebutton").click(
+					function() {
+						//store the id of the collapsible element
+						if (localStorage.getItem('collapseItem')) {
+							localStorage.removeItem('collapseItem');
+						} else {
+							localStorage.setItem('collapseItem', $(this)
+									.attr('data-target'));
+						}
+					});
+	
+			var collapseItem = localStorage.getItem('collapseItem');
+			if (collapseItem) {
+				$(collapseItem).collapse('show')
+			}
+	
+		});
 </script>
 
 <script>
@@ -47,12 +60,10 @@
 	 */
 	var priceSort = false;
 	var inDateSort = false;
-	var creationDateSort = false;
 
 	function sort_div_attribute(code) {
 		//code 1: sort by price
 		//code 2: sort by move-in date
-		//code 3: sort by creation date
 
 		// get sort mode based on code and existing sort
 		if (code == 1) {
@@ -64,6 +75,8 @@
 				priceSort = !priceSort;
 			}
 			var attname = 'data-price';
+			inDateSort = false;
+			changeSortIcon("price", priceSort);
 		}
 		if (code == 2) {
 			if (!inDateSort) {
@@ -74,16 +87,8 @@
 				inDateSort = !inDateSort;
 			}
 			var attname = 'data-moveIn';
-		}
-		if (code == 3) {
-			if (!creationDateSort) {
-				var sortmode = "dateAge_asc";
-				creationDateSort = !creationDateSort;
-			} else {
-				var sortmode = "dateAge_desc";
-				creationDateSort = !creationDateSort;
-			}
-			var attname = 'data-age';
+			priceSort = false;
+			changeSortIcon("date", inDateSort);
 		}
 
 		//Sorting based on sort mode and attname
@@ -123,8 +128,7 @@
 		//sort the array
 		divsbucket.sort(comparator);
 		//invert sorted array for certain sort options
-		if (sortmode == "price_desc" || sortmode == "moveIn_asc"
-				|| sortmode == "dateAge_asc") {
+		if (sortmode == "price_desc" || sortmode == "moveIn_asc") {
 			divsbucket.reverse()
 		}
 		//insert sorted divs into document again
@@ -132,6 +136,50 @@
 			$("#resultsDiv").append($(divsbucket[a][1]))
 		}
 	}
+	
+	/*
+	replaces the sort icon.
+	
+	Sortmode: "price" changes icon when price is sorted, "date" changes icon when move in date is sorted
+	sortAscending: if true, results are sorted from smallest to largest, if false from largest to smallest. (later dates are considered to be larger)
+	*/
+
+	var changeSortIcon = function(sortmode, sortAscending) {
+		// change icon of price sort
+		if (sortmode == "price") {
+			// reset icon of date and previous sorts
+			$("#sortDateId").addClass('glyphicon-sort').removeClass('glyphicon-sort-by-attributes').removeClass('glyphicon-sort-by-attributes-alt');
+			
+			// remove sort icon of price
+			$("#sortPriceId").removeClass('glyphicon-sort');
+			
+			// add new icon based on previous sorting 
+			if (sortAscending){
+				$("#sortPriceId").addClass('glyphicon-sort-by-attributes').removeClass('glyphicon-sort-by-attributes-alt');
+			}
+			else {
+				$("#sortPriceId").addClass('glyphicon-sort-by-attributes-alt').removeClass('glyphicon-sort-by-attributes');
+			}
+		}
+		// change icon of date sort
+		else {
+			// reset icon of date and previous sorts
+			$("#sortPriceId").addClass('glyphicon-sort').removeClass('glyphicon-sort-by-attributes').removeClass('glyphicon-sort-by-attributes-alt');
+
+			// remove sort icon of price
+			$("#sortDateId").removeClass('glyphicon-sort');
+			
+			// add new icon based on previous sorting 
+			if (sortAscending){
+				$("#sortDateId").addClass('glyphicon-sort-by-attributes-alt').removeClass('glyphicon-sort-by-attributes');
+			}
+			else {
+				$("#sortDateId").addClass('glyphicon-sort-by-attributes').removeClass('glyphicon-sort-by-attributes-alt');
+			}
+		}
+	}
+	
+	
 </script>
 
 <script>
@@ -535,25 +583,25 @@
 
 				<div class="tab-content">
 					<div id="listview" class="tab-pane fade in active">
-
-						<button class="btn btn-default pull-right col-sm-2 toFront"
-							onclick="sort_div_attribute(3)">
-							<span class="glyphicon glyphicon-sort"></span> Creation Date
-						</button>
-						<button class="btn btn-default pull-right col-sm-2 toFront"
-							onclick="sort_div_attribute(2)">
-							<span class="glyphicon glyphicon-sort"></span> Move-in Date
-						</button>
-
-						<button class="btn btn-default pull-right col-sm-2 toFront"
-							onclick="sort_div_attribute(1)">
-							<span class="glyphicon glyphicon-sort"></span> Price
-						</button>
+							<p>
+								<strong> 
+									<a class="link hand-cursor"
+									title="Price" onclick="sort_div_attribute(1)">
+									 <span class="glyphicon glyphicon-sort" id="sortPriceId"></span> Price
+									</a>
+									<a class="link margin-left hand-cursor"
+									title="Move-in Date" onclick="sort_div_attribute(2)">
+									 <span class="glyphicon glyphicon-sort" id="sortDateId"></span> Move-in Date
+									</a>
+								</strong>
+							</p>
+					
+			
 						<div id="resultsDiv">
 							<c:forEach var="ad" items="${results}">
 								<fmt:formatNumber value="${ad.price}" var="formattedPrice"
 									pattern="###,### CHF" />
-
+								
 								<fmt:formatNumber value="${ad.auctionPrice}"
 									var="formattedAuctionPrice" pattern="###,### CHF" />
 								<div data-price="${ad.auction ? ad.auctionPrice : ad.price}"

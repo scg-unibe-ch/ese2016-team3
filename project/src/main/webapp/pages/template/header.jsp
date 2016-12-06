@@ -140,9 +140,6 @@
 										<li><a href="/${pagemode}/profile/myRooms"> <span      
 												class="glyphicon glyphicon-home"></span> My Ads
 										</a></li>
-										<li><a href="/${pagemode}/profile/placeAd"> <span
-												class="glyphicon glyphicon-pencil"></span> Place Ad
-										</a></li>
 										<li><a href="/buy/profile/auctions"> <span
 												class="glyphicon glyphicon-th-list"></span> Manage auctions
 										</a></li>
