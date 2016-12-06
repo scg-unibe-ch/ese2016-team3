@@ -180,12 +180,19 @@ public class MessageController {
 		}
 	}
 
-	/** Sends a message with the passed parameters */
+	/** Sends a message with the passed parameters 
+	 * 
+	 */
 	@RequestMapping(value = "/profile/messages/sendMessage", method = RequestMethod.POST)
 	public @ResponseBody void sendMessage(@RequestParam String subject,
 			@RequestParam String text, @RequestParam String recipientEmail,
-			Principal principal) {
+			Principal principal) throws InvalidUserException {
 		User recipient = userService.findUserByUsername(recipientEmail);
+		
+		if (recipient == null){
+			throw new InvalidUserException();
+		}
+		
 		User sender = userService.findUserByUsername(principal.getName());
 		messageService.sendMessage(sender, recipient, subject, text);
 	}
