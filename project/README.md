@@ -28,5 +28,4 @@
 - **src**: contains all java files, pages (.jsp) and javascript files, which are used to create the page. In addition, the tests are contained
 - **log**: contains logs with the activity of users on the website
 - **settings**: project specific eclipse settings
-- **target**:
-- **temp**:
+
