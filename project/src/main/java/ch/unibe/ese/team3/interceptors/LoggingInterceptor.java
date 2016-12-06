@@ -10,16 +10,25 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+/**
+ * Logs each request with its parameters.
+ * Logs the response with its status code.
+ *
+ */
 public class LoggingInterceptor extends HandlerInterceptorAdapter {
 
 	private static final Logger logger = Logger.getLogger("Ithaca logger");
 
+	/**
+	 * Log the request along with its parameters.
+	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
-		UUID requestId = UUID.randomUUID();
-		
+		//Add a unique identifier to each request to allow
+		//matching of request and response.
+		UUID requestId = UUID.randomUUID();		
 		request.setAttribute("RequestId", requestId.toString());
 		
 		Principal user = request.getUserPrincipal();
@@ -47,6 +56,9 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 		return true;
 	}
 	
+	/**
+	 * Log the response with its status code.
+	 */
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {

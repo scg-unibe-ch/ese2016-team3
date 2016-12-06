@@ -8,11 +8,19 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import ch.unibe.ese.team3.model.enums.PageMode;
 
+/**
+ * Analyzes the url provided by the user and detects the mode
+ * of the application (buy or rent). 
+ * Makes this information available for all controllers.
+ *
+ */
 public class UriInterceptor extends HandlerInterceptorAdapter {
 	
 	private PageMode pageMode = PageMode.NONE;
 	
-	
+	/**
+	 * Passes the page mode to all controllers.
+	 */
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
@@ -21,6 +29,10 @@ public class UriInterceptor extends HandlerInterceptorAdapter {
 		}
 	}
 	
+	/**
+	 * Detects the page mode of the application based on the url.
+	 * Redirects user to buy mode if no page mode is set.
+	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 		throws Exception {

@@ -4,6 +4,11 @@ import java.util.Comparator;
 
 import ch.unibe.ese.team3.model.Ad;
 
+/**
+ * Compare two ads. Ads of premium users are more valuable
+ * than those from normal users.
+ *
+ */
 public class PremiumAdComparator implements Comparator<Ad> {
 
 	@Override

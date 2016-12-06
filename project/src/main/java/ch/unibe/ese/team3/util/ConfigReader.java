@@ -4,12 +4,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Reads values from a properties file and makes them
+ * available in memory. This class is registered as a bean and
+ * instantiated by spring automatically.
+ *
+ */
 public class ConfigReader {
 
 	private static Map<String, String> config;
 	
 	public String configFileName;
 
+	/**
+	 * Return the config value with a specific key
+	 * @param key the key to retrieve the value for
+	 * @return the value for the key or null if the key doesn't exist
+	 */
 	public String getConfigValue(String key) {
 		if (config.containsKey(key)) {
 			return config.get(key);
@@ -17,6 +28,13 @@ public class ConfigReader {
 		return null;
 	}
 
+	/**
+	 * Create a config reader which reads from the specified config file.
+	 * The config file has to be stored under src/main/resources under
+	 * the name <<configFileName>>.properties.
+	 * 
+	 * @param configFileName
+	 */
 	public ConfigReader(String configFileName) {
 		this.configFileName = configFileName;
 		config = new HashMap<String, String>();

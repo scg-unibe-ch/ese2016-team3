@@ -6,7 +6,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import ch.unibe.ese.team3.model.MessageState;
 
-
+/**
+ * Represents a data transfer object for messages.
+ * Can be converted to JSON.
+ * Was introduced to avoid stack overflows during
+ * serialization.
+ *
+ */
 public class MessageMeta {
 	private long id;
 

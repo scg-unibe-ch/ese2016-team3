@@ -3,7 +3,7 @@ package ch.unibe.ese.team3.dto;
 
 /**
  * Describes an ad with properties such as name, city etc. Objects
- * of this type should be convertable to JSON. 
+ * of this type are convertible to JSON. 
  */
 public class AdMeta {
 
