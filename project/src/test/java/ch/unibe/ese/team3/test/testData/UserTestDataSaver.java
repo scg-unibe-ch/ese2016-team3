@@ -123,6 +123,7 @@ public class UserTestDataSaver {
 		removePremium.setSecurityNumber("123");
 		userDao.save(removePremium);
 		
+		//User for testing google login.
 		User googleUser = createUser("google@test.com", "123456", "Google", "Test", Gender.OTHER, AccountType.BASIC);
 		googleUser.setIsGoogleUser(true);
 		userDao.save(googleUser);
