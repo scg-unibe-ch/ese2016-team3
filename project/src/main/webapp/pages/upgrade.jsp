@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 
 <c:import url="template/header.jsp" />
 
@@ -29,39 +30,27 @@
 <!-- check if user is logged in -->
 <security:authorize var="loggedIn" url="/profile" />
 
-<div class="row" >
+<div class="row">
 	<div class="col-md-12 col-xs-12">
 		<h3>Upgrade to premium user</h3>
 		<br />
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<p>
-					<strong>The following premium packages are available:</strong>
-				</p>
-				<br />
-				<c:forEach var="choice" items="${premiumChoices}">
-					<div class="row bottom15">
-						<div class="col-md-2">
-							<strong>Duration:</strong> ${choice.duration} days
-						</div>
-						<div class="col-md-6">
-							<strong>Price:</strong> ${choice.price} CHF
-						</div>
-					</div>
-				</c:forEach>
-				<br />
 				<form:form id="upgradeForm" class="form-horizontal" method="post"
 					modelAttribute="upgradeForm" action="./upgrade">
 
 					<spring:bind path="duration">
 						<div id="form-duration"
 							class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="col-sm-2 control-label" for="field-duration">Duration
-								in days</label>
+							<label class="col-sm-2 control-label" for="field-duration">Premium
+								package*</label>
 							<div class="col-sm-3">
 								<form:select path="duration" id="field-duration"
 									class="form-control">
-									<form:options items="${durations}" />
+									<c:forEach var="choice" items="${premiumChoices}">
+										<form:option value="${choice.duration}"
+											label="${choice.getLabel() }" />
+									</c:forEach>
 								</form:select>
 								<form:errors path="duration" cssClass="text-danger" />
 							</div>

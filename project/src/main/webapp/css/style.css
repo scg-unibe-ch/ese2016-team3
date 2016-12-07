@@ -201,3 +201,13 @@ h3 {
 	background: #65bf05 !important;
 	color: #FFFFFF !important;
 }
+
+/*define class which has a user defined left margin*/
+.margin-left{
+    margin-left: 27px !important;
+}
+    
+/*class, which makes cursor appear */
+.hand-cursor{
+	cursor: pointer;
+}
