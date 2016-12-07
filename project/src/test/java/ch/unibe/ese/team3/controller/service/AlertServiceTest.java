@@ -772,7 +772,7 @@ public class AlertServiceTest {
 			countAlertResult++;
 			assertFalse(alertResut.getNotified());
 		}
-		assertEquals(countAlertResult, 1);
+		assertEquals(1, countAlertResult);
 	}
 	
 	@Test
@@ -790,12 +790,7 @@ public class AlertServiceTest {
 		
 		// assert no alertResult is created
 		Iterable<AlertResult> alertResults = alertResultDao.findByUser(basicUserWithAlert);
-		int countAlertResult = 0;
-		
-		for (AlertResult alertResut: alertResults) {
-			countAlertResult++;
-		}
-		assertEquals(countAlertResult, 0);
+		assertEquals(0, ListUtils.countIterable(alertResults));
 	}
 	
 	@Test
@@ -812,7 +807,7 @@ public class AlertServiceTest {
 			countAlertResult++;
 			assertEquals(alert.getUser(), basicUserWithAlert);
 		}
-		assertEquals(countAlertResult, 1);
+		assertEquals(1, countAlertResult);
 	}
 	
 	@Test
@@ -828,20 +823,14 @@ public class AlertServiceTest {
 			id = alert.getId();
 			countAlertResult++;
 		}
-		assertEquals(countAlertResult, 1);
+		assertEquals(1, countAlertResult);
 		
 		// delete alert
 		alertService.deleteAlert(id);
 		
 		// make sure alert is deleted
 		Iterable<Alert> alertsAfterDelete = alertService.getAlertsByUser(basicUserWithAlert);
-		
-		int countAfterDelete = 0;
-		for (Alert alert: alertsAfterDelete) {
-			countAfterDelete++;
-		}
-		
-		assertEquals(countAfterDelete, 0);
+		assertEquals(0, ListUtils.countIterable(alertsAfterDelete));
 	}
 	
 	@Test
@@ -860,15 +849,15 @@ public class AlertServiceTest {
 			assertFalse(alertRes.getNotified());
 			alertResult = alertRes;
 		}
-		assertEquals(countAlertResult, 1);
+		assertEquals(1, countAlertResult);
 		
 		// make sure a message is sent to the alert receiver
 		Iterable<Message> messagesBefore = messageDao.findByRecipient(basicUserWithAlert);
-		assertEquals(ListUtils.countIterable(messagesBefore), 0);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
 		messageService.alertMessageForBasicUser();
 		
 		Iterable<Message> messagesAfter = messageDao.findByRecipient(basicUserWithAlert);
-		assertEquals(ListUtils.countIterable(messagesAfter), 1);
+		assertEquals(1, ListUtils.countIterable(messagesAfter));
 		assertTrue(alertResult.getNotified());	
 	}
 	
