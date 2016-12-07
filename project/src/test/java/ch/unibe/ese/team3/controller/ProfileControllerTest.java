@@ -125,8 +125,8 @@ public class ProfileControllerTest extends BaseControllerTest {
 
 		this.mockMvc.perform(post("/profile/editProfile")
 				.principal(principal)
-				.param("username", "jap@blue.ch")
-				.param("password", "yoyoyo")
+				.param("username", "jane@doe.com")
+				.param("password", "password")
 				.param("firstName", "hibli")
 				.param("lastName", "bubli"))
 			.andExpect(status().is(302)) // URL redirection status

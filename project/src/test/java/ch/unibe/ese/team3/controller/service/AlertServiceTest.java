@@ -1,7 +1,6 @@
 package ch.unibe.ese.team3.controller.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -80,6 +79,7 @@ public class AlertServiceTest {
 	private User userPlacingAd;
 
 	private Ad normalAd;
+	private Ad rentAd;
 
 	@Before
 	public void setUp() {
@@ -129,6 +129,40 @@ public class AlertServiceTest {
 		normalAd.setInfrastructureType(InfrastructureType.SATELLITE);
 	
 		adDao.save(normalAd);
+		
+		rentAd = new Ad();
+		rentAd.setZipcode(3012);
+		rentAd.setBuyMode(BuyMode.BUY);
+		rentAd.setMoveInDate(convertStringToDate("01-01-2016"));
+		rentAd.setCreationDate(date);
+		rentAd.setPrice(1000);
+		rentAd.setSquareFootage(80);
+		rentAd.setType(Type.APARTMENT);
+		rentAd.setRoomDescription("test");
+		rentAd.setUser(userPlacingAd);
+		rentAd.setTitle("AdTestAlertHochfeld");
+		rentAd.setStreet("Hochfeldstrasse 44");
+		rentAd.setCity("Bern");
+	
+		rentAd.setDishwasher(false);
+		rentAd.setElevator(false);
+		rentAd.setGarage(false);
+		rentAd.setBalcony(false);
+		rentAd.setParking(false);
+	
+		rentAd.setFloorLevel(3);
+		rentAd.setSquareFootage(100);
+		rentAd.setNumberOfBath(2);
+		rentAd.setNumberOfRooms(5);
+		rentAd.setDistancePublicTransport(900);
+		rentAd.setDistanceSchool(100);
+		rentAd.setDistanceShopping(450);
+		rentAd.setRenovationYear(1990);
+		rentAd.setBuildYear(1940);
+	
+		rentAd.setInfrastructureType(InfrastructureType.SATELLITE);
+	
+		adDao.save(rentAd);
 	
 		// set basic alert criteria
 		alertForm = new AlertForm();
@@ -806,8 +840,57 @@ public class AlertServiceTest {
 		for (Alert alert: alertsAfterDelete) {
 			countAfterDelete++;
 		}
+		
 		assertEquals(countAfterDelete, 0);
 	}
+	
+	@Test
+	public void sendMessageToBasicUser() {
+		alertService.saveFrom(alertForm, basicUserWithAlert);
+		
+		alertService.triggerAlerts(normalAd);
+		
+		// assert User not yet notified 
+		Iterable<AlertResult> alertResults = alertResultDao.findByUser(basicUserWithAlert);
+		int countAlertResult = 0;
+		AlertResult alertResult = new AlertResult();
+		
+		for (AlertResult alertRes: alertResults) {
+			countAlertResult++;
+			assertFalse(alertRes.getNotified());
+			alertResult = alertRes;
+		}
+		assertEquals(countAlertResult, 1);
+		
+		// make sure a message is sent to the alert receiver
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(basicUserWithAlert);
+		assertEquals(ListUtils.countIterable(messagesBefore), 0);
+		messageService.alertMessageForBasicUser();
+		
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(basicUserWithAlert);
+		assertEquals(ListUtils.countIterable(messagesAfter), 1);
+		assertTrue(alertResult.getNotified());	
+	}
+	
+	@Test
+	public void messageToBasicUserHasRightText() {
+		assertTrue(false);
+	}
+	
+	@Test
+	public void alertForRent() {
+		alertForm.setBuyMode(BuyMode.RENT); 
+		alertService.saveFrom(alertForm, premiumUserWithAlert);
+		
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(0, ListUtils.countIterable(messagesBefore));
+
+		alertService.triggerAlerts(rentAd);
+
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(premiumUserWithAlert);
+		assertEquals(1, ListUtils.countIterable(messagesAfter));
+	}
+	
 	
 	@Transactional
 	public Iterable<Alert> getAlertsByUser(User user) {
