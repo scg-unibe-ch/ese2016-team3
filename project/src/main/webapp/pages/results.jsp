@@ -15,14 +15,25 @@
 
 <style>
 /*define class which has a user defined left margin*/
-.margin-left{
-    margin-left: 27px !important;
+.margin-left23{
+    margin-left: 23px !important;
 }
+
+.margin-left10{
+    margin-left: 10px !important;
+}
+
     
 /*class, which makes cursor appear */
 .hand-cursor{
 	cursor: pointer;
 }
+/*empty glyphicon class*/	
+.glyphicon-none:before{
+    content: "\2122";
+    color: transparent !important;
+}
+
 
 </style>
 
@@ -148,10 +159,10 @@
 		// change icon of price sort
 		if (sortmode == "price") {
 			// reset icon of date and previous sorts
-			$("#sortDateId").addClass('glyphicon-sort').removeClass('glyphicon-sort-by-attributes').removeClass('glyphicon-sort-by-attributes-alt');
+			$("#sortDateId").addClass('glyphicon-none').removeClass('glyphicon-sort-by-attributes').removeClass('glyphicon-sort-by-attributes-alt');
 			
 			// remove sort icon of price
-			$("#sortPriceId").removeClass('glyphicon-sort');
+			$("#sortPriceId").removeClass('glyphicon-none');
 			
 			// add new icon based on previous sorting 
 			if (sortAscending){
@@ -164,10 +175,10 @@
 		// change icon of date sort
 		else {
 			// reset icon of date and previous sorts
-			$("#sortPriceId").addClass('glyphicon-sort').removeClass('glyphicon-sort-by-attributes').removeClass('glyphicon-sort-by-attributes-alt');
+			$("#sortPriceId").addClass('glyphicon-none').removeClass('glyphicon-sort-by-attributes').removeClass('glyphicon-sort-by-attributes-alt');
 
 			// remove sort icon of price
-			$("#sortDateId").removeClass('glyphicon-sort');
+			$("#sortDateId").removeClass('glyphicon-none');
 			
 			// add new icon based on previous sorting 
 			if (sortAscending){
@@ -220,11 +231,6 @@
 
 <script>
 	$(document).ready(function() {
-		/* sorts results when "sort by" is changed */
-		/* $("#form-sort").change(function() {
-			sort_div_attribute();
-		}); */
-
 		$("#cityInput").autocomplete({
 			minLength : 2,
 			source : <c:import url="getzipcodes.jsp" />,
@@ -584,16 +590,15 @@
 				<div class="tab-content">
 					<div id="listview" class="tab-pane fade in active">
 							<p>
-								<strong> 
-									<a class="link hand-cursor"
+									<label class="margin-left10">Sort by:</label>
+									<a class="link hand-cursor margin-left23"
 									title="Price" onclick="sort_div_attribute(1)">
-									 <span class="glyphicon glyphicon-sort" id="sortPriceId"></span> Price
+									 <span class="glyphicon glyphicon-none" id="sortPriceId"></span> Price
 									</a>
-									<a class="link margin-left hand-cursor"
+									<a class="link margin-left10 hand-cursor"
 									title="Move-in Date" onclick="sort_div_attribute(2)">
-									 <span class="glyphicon glyphicon-sort" id="sortDateId"></span> Move-in Date
+									 <span class="glyphicon glyphicon-none" id="sortDateId"></span> Move-in Date
 									</a>
-								</strong>
 							</p>
 					
 			

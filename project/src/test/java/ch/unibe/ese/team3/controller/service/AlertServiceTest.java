@@ -132,7 +132,7 @@ public class AlertServiceTest {
 		
 		rentAd = new Ad();
 		rentAd.setZipcode(3012);
-		rentAd.setBuyMode(BuyMode.BUY);
+		rentAd.setBuyMode(BuyMode.RENT);
 		rentAd.setMoveInDate(convertStringToDate("01-01-2016"));
 		rentAd.setCreationDate(date);
 		rentAd.setPrice(1000);
@@ -782,7 +782,7 @@ public class AlertServiceTest {
 		
 		alertService.saveFrom(alertForm, basicUserWithAlert);		
 		
-		alertService.triggerAlerts(normalAd);
+		alertService.triggerAlerts(rentAd);
 		
 		// assert no message is sent to basic user when alert triggers.
 		Iterable<Message> messagesAfter = messageDao.findByRecipient(basicUserWithAlert);
@@ -874,7 +874,67 @@ public class AlertServiceTest {
 	
 	@Test
 	public void messageToBasicUserHasRightText() {
-		assertTrue(false);
+		alertService.saveFrom(alertForm, basicUserWithAlert);
+		
+		alertService.triggerAlerts(normalAd);
+		messageService.alertMessageForBasicUser();
+		
+		Iterable<Message> messagesAfter = messageDao.findByRecipient(basicUserWithAlert);
+		
+		Message noticifation = new Message();
+		int countMessages = 0;
+		for (Message message: messagesAfter) {
+			countMessages++;
+			noticifation = message;
+		}
+		
+		assertEquals(countMessages, 1);
+		
+		String expectedTitle = "AdTestAlertHochfeld";
+		String returnedText = noticifation.getText();
+		
+		// make sure title of triggering ad is contained in the message
+		assertTrue(returnedText.contains(expectedTitle));
+	}
+	
+	@Test
+	public void notTwoNotificationsForSameAd() {
+		alertService.saveFrom(alertForm, basicUserWithAlert);
+		
+		alertService.triggerAlerts(normalAd);
+		
+		Iterable<Message> messagesBefore = messageDao.findByRecipient(basicUserWithAlert);
+		int countMessagesBefore = ListUtils.countIterable(messagesBefore);
+		assertEquals(countMessagesBefore, 0);
+		
+		// first message
+		messageService.alertMessageForBasicUser();
+		
+		Iterable<Message> messages1stTrigger = messageDao.findByRecipient(basicUserWithAlert);
+		int countMessages1stTrigger = ListUtils.countIterable(messages1stTrigger);
+		assertEquals(countMessages1stTrigger, 1);
+		
+		Message firstMessage = new Message();
+		for (Message message: messages1stTrigger) {
+			firstMessage = message;
+		}
+		
+		assertTrue(firstMessage.getText().contains("AdTestAlertHochfeld"));
+		
+		// second message
+		messageService.alertMessageForBasicUser();
+		
+		Iterable<Message> messages2ndTrigger = messageDao.findByRecipient(basicUserWithAlert);
+		int countMessages2ndTrigger = ListUtils.countIterable(messages2ndTrigger);
+		assertEquals(countMessages2ndTrigger, 2);
+
+		Message secondMessage = new Message();
+		for (Message message: messages2ndTrigger) {
+			secondMessage = message;
+		}
+		
+		// make sure title of triggering ad is not contained in the message
+		assertFalse(secondMessage.getText().contains("AdTestAlertHochfeld"));
 	}
 	
 	@Test
