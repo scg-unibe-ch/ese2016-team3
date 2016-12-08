@@ -787,9 +787,10 @@ After the results are displayed, the user can choose to:
 
 - *Sort search:* The search results can be sorted by: ascending or descending price, move-in date earliest to latest or latest to earliest, or by the date the ad was created, youngest to oldest or oldest to youngest. 
 
+- View the results as list or see them as markers on a map. 
+
 - *Filter search:* The search can be filtered further by choosing upper and lower limits for number of rooms and square meters. These search criteria are always visible to the user. Additional filters can be shown by pressing a button. Here, the user can fill out the earliest and latest move-in date in a dropdown calendar. He can also check boxes for; balcony or patio, garage, parking, elevator and dishwasher. In a dropdown menu, the user can choose between the infrastructure types; satellite, cable or fiber optic cable. He can also choose upper and lower limits for; nr. of bathrooms, floor level, build year, renovation year, distance to school, shopping and public transport. These filters can be hidden again by pressing the above button a second time.
 
-- *Participate in auction:* The user can participate in an auction when looking at ads for sale by directly buying or bidding from the result page.
 
 - *View ad:* The user can click on an ad to view it. 
 
@@ -804,6 +805,8 @@ From the view of the ad, the user can:
 - View advertiser profile, contact or send enquiry to advertiser if the user is logged in. If the user is not logged in, the boxes you can click to do these actions show "Login to send enquiries", "Login to visit profile" and "Login to contact advertiser" and will send you to the login screen.
 
 - View ad location. The address in the information box on the top left is clickable and will redirect the user to google maps where the address is shown.
+
+- *Participate in auction:* The user can participate in an auction when looking at ads for sale by directly buying or bidding from the view page.
 
 #### Alerts 
 
