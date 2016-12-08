@@ -200,7 +200,8 @@ public class MessageService {
 	/**
 	 * Sends the daily alert message for the basic users it is scheduled to
 	 * midnight of every day and contains exactly the alerts that have been
-	 * triggered for every user. A message and an e-mail are sent.
+	 * triggered for every user. A message and an e-mail are sent. The email is also
+	 * sent if no alert triggers.
 	 */
 	@Scheduled(cron = "0 59 23 * * *") // everyday at one minute before midnight
 	// @Scheduled(cron = "1 * * * * *") // every minute
@@ -220,15 +221,16 @@ public class MessageService {
 
 		for (User user : users) {
 			if (!user.isPremium()) {
-				for (AlertResult alertResult : alertResultDao.findByUser(user)) {
-					if (alertResult.getTriggerDate().after(yesterday) || alertResult.getNotified() == false) {
+				Iterable<AlertResult> alertResults = alertResultDao.findByUser(user);
+				for (AlertResult alertResult : alertResults) {
+					if (alertResult.getTriggerDate().after(yesterday) && alertResult.getNotified() == false) {
 						Ad ad = alertResult.getTriggerAd();
 						text += "</a><br><br> <a href=\"http://localhost:8080/buy/ad?id=" + ad.getId() + "\">" + ad.getTitle()
 								+ "</a><br><br>" + ad.getRoomDescription() + "\n";
 						alertResult.setNotified(true);
 					}
-
 				}
+				
 				if (text.equals("All ads that match your alerts: \n")) {
 					text = "There are no new Ads that match your alerts, but why"
 							+ " not have a look at the highlights on our page anyway?";
@@ -357,8 +359,7 @@ public class MessageService {
 	 * @param id
 	 */
 	@Transactional
-	public void readMessage(long id) {
-		Message message = messageDao.findOne(id);
+	public void readMessage(Message message) {
 		message.setState(MessageState.READ);
 		messageDao.save(message);
 	}

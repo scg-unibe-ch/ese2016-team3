@@ -139,7 +139,7 @@ public class MessageServiceTest {
 		Message receivedMessage = messageList.get(1);
 		assertEquals(MessageState.UNREAD, receivedMessage.getState());
 		
-		messageService.readMessage(receivedMessage.getId());
+		messageService.readMessage(receivedMessage);
 		Message message = messageService.getMessage(receivedMessage.getId());
 		assertEquals(MessageState.READ, message.getState());
 	}

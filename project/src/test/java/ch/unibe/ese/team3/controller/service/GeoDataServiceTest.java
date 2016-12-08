@@ -13,6 +13,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.google.code.geocoder.model.LatLng;
+
 import ch.unibe.ese.team3.dto.Location;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -75,5 +77,18 @@ public class GeoDataServiceTest {
 	public void getSpecficiLocationByZipNoCity(){
 		locations = geoDataService.getLocationsByZipcode(9999);
 		assertEquals(0, locations.size());
+	}
+	
+	@Test
+	public void getInvalidCoordinates(){
+		LatLng result = geoDataService.getCoordinates("not a valid address");
+		assertEquals(null, result);
+	}
+	
+	@Test
+	public void getValidCoordinates(){
+		LatLng result = geoDataService.getCoordinates("Sidlerstrasse 5 3000 Bern");
+		assertEquals(46.9513886, result.getLat().doubleValue(), 0.00001);
+		assertEquals(7.43860601, result.getLng().doubleValue(), 0.00001);
 	}
 }

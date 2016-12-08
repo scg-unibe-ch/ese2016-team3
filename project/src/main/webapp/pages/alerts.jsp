@@ -212,18 +212,18 @@
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
-										<label for="field-floorLevelMin"
-											class="control-label col-sm-4">Floor level</label>
+										<label for="field-squareFootageMin"
+											class="control-label col-sm-4">Square Footage</label>
 										<div class="col-sm-8 row form-inline">
 											<div class="col-sm-5 input-group">
 												<span class="input-group-addon">min</span>
-												<form:input type="number" min="0" step="1" id="field-floorLevelMin"
-													path="floorLevelMin" cssClass="form-control" />
+												<form:input type="number" min="0" step="1" id="field-squareFootageMin"
+													path="squareFootageMin" cssClass="form-control" />
 											</div>
 											<div class="col-sm-5 input-group">
 												<span class="input-group-addon">max</span>
-												<form:input type="number" min="0" step="1" id="field-floorLevelMax"
-													path="floorLevelMax" cssClass="form-control" />
+												<form:input type="number" min="0" step="1" id="field-squareFootageMax"
+													path="squareFootageMax" cssClass="form-control" />
 											</div>
 										</div>
 									</div>
@@ -554,12 +554,7 @@
 																							<tr>
 																								<td><b>Square footage between</b></td>
 																								<td>${alert.squareFootageMin}-
-																									${alert.squareFootageMin}</td>
-																							</tr>
-																							<tr>
-																								<td><b>Floor level between</b></td>
-																								<td>${alert.floorLevelMin}-
-																									${alert.floorLevelMax}</td>
+																									${alert.squareFootageMax}</td>
 																							</tr>
 																							<tr>
 																								<td><b>Build year between</b></td>

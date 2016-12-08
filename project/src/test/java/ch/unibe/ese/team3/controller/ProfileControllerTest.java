@@ -53,7 +53,7 @@ public class ProfileControllerTest extends BaseControllerTest {
 			.andExpect(view().name("signup"))
 			.andExpect(model().attributeExists("signupForm", "genders", 
 					"accountTypes", "creditcardTypes", "years", "months",
-					"premiumChoices", "durations"));
+					"premiumChoices"));
 	}
 	
 	@Test
@@ -70,7 +70,7 @@ public class ProfileControllerTest extends BaseControllerTest {
 			.andExpect(model().attributeHasFieldErrors("signupForm", "password"))
 			.andExpect(model().attributeExists("signupForm", "genders", 
 					"accountTypes", "creditcardTypes", "years", "months",
-					"premiumChoices", "durations"));	
+					"premiumChoices"));	
 	}
 	
 	@Test
@@ -125,11 +125,11 @@ public class ProfileControllerTest extends BaseControllerTest {
 
 		this.mockMvc.perform(post("/profile/editProfile")
 				.principal(principal)
-				.param("username", "jap@blue.ch")
-				.param("password", "yoyoyo")
+				.param("username", "jane@doe.com")
+				.param("password", "password")
 				.param("firstName", "hibli")
 				.param("lastName", "bubli"))
-			.andExpect(status().is(302)) // URL redirection status
+			.andExpect(status().is3xxRedirection()) // URL redirection status
 			.andExpect(view().name("redirect:../user?id=" + user.getId()));
 	}
 	

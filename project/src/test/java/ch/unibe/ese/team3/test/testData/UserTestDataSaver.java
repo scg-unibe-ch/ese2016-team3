@@ -1,18 +1,18 @@
 package ch.unibe.ese.team3.test.testData;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.Calendar;
-
 import ch.unibe.ese.team3.model.AccountType;
+import ch.unibe.ese.team3.model.CreditcardType;
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.UserPicture;
 import ch.unibe.ese.team3.model.UserRole;
-import ch.unibe.ese.team3.model.CreditcardType;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
 /**
@@ -104,6 +104,7 @@ public class UserTestDataSaver {
 		email.setExpirationMonth("10");
 		email.setExpirationYear("2020");
 		email.setSecurityNumber("123");
+		email.setIsGoogleUser(true);
 		userDao.save(email);
 		
 		//User for removing expired Premium.
@@ -121,6 +122,11 @@ public class UserTestDataSaver {
 		removePremium.setExpirationYear("2020");
 		removePremium.setSecurityNumber("123");
 		userDao.save(removePremium);
+		
+		//User for testing google login.
+		User googleUser = createUser("google@test.com", "123456", "Google", "Test", Gender.OTHER, AccountType.BASIC);
+		googleUser.setIsGoogleUser(true);
+		userDao.save(googleUser);
 	}
 
 	public User createUser(String email, String password, String firstName,

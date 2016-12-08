@@ -40,6 +40,18 @@ public class AuctionService extends BaseService {
 	@Autowired
 	private MessageService messageService;
 
+	/**
+	 * Check whether the bidder can bid for the specified ad
+	 * and save the bid if he can.
+	 * 
+	 * A bidder can bid if the amount is larger than the highest
+	 * bid so far and the auction is still running.
+	 * 
+	 * @param ad the ad to bid for
+	 * @param bidder the bidder
+	 * @param amount the amount to bid
+	 * @return true if the bid was successful, otherwise false
+	 */
 	@Transactional
 	public boolean checkAndBid(Ad ad, User bidder, int amount) {
 		if (!canBid(ad, bidder, amount)) {
@@ -54,6 +66,18 @@ public class AuctionService extends BaseService {
 		return true;
 	}
 
+	/**
+	 * Check whether the purchaser can place a purchase request
+	 * for the specified ad and save the request if he can.
+	 * 
+	 * A purchaser can place a request if the auction is still
+	 * running and the purchaser didn't place a purchase request
+	 * before for this ad.
+	 * 
+	 * @param ad
+	 * @param purchaser
+	 * @return true if the purchase request was successful, otherwise false
+	 */
 	@Transactional
 	public boolean checkAndBuy(Ad ad, User purchaser) {
 		if (!canBuy(ad, purchaser)) {
@@ -116,6 +140,12 @@ public class AuctionService extends BaseService {
 		return amount >= ad.getCurrentAuctionPrice();
 	}
 
+	/**
+	 * Resume a paused auction.
+	 * 
+	 * @param ad the auction to resume
+	 * @return true if the auction could be resumed, otherwise false
+	 */
 	public boolean resumeAuction(Ad ad) {
 		if (!ad.isAuctionStopped()){
 			return false;
@@ -127,6 +157,12 @@ public class AuctionService extends BaseService {
 		return true;
 	}
 
+	/**
+	 * Pause a running auction.
+	 * 
+	 * @param ad the auction to pause
+	 * @return true if the auction could be paused, otherwise false
+	 */
 	public boolean stopAuction(Ad ad) {
 		if (!ad.isAuctionRunning() && !ad.isAuctionNotYetRunning()){
 			return false;
@@ -138,6 +174,12 @@ public class AuctionService extends BaseService {
 		return true;
 	}
 
+	/**
+	 * Complete a running, paused or expired auction
+	 * 
+	 * @param ad
+	 * @return true if the auction could be completed, otherwise false
+	 */
 	public boolean completeAuction(Ad ad) {
 		if (ad.isAuctionCompleted()){
 			return false;
@@ -150,6 +192,12 @@ public class AuctionService extends BaseService {
 		return true;
 	}
 
+	/**
+	 * Get all auctions of a user which are not yet running
+	 * 
+	 * @param owner
+	 * @return
+	 */
 	public List<Ad> getNotYetRunningAuctionsForUser(User owner) {
 		ArrayList<Ad> ads = new ArrayList<Ad>();
 		Iterable<Ad> auctionAds = adDao.findByUserAndAuction(owner, true);
@@ -165,6 +213,12 @@ public class AuctionService extends BaseService {
 		return ads;
 	}
 
+	/**
+	 * Get all auctions of a user which are running
+	 * 
+	 * @param owner
+	 * @return
+	 */
 	public List<Ad> getRunningAuctionsForUser(User owner) {
 		ArrayList<Ad> ads = new ArrayList<Ad>();
 		Iterable<Ad> auctionAds = adDao.findByUserAndAuction(owner, true);
@@ -179,6 +233,12 @@ public class AuctionService extends BaseService {
 		return ads;
 	}
 
+	/**
+	 * Get all expired auctions of a user
+	 * 
+	 * @param owner
+	 * @return
+	 */
 	public List<Ad> getExpiredAuctionsForUser(User owner) {
 		ArrayList<Ad> ads = new ArrayList<Ad>();
 		Iterable<Ad> auctionAds = adDao.findByUserAndAuction(owner, true);
@@ -194,6 +254,12 @@ public class AuctionService extends BaseService {
 		return ads;
 	}
 
+	/**
+	 * Get all paused auctions of a user
+	 * 
+	 * @param owner
+	 * @return
+	 */
 	public List<Ad> getStoppedAuctionsForUser(User owner) {
 		ArrayList<Ad> ads = new ArrayList<Ad>();
 		Iterable<Ad> auctionAds = adDao.findByUserAndAuction(owner, true);
@@ -209,6 +275,12 @@ public class AuctionService extends BaseService {
 		return ads;
 	}
 
+	/**
+	 * Get all completed auctions of a user
+	 * 
+	 * @param owner
+	 * @return
+	 */
 	public List<Ad> getCompletedAuctionsForUser(User owner) {
 		ArrayList<Ad> ads = new ArrayList<Ad>();
 		Iterable<Ad> auctionAds = adDao.findByUserAndAuction(owner, true);
@@ -224,14 +296,32 @@ public class AuctionService extends BaseService {
 		return ads;
 	}
 
+	/**
+	 * Get all bids for a specific ad under auction
+	 * 
+	 * @param ad
+	 * @return
+	 */
 	public List<Bid> getBidsForAd(Ad ad) {
 		return ListUtils.convertToList(bidDao.findByAdOrderByAmountDesc(ad));
 	}
 
+	/**
+	 * Get all purchase requests for a specific ad under auction
+	 * @param ad
+	 * @return
+	 */
 	public List<PurchaseRequest> getPurchaseRequestForAd(Ad ad) {
 		return ListUtils.convertToList(purchaseRequestDao.findByAdOrderByCreatedAsc(ad));
 	}
 
+	/**
+	 * Get all placed bids of a user, grouped by auction and
+	 * ordered by amount descending
+	 * 
+	 * @param bidder
+	 * @return
+	 */
 	public Map<Ad, SortedSet<Bid>> getBidsByUser(User bidder) {
 		List<Bid> bidsByUser = ListUtils.convertToList(bidDao.findByBidder(bidder));
 		Map<Ad, SortedSet<Bid>> bidsByAd = new HashMap<Ad, SortedSet<Bid>>();
@@ -245,6 +335,10 @@ public class AuctionService extends BaseService {
 		return bidsByAd;
 	}
 
+	/**
+	 * Compares bids according to their amount, descending.
+	 *
+	 */
 	private class BidComparator implements Comparator<Bid> {
 
 		@Override
@@ -259,11 +353,25 @@ public class AuctionService extends BaseService {
 		}
 	}
 
+	/**
+	 * Check whether a user placed a purchase request for a
+	 * specific ad
+	 * 
+	 * @param ad
+	 * @param user
+	 * @return true if the user placed a purchase request, otherwise false
+	 */
 	public boolean hasUserSentBuyRequest(Ad ad, User user) {
 		Iterable<PurchaseRequest> requests = purchaseRequestDao.findByAdAndPurchaser(ad, user);
 		return requests.iterator().hasNext();
 	}
 
+	/**
+	 * Get the ten most recent bids for a specific ad
+	 * 
+	 * @param ad
+	 * @return
+	 */
 	public List<Bid> getMostRecentBidsForAd(Ad ad) {
 		return ListUtils.convertToList(bidDao.findTop10ByAdOrderByAmountDesc(ad));
 	}
