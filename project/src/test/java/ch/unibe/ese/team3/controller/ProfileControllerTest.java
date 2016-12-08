@@ -129,7 +129,7 @@ public class ProfileControllerTest extends BaseControllerTest {
 				.param("password", "password")
 				.param("firstName", "hibli")
 				.param("lastName", "bubli"))
-			.andExpect(status().is(302)) // URL redirection status
+			.andExpect(status().is3xxRedirection()) // URL redirection status
 			.andExpect(view().name("redirect:../user?id=" + user.getId()));
 	}
 	

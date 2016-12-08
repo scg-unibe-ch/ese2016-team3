@@ -145,7 +145,7 @@ public class SignupForm {
 		boolean validCreditcard = true;
 
 		if (isPremium) {
-			if (!java.util.regex.Pattern.matches("^[0-9]{16}$", creditCard)) {
+			if (!java.util.regex.Pattern.matches("^[0-9 -]{16,19}$", creditCard)) {
 				validCreditcard = false;
 			}
 		}
