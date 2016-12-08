@@ -40,14 +40,13 @@ public class BookmarkService {
 			updateUser(tempAdList, user);
 			return BookmarkStatus.NotBookmarked.getStatusCode();
 		}
-		
-		if(!bookmarked) {
+		else{
 			tempAdList.add(ad);
 			updateUser(tempAdList, user);
 			return BookmarkStatus.Bookmarked.getStatusCode();
+			
 		}
-		
-		return BookmarkStatus.NoUserFound.getStatusCode();
+	
 	}
 	
 	// updates effectively the new List into DB

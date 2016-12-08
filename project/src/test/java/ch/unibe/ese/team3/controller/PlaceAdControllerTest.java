@@ -106,7 +106,17 @@ public class PlaceAdControllerTest extends BaseControllerTest {
 				.andExpect(flash().attributeExists("warningMessage"));
 		
 	}
-	
+	@Test
+	public void createNotValidAd() throws Exception{
+		
+		this.mockMvc.perform(post("/profile/placeAd")
+				.requestAttr("pageMode", PageMode.BUY).principal(getTestPrincipal("ese@unibe.ch")))
+
+				.andExpect(view().name("placeAd"))
+				.andExpect(model().attributeExists("types"))
+				.andExpect(model().attributeExists("distances"));
+		
+	}
 	
 	
 	@Test

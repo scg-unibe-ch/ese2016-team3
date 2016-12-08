@@ -981,7 +981,41 @@ public class AdServiceTest {
 
 		assertTrue(searchAdInResults);
 	}
+	
+	@Test
+	public void checkIfAllreadyAddedFalse(){
+		
+		String email = "hansruediMeier@gmail.com";
+		Iterable<User> itrUsers = userDao.findAll();
+		Iterator<User> itr = itrUsers.iterator();
+		String alreadyAdded="";
+		
+		while(itr.hasNext()){
+			alreadyAdded += itr.next().getEmail();
+		}
+		
+		
+		assertFalse(adService.checkIfAlreadyAdded(email, alreadyAdded));
+		
+	}
 
+	@Test
+	public void checkIfAllreadyAddedTrue(){
+		
+		String email = "jane@doe.com";
+		Iterable<User> itrUsers = userDao.findAll();
+		Iterator<User> itr = itrUsers.iterator();
+		String alreadyAdded="";
+		
+		while(itr.hasNext()){
+			alreadyAdded += itr.next().getEmail();
+			
+		}
+		
+		
+		assertTrue(adService.checkIfAlreadyAdded(email, alreadyAdded));
+		
+	}
 	// checks if the created ad "searchAd" is returned by the filter function
 	private Boolean isSearchAdInResults(Ad searchAd, Iterable<Ad> filteredAd) {
 		Boolean searchAdContained = false;
