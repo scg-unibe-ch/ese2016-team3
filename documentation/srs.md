@@ -787,9 +787,9 @@ In the result lists, the ads of premium users are ranked higher than normal ads 
 
 After the results are displayed, the user can choose to:
 
-- *Sort search:* The search results can be sorted by: ascending or descending price, move-in date earliest to latest or latest to earliest, or by the date the ad was created, youngest to oldest or oldest to youngest. 
+- *Sort search:* The search results can be sorted by price or move-in date (both ascending or descending)
 
-- View the results as list or see them as markers on a map. 
+- View the results as *list* or see them as markers on a *map*. 
 
 - *Filter search:* The search can be filtered further by choosing upper and lower limits for number of rooms and square meters. These search criteria are always visible to the user. Additional filters can be shown by pressing a button. Here, the user can fill out the earliest and latest move-in date in a dropdown calendar. He can also check boxes for; balcony or patio, garage, parking, elevator and dishwasher. In a dropdown menu, the user can choose between the infrastructure types; satellite, cable or fiber optic cable. He can also choose upper and lower limits for; nr. of bathrooms, floor level, build year, renovation year, distance to school, shopping and public transport. These filters can be hidden again by pressing the above button a second time.
 
