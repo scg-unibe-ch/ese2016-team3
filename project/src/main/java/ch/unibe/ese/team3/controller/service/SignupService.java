@@ -41,7 +41,7 @@ public class SignupService {
 		
 		if(signupForm.getIsPremium() == true){
 			user.setAccountType(AccountType.PREMIUM);
-			user.setCreditCard(signupForm.getCreditCard());
+			user.setCreditCard(this.getFormattedCreditCard(signupForm.getCreditCard()));
 			
 			user.setCreditcardType(signupForm.getCreditcardType());
 			user.setSecurityNumber(signupForm.getSecurityNumber());
@@ -74,6 +74,12 @@ public class SignupService {
 		userDao.save(user);
 		
 		return user;
+	}
+	
+	private String getFormattedCreditCard(String creditCard) {
+		String formattedCreditCard;
+		formattedCreditCard = creditCard.replaceAll("[- ]", "");
+		return formattedCreditCard;
 	}
 	
 	/**

@@ -8,17 +8,30 @@
 
 <script>
 	// Validate the email field
-	$(document).ready(function() {
-		$("#field-email").focusout(function() {
-			var text = $(this).val();
-			$.post("/signup/doesEmailExist", {email: text}, function(data){
-				if(data){
-					alert("This username is taken. Please choose another one!");
-					$("#field-email").val("");
-				}
-			});
-		});
-	});
+	$(document)
+			.ready(
+					function() {
+						$("#field-email")
+								.focusout(
+										function() {
+											var text = $(this).val();
+											$
+													.post(
+															"/signup/doesEmailExist",
+															{
+																email : text
+															},
+															function(data) {
+																if (data) {
+																	alert("This username is taken. Please choose another one!");
+																	$(
+																			"#field-email")
+																			.val(
+																					"");
+																}
+															});
+										});
+					});
 </script>
 
 <ol class="breadcrumb">
@@ -29,7 +42,7 @@
 <div class="row">
 	<div class="col-md-12 col-xs-12">
 		<h3>Sign up</h3>
-		Fields marked with * are required. 
+		Fields marked with * are required.
 		<form:form id="signupForm" class="form-horizontal" method="post"
 			modelAttribute="signupForm" action="./signup">
 			<div class="panel panel-default">
@@ -106,53 +119,45 @@
 						<div class="col-sm-6 col-sm-offset-2">
 							<label class="checkbox-inline"> <form:checkbox
 									path="isPremium" value="on" id="premiumUser" /> Sign up as a
-								Premium User
+								Premium User 
 							</label>
+							<span class="glyphicon glyphicon-info-sign hand-cursor"
+								data-toggle="modal" data-target="#premiumUserInfo"></span>
 						</div>
 					</div>
-					
-					
+
+
 					<div id="premiumPackages">
-						<hr>
-						<p><strong>The following premium packages are available:</strong></p>
-						<br />
-						<c:forEach var="choice" items="${premiumChoices}">
-							<div class="row bottom15">
-								<div class="col-md-2">
-									<strong>Duration:</strong> ${choice.duration} days
-								</div>
-								<div class="col-md-6">
-									<strong>Price:</strong> ${choice.price} CHF
-								</div>
-							</div>
-						</c:forEach>
-						<br />
-				
 						<spring:bind path="duration">
 							<div id="form-duration"
 								class="form-group ${status.error ? 'has-error' : '' }">
-								<label class="col-sm-2 control-label"
-									for="field-duration">Duration in Days*</label>
+								<label class="col-sm-2 control-label" for="field-duration">Premium
+									package*</label>
 								<div class="col-sm-3">
 									<form:select path="duration" id="field-duration"
-										class="form-control"> 
-									<form:options items="${durations}"/>
+										class="form-control">
+										<c:forEach var="choice" items="${premiumChoices}">
+											<form:option value="${choice.duration}"
+												label="${choice.getLabel() }" />
+										</c:forEach>
 									</form:select>
 									<form:errors path="duration" cssClass="text-danger" />
 								</div>
 							</div>
 						</spring:bind>
-						
+
 						<hr>
-						<p><strong>Please Enter Your Credit Card Information</strong></p>
+						<p>
+							<strong>Please Enter Your Credit Card Information</strong>
+						</p>
 						<br />
 					</div>
-					
-					
+
+
 					<spring:bind path="validCreditcardType">
 						<div id="form-creditcardType"
 							class="form-group ${status.error ? 'has-error' : '' }">
-							
+
 							<label class="col-sm-2 control-label"
 								for="field-creditcardNumber">Type of Card*</label>
 							<div class="col-sm-6">
@@ -209,7 +214,8 @@
 					<spring:bind path="validExpirationMonth">
 						<div id="form-expirationMonth"
 							class="form-group ${status.error ? 'has-error' : '' }">
-							<label class="col-sm-2 control-label" for="field-expirationMonth">Expiration Date*</label>
+							<label class="col-sm-2 control-label" for="field-expirationMonth">Expiration
+								Date*</label>
 							<div class="col-sm-3">
 								<form:select path="expirationMonth" id="field-expirationMonth"
 									cssClass="form-control">
@@ -249,32 +255,56 @@
 	</div>
 </div>
 
-
+<div class="modal fade" id="premiumUserInfo" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">Premium users</h4>
+			</div>
+			<div class="modal-body">
+				<p>Premium users have the following privileges:</p>
+				<ul>
+					<li>They receive an email immediately if a newly placed ad meets the
+						criteria of one of their alerts</li>
+					<li>They receive an email if they are overbidden in an auction</li>
+					<li>They're ads are highlighted and ranked higher in the search
+						results</li>
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script>
-$("#premiumUser").change(function(){
-	var self = this;
-	
-	if (!self.checked){
-		$("#field-creditcardNumber").val("");
-		$("#field-creditcardType").val("");
-		$("#field-creditcardName").val("");
-		$("#field-securityNumber").val("");
-		$("#field-expirationMonth").val("");
-		$("#field-expirationYear").val("");
+	$("#premiumUser").change(function() {
+		var self = this;
 
-	}
-	
-	$("#form-creditcard").toggle(self.checked);
-	$("#form-creditcardType").toggle(self.checked);
-	$("#form-creditcardName").toggle(self.checked);
-	$("#form-securityNumber").toggle(self.checked);
-	$("#form-expirationMonth").toggle(self.checked);
-	$("#form-expirationYear").toggle(self.checked);
-	$("#premiumPackages").toggle(self.checked);
-	
-	
-}).change();
+		if (!self.checked) {
+			$("#field-creditcardNumber").val("");
+			$("#field-creditcardType").val("");
+			$("#field-creditcardName").val("");
+			$("#field-securityNumber").val("");
+			$("#field-expirationMonth").val("");
+			$("#field-expirationYear").val("");
+
+		}
+
+		$("#form-creditcard").toggle(self.checked);
+		$("#form-creditcardType").toggle(self.checked);
+		$("#form-creditcardName").toggle(self.checked);
+		$("#form-securityNumber").toggle(self.checked);
+		$("#form-expirationMonth").toggle(self.checked);
+		$("#form-expirationYear").toggle(self.checked);
+		$("#premiumPackages").toggle(self.checked);
+
+	}).change();
 </script>
 
 <c:import url="template/footer.jsp" />

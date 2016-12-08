@@ -116,7 +116,7 @@ The following sections describe abbreviations and special terms used in this doc
 |uc38|View extended alert criteria|The user of the web application|low|1|
 
 #### User management
-![User management](images/User_Management2.0.png)
+![User management](images/User_Management3.0.png)
 
 
 |Use case element|Description|
@@ -136,6 +136,7 @@ The following sections describe abbreviations and special terms used in this doc
 ||7. The login page and a success message are shown|
 |**Alternate flow**|If the user doesn't fill up the entire sign up form in step 5, validation error messages are shown.|
 ||If the user selects "premium" as account type in step 5, additional form elements for his credit card information and a choice of premium packages for fixed amounts of time are shown.|
+||If the user decides, instead of adding all his information anew, to sign up with his google account, he can click on the google login button and login normally with his google info.|
 
 |Use case element|Description|
 |:---|:---|
@@ -151,6 +152,7 @@ The following sections describe abbreviations and special terms used in this doc
 ||4. The user clicks on the button "Login"|
 ||5. The user is logged in and the start page is shown|
 |**Alternate flow**|If the user enters wrong credentials in step 3, an error message and the login form are shown.|
+||If the user wants to use the page with his google account, he can instead click the google login button and log in normally with his google info.|
 
 |Use case element|Description|
 |:---|:---|

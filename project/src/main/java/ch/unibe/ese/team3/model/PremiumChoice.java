@@ -43,6 +43,10 @@ public class PremiumChoice {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
+	public String getLabel(){
+		return String.format("%d days for CHF %2$,.2f", duration, (double) price);
+	}
 
 
 	@Override

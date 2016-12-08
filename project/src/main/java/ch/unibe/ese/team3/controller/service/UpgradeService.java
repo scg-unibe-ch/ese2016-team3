@@ -1,9 +1,7 @@
 package ch.unibe.ese.team3.controller.service;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,15 +37,6 @@ public class UpgradeService {
 	@Transactional
 	public Iterable<PremiumChoice> findAll(){
 		return premiumChoiceDao.findAll();
-	}
-	
-	public List<Integer> getDurations(){
-		Iterable<PremiumChoice> choices = findAll();
-		ArrayList<Integer> durations = new ArrayList<Integer>();
-		for(PremiumChoice obj : choices){
-			durations.add(obj.getDuration());
-		}
-		return durations;
 	}
 
 	/** Handles upgrading user in database. */
