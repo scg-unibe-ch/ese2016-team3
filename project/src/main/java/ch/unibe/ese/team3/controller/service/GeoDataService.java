@@ -10,6 +10,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderRequest;
+import com.google.code.geocoder.model.GeocoderResult;
+import com.google.code.geocoder.model.LatLng;
 import com.jolbox.bonecp.BoneCPDataSource;
 
 import ch.unibe.ese.team3.base.BaseService;
@@ -28,7 +34,7 @@ public class GeoDataService extends BaseService {
 	/**
 	 * Returns a list of all locations in the database.
 	 */
-	public List<Location> getAllLocations() {		
+	public List<Location> getAllLocations() {
 		PreparedStatement statement = null;
 
 		try {
@@ -65,7 +71,8 @@ public class GeoDataService extends BaseService {
 			statement.setString(1, city);
 			return executeQuery(statement);
 		} catch (SQLException ex) {
-			logger.error(String.format("Failed to get locations by city '%s' from DB. Message: %s", city, ex.getMessage()));
+			logger.error(
+					String.format("Failed to get locations by city '%s' from DB. Message: %s", city, ex.getMessage()));
 		} finally {
 			if (statement != null) {
 				try {
@@ -140,5 +147,38 @@ public class GeoDataService extends BaseService {
 
 	private Connection getConnection() throws SQLException {
 		return mainDataSource.getConnection();
+	}
+
+	/**
+	 * Gets the coordinates of the specified address from the google geocoding
+	 * service.
+	 * 
+	 * @param address
+	 *            the address to get the coordinates for
+	 * @return the coordinates as latitude/longitude pair or null if address
+	 *         couldn't be encoded
+	 */
+	public LatLng getCoordinates(String address) {
+		try {
+			final Geocoder geocoder = new Geocoder();
+			GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(address).setLanguage("en")
+					.getGeocoderRequest();
+
+			GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
+
+			List<GeocoderResult> results = geocoderResponse.getResults();
+			if (results != null && !results.isEmpty()) {
+				GeocoderResult result = results.get(0);
+				if (!result.isPartialMatch() || results.size() == 1) {
+					return result.getGeometry().getLocation();
+				}
+			}
+		} catch (Exception ex) {
+			logger.error(String.format("Failed to connect to GoogleService. Exception: %s", ex.getMessage()));
+		}
+
+		logger.warn(String.format("Failed to get coordinates from Service. Address: %s", address));
+		return null;
+
 	}
 }

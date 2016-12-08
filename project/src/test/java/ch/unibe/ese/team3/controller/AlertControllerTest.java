@@ -1,6 +1,5 @@
 package ch.unibe.ese.team3.controller;
 
-import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -8,7 +7,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.junit.Test;
-import org.springframework.test.web.servlet.MvcResult;
 
 public class AlertControllerTest extends BaseControllerTest {
 
@@ -41,9 +39,6 @@ public class AlertControllerTest extends BaseControllerTest {
 				.principal(getTestPrincipal("ese@unibe.ch")) 
 				.param("id", "1")
 				)
-
-				.andExpect(status().isOk())
-				//.andExpect(view().name("alerts"))
-				.andExpect(model().attributeExists("alerts", "types", "alertForm")); 
+				.andExpect(status().isOk());
 	}
 }
