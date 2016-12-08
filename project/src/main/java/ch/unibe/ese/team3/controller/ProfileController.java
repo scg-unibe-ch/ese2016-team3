@@ -113,7 +113,6 @@ public class ProfileController {
 		
 		Iterable<PremiumChoice> allChoices = upgradeService.findAll();
 		model.addObject("premiumChoices", allChoices);
-		model.addObject("durations", upgradeService.getDurations());
 		return model;
 	}
 
@@ -155,7 +154,6 @@ public class ProfileController {
 			
 			Iterable<PremiumChoice> allChoices = upgradeService.findAll();
 			model.addObject("premiumChoices", allChoices);
-			model.addObject("durations", upgradeService.getDurations());
 		}
 		
 		return model;
@@ -275,7 +273,6 @@ public class ProfileController {
 		model.addObject("years", GetYears());
 		model.addObject("months", GetMonths());
 		model.addObject("premiumChoices", allChoices);
-		model.addObject("durations", upgradeService.getDurations());
 		return model;
 	}
 
@@ -302,7 +299,6 @@ public class ProfileController {
 			model.addObject("years", GetYears());
 			model.addObject("months", GetMonths());
 			model.addObject("premiumChoices", allChoices);
-			model.addObject("durations", upgradeService.getDurations());
 		}
 		return model;
 	}

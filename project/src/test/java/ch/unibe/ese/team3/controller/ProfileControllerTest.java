@@ -53,7 +53,7 @@ public class ProfileControllerTest extends BaseControllerTest {
 			.andExpect(view().name("signup"))
 			.andExpect(model().attributeExists("signupForm", "genders", 
 					"accountTypes", "creditcardTypes", "years", "months",
-					"premiumChoices", "durations"));
+					"premiumChoices"));
 	}
 	
 	@Test
@@ -70,7 +70,7 @@ public class ProfileControllerTest extends BaseControllerTest {
 			.andExpect(model().attributeHasFieldErrors("signupForm", "password"))
 			.andExpect(model().attributeExists("signupForm", "genders", 
 					"accountTypes", "creditcardTypes", "years", "months",
-					"premiumChoices", "durations"));	
+					"premiumChoices"));	
 	}
 	
 	@Test

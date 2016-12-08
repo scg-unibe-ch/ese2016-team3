@@ -13,19 +13,6 @@
 	<li class="active">Results</li>
 </ol>
 
-<style>
-/*define class which has a user defined left margin*/
-.margin-left{
-    margin-left: 27px !important;
-}
-    
-/*class, which makes cursor appear */
-.hand-cursor{
-	cursor: pointer;
-}
-
-</style>
-
 <script
 	src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDPcQNoMGcp8Oe9l6uY8jLFlMR4pyecFIU&libraries=places"></script>
 <script
