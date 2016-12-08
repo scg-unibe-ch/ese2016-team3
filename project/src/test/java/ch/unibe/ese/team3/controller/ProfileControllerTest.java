@@ -133,6 +133,19 @@ public class ProfileControllerTest extends BaseControllerTest {
 			.andExpect(view().name("redirect:../user?id=" + user.getId()));
 	}
 	
+	@Test
+	public void testChangeEmailToExistingEmailProfile() throws Exception{
+		this.mockMvc.perform(post("/profile/editProfile")
+				.principal(getTestPrincipal("jane@doe.com"))
+				.param("username", "ese@unibe.ch")
+				.param("password", "password")
+				.param("firstName", "hibli")
+				.param("lastName", "bubli"))
+		.andExpect(status().isOk())
+		.andExpect(view().name("editProfile"))
+		.andExpect(model().attributeExists("editProfileForm", "currentUser", "errorMessage"));
+	}
+	
 	@Test public void getUserPage() throws Exception {
 		Principal principal = mock(Principal.class);
 		when(principal.getName()).thenReturn("jane@doe.com");

@@ -27,6 +27,11 @@ public class UserUpdateService {
 		
 		User currentUser = user;
 		
+		if (userDao.findByUsername(editProfileForm.getUsername()) != null && 
+				!user.getUsername().equals(editProfileForm.getUsername())){
+			throw new IllegalArgumentException("This username is taken");
+		}
+		
 		currentUser.setUsername(editProfileForm.getUsername());
 		currentUser.setFirstName(editProfileForm.getFirstName());
 		currentUser.setLastName(editProfileForm.getLastName());

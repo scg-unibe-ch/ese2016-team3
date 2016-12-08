@@ -51,17 +51,17 @@ import ch.unibe.ese.team3.model.Visit;
 @Controller
 @EnableScheduling
 public class ProfileController {
-	
+
 	@Autowired
 	@Qualifier("authenticationManager")
 	protected AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private SignupService signupService;
-	
+
 	@Autowired
 	private GoogleService googleService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -73,7 +73,7 @@ public class ProfileController {
 
 	@Autowired
 	private AdService adService;
-	
+
 	@Autowired
 	private UpgradeService upgradeService;
 
@@ -84,12 +84,12 @@ public class ProfileController {
 		model.addObject("googleForm", new GoogleSignupForm());
 		return model;
 	}
-	
+
 	/** Handles Google sign in. */
 	@RequestMapping(value = "/googlelogin", method = RequestMethod.POST)
 	public ModelAndView googleLogin(GoogleSignupForm googleForm) {
 		ModelAndView model = new ModelAndView("index");
-		if(!googleService.doesUserWithUsernameExist(googleForm.getEmail())){
+		if (!googleService.doesUserWithUsernameExist(googleForm.getEmail())) {
 			googleService.saveFrom(googleForm);
 		}
 		googleService.loginFrom(googleForm);
@@ -98,7 +98,6 @@ public class ProfileController {
 		model.addObject("searchForm", new SearchForm());
 		return model;
 	}
-	
 
 	/** Returns the signup page. */
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
@@ -110,7 +109,7 @@ public class ProfileController {
 		model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
 		model.addObject("years", GetYears());
 		model.addObject("months", GetMonths());
-		
+
 		Iterable<PremiumChoice> allChoices = upgradeService.findAll();
 		model.addObject("premiumChoices", allChoices);
 		return model;
@@ -118,7 +117,7 @@ public class ProfileController {
 
 	private List<Integer> GetMonths() {
 		ArrayList<Integer> months = new ArrayList<Integer>();
-		for (int i = 1; i <= 12; i++){
+		for (int i = 1; i <= 12; i++) {
 			months.add(i);
 		}
 		return months;
@@ -127,7 +126,7 @@ public class ProfileController {
 	private List<Integer> GetYears() {
 		ArrayList<Integer> years = new ArrayList<Integer>();
 		int year = Year.now().getValue();
-		for (int i = 0; i < 10; i++){
+		for (int i = 0; i < 10; i++) {
 			years.add(new Integer(year + i));
 		}
 		return years;
@@ -135,8 +134,7 @@ public class ProfileController {
 
 	/** Validates the signup form and on success persists the new user. */
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ModelAndView signupResultPage(@Valid SignupForm signupForm,
-			BindingResult bindingResult) {
+	public ModelAndView signupResultPage(@Valid SignupForm signupForm, BindingResult bindingResult) {
 		ModelAndView model;
 		if (!bindingResult.hasErrors()) {
 			signupService.saveFrom(signupForm);
@@ -151,15 +149,17 @@ public class ProfileController {
 			model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
 			model.addObject("years", GetYears());
 			model.addObject("months", GetMonths());
-			
+
 			Iterable<PremiumChoice> allChoices = upgradeService.findAll();
 			model.addObject("premiumChoices", allChoices);
 		}
-		
+
 		return model;
 	}
 
-	/** Checks and returns whether a user with the given email already exists. */
+	/**
+	 * Checks and returns whether a user with the given email already exists.
+	 */
 	@RequestMapping(value = "/signup/doesEmailExist", method = RequestMethod.POST)
 	public @ResponseBody boolean doesEmailExist(@RequestParam String email) {
 		return signupService.doesUserWithUsernameExist(email);
@@ -178,25 +178,28 @@ public class ProfileController {
 
 	/** Handles the request for editing the user profile. */
 	@RequestMapping(value = "/profile/editProfile", method = RequestMethod.POST)
-	public ModelAndView editProfileResultPage(
-			@Valid EditProfileForm editProfileForm,
-			BindingResult bindingResult, Principal principal) {
-		ModelAndView model;
+	public ModelAndView editProfileResultPage(@Valid EditProfileForm editProfileForm, BindingResult bindingResult,
+			Principal principal) {
+		ModelAndView model = new ModelAndView("editProfile");
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
 		if (!bindingResult.hasErrors()) {
-			userUpdateService.updateFrom(editProfileForm, user);
-			Authentication request = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-			Authentication result = authenticationManager.authenticate(request);
-			SecurityContextHolder.getContext().setAuthentication(result);
-			model = new ModelAndView("redirect:../user?id=" + user.getId());
-			return model;
-		} else {
-			model = new ModelAndView("editProfile");
-			model.addObject("editProfileForm", editProfileForm);
-			model.addObject("currentUser", user);
-			return model;
-		}
+			try {
+				userUpdateService.updateFrom(editProfileForm, user);
+				Authentication request = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+				Authentication result = authenticationManager.authenticate(request);
+				SecurityContextHolder.getContext().setAuthentication(result);
+				model = new ModelAndView("redirect:../user?id=" + user.getId());
+				return model;
+			} catch (IllegalArgumentException ex) {
+				model.addObject("errorMessage", "This email-address is taken. Please choose another one.");
+			}			
+		}		
+		
+		model.addObject("editProfileForm", editProfileForm);
+		model.addObject("currentUser", user);
+		return model;
+
 	}
 
 	/** Displays the public profile of the user with the given id. */
@@ -235,8 +238,7 @@ public class ProfileController {
 
 		for (Ad ad : usersAds) {
 			try {
-				usersPresentations.addAll((ArrayList<Visit>) visitService
-						.getVisitsByAd(ad));
+				usersPresentations.addAll((ArrayList<Visit>) visitService.getVisitsByAd(ad));
 			} catch (Exception e) {
 			}
 		}
@@ -258,7 +260,7 @@ public class ProfileController {
 		model.addObject("ad", ad);
 		return model;
 	}
-	
+
 	/** Returns the upgrade page. */
 	@RequestMapping(value = "/profile/upgrade", method = RequestMethod.GET)
 	public ModelAndView upgradePage(Principal principal) {
@@ -278,8 +280,8 @@ public class ProfileController {
 
 	/** Validates the upgrade form and on success persists the new user. */
 	@RequestMapping(value = "/profile/upgrade", method = RequestMethod.POST)
-	public ModelAndView upgradeResultPage(@Valid UpgradeForm upgradeForm,
-			BindingResult bindingResult, Principal principal) {
+	public ModelAndView upgradeResultPage(@Valid UpgradeForm upgradeForm, BindingResult bindingResult,
+			Principal principal) {
 		ModelAndView model;
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);

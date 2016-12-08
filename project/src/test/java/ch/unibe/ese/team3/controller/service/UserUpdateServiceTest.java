@@ -66,4 +66,47 @@ public class UserUpdateServiceTest {
 		userUpdateService.updateFrom(form, user);
 	}
 	
+	@Test(expected=IllegalArgumentException.class)
+	public void updateUsernameToOtherExistingUser(){
+		EditProfileForm form = new EditProfileForm();
+		User mark = userDao.findByUsername("mark@knopfler.com");
+		String newUserName = "ese@unibe.ch";
+		String newFirstName = "Mark D.";
+		String newLastName = "Knopfler Jr.";
+		String newPassword = "sultans";
+		String newAboutMe = "I'm the world's greatest guitar player!";
+		
+		form.setUsername(newUserName);
+		form.setLastName(newLastName);
+		form.setFirstName(newFirstName);
+		form.setPassword(newPassword);
+		form.setAboutMe(newAboutMe);
+		
+		userUpdateService.updateFrom(form, mark);
+	}
+	
+	@Test
+	public void updateOtherFieldsAndKeepUsername(){
+		EditProfileForm form = new EditProfileForm();
+		User mark = userDao.findByUsername("mark@knopfler.com");
+		String newUserName = "mark@knopfler.com";
+		String newFirstName = "Mark D.";
+		String newLastName = "Knopfler Jr.";
+		String newPassword = "sultans";
+		String newAboutMe = "I'm the world's greatest guitar player!";
+		
+		form.setUsername(newUserName);
+		form.setLastName(newLastName);
+		form.setFirstName(newFirstName);
+		form.setPassword(newPassword);
+		form.setAboutMe(newAboutMe);
+		
+		userUpdateService.updateFrom(form, mark);
+		
+		assertEquals(newUserName, mark.getUsername());
+		assertEquals(newFirstName, mark.getFirstName());
+		assertEquals(newLastName, mark.getLastName());
+		assertEquals(newPassword, mark.getPassword());
+		assertEquals(newAboutMe, mark.getAboutMe());		
+	}	
 }
