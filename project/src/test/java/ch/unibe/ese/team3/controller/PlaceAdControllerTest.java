@@ -27,41 +27,12 @@ public class PlaceAdControllerTest extends BaseControllerTest {
 	
 	@Test
 	public void uploadPictures() throws Exception{
-		//this.mockMvc.perform(post("/profile/placeAd/uploadPictures").param(name, values))
 		
 		MockMultipartFile pictureFile = new MockMultipartFile("HousePicture", "HousePicture.png", "image/png", "picture".getBytes());
         
         this.mockMvc.perform(MockMvcRequestBuilders.fileUpload("/profile/placeAd/uploadPictures")
                 .file(pictureFile))
-            .andExpect(status().is(200))
-           ;
-		
-		
-		
-		
-		/*
-		 * 
-		 * 
-		 * Path path = Paths.get("/Users/sarahmorillo/Desktop/Derby_Osbornedale_house.jpg");
-		 * byte[] data = Files.readAllBytes(path);
-		 *  MockMultipartFile file = new MockMultipartFile("Derby_Osbornedale_house.jpg", data);
-		 *  
-		 * 
-		 * 
-		 Path path = Paths.get("c:\\temp\\test.zip");
-            byte[] data = Files.readAllBytes(path);
-            MockMultipartFile file = new MockMultipartFile("test.zip", "test.zip",
-                    "application/zip", data);
-            MockMultipartHttpServletRequest mockRequest = new MockMultipartHttpServletRequest();
-            String boundary = "q1w2e3r4t5y6u7i8o9";
-            mockRequest.setContentType("multipart/form-data; boundary="+boundary);
-            mockRequest.setContent(createFileContent(data,boundary,"application/zip","test.zip"));
-            mockRequest.addFile(file);
-		  
-		  
-		
-	
-		 */
+            .andExpect(status().is(200));
 	}
 	
 	
@@ -118,13 +89,13 @@ public class PlaceAdControllerTest extends BaseControllerTest {
 	
 	@Test
 	public void getUploadedPicture() throws Exception{
-		this.mockMvc.perform(post("/profile/placeAd/getUploadedPictures")).andExpect(null);
+		this.mockMvc.perform(post("/profile/placeAd/getUploadedPictures")).andExpect(status().is(200));
 	}
 	
 	
 	@Test
-	public void deleteUploadedPicture(){
-	//	this.mockMvc.perform(post("/profile/placeAd/deletePicture").param("url", "...?"));
+	public void deleteUploadedPicture() throws Exception{
+	 this.mockMvc.perform(post("/profile/placeAd/deletePicture").param("url", "HousePicture.png")).andExpect(status().is(200));
 	}
 }
 
