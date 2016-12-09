@@ -1,18 +1,15 @@
 package ch.unibe.ese.team3.controller;
 
-import org.junit.Test;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import ch.unibe.ese.team3.model.Type;
-import ch.unibe.ese.team3.model.enums.PageMode;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
+
+import org.junit.Test;
+
+import ch.unibe.ese.team3.model.enums.PageMode;
 
 public class PlaceAdControllerTest extends BaseControllerTest {
 

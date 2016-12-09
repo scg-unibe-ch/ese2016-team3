@@ -6,19 +6,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
-import javax.mail.Authenticator;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -35,12 +28,12 @@ import ch.unibe.ese.team3.model.dao.AlertResultDao;
 import ch.unibe.ese.team3.model.dao.BidDao;
 import ch.unibe.ese.team3.model.dao.MessageDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
-import ch.unibe.ese.team3.util.ConfigReader;
+import ch.unibe.ese.team3.util.IMailSender;
 
 /** Handles all persistence operations concerning messaging. */
 @Service
 @Configuration
-
+@DependsOn("mailSender")
 public class MessageService {
 
 	@Autowired
@@ -51,15 +44,15 @@ public class MessageService {
 
 	@Autowired
 	private AlertResultDao alertResultDao;
+	
+	@Autowired
+	private IMailSender mailSender;
 
 	@Autowired
 	private AdDao adDao;
 
 	@Autowired
 	private BidDao bidDao;
-
-	@Autowired
-	private ConfigReader configReader;
 
 	/**
 	 * Gets all messages in the inbox of the given user, sorted newest to oldest
@@ -142,62 +135,6 @@ public class MessageService {
 	}
 
 	/**
-	 * Sends an e-mail to a certain user
-	 * 
-	 * @param recipient
-	 *            the user who will receive the e-mail
-	 * @param subject
-	 *            the subject of the message
-	 * @param text
-	 *            the text of the message
-	 */
-	public void sendEmail(User recipient, String subject, String text) {
-		String mailHost = configReader.getConfigValue("mailhost");
-		String mailAccount = configReader.getConfigValue("mailaccount");
-		String mailPassword = configReader.getConfigValue("mailpassword");
-		String mailDebug = configReader.getConfigValue("maildebug");
-		String mailAuth = configReader.getConfigValue("mailauth");
-		String mailPort = configReader.getConfigValue("mailport");
-		String mailEnableTls = configReader.getConfigValue("mailenabletls");
-
-		Properties properties = System.getProperties();
-		properties.setProperty("mail.smtp.host", mailHost);
-		properties.setProperty("mail.smtp.user", mailAccount);
-		properties.setProperty("mail.smtp.debug", mailDebug);
-		properties.setProperty("mail.smtp.auth", mailAuth);
-		properties.setProperty("mail.smtp.port", mailPort);
-		properties.setProperty("mail.smtp.starttls.enable", mailEnableTls);
-
-		Session session;
-		
-		if (mailAuth.equals("true")) {
-
-			session = Session.getInstance(properties, new Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(mailAccount, mailPassword);
-				}
-			});
-		}
-		else {
-			session = Session.getDefaultInstance(properties);
-		}
-
-		try {
-			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("ithacaserver@gmail.com"));
-			message.addRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(recipient.getEmail(), false));
-			message.setSubject(subject);
-			message.setContent(text, "text/html; charset=utf-8");
-
-			Transport.send(message);
-			System.out.println("Message sent successfully for " + recipient.getUsername());
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	/**
 	 * Sends the daily alert message for the basic users it is scheduled to
 	 * midnight of every day and contains exactly the alerts that have been
 	 * triggered for every user. A message and an e-mail are sent. The email is also
@@ -236,7 +173,7 @@ public class MessageService {
 							+ " not have a look at the highlights on our page anyway?";
 				}
 				sendMessage(userDao.findByUsername("System"), user, subject, text);
-				sendEmail(user, subject, text);
+				mailSender.sendEmail(user, subject, text);
 
 				text = "All ads that match your alerts: \n";
 			}
@@ -267,7 +204,7 @@ public class MessageService {
 								+ "<br> <br> It seems as if your premium membership will expire tomorrow! <br>"
 								+ "<br> We hope you've enjoyed the benefits, if you still want to be a premium member, "
 								+ "please upgrade again after it expires.";
-						sendEmail(user, subject, text);
+						mailSender.sendEmail(user, subject, text);
 						sendMessage(userDao.findByUsername("System"), user, subject, text);
 					}
 				}
@@ -322,7 +259,7 @@ public class MessageService {
 				+ owner.getFirstName() + " " + owner.getLastName() + " will contact you with further details.</br>";
 
 		sendMessage(userDao.findByUsername("System"), winner, subject1, text1);
-		sendEmail(winner, subject1, text1);
+		mailSender.sendEmail(winner, subject1, text1);
 
 		String subject2 = "Your auction was successfully";
 		String text2 = "Dear " + owner.getFirstName() + ",</br></br>" + "You just sold the "
@@ -331,7 +268,7 @@ public class MessageService {
 				+ highestBid.getAmount() + " CHF.</br>" + "Please contact the winner as soon as possible.";
 
 		sendMessage(userDao.findByUsername("System"), owner, subject2, text2);
-		sendEmail(owner, subject2, text2);
+		mailSender.sendEmail(owner, subject2, text2);
 
 	}
 
@@ -350,7 +287,7 @@ public class MessageService {
 				+ "<a href=\"http://localhost:8080/buy/ad?id=" + ad.getId() + "\">" + ad.getTitle() + "</a>.</br>";
 
 		sendMessage(userDao.findByUsername("System"), user, subject, text);
-		sendEmail(user, subject, text);
+		mailSender.sendEmail(user, subject, text);
 	}
 
 	/**
@@ -397,7 +334,7 @@ public class MessageService {
 						+ "<a href=\"http://localhost:8080/buy/ad?id=" + ad.getId() + "\">" + ad.getTitle() + "</a>.</br>";
 
 				sendMessage(userDao.findByUsername("System"), receiver, subject, text);
-				sendEmail(receiver, subject, text);
+				mailSender.sendEmail(receiver, subject, text);
 			}
 		}
 

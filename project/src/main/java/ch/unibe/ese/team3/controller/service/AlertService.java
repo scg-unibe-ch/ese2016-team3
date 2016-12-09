@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,12 +28,14 @@ import ch.unibe.ese.team3.model.dao.AlertDao;
 import ch.unibe.ese.team3.model.dao.AlertResultDao;
 import ch.unibe.ese.team3.model.dao.MessageDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
+import ch.unibe.ese.team3.util.IMailSender;
 
 /**
  * Provides and handles persistence operations for adding, editing and deleting
  * alerts.
  */
 @Service
+@DependsOn("mailSender")
 public class AlertService {
 
 	@Autowired
@@ -49,9 +52,9 @@ public class AlertService {
 
 	@Autowired
 	private GeoDataService geoDataService;
-
+	
 	@Autowired
-	private MessageService messageService;
+	private IMailSender mailSender;
 
 	/**
 	 * Persists a new alert with the data from the alert form to the database.
@@ -213,7 +216,7 @@ public class AlertService {
 				message.setState(MessageState.UNREAD);
 				message.setDateSent(now);
 				messageDao.save(message);
-				messageService.sendEmail(user, "It's a match!", getAlertText(ad));
+				mailSender.sendEmail(user, "It's a match!", getAlertText(ad));
 			}
 		}
 	}

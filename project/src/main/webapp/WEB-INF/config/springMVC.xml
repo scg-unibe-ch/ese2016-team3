@@ -47,6 +47,8 @@
 		<constructor-arg type="java.lang.String" value="config"/>
 	</bean>
 	
+	<bean id="mailSender" class="ch.unibe.ese.team3.util.MailSender" scope="singleton"></bean>
+	
 	<!-- resources -->
 	<mvc:resources mapping="/assets/**"
 		location="classpath:/META-INF/resources/webjars/" />
