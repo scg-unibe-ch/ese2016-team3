@@ -60,6 +60,8 @@ public class AdService extends BaseService {
 		Date now = new Date();
 		ad.setCreationDate(now);
 
+		
+		
 		ad.setTitle(placeAdForm.getTitle());
 
 		ad.setStreet(placeAdForm.getStreet());
@@ -94,10 +96,7 @@ public class AdService extends BaseService {
 
 		} catch (NumberFormatException e) {
 		}
-		// This causes java.lang.NullPointerException when Ad is placed
-		// this is for auction
-		// java.util.Calendar uses a month range of 0-11 instead of the
-		// XMLGregorianCalendar which uses 1-12
+		
 		try {
 			String startDate = placeAdForm.getStartDate();
 			if (startDate != null && startDate.length() >= 1) {
