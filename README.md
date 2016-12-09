@@ -15,5 +15,5 @@ The website offers the following functionalities:
 - users can sign in directly with their google account
 
 #### Used technologies
-The Website was built using the Spring MVC framework. The languages Java (JDK 1.8), Javascript and CSS were used. Maven was utiliesd to handle dependencies, the project is created with eclipse.
+The Website was built using the Spring MVC framework. The languages Java (JDK 1.8), Javascript and CSS were used. Maven was utilised to handle dependencies, the project is created with eclipse.
 The GUI was created with Bootstrap.
