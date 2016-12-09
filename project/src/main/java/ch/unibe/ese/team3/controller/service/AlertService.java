@@ -57,7 +57,7 @@ public class AlertService {
 	private IMailSender mailSender;
 
 	/**
-	 * Persists a new alert with the data from the alert form to the database.
+	 * Creates an alert and saves it within the database
 	 * 
 	 * @param alertForm
 	 *            the form to take the data from
@@ -93,60 +93,16 @@ public class AlertService {
 
 		// Add extended Alert criteria only if extendedAlert = true
 		if (alert.isExtendedAlert()) {
-			Date earliestDate = convertStringToDate(alertForm.getEarliestMoveInDate());
-			Date latestDate = convertStringToDate(alertForm.getLatestMoveInDate());
-			alert.setEarliestMoveInDate(earliestDate);
-			alert.setLatestMoveInDate(latestDate);
-
-			alert.setBalcony(alertForm.isBalcony());
-			alert.setParking(alertForm.isParking());
-			alert.setElevator(alertForm.isElevator());
-			alert.setGarage(alertForm.isGarage());
-			alert.setDishwasher(alertForm.isDishwasher());
-
-			alert.setInfrastructureType(alertForm.getInfrastructureType());
-			alert.setSquareFootageMin(alertForm.getSquareFootageMin());
-			alert.setSquareFootageMax(alertForm.getSquareFootageMax());
-
-			alert.setBuildYearMin(alertForm.getBuildYearMin());
-			alert.setBuildYearMax(alertForm.getBuildYearMax());
-
-			alert.setRenovationYearMin(alertForm.getRenovationYearMin());
-			alert.setRenovationYearMax(alertForm.getRenovationYearMax());
-
-			alert.setNumberOfRoomsMin(alertForm.getNumberOfRoomsMin());
-			alert.setNumberOfRoomsMax(alertForm.getNumberOfRoomsMax());
-
-			alert.setNumberOfBathMin(alertForm.getNumberOfBathMin());
-			alert.setNumberOfBathMax(alertForm.getNumberOfBathMax());
-
-			alert.setDistanceSchoolMin(alertForm.getDistanceSchoolMin());
-			alert.setDistanceSchoolMax(alertForm.getDistanceSchoolMax());
-
-			alert.setDistanceShoppingMin(alertForm.getDistanceShoppingMin());
-			alert.setDistanceShoppingMax(alertForm.getDistanceShoppingMax());
-
-			alert.setDistancePublicTransportMin(alertForm.getDistancePublicTransportMin());
-			alert.setDistancePublicTransportMax(alertForm.getDistancePublicTransportMax());
-
-			alert.setFloorLevelMin(alertForm.getFloorLevelMin());
-			alert.setFloorLevelMax(alertForm.getFloorLevelMax());
+			setExtendedAlertCriteria(alert, alertForm); 
 		}
 		alertDao.save(alert);
 	}
-
-	private Date convertStringToDate(String date) {
-		try {
-			DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-			Date earliestMoveInDate = formatter.parse(date);
-			return earliestMoveInDate;
-		} catch (Exception e) {
-		}
-		return null;
-	}
-
+	
+	
 	/**
 	 * Returns all alerts that belong to the given user.
+	 * 
+	 * @param user: the user for whom the alerts are to be returned
 	 */
 	@Transactional
 	public Iterable<Alert> getAlertsByUser(User user) {
@@ -162,11 +118,17 @@ public class AlertService {
 	/**
 	 * Triggers all alerts that match the given ad. For every user, only one
 	 * message is sent.
+	 * 
+	 * Each triggered Alert is saved as alertResult. 
+	 * 
+	 * @param ad: the placed ad which may trigger an alert
 	 */
 	@Transactional
 	public void triggerAlerts(Ad ad) {
 		int adPrice = ad.getPrice();
 		BuyMode buyMode = ad.getBuyMode();
+		
+		// get all alerts, which are in the right price range and the right buyMode
 		Iterable<Alert> alerts = alertDao.findByPriceGreaterThanAndBuyMode(adPrice - 1, buyMode);
 
 		filterWithBasicCriteria(ad, alerts);
@@ -176,7 +138,13 @@ public class AlertService {
 		saveAlertResults(ad, alertReceivers);
 		sendAlertMessages(ad, alertReceivers);
 	}
-
+	
+	/**
+	 * removes alerts which (removed alerts won't trigger)
+	 * 1. belong to the same user who is placing the ad
+	 * 2. are outside of the user defined radius
+	 * 3. do not share a Type with the placed ad
+	 */
 	private void filterWithBasicCriteria(Ad ad, Iterable<Alert> alerts) {
 		// loop through all ads with matching city and price range, throw out
 		// mismatches
@@ -269,8 +237,6 @@ public class AlertService {
 	/**
 	 * Removes the alerts, which do not match with the placed ad, based on the
 	 * extended alert criteria
-	 * 
-	 * @param alerts
 	 */
 	private void filterWithExtendedCriteria(Ad ad, Iterable<Alert> alerts) {
 
@@ -279,13 +245,62 @@ public class AlertService {
 		filterNumberCriteria(ad, alerts);
 		filterInfrastructureType(ad, alerts);
 	}
+	
+	private void setExtendedAlertCriteria(Alert alert, AlertForm alertForm) {
+		Date earliestDate = convertStringToDate(alertForm.getEarliestMoveInDate());
+		Date latestDate = convertStringToDate(alertForm.getLatestMoveInDate());
+		alert.setEarliestMoveInDate(earliestDate);
+		alert.setLatestMoveInDate(latestDate);
 
+		alert.setBalcony(alertForm.isBalcony());
+		alert.setParking(alertForm.isParking());
+		alert.setElevator(alertForm.isElevator());
+		alert.setGarage(alertForm.isGarage());
+		alert.setDishwasher(alertForm.isDishwasher());
+
+		alert.setInfrastructureType(alertForm.getInfrastructureType());
+		alert.setSquareFootageMin(alertForm.getSquareFootageMin());
+		alert.setSquareFootageMax(alertForm.getSquareFootageMax());
+
+		alert.setBuildYearMin(alertForm.getBuildYearMin());
+		alert.setBuildYearMax(alertForm.getBuildYearMax());
+
+		alert.setRenovationYearMin(alertForm.getRenovationYearMin());
+		alert.setRenovationYearMax(alertForm.getRenovationYearMax());
+
+		alert.setNumberOfRoomsMin(alertForm.getNumberOfRoomsMin());
+		alert.setNumberOfRoomsMax(alertForm.getNumberOfRoomsMax());
+
+		alert.setNumberOfBathMin(alertForm.getNumberOfBathMin());
+		alert.setNumberOfBathMax(alertForm.getNumberOfBathMax());
+
+		alert.setDistanceSchoolMin(alertForm.getDistanceSchoolMin());
+		alert.setDistanceSchoolMax(alertForm.getDistanceSchoolMax());
+
+		alert.setDistanceShoppingMin(alertForm.getDistanceShoppingMin());
+		alert.setDistanceShoppingMax(alertForm.getDistanceShoppingMax());
+
+		alert.setDistancePublicTransportMin(alertForm.getDistancePublicTransportMin());
+		alert.setDistancePublicTransportMax(alertForm.getDistancePublicTransportMax());
+
+		alert.setFloorLevelMin(alertForm.getFloorLevelMin());
+		alert.setFloorLevelMax(alertForm.getFloorLevelMax());
+		
+	}
+	
+	private Date convertStringToDate(String date) {
+		try {
+			DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+			Date earliestMoveInDate = formatter.parse(date);
+			return earliestMoveInDate;
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
+	/*removes alerts which do not match the specified number criteria*/
 	private void filterNumberCriteria(Ad ad, Iterable<Alert> alerts) {
-		Iterator<Alert> iterator = alerts.iterator(); // a new iterator has to
-														// be created, when the
-														// iteration should
-														// start anew (this
-														// resets the cursor)
+		Iterator<Alert> iterator = alerts.iterator(); // a new iterator has to be created, when the iteration should start anew (this resets the cursor)
 		while (iterator.hasNext()) {
 			Alert alert = iterator.next();
 			Integer minBath = convertToNullableInt(alert.getNumberOfBathMin());
@@ -324,7 +339,8 @@ public class AlertService {
 			}
 		}
 	}
-
+	
+	/*removes alerts which do not match the specified InfrastructureType*/
 	private void filterInfrastructureType(Ad ad, Iterable<Alert> alerts) {
 		Iterator<Alert> iterator = alerts.iterator();
 		InfrastructureType infraType = ad.getInfrastructureType();
@@ -340,13 +356,11 @@ public class AlertService {
 			}
 		}
 	}
-
+	
+	/*removes alerts which do not match the checkbox criteria*/
 	private void filterBinaryCriteria(Ad ad, Iterable<Alert> alerts) {
-		Iterator<Alert> iterator = alerts.iterator(); // a new iterator has to
-														// be created, when the
-														// iteration should
-														// start anew (this
-														// resets the cursor)
+		Iterator<Alert> iterator = alerts.iterator(); // a new iterator has to be created, when the iteration should
+														// start anew (this resets the cursor)
 		while (iterator.hasNext()) {
 			Alert alert = iterator.next();
 			if (alert.isDishwasher()) {

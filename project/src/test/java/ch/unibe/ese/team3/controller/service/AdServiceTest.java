@@ -1026,6 +1026,7 @@ public class AdServiceTest {
 		assertTrue(searchAdInResults);
 	}
 	
+	/*
 	@Test
 	public void checkIfAllreadyAddedFalse(){
 		
@@ -1059,6 +1060,8 @@ public class AdServiceTest {
 		assertTrue(adService.checkIfAlreadyAdded(email, alreadyAdded.toString()));
 		
 	}
+	*/
+	
 	// checks if the created ad "searchAd" is returned by the filter function
 	private Boolean isSearchAdInResults(Ad searchAd, Iterable<Ad> filteredAd) {
 		Boolean searchAdContained = false;

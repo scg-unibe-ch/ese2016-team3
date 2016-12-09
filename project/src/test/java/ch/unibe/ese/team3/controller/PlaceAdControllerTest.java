@@ -1,5 +1,14 @@
 package ch.unibe.ese.team3.controller;
 
+
+import org.apache.commons.io.IOUtils;
+import org.junit.Test;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.mock.web.MockMultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartFile;
+
+import ch.unibe.ese.team3.model.enums.PageMode;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
@@ -11,19 +20,14 @@ import org.junit.Test;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import ch.unibe.ese.team3.model.enums.PageMode;
-
 public class PlaceAdControllerTest extends BaseControllerTest {
 
-	
-	
 	@Test
 	public void placeAd() throws Exception{
 		this.mockMvc.perform(get("/profile/placeAd")).andExpect(status().isOk())
 		.andExpect(view().name("placeAd"))
 		.andExpect(model().attributeExists("types", "distances"));
 	}
-	
 	
 	@Test
 	public void uploadPictures() throws Exception{
@@ -33,8 +37,8 @@ public class PlaceAdControllerTest extends BaseControllerTest {
         this.mockMvc.perform(MockMvcRequestBuilders.fileUpload("/profile/placeAd/uploadPictures")
                 .file(pictureFile))
             .andExpect(status().is(200));
+
 	}
-	
 	
 	@Test
 	public void createAdNoExistingAdress() throws Exception{
@@ -83,7 +87,6 @@ public class PlaceAdControllerTest extends BaseControllerTest {
 				.andExpect(view().name("placeAd"))
 				.andExpect(model().attributeExists("types"))
 				.andExpect(model().attributeExists("distances"));
-		
 	}
 	
 	
