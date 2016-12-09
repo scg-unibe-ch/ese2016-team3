@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import org.junit.Test;
 
@@ -24,18 +26,16 @@ public class PlaceAdControllerTest extends BaseControllerTest {
 	
 	
 	@Test
-	public void uploadPictures(){
+	public void uploadPictures() throws Exception{
 		//this.mockMvc.perform(post("/profile/placeAd/uploadPictures").param(name, values))
-	/*	
-		MockMultipartFile pictureFile = new MockMultipartFile("data", "filename.txt", "text/plain", "some xml".getBytes());
-        MockMultipartFile secondFile = new MockMultipartFile("data", "other-file-name.data", "text/plain", "some other type".getBytes());
-        MockMultipartFile jsonFile = new MockMultipartFile("json", "", "application/json", "{\"json\": \"someValue\"}".getBytes());
 		
+		MockMultipartFile pictureFile = new MockMultipartFile("HousePicture", "HousePicture.png", "image/png", "picture".getBytes());
+        
         this.mockMvc.perform(MockMvcRequestBuilders.fileUpload("/profile/placeAd/uploadPictures")
                 .file(pictureFile))
             .andExpect(status().is(200))
-           .andExpect(content().string("success"));
-	*/ 	
+           ;
+		
 		
 		
 		
