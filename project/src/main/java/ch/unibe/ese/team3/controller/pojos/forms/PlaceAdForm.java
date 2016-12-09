@@ -30,7 +30,7 @@ public class PlaceAdForm {
 
 	@Min(value = 1, message = "Has to be equal to 1 or more")
 	private int squareFootage;
-	//new
+	
 	@Min(value=0, message ="Has to be equal to 1700 or more")
 	private int buildYear;
 
@@ -43,23 +43,16 @@ public class PlaceAdForm {
     @Min(value=0, message ="Has to be equal to 1 or more")
    	private int numberOfBath;
 	
-	//new
+    @NotBlank(message = "Required")
+	private String roomDescription;
+    
 	private int distanceSchool;
-	
 	private int distanceShopping;
-	
 	private int distancePublicTransport;
-	
 	private int floorLevel;
 	
-	// new
 	private InfrastructureType infrastructureType;
 	private Type type;
-
-	@NotBlank(message = "Required")
-	private String roomDescription;
-
-
 	
 	// validation attributes
 	
@@ -79,7 +72,21 @@ public class PlaceAdForm {
 	private boolean validPrice;
 	
 	// auction specific attributes
-			
+	private int auctionPrice;	
+	private String startDate;
+	private String endDate;
+	private int startPrice;
+	private int increaseBidPrice;
+	private boolean auction;
+	
+	// optional for input
+	private boolean parking;
+	private boolean elevator;
+	private boolean balcony;
+	private boolean garage;
+	private boolean dishwasher;
+		
+		
 	public boolean isValidPrice() {
 		return validPrice;
 	}
@@ -119,21 +126,6 @@ public class PlaceAdForm {
 	public void setValidIncreaseBidPrice(boolean validIncreaseBidPrice) {
 		this.validIncreaseBidPrice = validIncreaseBidPrice;
 	}
-
-	private int auctionPrice;	
-	private String startDate;
-	private String endDate;
-	private int startPrice;
-	private int increaseBidPrice;
-	private boolean auction;
-	
-	
-	// optional for input
-	private boolean parking;
-	private boolean elevator;
-	private boolean balcony;
-	private boolean garage;
-	private boolean dishwasher;
 	
 	public int getAuctionPrice(){
 		return auctionPrice;
@@ -218,7 +210,7 @@ public class PlaceAdForm {
 	public int getSquareFootage() {
 		return squareFootage;
 	}
-	//new
+	
 	public int getBuildYear(){
 		return buildYear;
 	}
@@ -240,7 +232,6 @@ public class PlaceAdForm {
 		this.numberOfRooms = numberOfRooms;
 	}
 
-	//new
 	public int getDistanceSchool(){
 		return distanceSchool;
 	}
@@ -260,18 +251,16 @@ public class PlaceAdForm {
 		this.distancePublicTransport = distancePublicTransport;
 	}
 	
-
 	public void setSquareFootage(int squareFootage) {
 		this.squareFootage = squareFootage;
 	}
-	public boolean isElevator(){		//new
+	public boolean isElevator(){		
 		return elevator;
 	}
-	public void setElevator(boolean elevator){		//new
+	public void setElevator(boolean elevator){		
 		this.elevator = elevator;
 	}
-	
-	// new
+
 	public int getNumberOfBath() {
 		return numberOfBath;
 	}

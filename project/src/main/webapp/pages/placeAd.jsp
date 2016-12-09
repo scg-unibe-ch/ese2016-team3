@@ -123,7 +123,7 @@
 										of Rooms*</label>
 									<div class="col-sm-5">
 										<form:input id="field-NumberOfRooms" type="number" min="0"
-											path="numberOfRooms" placeholder="numberOfRooms" step="1"
+											path="numberOfRooms" placeholder="Number of rooms" step="1"
 											cssClass="form-control" />
 										<form:errors path="numberOfRooms" cssClass="text-danger" />
 									</div>

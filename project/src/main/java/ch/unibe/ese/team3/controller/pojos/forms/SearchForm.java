@@ -35,9 +35,6 @@ public class SearchForm {
 	private boolean garage;
 	private boolean dishwasher;
 
-	private boolean roomHelper;
-	
-	// new
 
 	private InfrastructureType infrastructureType;
 	private int squareFootageMin;
@@ -50,9 +47,6 @@ public class SearchForm {
 	private int numberOfRoomsMax;
    	private int numberOfBathMin;
    	private int numberOfBathMax;
-	
-	
-	//new
 	private int distanceSchoolMin;
 	private int distanceSchoolMax;
 	private int distanceShoppingMin;
@@ -62,8 +56,6 @@ public class SearchForm {
 	private int floorLevelMin;
 	private int floorLevelMax;
 
-	// the ugly stuff
-	private boolean studioHelper; // to remove?
 
 	public int getSquareFootageMin() {
 		return squareFootageMin;
@@ -256,22 +248,6 @@ public class SearchForm {
 
 	public void setLatestMoveInDate(String latestMoveInDate) {
 		this.latestMoveInDate = latestMoveInDate;
-	}
-
-	public boolean getStudioHelper() {
-		return studioHelper;
-	}
-
-	public void setStudioHelper(boolean helper) {
-		this.studioHelper = helper;
-	}
-
-	public boolean getRoomHelper() {
-		return roomHelper;
-	}
-
-	public void setRoomHelper(boolean helper) {
-		this.roomHelper = helper;
 	}
 
 	public Type[] getTypes() {
