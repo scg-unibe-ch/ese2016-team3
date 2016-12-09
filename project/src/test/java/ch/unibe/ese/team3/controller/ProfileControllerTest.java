@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 
 import java.security.Principal;
 
@@ -130,7 +131,8 @@ public class ProfileControllerTest extends BaseControllerTest {
 				.param("firstName", "hibli")
 				.param("lastName", "bubli"))
 			.andExpect(status().is3xxRedirection()) // URL redirection status
-			.andExpect(view().name("redirect:../user?id=" + user.getId()));
+			.andExpect(view().name("redirect:../user?id=" + user.getId()))
+			.andExpect(flash().attributeExists("confirmationMessage"));
 	}
 	
 	@Test

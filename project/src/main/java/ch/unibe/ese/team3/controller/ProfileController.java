@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.unibe.ese.team3.controller.pojos.forms.EditProfileForm;
 import ch.unibe.ese.team3.controller.pojos.forms.GoogleSignupForm;
@@ -171,15 +172,26 @@ public class ProfileController {
 		ModelAndView model = new ModelAndView("editProfile");
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
-		model.addObject("editProfileForm", new EditProfileForm());
+		EditProfileForm form = fillEditProfileForm(user);
+		model.addObject("editProfileForm", form);
 		model.addObject("currentUser", user);
 		return model;
+	}
+
+	private EditProfileForm fillEditProfileForm(User user) {
+		EditProfileForm form = new EditProfileForm();
+		form.setAboutMe(user.getAboutMe());
+		form.setFirstName(user.getFirstName());
+		form.setLastName(user.getLastName());
+		form.setPassword(user.getPassword());
+		form.setUsername(user.getUsername());
+		return form;
 	}
 
 	/** Handles the request for editing the user profile. */
 	@RequestMapping(value = "/profile/editProfile", method = RequestMethod.POST)
 	public ModelAndView editProfileResultPage(@Valid EditProfileForm editProfileForm, BindingResult bindingResult,
-			Principal principal) {
+			Principal principal, RedirectAttributes redirectAttributes) {
 		ModelAndView model = new ModelAndView("editProfile");
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
@@ -190,6 +202,7 @@ public class ProfileController {
 				Authentication result = authenticationManager.authenticate(request);
 				SecurityContextHolder.getContext().setAuthentication(result);
 				model = new ModelAndView("redirect:../user?id=" + user.getId());
+				redirectAttributes.addFlashAttribute("confirmationMessage", "Profile updated successfully.");
 				return model;
 			} catch (IllegalArgumentException ex) {
 				model.addObject("errorMessage", "This email-address is taken. Please choose another one.");

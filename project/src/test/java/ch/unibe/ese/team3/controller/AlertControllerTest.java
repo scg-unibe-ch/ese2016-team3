@@ -39,7 +39,7 @@ public class AlertControllerTest extends BaseControllerTest {
 				 
 				.andExpect(status().isOk())
 				.andExpect(view().name("alerts"))
-				.andExpect(model().attributeExists("alerts", "types", "alertForm"))
+				.andExpect(model().attributeExists("alerts", "types", "alertForm", "confirmationMessage"))
 				.andExpect(model().attributeHasNoErrors("alertForm")); // attributes are refering to attributes of alert site. (over id?)
 	}
 	

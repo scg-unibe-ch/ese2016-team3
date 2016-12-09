@@ -7,19 +7,6 @@
 
 <c:import url="template/header.jsp" />
 
-<script>
-	$(document).ready(function() {
-		$("#field-aboutMe").val("${currentUser.aboutMe}");
-		$("#field-username").val("${currentUser.username}");
-		$("#field-firstName").val("${currentUser.firstName}");
-		$("#field-lastName").val("${currentUser.lastName}");
-		$("#field-password").val("${currentUser.password}");
-		});
-	
-		
-</script>
-
-
 <ol class="breadcrumb">
 	<li><a href="/${pagemode}/">Homepage</a></li>
 	<li><a href="/user?id=${currentUser.id}">Profile</a></li>
