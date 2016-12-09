@@ -95,7 +95,6 @@ public class Ad {
 	@Lob
 	private String roomDescription;
 
-	// new
 	@Column(nullable = false)
 	private boolean elevator;
 
@@ -132,41 +131,11 @@ public class Ad {
 	@OneToMany(mappedBy = "triggerAd", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<AlertResult> alertResults;
 
-	public List<Bid> getBids() {
-		return bids;
-	}
-
-	public void addBid(Bid bid){
-		if (!bids.contains(bid)){
-			bids.add(bid);
-			bid.setAd(this);
-		}
-	}
-	
-	public void removeBid(Bid bid){
-		bids.remove(bid);
-		bid.setAd(null);
-	}
 
 	@Fetch(FetchMode.SELECT)
 	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<PurchaseRequest> purchaseRequests;
 
-	public List<PurchaseRequest> getPurchaseRequests() {
-		return purchaseRequests;
-	}
-	
-	public void addPurchaseRequest(PurchaseRequest request){
-		if (!this.purchaseRequests.contains(request)){
-			this.purchaseRequests.add(request);
-			request.setAd(this);
-		}
-	}
-	
-	public void removePurchaseRequest(PurchaseRequest request){
-		this.purchaseRequests.remove(request);
-		request.setAd(null);
-	}
 
 	@ManyToOne(optional = false)
 	private User user;
@@ -206,6 +175,39 @@ public class Ad {
 	private boolean auctionCompleted;
 	
 	private boolean auctionMessageSent;
+	
+	public List<Bid> getBids() {
+		return bids;
+	}
+
+	public void addBid(Bid bid){
+		if (!bids.contains(bid)){
+			bids.add(bid);
+			bid.setAd(this);
+		}
+	}
+	
+	public void removeBid(Bid bid){
+		bids.remove(bid);
+		bid.setAd(null);
+	}
+	
+	public List<PurchaseRequest> getPurchaseRequests() {
+		return purchaseRequests;
+	}
+	
+	public void addPurchaseRequest(PurchaseRequest request){
+		if (!this.purchaseRequests.contains(request)){
+			this.purchaseRequests.add(request);
+			request.setAd(this);
+		}
+	}
+	
+	public void removePurchaseRequest(PurchaseRequest request){
+		this.purchaseRequests.remove(request);
+		request.setAd(null);
+	}
+	
 
 	public boolean isAuctionMessageSent() {
 		return auctionMessageSent;
@@ -371,7 +373,6 @@ public class Ad {
 		this.buyMode = buyMode;
 	}
 
-	// new
 	public boolean getElevator() {
 		return elevator;
 	}
@@ -436,7 +437,6 @@ public class Ad {
 		this.squareFootage = squareFootage;
 	}
 
-	// new
 	public int getDistanceSchool() {
 		return distanceSchool;
 	}

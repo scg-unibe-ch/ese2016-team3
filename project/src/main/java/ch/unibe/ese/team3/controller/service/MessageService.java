@@ -280,15 +280,13 @@ public class MessageService {
 	}
 
 	/**
-	 * at Midnight of the end date of the auction, the auction expires. sends
-	 * message to most higher bidder and owner of auction at 00:00 of the next
-	 * day. for example : End date of auction 11.12.2016. Auction expires on
-	 * 11.12.2016 at 23:59:59 this method will be evoked on the 12.12.2016 at
-	 * 00:00
+	 * Searches for expired auctions and sends messages to the most higher bidder 
+	 * and owner of these expired auctions at midnight.
+	 * If no one has bid for the expired auction, the owner will be notified
 	 */
 	@Transactional
 	@Scheduled(cron = "0 0 0 * * *") // everyday on midnight
-	public void checkForExpiredAuctions() {
+	public void sendMessageForExpiredAuctions() {
 
 		Iterable<Ad> expiredAds = adDao.findByEndDateLessThanAndAuctionMessageSent(new Date(), false);
 
@@ -380,10 +378,8 @@ public class MessageService {
 	/**
 	 * Sends Message to Premium User who has been over bidden
 	 * 
-	 * @param ad
-	 *            Ad to bid on
-	 * @param bidder
-	 *            User who overbids the last one
+	 * @param ad  Ad to bid on
+	 * @param bidder User who overbids the last one
 	 */
 	public void sendOverbiddenMessage(Ad ad, User bidder) {
 		Bid maxbid = bidDao.findTopByAdOrderByAmountDesc(ad);

@@ -574,7 +574,7 @@ public class AuctionServiceTest {
 		
 		assertEquals(0, ListUtils.countIterable(messageService.getInboxForUser(auctionOwner2)));
 		
-		messageService.checkForExpiredAuctions();
+		messageService.sendMessageForExpiredAuctions();
 		List<Message> inbox = ListUtils.convertToList(messageService.getInboxForUser(auctionOwner2));
 
 		assertEquals(1, inbox.size());
@@ -591,7 +591,7 @@ public class AuctionServiceTest {
 		assertEquals(0, ListUtils.countIterable(messageService.getInboxForUser(auctionOwner2)));
 		assertEquals(0, ListUtils.countIterable(messageService.getInboxForUser(bidder1)));
 		
-		messageService.checkForExpiredAuctions();
+		messageService.sendMessageForExpiredAuctions();
 		
 		List<Message> inboxOwner = ListUtils.convertToList(messageService.getInboxForUser(auctionOwner2));
 		List<Message> inboxBidder = ListUtils.convertToList(messageService.getInboxForUser(bidder1));
@@ -615,7 +615,7 @@ public class AuctionServiceTest {
 		assertEquals(0, ListUtils.countIterable(messageService.getInboxForUser(bidder1)));
 		assertEquals(0, ListUtils.countIterable(messageService.getInboxForUser(bidder2)));
 		
-		messageService.checkForExpiredAuctions();
+		messageService.sendMessageForExpiredAuctions();
 		
 		List<Message> inboxOwner = ListUtils.convertToList(messageService.getInboxForUser(auctionOwner2));
 		List<Message> inboxBidder1 = ListUtils.convertToList(messageService.getInboxForUser(bidder1));

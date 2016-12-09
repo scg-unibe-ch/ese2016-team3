@@ -241,23 +241,7 @@ public class AdService extends BaseService {
 			fourNewest.add(ads.get(i));
 		return fourNewest;
 	}
-
-	private List<Ad> removeExpiredAuctions(List<Ad> ads) {
-		Iterator<Ad> itr = ads.iterator();
-		while (itr.hasNext()) {
-			Ad ad = itr.next();
-			if(ad.isAuction()){
-				if(ad.isAuctionCompleted())
-					itr.remove();
-				if(ad.hasAuctionExpired())
-					itr.remove();
-				
-			}
-		}	
-		return ads;
-	}
-
-
+	
 
 	/**
 	 * Returns all ads that match the parameters given by the form. This list
@@ -433,6 +417,20 @@ public class AdService extends BaseService {
 		return locatedResults;
 	}
 
+	private List<Ad> removeExpiredAuctions(List<Ad> ads) {
+		Iterator<Ad> itr = ads.iterator();
+		while (itr.hasNext()) {
+			Ad ad = itr.next();
+			if(ad.isAuction()){
+				if(ad.isAuctionCompleted())
+					itr.remove();
+				if(ad.hasAuctionExpired())
+					itr.remove();
+				
+			}
+		}	
+		return ads;
+	}
 	private Integer convertToNullableInt(int value) {
 		return value > 0 ? value : null;
 	}

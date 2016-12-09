@@ -991,7 +991,7 @@ public class AdServiceTest {
 		String alreadyAdded="";
 		
 		while(itr.hasNext()){
-			alreadyAdded += itr.next().getEmail();
+			alreadyAdded += itr.next().getEmail() + " ";
 		}
 		
 		
@@ -1008,7 +1008,7 @@ public class AdServiceTest {
 		String alreadyAdded="";
 		
 		while(itr.hasNext()){
-			alreadyAdded += itr.next().getEmail();
+			alreadyAdded += itr.next().getEmail() + " ";
 			
 		}
 		

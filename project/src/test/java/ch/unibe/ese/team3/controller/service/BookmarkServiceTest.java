@@ -53,7 +53,7 @@ public class BookmarkServiceTest {
 	@Test
 	public void testgetBookmarkStatusTrue2(){
 		
-		assertNotEquals(1,bookmarkService.getBookmarkStatus(new Ad(), true, userDao.findByUsername("user@bern.com")) );;
+		assertNotEquals(1,bookmarkService.getBookmarkStatus(new Ad(), true, userDao.findByUsername("user@bern.com")) );
 	}
 	
 	
