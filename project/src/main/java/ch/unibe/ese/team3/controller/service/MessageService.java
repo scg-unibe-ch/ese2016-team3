@@ -203,7 +203,7 @@ public class MessageService {
 	 * triggered for every user. A message and an e-mail are sent. The email is also
 	 * sent if no alert triggers.
 	 */
-	@Scheduled(cron = "0 59 23 * * *") // everyday at one minute before midnight
+	@Scheduled(cron = "0 59 23 * * *") // everyday at one minute before midnight 
 	// @Scheduled(cron = "1 * * * * *") // every minute
 	public void alertMessageForBasicUser() {
 

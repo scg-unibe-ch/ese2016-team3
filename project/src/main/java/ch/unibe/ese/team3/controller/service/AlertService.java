@@ -242,7 +242,7 @@ public class AlertService {
 	 */
 	private String getAlertText(Ad ad) {
 		return "Dear user,<br>good news. A new ad matching one of your alerts has been "
-				+ "entered into our system. You can visit it here:<br><br>" + "<a class=\"link\" href=\"http://localhost:8080/+ " + ad.getBuyMode().getName() + "/ad?id="
+				+ "entered into our system. You can visit it here:<br><br>" + "<a class=\"link\" href=\"http://localhost:8080/" + ad.getBuyMode().getName() + "/ad?id="
 				+ ad.getId() + "\">" + ad.getTitle() + "</a><br><br>" + "Good luck and enjoy,<br>" + "Your Ithaca crew";
 	}
 

@@ -12,7 +12,21 @@ import ch.unibe.ese.team3.model.BuyMode;
 
 public class AlertControllerTest extends BaseControllerTest {
 
+	
 	@Test
+	public void createAlertAndShowAlertView() throws Exception {
+		this.mockMvc.perform(post("/profile/alerts")
+				.principal(getTestPrincipal("ese@unibe.ch"))
+				.param("buyMode", "BuyMode.BUY")
+				.param("city", "3012 - Bern")
+				.param("radius", "10")
+				.param("price", "10") )   // set inputs of alert form. Attributes are set by name (name in alertForm).
+				 
+				.andExpect(status().isOk())
+				.andExpect(view().name("alerts"))
+				.andExpect(model().attributeExists("alerts", "types", "alertForm")); // attributes are refering to attributes of alert site. (over id?)
+	}
+	
 	public void showAlertViewAfterSavingInvalidInput() throws Exception {
 		this.mockMvc.perform(post("/profile/alerts")
 				.principal(getTestPrincipal("ese@unibe.ch"))
@@ -24,7 +38,7 @@ public class AlertControllerTest extends BaseControllerTest {
 				.andExpect(status().isOk())
 				.andExpect(view().name("alerts"))
 				.andExpect(model().attributeExists("alerts", "types", "alertForm"))
-				.andExpect(model().attributeHasFieldErrors("alertForm", "buyMode")); // attributes are refering to attributes of alert site. (over id?)
+				.andExpect(model().attributeHasFieldErrors("alertForm", "buyMode")); // attributes are refering to attributes of alert site.
 	}
 	
 	@Test
@@ -40,7 +54,7 @@ public class AlertControllerTest extends BaseControllerTest {
 				.andExpect(status().isOk())
 				.andExpect(view().name("alerts"))
 				.andExpect(model().attributeExists("alerts", "types", "alertForm"))
-				.andExpect(model().attributeHasNoErrors("alertForm")); // attributes are refering to attributes of alert site. (over id?)
+				.andExpect(model().attributeHasNoErrors("alertForm")); // attributes are refering to attributes of alert site. 
 	}
 	
 	@Test

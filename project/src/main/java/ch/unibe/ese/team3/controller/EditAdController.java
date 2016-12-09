@@ -175,6 +175,7 @@ public class EditAdController {
 	 * @return a list of picture descriptions or null if no pictures were
 	 *         uploaded
 	 */
+	/*
 	@RequestMapping(value = "/profile/editAd/getUploadedPictures", method = RequestMethod.POST)
 	public @ResponseBody List<PictureMeta> getUploadedPictures() {
 		if (pictureUploader == null) {
@@ -182,7 +183,7 @@ public class EditAdController {
 		}
 		return pictureUploader.getUploadedPictureMetas();
 	}
-
+	*/
 	/**
 	 * Uploads the pictures that are attached as multipart files to the request.
 	 * The JSON representation, that is returned, is generated manually because
