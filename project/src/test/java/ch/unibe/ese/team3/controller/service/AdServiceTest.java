@@ -212,6 +212,50 @@ public class AdServiceTest {
 	}
 
 	@Test
+	public void saveFromWithIllegalMoveInDate() throws ParseException {
+		// Preparation
+		PlaceAdForm placeAdForm = new PlaceAdForm();
+		placeAdForm.setCity("3018 - Bern");
+		placeAdForm.setType(Type.APARTMENT);
+		placeAdForm.setRoomDescription("Test Room description");
+		placeAdForm.setPrice(600);
+		placeAdForm.setSquareFootage(50);
+		placeAdForm.setTitle("title");
+		placeAdForm.setStreet("Hauptstrasse 16");
+		placeAdForm.setMoveInDate("f");
+
+		
+		placeAdForm.setType(Type.APARTMENT);
+		placeAdForm.setInfrastructureType(InfrastructureType.CABLE);
+
+		placeAdForm.setNumberOfRooms(5);
+
+
+		ArrayList<String> filePaths = new ArrayList<>();
+		filePaths.add("/img/test/ad1_1.jpg");
+
+		User hans = createUser("hansi@kanns.ch", "password", "Hans", "Kanns", Gender.MALE);
+		hans.setAboutMe("Hansi Hinterseer");
+		userDao.save(hans);
+
+		adService.saveFrom(placeAdForm, filePaths, hans, BuyMode.BUY);
+
+		Ad ad = new Ad();
+		Iterable<Ad> ads = adService.getAllAds();
+		Iterator<Ad> iterator = ads.iterator();
+
+		while (iterator.hasNext()) {
+			ad = iterator.next();
+		}
+
+
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Date result = df.parse("2015-02-27");
+
+		// Hack to avoid datetime issues when comparing
+		assertEquals(result.toString(), ad.getMoveInDate().toString());
+	}
+	@Test
 	public void saveFromWithCoordinatesAndVisitsTest() throws ParseException {
 		// Preparation
 		PlaceAdForm placeAdForm = new PlaceAdForm();
