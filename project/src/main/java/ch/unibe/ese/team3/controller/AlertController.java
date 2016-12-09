@@ -77,9 +77,11 @@ public class AlertController {
 			boolean alreadySet, AlertForm alertForm) {
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
-		if (alreadySet)
-			alertService.saveFrom(alertForm, user);
 		ModelAndView model = new ModelAndView("alerts");
+		if (alreadySet){
+			alertService.saveFrom(alertForm, user);
+			model.addObject("confirmationMessage", "Alert saved successfuly.");
+		}
 		Iterable<Alert> alerts = alertService.getAlertsByUser(user);
 		model.addObject("user", user);
 		model.addObject("alertForm", alertForm);

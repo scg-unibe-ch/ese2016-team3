@@ -1,14 +1,30 @@
-# FakeSMTP für Unit Tests
+# FakeSMTP for Unit Tests
 
-Falls in Unit Tests Mails verschickt werden, wird automatisch ein lokaler SMTP-Server verwendet. Dafür wird das Programm [fakeSMTP](https://nilhcem.github.io/FakeSMTP/) verwendet.
+If mails should be sent during unit tests, a local smtp-server may be used. An example of such a server is [fakeSMTP](https://nilhcem.github.io/FakeSMTP/).
 
-Das Programm ist ins Repository eingecheckt und muss nicht heruntergeladen werden.
+The application is checked into the git repository. So you don't need to download it yourself.
 
-Das Programm muss vor dem Ausführen von Unit-Tests gestartet und konfiguriert werden.
+fakeSMTP has to be started and configured before execution of unit tests:
 
-1. Starte das Programm `/fakeSMTP/fakeSMTP-2.0.jar`
-2. Setze den *Listening Port* auf 2525 und klicke *Start server*
+1. Start the application `/fakeSMTP/fakeSMTP-2.0.jar`
+2. Set *Listening Port* to 2525 and click *Start server*
 
 	![](./startup.png)
 
-3. Gesendete Nachrichten werden unten im grossen weissen Bereich angezeigt und können per Doppelklick geöffnet werden.
+3. Sent messages are shown in the white area in the main application window and can be opened by double clicking.
+
+# Important: Mail sending behaviour during tests
+
+The Web-Application has to be configured to use the fake SMTP-server.
+
+In the file `/project/src/main/webapp/WEB-INF/config/springMVC_test.xml` you can define whether the class `TestMailSender` or the class `MailSender` should be used for sending mails. The former doesn't send any mails, the later uses the local SMTP-server.
+
+Just comment the bean configuration which shouldn't be used in the file `/project/src/main/webapp/WEB-INF/config/springMVC_test.xml`:
+
+```xml
+<!-- To not send mail at all, uncomment line 2 and comment line 5 -->
+<bean id="mailSender" class="ch.unibe.ese.team3.util.TestMailSender" scope="singleton"></bean>
+
+<!-- To send mail using local SMTP server uncomment line 5 and comment line 2-->
+<bean id="mailSender" class="ch.unibe.ese.team3.util.MailSender" scope="singleton"></bean>
+```

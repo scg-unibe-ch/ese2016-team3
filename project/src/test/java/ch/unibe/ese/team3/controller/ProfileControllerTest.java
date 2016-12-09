@@ -4,6 +4,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -130,7 +131,8 @@ public class ProfileControllerTest extends BaseControllerTest {
 				.param("firstName", "hibli")
 				.param("lastName", "bubli"))
 			.andExpect(status().is3xxRedirection()) // URL redirection status
-			.andExpect(view().name("redirect:../user?id=" + user.getId()));
+			.andExpect(view().name("redirect:../user?id=" + user.getId()))
+			.andExpect(flash().attributeExists("confirmationMessage"));
 	}
 	
 	@Test

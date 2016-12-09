@@ -46,6 +46,14 @@
 		<constructor-arg type="java.lang.String" value="test"/>
 	</bean>
 	
+	<!--
+		Define which MailSender class is used for sending mail during unit tests.
+		- ch.unibe.ese.team3.util.TestMailSender: don't send any mails
+		- ch.unibe.ese.team3.util.MailSender: send mails using a local mail server
+	 -->
+	<bean id="mailSender" class="ch.unibe.ese.team3.util.TestMailSender" scope="singleton"></bean>
+	<!-- <bean id="mailSender" class="ch.unibe.ese.team3.util.MailSender" scope="singleton"></bean> -->
+	
 	<!-- resources -->
 	<mvc:resources mapping="/assets/**"
 		location="classpath:/META-INF/resources/webjars/" />

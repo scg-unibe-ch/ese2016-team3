@@ -571,7 +571,7 @@ public class AlertServiceTest {
 	}
 	
 	@Test
-	public void searchElevator() {
+	public void elevator() {
 		alertForm.setElevator(true);
 				
 		alertService.saveFrom(alertForm, premiumUserWithAlert);
@@ -586,7 +586,7 @@ public class AlertServiceTest {
 	}
 	
 	@Test
-	public void searchGarage() {
+	public void garage() {
 		alertForm.setGarage(true);
 				
 		alertService.saveFrom(alertForm, premiumUserWithAlert);
@@ -601,7 +601,7 @@ public class AlertServiceTest {
 	}
 	
 	@Test
-	public void searchBalcony() {
+	public void balcony() {
 		alertForm.setBalcony(true);
 				
 		alertService.saveFrom(alertForm, premiumUserWithAlert);
@@ -616,7 +616,7 @@ public class AlertServiceTest {
 	}
 	
 	@Test
-	public void searchParking() {
+	public void parking() {
 		alertForm.setParking(true);
 				
 		alertService.saveFrom(alertForm, premiumUserWithAlert);
