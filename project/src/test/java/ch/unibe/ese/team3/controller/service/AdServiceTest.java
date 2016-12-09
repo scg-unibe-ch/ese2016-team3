@@ -1049,15 +1049,14 @@ public class AdServiceTest {
 		String email = "jane@doe.com";
 		Iterable<User> itrUsers = userDao.findAll();
 		Iterator<User> itr = itrUsers.iterator();
-		String alreadyAdded="";
+		StringBuilder alreadyAdded= new StringBuilder();
 		
 		while(itr.hasNext()){
-			alreadyAdded += itr.next().getEmail() + " ";
-			
-		}
+			alreadyAdded.append(itr.next().getEmail());
+			alreadyAdded.append(";");			
+		}		
 		
-		
-		assertTrue(adService.checkIfAlreadyAdded(email, alreadyAdded));
+		assertTrue(adService.checkIfAlreadyAdded(email, alreadyAdded.toString()));
 		
 	}
 	// checks if the created ad "searchAd" is returned by the filter function
