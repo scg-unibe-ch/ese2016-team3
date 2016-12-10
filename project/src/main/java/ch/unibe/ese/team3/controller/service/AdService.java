@@ -56,19 +56,19 @@ public class AdService extends BaseService {
 	public Ad saveFrom(PlaceAdForm placeAdForm, List<String> filePaths, User user, BuyMode buyMode) {
 
 		Ad ad = new Ad();
-
+		ad.setBuyMode(buyMode);
+		
 		Date now = new Date();
 		ad.setCreationDate(now);
 
 		
-		
 		ad.setTitle(placeAdForm.getTitle());
-
-		ad.setStreet(placeAdForm.getStreet());
-
+		ad.setPrice(placeAdForm.getPriceForAd());
+		ad.setSquareFootage(placeAdForm.getSquareFootage());
+		ad.setNumberOfRooms(placeAdForm.getNumberOfRooms());
 		ad.setType(placeAdForm.getType());
-		ad.setBuyMode(buyMode);
-
+		
+		ad.setStreet(placeAdForm.getStreet());
 		// take the zipcode - first four digits
 		String zip = placeAdForm.getCity().substring(0, 4);
 		ad.setZipcode(Integer.parseInt(zip));
@@ -85,74 +85,31 @@ public class AdService extends BaseService {
 		Calendar calendar = Calendar.getInstance();
 		// java.util.Calendar uses a month range of 0-11 instead of the
 		// XMLGregorianCalendar which uses 1-12
-		try {
-			if (placeAdForm.getMoveInDate().length() >= 1) {
-			//	String[] brokenInput = placeAdForm.getMoveInDate().split("-");
-			//	if(brokenInput.length == 3){
-			//	int dayMoveIn = Integer.parseInt(brokenInput[0]);
-			//	int monthMoveIn = Integer.parseInt(brokenInput[1]); 
-			//	int yearMoveIn= Integer.parseInt(brokenInput[2]);
-				
-				int dayMoveIn = Integer.parseInt(placeAdForm.getMoveInDate().substring(0, 2));
-				int monthMoveIn = Integer.parseInt(placeAdForm.getMoveInDate().substring(3, 5));
-				int yearMoveIn = Integer.parseInt(placeAdForm.getMoveInDate().substring(6, 10));
-				calendar.set(yearMoveIn, monthMoveIn - 1, dayMoveIn, 0, 0, 0);
-				ad.setMoveInDate(calendar.getTime());
-				}
-			//}
-
-		} catch (NumberFormatException e) {
+		if (placeAdForm.getMoveInDate().length() >= 1) {
+			int dayMoveIn = Integer.parseInt(placeAdForm.getMoveInDate().substring(0, 2));
+			int monthMoveIn = Integer.parseInt(placeAdForm.getMoveInDate().substring(3, 5));
+			int yearMoveIn = Integer.parseInt(placeAdForm.getMoveInDate().substring(6, 10));
+			calendar.set(yearMoveIn, monthMoveIn - 1, dayMoveIn, 0, 0, 0);
+			ad.setMoveInDate(calendar.getTime());
 		}
-		
-		try {
-			String startDate = placeAdForm.getStartDate();
-			if (startDate != null && startDate.length() >= 1) {
-				int dayStart = Integer.parseInt(placeAdForm.getStartDate().substring(0, 2));
-				int monthStart = Integer.parseInt(placeAdForm.getStartDate().substring(3, 5));
-				int yearStart = Integer.parseInt(placeAdForm.getStartDate().substring(6, 10));
-				calendar.set(yearStart, monthStart - 1, dayStart);
-				ad.setStartDate(calendar.getTime());
-			}
-
-			String endDate = placeAdForm.getEndDate();
-			if (endDate != null && endDate.length() >= 1) {
-				int dayEnd = Integer.parseInt(endDate.substring(0, 2));
-				int monthEnd = Integer.parseInt(endDate.substring(3, 5));
-				int yearEnd = Integer.parseInt(endDate.substring(6, 10));
-				calendar.set(yearEnd, monthEnd - 1, dayEnd);
-				ad.setEndDate(calendar.getTime());
-			}
-		} catch (NumberFormatException e) {
-		}
-
-		// for auction
-		ad.setStartPrice(placeAdForm.getStartPrice());
-		ad.setIncreaseBidPrice(placeAdForm.getIncreaseBidPrice());
-		ad.setcurrentAuctionPrice(placeAdForm.getStartPrice() + placeAdForm.getIncreaseBidPrice());
-		ad.setAuction(placeAdForm.getAuction());
-		ad.setAuctionPrice(placeAdForm.getAuctionPrice());
-		
-		ad.setPrice(placeAdForm.getPriceForAd());
-		ad.setSquareFootage(placeAdForm.getSquareFootage());
-		
+			
 		ad.setDistanceSchool(placeAdForm.getDistanceSchool());
 		ad.setDistanceShopping(placeAdForm.getDistanceShopping());
 		ad.setDistancePublicTransport(placeAdForm.getDistancePublicTransport());
 		ad.setBuildYear(placeAdForm.getBuildYear());
 		ad.setRenovationYear(placeAdForm.getRenovationYear());
-		ad.setNumberOfRooms(placeAdForm.getNumberOfRooms());
 		ad.setNumberOfBath(placeAdForm.getNumberOfBath());
 		ad.setParking(placeAdForm.isParking());
 		ad.setDishwasher(placeAdForm.getDishwasher());
-		ad.setRoomDescription(placeAdForm.getRoomDescription());
 		ad.setBalcony(placeAdForm.getBalcony());
 		ad.setGarage(placeAdForm.getGarage());
-
-		// new description variables
 		ad.setElevator(placeAdForm.isElevator());
 		ad.setInfrastructureType(placeAdForm.getInfrastructureType());
 		ad.setFloorLevel(placeAdForm.getFloorLevel());
-
+		
+		setAuctionFields(placeAdForm, ad);
+		
+		ad.setRoomDescription(placeAdForm.getRoomDescription());
 		/*
 		 * Save the paths to the picture files, the pictures are assumed to be
 		 * uploaded at this point!
@@ -196,6 +153,35 @@ public class AdService extends BaseService {
 		adDao.save(ad);
 
 		return ad;
+	}
+
+
+
+	private void setAuctionFields(PlaceAdForm placeAdForm, Ad ad) {
+		Calendar calendar = Calendar.getInstance();
+		String startDateAuction = placeAdForm.getStartDate();
+		if (startDateAuction != null && startDateAuction.length() >= 1) {
+			int dayStart = Integer.parseInt(startDateAuction.substring(0, 2));
+			int monthStart = Integer.parseInt(startDateAuction.substring(3, 5));
+			int yearStart = Integer.parseInt(startDateAuction.substring(6, 10));
+			calendar.set(yearStart, monthStart - 1, dayStart);
+			ad.setStartDate(calendar.getTime());	
+		}
+
+		String endDateAuction = placeAdForm.getEndDate();
+		if (endDateAuction != null && endDateAuction.length() >= 1) {
+			int dayEnd = Integer.parseInt(endDateAuction.substring(0, 2));
+			int monthEnd = Integer.parseInt(endDateAuction.substring(3, 5));
+			int yearEnd = Integer.parseInt(endDateAuction.substring(6, 10));
+			calendar.set(yearEnd, monthEnd - 1, dayEnd);
+			ad.setEndDate(calendar.getTime());
+			}
+
+		ad.setStartPrice(placeAdForm.getStartPrice());
+		ad.setIncreaseBidPrice(placeAdForm.getIncreaseBidPrice());
+		ad.setcurrentAuctionPrice(placeAdForm.getStartPrice() + placeAdForm.getIncreaseBidPrice());
+		ad.setAuction(placeAdForm.getAuction());
+		ad.setAuctionPrice(placeAdForm.getAuctionPrice());
 	}
 	
 
@@ -500,7 +486,7 @@ public class AdService extends BaseService {
 	 * 
 	 * @return true if the email has been added already, false otherwise
 	 */
-	public Boolean checkIfAlreadyAdded(String email, String alreadyAdded) {
+/*	public Boolean checkIfAlreadyAdded(String email, String alreadyAdded) {
 		email = email.toLowerCase();
 		alreadyAdded = alreadyAdded.replaceAll("\\s+", "").toLowerCase();
 		String delimiter = "[:;]+";
@@ -512,4 +498,5 @@ public class AdService extends BaseService {
 		}
 		return false;
 	}
+*/
 }
