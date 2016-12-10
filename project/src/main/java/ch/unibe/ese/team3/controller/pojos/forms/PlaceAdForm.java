@@ -23,7 +23,7 @@ public class PlaceAdForm {
 	@Pattern(regexp = "^[0-9]{4} - [\\S]*", message = "Please pick a city from the list")
 	private String city;
 	
-	@NotBlank(message = "Required")
+	@Pattern(regexp = "^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}" ,message = "Please enter a valid date")
 	private String moveInDate;
 
 	private int price;
@@ -73,7 +73,9 @@ public class PlaceAdForm {
 	
 	// auction specific attributes
 	private int auctionPrice;	
+	@Pattern(regexp = "^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}" ,message = "Please enter a valid date")
 	private String startDate;
+	@Pattern(regexp = "^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}" ,message = "Please enter a valid date")
 	private String endDate;
 	private int startPrice;
 	private int increaseBidPrice;
