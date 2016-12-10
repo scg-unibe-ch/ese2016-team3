@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.WebApplicationContext;
 
+import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.User;
+import ch.unibe.ese.team3.model.dao.AdDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
 public class ProfileControllerTest extends BaseControllerTest {
@@ -29,6 +31,9 @@ public class ProfileControllerTest extends BaseControllerTest {
 	
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	AdDao adDao;
 	
 	@Test 
 	public void getLoginPage() throws Exception {
@@ -148,7 +153,8 @@ public class ProfileControllerTest extends BaseControllerTest {
 		.andExpect(model().attributeExists("editProfileForm", "currentUser", "errorMessage"));
 	}
 	
-	@Test public void getUserPage() throws Exception {
+	@Test 
+	public void getUserPage() throws Exception {
 		Principal principal = mock(Principal.class);
 		when(principal.getName()).thenReturn("jane@doe.com");
 		
@@ -158,6 +164,85 @@ public class ProfileControllerTest extends BaseControllerTest {
 			.andExpect(status().isOk())
 			.andExpect(view().name("user"))
 			.andExpect(model().attributeExists("user", "messageForm", "principalID"));
+	}
+	
+	@Test
+	public void getUpgradePage() throws Exception {
+		Principal principal = mock(Principal.class);
+		when(principal.getName()).thenReturn("jane@doe.com");
+		
+		this.mockMvc.perform(get("/profile/upgrade")
+				.principal(principal))
+			.andExpect(status().isOk())
+			.andExpect(view().name("upgrade"))
+			.andExpect(model().attributeExists("upgradeForm", "creditcardTypes", "accountTypes",
+					"currentUser", "years", "months", "premiumChoices"));
+	}
+	
+	@Test 
+	public void testSuccessfulUpgrade() throws Exception {
+		Principal principal = mock(Principal.class);
+		when(principal.getName()).thenReturn("jane@doe.com");
+		
+		User user = userDao.findByUsername(principal.getName());
+		
+		this.mockMvc.perform(post("/profile/upgrade")
+				.principal(principal)
+				.param("creditCard", "1111-1111-1111-1111")
+				.param("creditcardType", "VISA")
+				.param("securityNumber", "333")
+				.param("expirationMonth", "12")
+				.param("expirationYear", "2020")
+				.param("creditcardName", "hans")
+				.param("duration", "7"))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:../user?id=" + user.getId()))
+		.andExpect(flash().attributeExists("confirmationMessage"));
+	}
+	
+	@Test 
+	public void testInvalidCreditCardUpgrade() throws Exception {
+		Principal principal = mock(Principal.class);
+		when(principal.getName()).thenReturn("jane@doe.com");
+				
+		this.mockMvc.perform(post("/profile/upgrade")
+				.principal(principal)
+				.param("creditCard", "-1111-1111-1111")
+				.param("creditcardType", "VISA")
+				.param("securityNumber", "333")
+				.param("expirationMonth", "12")
+				.param("expirationYear", "2020")
+				.param("creditcardName", "hans")
+				.param("duration", "7"))
+		.andExpect(status().isOk())
+		.andExpect(view().name("upgrade"))
+		.andExpect(model().attributeExists("upgradeForm", "creditcardTypes", "accountTypes",
+					"currentUser", "years", "months", "premiumChoices"));
+	}
+	
+	@Test
+	public void getSchedulePage() throws Exception {
+		Principal principal = mock(Principal.class);
+		when(principal.getName()).thenReturn("jane@doe.com");
+		
+		this.mockMvc.perform(get("/profile/schedule")
+				.principal(principal))
+		.andExpect(status().isOk())
+		.andExpect(view().name("schedule"))
+		.andExpect(model().attributeExists("visits", "presentations"));
+	}
+	
+	@Test
+	public void getVisitorPage() throws Exception {
+		Principal principal = mock(Principal.class);
+		when(principal.getName()).thenReturn("jane@doe.com");
+		
+		this.mockMvc.perform(get("/profile/visitors")
+				.principal(principal)
+				.param("visit", "45"))
+		.andExpect(status().isOk())
+		.andExpect(view().name("visitors"))
+		.andExpect(model().attributeExists("visitors", "ad"));
 	}
 
 }

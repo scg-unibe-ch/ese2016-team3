@@ -18,7 +18,7 @@ public class UpgradeForm {
 	
 	
 
-	@Pattern(regexp = "[0-9]{16}", message = "Credit card number must be 16 digits")
+	@Pattern(regexp = "^[0-9 -]{16,19}$", message = "Credit card number must be 16 digits")
 	@NotNull
 	private String creditCard;
 	

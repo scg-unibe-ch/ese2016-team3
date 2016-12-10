@@ -294,7 +294,7 @@ public class ProfileController {
 	/** Validates the upgrade form and on success persists the new user. */
 	@RequestMapping(value = "/profile/upgrade", method = RequestMethod.POST)
 	public ModelAndView upgradeResultPage(@Valid UpgradeForm upgradeForm, BindingResult bindingResult,
-			Principal principal) {
+			Principal principal, RedirectAttributes redirectAttributes) {
 		ModelAndView model;
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
@@ -303,6 +303,7 @@ public class ProfileController {
 			upgradeService.upgradeFrom(upgradeForm, user, premiumChoice);
 			user = userService.findUserByUsername(username);
 			model = new ModelAndView("redirect:../user?id=" + user.getId());
+			redirectAttributes.addFlashAttribute("confirmationMessage", "Profile upgrade to Premium was successful.");
 			return model;
 		} else {
 			Iterable<PremiumChoice> allChoices = upgradeService.findAll();

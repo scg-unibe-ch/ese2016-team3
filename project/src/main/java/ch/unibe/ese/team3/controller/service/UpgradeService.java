@@ -42,7 +42,7 @@ public class UpgradeService {
 	/** Handles upgrading user in database. */
 	@Transactional
 	public void upgradeFrom(UpgradeForm upgradeForm, User user, PremiumChoice premiumChoice) {
-		user.setCreditCard(upgradeForm.getCreditCard());
+		user.setCreditCard(this.getFormattedCreditCard(upgradeForm.getCreditCard()));
 		user.setCreditcardType(upgradeForm.getCreditcardType());
 		user.setSecurityNumber(upgradeForm.getSecurityNumber());
 		user.setExpirationMonth(upgradeForm.getExpirationMonth());
@@ -60,6 +60,12 @@ public class UpgradeService {
 		user.setPremiumChoice(premiumChoice);
 		
 		userDao.save(user);
+	}
+	
+	private String getFormattedCreditCard(String creditCard) {
+		String formattedCreditCard;
+		formattedCreditCard = creditCard.replaceAll("[- ]", "");
+		return formattedCreditCard;
 	}
 	
 	
