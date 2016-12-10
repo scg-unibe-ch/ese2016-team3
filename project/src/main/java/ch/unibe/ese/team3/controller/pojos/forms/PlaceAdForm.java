@@ -23,7 +23,7 @@ public class PlaceAdForm {
 	@Pattern(regexp = "^[0-9]{4} - [\\S]*", message = "Please pick a city from the list")
 	private String city;
 	
-	@Pattern(regexp = "^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}" ,message = "Please enter a valid date")
+	@Pattern(regexp = "^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$" ,message = "Please enter a valid date")
 	private String moveInDate;
 
 	private int price;
@@ -56,10 +56,10 @@ public class PlaceAdForm {
 	
 	// validation attributes
 	
-	@AssertTrue(message = "Required")
+	@AssertTrue(message = "Please enter a valid Date")
 	private boolean validStartDate;
 	
-	@AssertTrue(message = "Required")
+	@AssertTrue(message = "Please enter a valid Date")
 	private boolean validEndDate;
 	
 	@AssertTrue(message = "Must be greater than zero")
@@ -73,9 +73,7 @@ public class PlaceAdForm {
 	
 	// auction specific attributes
 	private int auctionPrice;	
-//	@Pattern(regexp = "^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}" ,message = "Please enter a valid date")
 	private String startDate;
-//	@Pattern(regexp = "^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}" ,message = "Please enter a valid date")
 	private String endDate;
 	private int startPrice;
 	private int increaseBidPrice;
@@ -372,8 +370,9 @@ public class PlaceAdForm {
 			validPrice = (price > 0);
 		}
 		else {
-			validStartDate = (startDate != null && !startDate.isEmpty());
-			validEndDate =(endDate != null && !endDate.isEmpty());
+			validStartDate = (startDate != null && !startDate.isEmpty()&& startDate.matches("^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$"));
+			
+			validEndDate =(endDate != null && !endDate.isEmpty()&& endDate.matches("^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$"));
 			validIncreaseBidPrice = increaseBidPrice > 0;
 			validStartPrice = startPrice > 0;
 			validPrice = (auctionPrice > 0);
