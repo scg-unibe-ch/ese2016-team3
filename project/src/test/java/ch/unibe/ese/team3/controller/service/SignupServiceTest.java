@@ -109,4 +109,16 @@ public class SignupServiceTest {
 		assertEquals(7, serviceUser.getPremiumChoice().getDuration());
 		
 	}
+		
+	@Test(expected=IllegalArgumentException.class)
+	public void testSignupExistingUserShouldThrow(){
+		SignupForm signupForm = new SignupForm();
+		signupForm.setEmail("ese@unibe.ch");
+		signupForm.setFirstName("John");
+		signupForm.setLastName("Test");
+		signupForm.setPassword("123test");
+		signupForm.setGender(Gender.MALE);
+		
+		signupService.saveFrom(signupForm);
+	}
 }

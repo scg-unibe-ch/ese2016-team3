@@ -30,6 +30,10 @@ public class SignupService {
 	/** Handles persisting a new user to the database. */
 	@Transactional
 	public User saveFrom(SignupForm signupForm) {
+		if (doesUserWithUsernameExist(signupForm.getEmail())){
+			throw new IllegalArgumentException("This username is taken");
+		}		
+		
 		User user = new User();
 		user.setUsername(signupForm.getEmail());
 		user.setEmail(signupForm.getEmail());

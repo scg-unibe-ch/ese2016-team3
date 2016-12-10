@@ -136,25 +136,29 @@ public class ProfileController {
 	/** Validates the signup form and on success persists the new user. */
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ModelAndView signupResultPage(@Valid SignupForm signupForm, BindingResult bindingResult) {
-		ModelAndView model;
+		ModelAndView model = new ModelAndView("signup");
+		
 		if (!bindingResult.hasErrors()) {
-			signupService.saveFrom(signupForm);
-			model = new ModelAndView("login");
-			model.addObject("googleForm", new GoogleSignupForm());
-			model.addObject("confirmationMessage", "Signup complete!");
-		} else {
-			model = new ModelAndView("signup");
-			model.addObject("signupForm", signupForm);
-			model.addObject("genders", Gender.valuesForDisplay());
-			model.addObject("accountTypes", AccountType.values());
-			model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
-			model.addObject("years", GetYears());
-			model.addObject("months", GetMonths());
-
-			Iterable<PremiumChoice> allChoices = upgradeService.findAll();
-			model.addObject("premiumChoices", allChoices);
+			try {
+				signupService.saveFrom(signupForm);
+				model = new ModelAndView("login");
+				model.addObject("googleForm", new GoogleSignupForm());
+				model.addObject("confirmationMessage", "Signup complete!");
+				return model;
+			} catch (IllegalArgumentException ex) {
+				model.addObject("errorMessage", "This email-address is taken. Please choose another one.");
+			}
 		}
+		
+		model.addObject("signupForm", signupForm);
+		model.addObject("genders", Gender.valuesForDisplay());
+		model.addObject("accountTypes", AccountType.values());
+		model.addObject("creditcardTypes", CreditcardType.valuesForDisplay());
+		model.addObject("years", GetYears());
+		model.addObject("months", GetMonths());
 
+		Iterable<PremiumChoice> allChoices = upgradeService.findAll();
+		model.addObject("premiumChoices", allChoices);
 		return model;
 	}
 
@@ -198,7 +202,8 @@ public class ProfileController {
 		if (!bindingResult.hasErrors()) {
 			try {
 				userUpdateService.updateFrom(editProfileForm, user);
-				Authentication request = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+				Authentication request = new UsernamePasswordAuthenticationToken(user.getUsername(),
+						user.getPassword());
 				Authentication result = authenticationManager.authenticate(request);
 				SecurityContextHolder.getContext().setAuthentication(result);
 				model = new ModelAndView("redirect:../user?id=" + user.getId());
@@ -206,9 +211,9 @@ public class ProfileController {
 				return model;
 			} catch (IllegalArgumentException ex) {
 				model.addObject("errorMessage", "This email-address is taken. Please choose another one.");
-			}			
-		}		
-		
+			}
+		}
+
 		model.addObject("editProfileForm", editProfileForm);
 		model.addObject("currentUser", user);
 		return model;
