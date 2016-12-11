@@ -70,7 +70,7 @@ public class EditAdService extends BaseService {
 
 		String addressString = String.format("%s %s %s", placeAdForm.getStreet(), zip,
 				placeAdForm.getCity().substring(7));
-
+		
 		LatLng coordinates = geoDataService.getCoordinates(addressString);
 		if (coordinates != null) {
 			ad.setLatitude(coordinates.getLat());

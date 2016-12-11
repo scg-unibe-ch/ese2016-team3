@@ -500,7 +500,6 @@ public class AdService extends BaseService {
 	 * 
 	 * @return true if the email has been added already, false otherwise
 	 */
-	/*
 	public Boolean checkIfAlreadyAdded(String email, String alreadyAdded) {
 		email = email.toLowerCase();
 		alreadyAdded = alreadyAdded.replaceAll("\\s+", "").toLowerCase();
@@ -513,5 +512,4 @@ public class AdService extends BaseService {
 		}
 		return false;
 	}
-	*/
 }

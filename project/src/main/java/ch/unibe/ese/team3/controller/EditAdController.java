@@ -104,7 +104,8 @@ public class EditAdController {
 	}
 
 	/**
-	 * Processes the edit ad form and displays the result page to the user.
+	 * Processes the edit ad form and displays the result page to the user. If an error is in BindingResult,
+	 * the ad is returned unedited.
 	 */
 	@RequestMapping(value = "/profile/editAd", method = RequestMethod.POST)
 	public ModelAndView editAdPageWithForm(@Valid PlaceAdForm placeAdForm,
