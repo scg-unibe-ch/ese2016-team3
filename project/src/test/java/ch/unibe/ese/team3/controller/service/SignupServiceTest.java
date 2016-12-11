@@ -15,7 +15,6 @@ import ch.unibe.ese.team3.controller.pojos.forms.SignupForm;
 import ch.unibe.ese.team3.model.CreditcardType;
 import ch.unibe.ese.team3.model.Gender;
 import ch.unibe.ese.team3.model.User;
-import ch.unibe.ese.team3.model.dao.PremiumChoiceDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
 
 
@@ -33,10 +32,7 @@ public class SignupServiceTest {
 	
 	@Autowired
 	private UserDao userDao;
-	
-	@Autowired
-	private PremiumChoiceDao premiumChoiceDao;
-	
+		
 	@Test
 	public void testSaveFrom(){
 		SignupForm signupForm = new SignupForm();
