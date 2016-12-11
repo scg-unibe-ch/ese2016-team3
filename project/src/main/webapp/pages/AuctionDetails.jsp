@@ -47,13 +47,13 @@
 					</div>
 					<fmt:formatNumber value="${ad.startPrice }" var="formattedStartPrice"
 						pattern="###,### CHF" />
-					<div class="col-sm-3 col-xs-9">CHF ${formattedStartPrice}.-</div>
+					<div class="col-sm-3 col-xs-9">${formattedStartPrice}</div>
 					<div class="col-sm-3 col-xs-3">
 						<strong>Price Increment</strong>
 					</div>
 					<fmt:formatNumber value="${ad.increaseBidPrice }" var="formattedIncreaseBidPrice"
 						pattern="###,### CHF" />
-					<div class="col-sm-3 col-xs-9">CHF ${formattedIncreaseBidPrice}.-</div>
+					<div class="col-sm-3 col-xs-9">${formattedIncreaseBidPrice}</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-3 col-xs-3">
@@ -61,14 +61,14 @@
 					</div>
 					<fmt:formatNumber value="${ad.currentAuctionPrice }" var="formattedCurrentAuctionPrice"
 						pattern="###,### CHF" />
-					<div class="col-sm-3 col-xs-9">CHF
-						${formattedCurrentAuctionPrice}.-</div>
+					<div class="col-sm-3 col-xs-9">
+						${formattedCurrentAuctionPrice}</div>
 					<div class="col-sm-3 col-xs-3">
 						<strong>Price (Buy Directly)</strong>
 					</div>
 					<fmt:formatNumber value="${ad.auctionPrice }" var="formattedAuctionPrice"
 						pattern="###,### CHF" />
-					<div class="col-sm-3 col-xs-9">CHF ${ad.auctionPrice}.-</div>
+					<div class="col-sm-3 col-xs-9">${formattedAuctionPrice}</div>
 				</div>
 			</div>
 		</div>
@@ -125,7 +125,8 @@
 					<tbody>
 						<c:forEach var="bid" items="${bids}" varStatus="loop">
 							<tr class="${loop.index == 0 ? 'success text-success' : '' }">
-								<td>CHF ${bid.amount}.00</td>
+								<fmt:formatNumber pattern="###,### CHF" value="${bid.amount}" var="formattedAmount"/>
+								<td>${formattedAmount}</td>
 								<td><fmt:formatDate value="${bid.timeStamp}"
 										var="formattedDate" type="date" pattern="yyyy-MM-dd HH:mm:ss" />
 									${formattedDate}</td>
