@@ -1,6 +1,6 @@
 package ch.unibe.ese.team3.controller;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
@@ -45,11 +45,11 @@ public class EditAdControllerTest extends BaseControllerTest {
 
 				.andExpect(status().isOk()).andExpect(model().attributeExists("adId", "placeAdForm"));
 	}
-	
+
 	@Test
 	public void editAdOtherUser() throws Exception {
 		this.mockMvc.perform(post("/profile/editAd").param("id", "1").param("adId", "1").param("title", "testTitle")
-				.param("street", "Hochfeldstrasse 55").param("city", "3012 - Bern").param("moveInDate", "2017-02-02")
+				.param("street", "Hochfeldstrasse 55").param("city", "3012 - Bern").param("moveInDate", "27-02-2017")
 				.param("price", "100000").param("roomDescription", "description")
 				.param("type", Type.APARTMENT.toString()).param("squareFootage", "100").param("numberOfRooms", "3")
 
@@ -62,45 +62,45 @@ public class EditAdControllerTest extends BaseControllerTest {
 	@Test
 	public void editUserAd() throws Exception {
 		this.mockMvc.perform(post("/profile/editAd").param("id", "2").param("adId", "2").param("title", "testTitle")
-				.param("street", "Hochfeldstrasse 55").param("city", "3012 - Bern").param("moveInDate", "2017-02-02")
+				.param("street", "Hochfeldstrasse 55").param("city", "3012 - Bern").param("moveInDate", "27-02-2017")
 				.param("price", "100000").param("roomDescription", "description")
 				.param("type", Type.APARTMENT.toString()).param("squareFootage", "100").param("numberOfRooms", "3")
 
 				.param("infrastructureType", InfrastructureType.CABLE.toString())
 				.principal(getTestPrincipal("ese@unibe.ch")))
 
-				.andExpect(status().is3xxRedirection()) 
-				.andExpect(flash().attributeExists("confirmationMessage"));
+				.andExpect(status().is3xxRedirection()).andExpect(flash().attributeExists("confirmationMessage"));
 	}
-	
+
 	@Test
 	public void editAdWithoutPictures() throws Exception {
-		this.mockMvc.perform(post("/profile/editAd").param("id", "20").param("adId", "20").param("title", "testTitle") // ad nr 20 doesn't have pictures
-				.param("street", "Hochfeldstrasse 55").param("city", "3012 - Bern").param("moveInDate", "2017-02-02")
+		this.mockMvc.perform(post("/profile/editAd").param("id", "20").param("adId", "20").param("title", "testTitle") // ad
+																														// nr
+																														// 20
+																														// doesn't
+																														// have
+																														// pictures
+				.param("street", "Hochfeldstrasse 55").param("city", "3012 - Bern").param("moveInDate", "27-02-2017")
 				.param("price", "100000").param("roomDescription", "description")
 				.param("type", Type.APARTMENT.toString()).param("squareFootage", "100").param("numberOfRooms", "3")
 
 				.param("infrastructureType", InfrastructureType.CABLE.toString())
 				.principal(getTestPrincipal("ese@unibe.ch")))
 
-				.andExpect(status().is3xxRedirection()) 
-				.andExpect(flash().attributeExists("confirmationMessage"));
+				.andExpect(status().is3xxRedirection()).andExpect(flash().attributeExists("confirmationMessage"));
 	}
-	
+
 	@Test
 	public void warningMessageWhenInvalidAddressAfterEditing() throws Exception {
-		// if edited coordinates are invalid, old coordinates remain
-		
 		this.mockMvc.perform(post("/profile/editAd").param("id", "2").param("adId", "2").param("title", "testTitle")
-				.param("street", "hoceldstras").param("city", "3012 - Bern").param("moveInDate", "2017-02-02")
+				.param("street", "hoceldstras").param("city", "3012 - Bern").param("moveInDate", "27-02-2017")
 				.param("price", "100000").param("roomDescription", "description")
 				.param("type", Type.APARTMENT.toString()).param("squareFootage", "100").param("numberOfRooms", "3")
 
 				.param("infrastructureType", InfrastructureType.CABLE.toString())
 				.principal(getTestPrincipal("ese@unibe.ch")))
 
-				.andExpect(status().isOk()) 
-				.andExpect(flash().attributeExists("warningMessage"));
+				.andExpect(status().is3xxRedirection()).andExpect(flash().attributeExists("warningMessage"));
 	}
 
 	@Test
@@ -115,16 +115,30 @@ public class EditAdControllerTest extends BaseControllerTest {
 	}
 
 	@Test
-	public void getListOfPictureNoPictureUploader() throws Exception {
+	public void getListOfPicturesNoPictureUploader() throws Exception {
 
-		MvcResult result = this.mockMvc.perform(post("/profile/editAd/getUploadedPictures"))
-				.andExpect(status().isOk()).andReturn();
+		MvcResult result = this.mockMvc.perform(post("/profile/editAd/getUploadedPictures")).andExpect(status().isOk())
+				.andReturn();
 
-		assertEquals("", result.getResponse().getContentAsString());	
+		assertEquals("", result.getResponse().getContentAsString());
 	}
 	
 	@Test
-	public void getUploadedPicture() throws Exception{
+	public void getListOfPicturesFromPictureUploader() throws Exception {
+		// initialise pictureUploader
+		MockMultipartFile pictureFile = new MockMultipartFile("HousePicture", "HousePicture.png", "image/png",
+				"picture".getBytes());
+		this.mockMvc.perform(MockMvcRequestBuilders.fileUpload("/profile/editAd/uploadPictures").file(pictureFile));
+		
+		// make sure right list of pictures is returned
+		MvcResult result = this.mockMvc.perform(post("/profile/editAd/getUploadedPictures")).andExpect(status().isOk())
+				.andReturn();
+
+		assertTrue(result.getResponse().getContentAsString().contains("HousePicture.png"));
+	}
+
+	@Test
+	public void getUploadedPicture() throws Exception {
 		this.mockMvc.perform(post("/profile/editAd/getUploadedPictures")).andExpect(status().is(200));
 	}
 
@@ -138,13 +152,12 @@ public class EditAdControllerTest extends BaseControllerTest {
 
 	@Test
 	public void deletePictureNoPictureUploader() throws Exception {
-		this.mockMvc.perform(
-				MockMvcRequestBuilders.fileUpload("/profile/editAd/deletePicture").param("url", ""))
+		this.mockMvc.perform(MockMvcRequestBuilders.fileUpload("/profile/editAd/deletePicture").param("url", ""))
 				.andExpect(status().isOk());
 	}
-	
+
 	@Test
-	public void deletePicture() throws Exception{
-	 this.mockMvc.perform(post("/profile/editAd/deletePicture").param("url", "")).andExpect(status().isOk()); // no real url added or picture will realy be deleted
+	public void deletePicture() throws Exception {
+		this.mockMvc.perform(post("/profile/editAd/deletePicture").param("url", "")).andExpect(status().isOk()); // no real url or acctual picture will be deleted
 	}
 }
