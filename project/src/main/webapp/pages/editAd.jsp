@@ -163,6 +163,7 @@
 									<div class="col-sm-5">
 										<form:input type="text" id="field-moveInDate"
 											path="moveInDate" cssClass="form-control" />
+											<form:errors path="moveInDate" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>

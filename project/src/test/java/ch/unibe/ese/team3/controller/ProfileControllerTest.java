@@ -1,5 +1,6 @@
 package ch.unibe.ese.team3.controller;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -14,9 +15,9 @@ import java.security.Principal;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
-import ch.unibe.ese.team3.model.Ad;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.AdDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
@@ -77,6 +78,22 @@ public class ProfileControllerTest extends BaseControllerTest {
 			.andExpect(model().attributeExists("signupForm", "genders", 
 					"accountTypes", "creditcardTypes", "years", "months",
 					"premiumChoices"));	
+	}
+	
+	@Test
+	public void testDuplicateUsernameSignup() throws Exception {
+		this.mockMvc.perform(post("/signup")
+				.param("email", "ese@unibe.ch")
+				.param("password", "123123")
+				.param("firstName", "Hans")
+				.param("lastName", "Heiri")
+				.param("isPremium", "false")
+				.param("gender", "MALE"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("signup"))
+			.andExpect(model().attributeExists("signupForm", "genders", 
+					"accountTypes", "creditcardTypes", "years", "months",
+					"premiumChoices", "errorMessage"));	
 	}
 	
 	@Test
@@ -166,6 +183,15 @@ public class ProfileControllerTest extends BaseControllerTest {
 			.andExpect(model().attributeExists("user", "messageForm", "principalID"));
 	}
 	
+	@Test 
+	public void getUserPageNotLoggedIn() throws Exception {
+		this.mockMvc.perform(get("/user")
+				.param("id", "1"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("user"))
+			.andExpect(model().attributeExists("user", "messageForm"));
+	}
+	
 	@Test
 	public void getUpgradePage() throws Exception {
 		Principal principal = mock(Principal.class);
@@ -243,6 +269,24 @@ public class ProfileControllerTest extends BaseControllerTest {
 		.andExpect(status().isOk())
 		.andExpect(view().name("visitors"))
 		.andExpect(model().attributeExists("visitors", "ad"));
+	}
+	
+	@Test
+	public void doesEmailExistNonExistingMail() throws Exception{
+		MvcResult result = this.mockMvc.perform(post("/signup/doesEmailExist").param("email", "notexisting@test.com"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		assertEquals("false", result.getResponse().getContentAsString());
+	}
+	
+	@Test
+	public void doesEmailExistExistingMail() throws Exception{
+		MvcResult result = this.mockMvc.perform(post("/signup/doesEmailExist").param("email", "ese@unibe.ch"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		assertEquals("true", result.getResponse().getContentAsString());
 	}
 
 }

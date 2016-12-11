@@ -644,6 +644,11 @@ public class Ad {
 	public Double getLatitude() {
 		return latitude;
 	}
+	
+	public void setLatLongNull() {
+		this.longitude = null;
+		this.latitude = null;
+	}
 
 	public void setLatitude(BigDecimal latitude) {
 		this.latitude = latitude.doubleValue();

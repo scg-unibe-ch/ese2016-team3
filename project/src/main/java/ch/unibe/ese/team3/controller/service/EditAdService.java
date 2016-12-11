@@ -1,5 +1,6 @@
 package ch.unibe.ese.team3.controller.service;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -71,13 +72,15 @@ public class EditAdService extends BaseService {
 		String addressString = String.format("%s %s %s", placeAdForm.getStreet(), zip,
 				placeAdForm.getCity().substring(7));
 		
+		// set coordinates if geoDataService finds coordinates, set null otherwise
 		LatLng coordinates = geoDataService.getCoordinates(addressString);
 		if (coordinates != null) {
 			ad.setLatitude(coordinates.getLat());
 			ad.setLongitude(coordinates.getLng());
 		}
-
-		
+		else {
+			ad.setLatLongNull();
+		}
 		
 		Calendar calendar = Calendar.getInstance();
 		// java.util.Calendar uses a month range of 0-11 instead of the
