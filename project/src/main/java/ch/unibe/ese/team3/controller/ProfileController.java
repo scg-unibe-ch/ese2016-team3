@@ -143,7 +143,7 @@ public class ProfileController {
 				signupService.saveFrom(signupForm);
 				model = new ModelAndView("login");
 				model.addObject("googleForm", new GoogleSignupForm());
-				model.addObject("confirmationMessage", "Signup complete!");
+				model.addObject("confirmationMessage", "Signup complete! Please login to discover our website.");
 				return model;
 			} catch (IllegalArgumentException ex) {
 				model.addObject("errorMessage", "This email-address is taken. Please choose another one.");
