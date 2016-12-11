@@ -35,7 +35,7 @@ public class ProfileControllerTest extends BaseControllerTest {
 	
 	@Autowired
 	AdDao adDao;
-	
+
 	@Test 
 	public void getLoginPage() throws Exception {
 		this.mockMvc.perform(get("/login"))
@@ -44,15 +44,7 @@ public class ProfileControllerTest extends BaseControllerTest {
 			.andExpect(model().attributeExists("googleForm"));
 	}
 	
-	/*
-	@Test
-	public void getGoogleLoginPage() throws Exception {
-		this.mockMvc.perform(post("/googlelogin"))
-			.andExpect(status().isOk())
-			.andExpect(view().name("index"))
-			.andExpect(model().attributeExists("newest", "types", "searchForm"));
-	}*/
-	
+	// cannot test google login in mockMvc
 	@Test
 	public void getSignupPage() throws Exception {
 		this.mockMvc.perform(get("/signup"))
@@ -110,6 +102,45 @@ public class ProfileControllerTest extends BaseControllerTest {
 			.andExpect(model().attributeExists("confirmationMessage", "googleForm"));
 	}
 	
+	@Test
+	public void testUsernameTakenSignup() throws Exception {
+		this.mockMvc.perform(post("/signup")
+				.param("email", "ese@unibe.ch")
+				.param("password", "halloo")
+				.param("firstName", "Hans")
+				.param("lastName", "Heiri")
+				.param("isPremium", "false")
+				.param("gender", "MALE"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("signup"))
+			.andExpect(model().attributeExists("signupForm", "genders", 
+					"accountTypes", "creditcardTypes", "years", "months",
+					"premiumChoices", "errorMessage"));
+	}
+	
+	@Test
+	public void testValidPremiumSignup() throws Exception {
+		this.mockMvc.perform(post("/signup")
+				.param("email", "kolleg@ithaca.ch")
+				.param("password", "halloo")
+				.param("firstName", "Hans")
+				.param("lastName", "Heiri")
+				.param("isPremium", "false")
+				.param("gender", "MALE")
+				.param("_isPremium", "on")
+				.param("isPremium", "true")
+				.param("creditCard", "1111-1111-1111-1111")
+				.param("creditcardType", "VISA")
+				.param("securityNumber", "333")
+				.param("expirationMonth", "12")
+				.param("expirationYear", "2020")
+				.param("creditcardName", "hans")
+				.param("duration", "7"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("login"))
+			.andExpect(model().attributeExists("confirmationMessage", "googleForm"));
+	}
+	
 	@Test 
 	public void getEditProfilePage() throws Exception {
 		Principal principal = mock(Principal.class);
@@ -123,7 +154,7 @@ public class ProfileControllerTest extends BaseControllerTest {
 	}
 	
 	@Test
-	public void testInvalidFirstNameEditProfile() throws Exception {
+	public void testInvalidUsernameEditProfile() throws Exception {
 		Principal principal = mock(Principal.class);
 		when(principal.getName()).thenReturn("jane@doe.com");
 		
@@ -139,6 +170,7 @@ public class ProfileControllerTest extends BaseControllerTest {
 			.andExpect(model().attributeExists("editProfileForm", "currentUser"));
 	}
 	
+	// cannot test authentication manager in mockMvc (e.g. change of username or password)
 	@Test
 	public void testValidEditProfile() throws Exception {
 		Principal principal = mock(Principal.class);
@@ -242,6 +274,7 @@ public class ProfileControllerTest extends BaseControllerTest {
 				.param("duration", "7"))
 		.andExpect(status().isOk())
 		.andExpect(view().name("upgrade"))
+		.andExpect(model().attributeHasFieldErrors("upgradeForm", "creditCard"))
 		.andExpect(model().attributeExists("upgradeForm", "creditcardTypes", "accountTypes",
 					"currentUser", "years", "months", "premiumChoices"));
 	}
@@ -259,6 +292,18 @@ public class ProfileControllerTest extends BaseControllerTest {
 	}
 	
 	@Test
+	public void getSchedulePageNoPresentations() throws Exception {
+		Principal principal = mock(Principal.class);
+		when(principal.getName()).thenReturn("System");
+		
+		this.mockMvc.perform(get("/profile/schedule")
+				.principal(principal))
+		.andExpect(status().isOk())
+		.andExpect(view().name("schedule"))
+		.andExpect(model().attributeExists("visits", "presentations"));
+	}
+	
+	@Test
 	public void getVisitorPage() throws Exception {
 		Principal principal = mock(Principal.class);
 		when(principal.getName()).thenReturn("jane@doe.com");
@@ -266,6 +311,19 @@ public class ProfileControllerTest extends BaseControllerTest {
 		this.mockMvc.perform(get("/profile/visitors")
 				.principal(principal)
 				.param("visit", "45"))
+		.andExpect(status().isOk())
+		.andExpect(view().name("visitors"))
+		.andExpect(model().attributeExists("visitors", "ad"));
+	}
+	
+	@Test
+	public void getVisitorPageNoVisits() throws Exception {
+		Principal principal = mock(Principal.class);
+		when(principal.getName()).thenReturn("ese@unibe.ch");
+		
+		this.mockMvc.perform(get("/profile/visitors")
+				.principal(principal)
+				.param("visit", "21"))
 		.andExpect(status().isOk())
 		.andExpect(view().name("visitors"))
 		.andExpect(model().attributeExists("visitors", "ad"));
