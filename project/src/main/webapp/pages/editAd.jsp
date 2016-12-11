@@ -416,7 +416,7 @@
 
 									<button type="button" class="btn btn-primary"
 										id="addVisitButton">
-										<span class="glyphicon glyphicon-plus"></span>
+										<span class="glyphicon glyphicon-plus"></span>Add
 									</button>
 								</div>
 							</div>

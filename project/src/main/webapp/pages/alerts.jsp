@@ -181,29 +181,32 @@
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										<div class="col-sm-offset-4 col-sm-10">
-											<div class="checkbox">
-												<label><form:checkbox id="field-garage"
-														path="garage" /> Garage</label>
-											</div>
-											<div class="checkbox">
-												<label><form:checkbox id="field-balcony"
-														path="balcony" /> Balcony or Patio</label>
-											</div>
+										<label class="control-label col-sm-4" for="form-group">Details</label>
+										<div class="form-group">
+											<div class="col-sm-5">
+												<div class="checkbox">
+													<label><form:checkbox id="field-garage"
+															path="garage" /> Garage</label>
+												</div>
+												<div class="checkbox">
+													<label><form:checkbox id="field-balcony"
+															path="balcony" /> Balcony or Patio</label>
+												</div>
 
-											<div class="checkbox">
-												<label><form:checkbox id="field-parking"
-														path="parking" /> Parking</label>
-											</div>
+												<div class="checkbox">
+													<label><form:checkbox id="field-parking"
+															path="parking" /> Parking</label>
+												</div>
 
-											<div class="checkbox">
-												<label><form:checkbox id="field-elevator"
-														path="elevator" /> Elevator</label>
-											</div>
+												<div class="checkbox">
+													<label><form:checkbox id="field-elevator"
+															path="elevator" /> Elevator</label>
+												</div>
 
-											<div class="checkbox">
-												<label><form:checkbox id="field-dishwasher"
-														path="dishwasher" /> Dishwasher</label>
+												<div class="checkbox">
+													<label><form:checkbox id="field-dishwasher"
+															path="dishwasher" /> Dishwasher</label>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -214,16 +217,20 @@
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-squareFootageMin"
 											class="control-label col-sm-4">Square Footage</label>
-										<div class="col-sm-8 row form-inline">
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">min</span>
-												<form:input type="number" min="0" step="1" id="field-squareFootageMin"
-													path="squareFootageMin" cssClass="form-control" />
-											</div>
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">max</span>
-												<form:input type="number" min="0" step="1" id="field-squareFootageMax"
-													path="squareFootageMax" cssClass="form-control" />
+										<div class="col-sm-8">
+											<div class="col-sm-12 row form-inline">
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">min</span>
+													<form:input type="number" min="0" step="1"
+														id="field-squareFootageMin" path="squareFootageMin"
+														cssClass="form-control" />
+												</div>
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">max</span>
+													<form:input type="number" min="0" step="1"
+														id="field-squareFootageMax" path="squareFootageMax"
+														cssClass="form-control" />
+												</div>
 											</div>
 										</div>
 									</div>
@@ -232,18 +239,20 @@
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-numberOfBathMin"
 											class="control-label col-sm-4">Nr. of Baths</label>
-										<div class="col-sm-8 row form-inline">
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">min</span>
-												<form:input type="number" min="0" step="1"
-													id="field-numberOfBathMin" path="numberOfBathMin"
-													cssClass="form-control" />
-											</div>
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">max</span>
-												<form:input type="number" min="0" step="1"
-													id="field-numberOfBathMax" path="numberOfBathMax"
-													cssClass="form-control" />
+										<div class="col-sm-8">
+											<div class="col-sm-12 row form-inline">
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">min</span>
+													<form:input type="number" min="0" step="1"
+														id="field-numberOfBathMin" path="numberOfBathMin"
+														cssClass="form-control" />
+												</div>
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">max</span>
+													<form:input type="number" min="0" step="1"
+														id="field-numberOfBathMax" path="numberOfBathMax"
+														cssClass="form-control" />
+												</div>
 											</div>
 										</div>
 									</div>
@@ -254,16 +263,20 @@
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-buildYearMin" class="control-label col-sm-4">Build
 											year</label>
-										<div class="col-sm-8 row form-inline">
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">min</span>
-												<form:input type="number" min="0" step="1" id="field-buildYearMin"
-													path="buildYearMin" cssClass="form-control" />
-											</div>
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">max</span>
-												<form:input type="number" min="0" step="1" id="field-buildYearMax"
-													path="buildYearMax" cssClass="form-control" />
+										<div class="col-sm-8">
+											<div class="col-sm-12 row form-inline">
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">min</span>
+													<form:input type="number" min="0" step="1"
+														id="field-buildYearMin" path="buildYearMin"
+														cssClass="form-control" />
+												</div>
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">max</span>
+													<form:input type="number" min="0" step="1"
+														id="field-buildYearMax" path="buildYearMax"
+														cssClass="form-control" />
+												</div>
 											</div>
 										</div>
 									</div>
@@ -273,18 +286,20 @@
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-renovationYearMin"
 											class="control-label col-sm-4">Renovation year</label>
-										<div class="col-sm-8 row form-inline">
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">min</span>
-												<form:input type="number" min="0" step="1"
-													id="field-renovationYearMin" path="renovationYearMin"
-													cssClass="form-control" />
-											</div>
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">max</span>
-												<form:input type="number" min="0" step="1"
-													id="field-renovationYearMax" path="renovationYearMax"
-													cssClass="form-control" />
+										<div class="col-sm-8">
+											<div class="col-sm-12 row form-inline">
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">min</span>
+													<form:input type="number" min="0" step="1"
+														id="field-renovationYearMin" path="renovationYearMin"
+														cssClass="form-control" />
+												</div>
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">max</span>
+													<form:input type="number" min="0" step="1"
+														id="field-renovationYearMax" path="renovationYearMax"
+														cssClass="form-control" />
+												</div>
 											</div>
 										</div>
 									</div>
@@ -299,18 +314,20 @@
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-numberOfRoomsMin"
 											class="control-label col-sm-4">Nr. of Rooms</label>
-										<div class="col-sm-8 row form-inline">
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">min</span>
-												<form:input type="number" min="0" step="1"
-													id="field-numberOfRoomsMin" path="numberOfRoomsMin"
-													cssClass="form-control" />
-											</div>
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">max</span>
-												<form:input type="number" min="0" step="1"
-													id="field-numberOfRoomsMax" path="numberOfRoomsMax"
-													cssClass="form-control" />
+										<div class="col-sm-8">
+											<div class="col-sm-12 row form-inline">
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">min</span>
+													<form:input type="number" min="0" step="1"
+														id="field-numberOfRoomsMin" path="numberOfRoomsMin"
+														cssClass="form-control" />
+												</div>
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">max</span>
+													<form:input type="number" min="0" step="1"
+														id="field-numberOfRoomsMax" path="numberOfRoomsMax"
+														cssClass="form-control" />
+												</div>
 											</div>
 										</div>
 									</div>
@@ -319,18 +336,20 @@
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-distanceSchoolMin"
 											class="control-label col-sm-4">Distance to school (m)</label>
-										<div class="col-sm-8 row form-inline">
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">min</span>
-												<form:input type="number" min="0" placeholder="0" step="100"
-													id="field-distanceSchoolMin" path="distanceSchoolMin"
-													cssClass="form-control" />
-											</div>
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">max</span>
-												<form:input type="number" min="0" placeholder="0" step="100"
-													id="field-distanceSchoolMax" path="distanceSchoolMax"
-													cssClass="form-control" />
+										<div class="col-sm-8">
+											<div class="col-sm-12 row form-inline">
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">min</span>
+													<form:input type="number" min="0" placeholder="0"
+														step="100" id="field-distanceSchoolMin"
+														path="distanceSchoolMin" cssClass="form-control" />
+												</div>
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">max</span>
+													<form:input type="number" min="0" placeholder="0"
+														step="100" id="field-distanceSchoolMax"
+														path="distanceSchoolMax" cssClass="form-control" />
+												</div>
 											</div>
 										</div>
 									</div>
@@ -340,19 +359,22 @@
 								<div class="col-sm-6">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-distanceShoppingMin"
-											class="control-label col-sm-4">Distance to shopping (m)</label>
-										<div class="col-sm-8 row form-inline">
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">min</span>
-												<form:input type="number" min="0" placeholder="0" step="100"
-													id="field-distanceShoppingMin" path="distanceShoppingMin"
-													cssClass="form-control" />
-											</div>
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">max</span>
-												<form:input type="number" min="0" placeholder="0" step="100"
-													id="field-distanceShoppingMax" path="distanceShoppingMax"
-													cssClass="form-control" />
+											class="control-label col-sm-4">Distance to shopping
+											(m)</label>
+										<div class="col-sm-8">
+											<div class="col-sm-12 row form-inline">
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">min</span>
+													<form:input type="number" min="0" placeholder="0"
+														step="100" id="field-distanceShoppingMin"
+														path="distanceShoppingMin" cssClass="form-control" />
+												</div>
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">max</span>
+													<form:input type="number" min="0" placeholder="0"
+														step="100" id="field-distanceShoppingMax"
+														path="distanceShoppingMax" cssClass="form-control" />
+												</div>
 											</div>
 										</div>
 									</div>
@@ -360,19 +382,22 @@
 								<div class="col-sm-6">
 									<div class="form-group ${status.error ? 'has-error' : '' }">
 										<label for="field-distancePublicTransportMin"
-											class="control-label col-sm-4">Distance to public transport (m)</label>
-										<div class="col-sm-8 row form-inline">
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">min</span>
-												<form:input type="number" min="0" placeholder="0" step="100"
-													id="field-distancePublicTransportMin" path="distancePublicTransportMin"
-													cssClass="form-control" />
-											</div>
-											<div class="col-sm-5 input-group">
-												<span class="input-group-addon">max</span>
-												<form:input type="number" min="0" placeholder="0" step="100"
-													id="field-distancePublicTransportMax" path="distancePublicTransportMax"
-													cssClass="form-control" />
+											class="control-label col-sm-4">Distance to public
+											transport (m)</label>
+										<div class="col-sm-8">
+											<div class="col-sm-12 row form-inline">
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">min</span>
+													<form:input type="number" min="0" placeholder="0"
+														step="100" id="field-distancePublicTransportMin"
+														path="distancePublicTransportMin" cssClass="form-control" />
+												</div>
+												<div class="col-sm-5 input-group">
+													<span class="input-group-addon">max</span>
+													<form:input type="number" min="0" placeholder="0"
+														step="100" id="field-distancePublicTransportMax"
+														path="distancePublicTransportMax" cssClass="form-control" />
+												</div>
 											</div>
 										</div>
 									</div>
@@ -387,8 +412,8 @@
 						</div>
 					</div>
 				</form:form>
+				<br></br>
 			</div>
-
 			<h4>Your active alerts</h4>
 			<form:form method="post" modelAttribute="alertForm"
 				action="/profile/alerts" id="alertForm" autocomplete="off"
