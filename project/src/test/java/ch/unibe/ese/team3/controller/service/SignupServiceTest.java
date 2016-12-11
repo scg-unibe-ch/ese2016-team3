@@ -12,10 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import ch.unibe.ese.team3.controller.pojos.forms.SignupForm;
-import ch.unibe.ese.team3.controller.pojos.forms.UpgradeForm;
 import ch.unibe.ese.team3.model.CreditcardType;
 import ch.unibe.ese.team3.model.Gender;
-import ch.unibe.ese.team3.model.PremiumChoice;
 import ch.unibe.ese.team3.model.User;
 import ch.unibe.ese.team3.model.dao.PremiumChoiceDao;
 import ch.unibe.ese.team3.model.dao.UserDao;
