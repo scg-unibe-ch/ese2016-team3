@@ -61,7 +61,7 @@ public class PlaceAdControllerTest extends BaseControllerTest {
 				.param("_elevator", "on")
 				.param("_parking", "on")
 				.param("distanceSchool", "0")
-				.param("moveInDate", "21-12-2016")
+				.param("moveInDate", "2016-12-21")
 				.param("distancePublicTransport", "0")
 				.param("auctionPrice", "0")
 				.param("_garage", "on")

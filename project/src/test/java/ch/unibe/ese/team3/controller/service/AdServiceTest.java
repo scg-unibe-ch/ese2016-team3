@@ -128,7 +128,7 @@ public class AdServiceTest {
 		placeAdForm.setSquareFootage(50);
 		placeAdForm.setTitle("title");
 		placeAdForm.setStreet("Hauptstrasse 13");
-		placeAdForm.setMoveInDate("27-02-2015");
+		placeAdForm.setMoveInDate("2015-02-27");
 
 		// new criteria
 		// test newly added fields
@@ -223,7 +223,7 @@ public class AdServiceTest {
 		placeAdForm.setSquareFootage(50);
 		placeAdForm.setTitle("title");
 		placeAdForm.setStreet("Forelstrasse 22");
-		placeAdForm.setMoveInDate("27-02-2015");
+		placeAdForm.setMoveInDate("2015-02-27");
 
 		// new criteria
 		// test newly added fields
@@ -430,7 +430,7 @@ public class AdServiceTest {
 		placeAdForm.setSquareFootage(50);
 		placeAdForm.setTitle("ad1");
 		placeAdForm.setStreet("Hauptstrasse 13");
-		placeAdForm.setMoveInDate("27-02-2015");
+		placeAdForm.setMoveInDate("2015-02-27");
 		placeAdForm.setStartDate("03.10.2016");
 		placeAdForm.setEndDate("03.12.2016");
 
@@ -487,7 +487,7 @@ public class AdServiceTest {
 		placeAdForm.setSquareFootage(50);
 		placeAdForm.setTitle("AuctionLoft");
 		placeAdForm.setStreet("Hauptstrasse 13");
-		placeAdForm.setMoveInDate("27-02-2015");
+		placeAdForm.setMoveInDate("2015-02-27");
 
 		// new criteria
 		// test newly added fields
@@ -560,7 +560,7 @@ public class AdServiceTest {
 		placeAdForm.setSquareFootage(100);
 		placeAdForm.setTitle("AuctionLoftVisibel");
 		placeAdForm.setStreet("Hauptstrasse 13");
-		placeAdForm.setMoveInDate("27-02-2015");
+		placeAdForm.setMoveInDate("2015-02-27");
 
 		// new criteria
 		// test newly added fields

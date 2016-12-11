@@ -1,17 +1,17 @@
 $(document).ready(function() {
 
 	$("#field-moveInDate").datepicker({
-		dateFormat : 'dd-mm-yy'
+		dateFormat : 'yy-mm-dd'
 	});
 	$("#field-startDate").datepicker({
-		dateFormat : 'dd-mm-yy'
+		dateFormat : 'yy-mm-dd'
 	});
 	$("#field-endDate").datepicker({
-		dateFormat : 'dd-mm-yy'
+		dateFormat : 'yy-mm-dd'
 	});
 
 	$("#field-visitDay").datepicker({
-		dateFormat : 'dd-mm-yy'
+		dateFormat : 'yy-mm-dd'
 	});
 	
 	var setPanelVisibility = function(){

@@ -239,10 +239,10 @@
 		});
 
 		$("#field-earliestMoveInDate").datepicker({
-			dateFormat : 'dd-mm-yy'
+			dateFormat : 'yy-mm-dd'
 		});
 		$("#field-latestMoveInDate").datepicker({
-			dateFormat : 'dd-mm-yy'
+			dateFormat : 'yy-mm-dd'
 		});
 
 		initMap();

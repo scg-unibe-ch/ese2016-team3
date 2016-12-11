@@ -49,7 +49,7 @@ public class EditAdControllerTest extends BaseControllerTest {
 	@Test
 	public void editAdOtherUser() throws Exception {
 		this.mockMvc.perform(post("/profile/editAd").param("id", "1").param("adId", "1").param("title", "testTitle")
-				.param("street", "Hochfeldstrasse 55").param("city", "3012 - Bern").param("moveInDate", "27-02-2017")
+				.param("street", "Hochfeldstrasse 55").param("city", "3012 - Bern").param("moveInDate", "2017-02-27")
 				.param("price", "100000").param("roomDescription", "description")
 				.param("type", Type.APARTMENT.toString()).param("squareFootage", "100").param("numberOfRooms", "3")
 
@@ -62,7 +62,7 @@ public class EditAdControllerTest extends BaseControllerTest {
 	@Test
 	public void editUserAd() throws Exception {
 		this.mockMvc.perform(post("/profile/editAd").param("id", "2").param("adId", "2").param("title", "testTitle")
-				.param("street", "Hochfeldstrasse 55").param("city", "3012 - Bern").param("moveInDate", "27-02-2017")
+				.param("street", "Hochfeldstrasse 55").param("city", "3012 - Bern").param("moveInDate", "2017-02-27")
 				.param("price", "100000").param("roomDescription", "description")
 				.param("type", Type.APARTMENT.toString()).param("squareFootage", "100").param("numberOfRooms", "3")
 
@@ -80,7 +80,7 @@ public class EditAdControllerTest extends BaseControllerTest {
 																														// doesn't
 																														// have
 																														// pictures
-				.param("street", "Hochfeldstrasse 55").param("city", "3012 - Bern").param("moveInDate", "27-02-2017")
+				.param("street", "Hochfeldstrasse 55").param("city", "3012 - Bern").param("moveInDate", "2017-02-27")
 				.param("price", "100000").param("roomDescription", "description")
 				.param("type", Type.APARTMENT.toString()).param("squareFootage", "100").param("numberOfRooms", "3")
 
@@ -93,7 +93,7 @@ public class EditAdControllerTest extends BaseControllerTest {
 	@Test
 	public void warningMessageWhenInvalidAddressAfterEditing() throws Exception {
 		this.mockMvc.perform(post("/profile/editAd").param("id", "2").param("adId", "2").param("title", "testTitle")
-				.param("street", "hoceldstras").param("city", "3012 - Bern").param("moveInDate", "27-02-2017")
+				.param("street", "hoceldstras").param("city", "3012 - Bern").param("moveInDate", "2017-02-27")
 				.param("price", "100000").param("roomDescription", "description")
 				.param("type", Type.APARTMENT.toString()).param("squareFootage", "100").param("numberOfRooms", "3")
 

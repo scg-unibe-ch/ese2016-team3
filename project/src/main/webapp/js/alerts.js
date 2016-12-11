@@ -1,10 +1,10 @@
 // function is called when page is loaded
 $(document).ready(function() {
 	$("#field-earliestMoveInDate").datepicker({
-		dateFormat : 'dd-mm-yy'
+		dateFormat : 'yy-mm-dd'
 	});
 	$("#field-latestMoveInDate").datepicker({
-		dateFormat : 'dd-mm-yy'
+		dateFormat : 'yy-mm-dd'
 	});
 	
 	

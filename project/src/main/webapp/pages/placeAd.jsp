@@ -15,13 +15,13 @@
 <script src="/js/placeAd.js"></script>
 
 <script>
-	$(document).ready(function(){
+	$(document).ready(function() {
 		$("#field-city").autocomplete({
-								minLength : 2,
-								source : <c:import url="getzipcodes.jsp" />,
-								enabled : true,
-								autoFocus : true
-							});
+			minLength : 2,
+			source : <c:import url="getzipcodes.jsp" />,
+			enabled : true,
+			autoFocus : true
+		});
 	});
 </script>
 
@@ -83,7 +83,8 @@
 							<spring:bind path="city">
 								<div class="form-group ${status.error ? 'has-error' : '' }">
 
-									<label class="col-sm-3 control-label" for="field-city">City/ Zip Code*</label>
+									<label class="col-sm-3 control-label" for="field-city">City/
+										Zip Code*</label>
 									<div class="col-sm-5">
 										<form:input type="text" name="city" id="field-city"
 											path="city" placeholder="City" cssClass="form-control" />
@@ -128,10 +129,10 @@
 										<form:errors path="numberOfRooms" cssClass="text-danger" />
 									</div>
 								</div>
-							</spring:bind>							
+							</spring:bind>
 						</div>
 					</div>
-										
+
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<spring:bind path="numberOfBath">
@@ -235,7 +236,7 @@
 							</spring:bind>
 						</div>
 					</div>
-					
+
 					<h4>Pricing</h4>
 					<div class="panel panel-default">
 						<div class="panel-body">
@@ -282,8 +283,8 @@
 
 									<spring:bind path="validStartDate">
 										<div class="form-group ${status.error ? 'has-error' : '' }">
-											<label class="col-sm-3 control-label" for="field-startDate">Start Date
-												of Auction* </label>
+											<label class="col-sm-3 control-label" for="field-startDate">Start
+												Date of Auction* </label>
 											<div class="col-sm-5">
 												<form:input type="text" id="field-startDate"
 													path="startDate" cssClass="form-control" />
@@ -294,20 +295,20 @@
 
 									<spring:bind path="validEndDate">
 										<div class="form-group ${status.error ? 'has-error' : '' }">
-											<label class="col-sm-3 control-label" for="field-endDate">End Date
-												of Auction* </label>
+											<label class="col-sm-3 control-label" for="field-endDate">End
+												Date of Auction* </label>
 											<div class="col-sm-5">
 												<form:input type="text" id="field-endDate" path="endDate"
 													cssClass="form-control" />
-													<form:errors path="validEndDate" cssClass="text-danger" />
+												<form:errors path="validEndDate" cssClass="text-danger" />
 											</div>
 										</div>
 									</spring:bind>
 
 									<spring:bind path="validStartPrice">
 										<div class="form-group ${status.error ? 'has-error' : '' }">
-											<label class="col-sm-3 control-label" for="field-startPrice">Start Price
-												of Auction* </label>
+											<label class="col-sm-3 control-label" for="field-startPrice">Start
+												Price of Auction* </label>
 											<div class="col-sm-5">
 												<form:input id="field-startPrice" path="startPrice"
 													type="number" min="0" placeholder="Startprice " step="1"
@@ -326,7 +327,8 @@
 												<form:input id="field-increasePrice" path="increaseBidPrice"
 													type="number" min="0" placeholder="Startprice " step="1"
 													cssClass="form-control" />
-												<form:errors path="validIncreaseBidPrice" cssClass="text-danger" />
+												<form:errors path="validIncreaseBidPrice"
+													cssClass="text-danger" />
 											</div>
 										</div>
 									</spring:bind>

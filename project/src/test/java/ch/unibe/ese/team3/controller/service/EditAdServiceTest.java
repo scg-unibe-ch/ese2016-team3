@@ -62,7 +62,7 @@ public class EditAdServiceTest {
 		placeAdForm.setSquareFootage(50);
 		placeAdForm.setTitle("title");
 		placeAdForm.setStreet("Hauptstrasse 13");
-		placeAdForm.setMoveInDate("27-02-2015");
+		placeAdForm.setMoveInDate("2015-02-27");
 	
 		placeAdForm.setBalcony(false);
 
@@ -103,7 +103,7 @@ public class EditAdServiceTest {
 		placeAdForm.setSquareFootage(50);
 		placeAdForm.setTitle("title");
 		placeAdForm.setStreet("Hauptstrasse 13");
-		placeAdForm.setMoveInDate("27-02-2015");
+		placeAdForm.setMoveInDate("2015-02-27");
 	
 		placeAdForm.setBalcony(false);
 
@@ -148,7 +148,7 @@ public class EditAdServiceTest {
 		placeAdForm.setSquareFootage(50);
 		placeAdForm.setTitle("title");
 		placeAdForm.setStreet("Hauptstrasse 13");
-		placeAdForm.setMoveInDate("27-02-2015");
+		placeAdForm.setMoveInDate("2015-02-27");
 	
 		placeAdForm.setBalcony(false);
 

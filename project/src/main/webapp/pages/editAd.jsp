@@ -37,11 +37,11 @@
 							autoFocus : true
 						});
 						$("#field-moveInDate").datepicker({
-							dateFormat : 'dd-mm-yy'
+							dateFormat : 'yy-mm-dd'
 						});
 
 						$("#field-visitDay").datepicker({
-							dateFormat : 'dd-mm-yy'
+							dateFormat : 'yy-mm-dd'
 						});
 
 						$("#addVisitButton")
