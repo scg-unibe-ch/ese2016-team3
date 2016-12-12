@@ -27,10 +27,12 @@ $(document).ready(function() {
 	
 	// resets the values of the extended alert fields
 	var deleteExtendedAlertValues = function() {
-		$("#field-floorLevelMin").val(0)
-		$("#field-floorLevelMax").val(0)
+		$("#field-squareFootageMin").val(0)
+		$("#field-squareFootageMax").val(0)
 		$("#field-renovationYearMin").val(0)
 		$("#field-renovationYearMax").val(0)
+		$("#field-buildYearMin").val(0)
+		$("#field-buildYearMax").val(0)
 		$("#field-numberOfRoomsMin").val(0)
 		$("#field-numberOfRoomsMax").val(0)
 		$("#field-numberOfBathMin").val(0)
@@ -42,7 +44,7 @@ $(document).ready(function() {
 		$("#field-distancePublicTransportMin").val(0)
 		$("#field-distancePublicTransportMax").val(0)
 		
-		// set aditional criteria
+		// other criteria do not have to be reseted, as they are dicarded anyways when extendedAlert is not true
 	}
 	
 	// when field with Id field-auction is checked, call function
