@@ -6,13 +6,14 @@
 
 <c:import url="template/header.jsp" />
 
-<!-- loads functions from placeAd.js -->
-<script src="/js/alerts.js"></script>
 
 <ol class="breadcrumb">
 	<li><a href="/${pagemode}/">Homepage</a></li>
 	<li class="active">Alerts</li>
 </ol>
+
+<!-- loads functions from placeAd.js -->
+<script src="/js/alerts.js"></script>
 
 <script>
 	function deleteAlert(button) {
@@ -86,7 +87,7 @@
 									<div class="col-sm-4">
 										<form:input type="text" name="city" id="city" path="city"
 											placeholder="e.g. Bern" tabindex="3" cssClass="form-control" />
-										<form:errors path="city" cssClass="validationErrorText" />
+										<form:errors path="city" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -101,7 +102,7 @@
 												placeholder="e.g. 5" step="5" cssClass="form-control" />
 											<span class="input-group-addon">km</span>
 										</div>
-										<form:errors path="radius" />
+										<form:errors path="radius" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>
@@ -116,7 +117,7 @@
 											<form:input id="priceInput" type="number" path="price"
 												placeholdr="e.g. 5" step="50" cssClass="form-control" />
 										</div>
-										<form:errors path="price" cssClass="validationErrorText" />
+										<form:errors path="price" cssClass="text-danger" />
 									</div>
 								</div>
 							</spring:bind>

@@ -41,6 +41,8 @@ $(document).ready(function() {
 		$("#field-distanceShoppingMax").val(0)
 		$("#field-distancePublicTransportMin").val(0)
 		$("#field-distancePublicTransportMax").val(0)
+		
+		// set aditional criteria
 	}
 	
 	// when field with Id field-auction is checked, call function

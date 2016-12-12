@@ -432,8 +432,13 @@ public class AlertService {
 	 */
 	private boolean radiusMismatchWith(Ad ad, Alert alert) {
 		final int earthRadiusKm = 6380;
-		Location adLocation = geoDataService.getLocationsByZipcode(ad.getZipcode()).get(0);
-		Location alertLocation = geoDataService.getLocationsByZipcode(alert.getZipcode()).get(0);
+		List<Location> adLocationsByZip = geoDataService.getLocationsByZipcode(ad.getZipcode());
+		List<Location> alertLocationsByZip = geoDataService.getLocationsByZipcode(alert.getZipcode());
+		if (adLocationsByZip.isEmpty() || alertLocationsByZip.isEmpty()){
+			return true;
+		}
+		Location adLocation = adLocationsByZip.get(0);
+		Location alertLocation = alertLocationsByZip.get(0);
 
 		double radSinLat = Math.sin(Math.toRadians(adLocation.getLatitude()));
 		double radCosLat = Math.cos(Math.toRadians(adLocation.getLatitude()));

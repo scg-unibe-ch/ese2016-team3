@@ -21,7 +21,7 @@ public class AlertForm {
 	private List<Type> types;
 
 	@NotBlank(message = "Required")
-	@Pattern(regexp = "^[0-9]{4} - [-;\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
+	@Pattern(regexp = "^[0-9]{4} - [\\S]*", message = "Please pick a city from the list")
 	private String city;
 
 	@NotNull(message = "Requires a number")
@@ -29,7 +29,7 @@ public class AlertForm {
 	private Integer radius;
 	
 	@NotNull(message = "Requires a number")
-	@Min(value = 0, message = "In your dreams.")
+	@Min(value = 0, message = "Please enter a valid number")
 	private Integer price;
 	
 	private int zipCode;
