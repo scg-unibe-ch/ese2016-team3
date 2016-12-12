@@ -373,7 +373,7 @@
 					</div>
 
 
-					<h4>Edit Visiting Times (optional)</h4>
+					<h4>Add Visiting Times (optional)</h4>
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="row form-inline bottom15">
@@ -428,7 +428,6 @@
 
 						</div>
 					</div>
-
 
 
 					<h4>Change Pictures</h4>
