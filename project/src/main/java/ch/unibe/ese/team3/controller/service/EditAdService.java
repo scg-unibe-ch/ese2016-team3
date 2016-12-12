@@ -54,9 +54,10 @@ public class EditAdService extends BaseService {
 		// get ad which should be edited
 		Ad ad = adService.getAdById(adId);
 
-		// add new attributes to ad, which should be edited
+		// add new attributes to ad
 		setNewAttributes(placeAdForm, ad, user, filePaths);
 		
+		// save ad in db
 		adDao.save(ad);
 
 		return ad;
