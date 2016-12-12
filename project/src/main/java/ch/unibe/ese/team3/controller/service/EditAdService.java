@@ -1,6 +1,5 @@
 package ch.unibe.ese.team3.controller.service;
 
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -181,7 +180,7 @@ public class EditAdService extends BaseService {
 	public PlaceAdForm fillForm(Ad ad) {
 		PlaceAdForm adForm = new PlaceAdForm();
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		adForm.setAuction(ad.isAuction());
 		adForm.setAuctionPrice(ad.getPrice());
 		adForm.setBalcony(ad.getBalcony());
