@@ -135,7 +135,7 @@ public class AuctionServiceTest {
 		auctionAd1.setIncreaseBidPrice(1000);
 		auctionAd1.setcurrentAuctionPrice(auctionAd1.getStartPrice() + auctionAd1.getIncreaseBidPrice());
 		auctionAd1.setStartDate(formatter.parse("10.10.2016"));
-		auctionAd1.setEndDate(formatter.parse("12.12.2016"));
+		auctionAd1.setEndDate(formatter.parse("12.12.2017"));
 		
 		adDao.save(auctionAd1);
 	}
@@ -176,7 +176,7 @@ public class AuctionServiceTest {
 		auctionAd2.setIncreaseBidPrice(1000);
 		auctionAd2.setcurrentAuctionPrice(auctionAd2.getStartPrice() + auctionAd2.getIncreaseBidPrice());
 		auctionAd2.setStartDate(formatter.parse("10.10.2016"));
-		auctionAd2.setEndDate(formatter.parse("12.12.2016"));
+		auctionAd2.setEndDate(formatter.parse("12.12.2017"));
 		
 		adDao.save(auctionAd2);
 	}
